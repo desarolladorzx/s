@@ -1,0 +1,2 @@
+[30-Nov-2020 11:07:54 America/Chicago] PHP Warning:  mysqli::__construct(): (08004/1040): Too many connections in /home1/sismedic/sis.medicfitcen.com/model/Conexion.php on line 5
+[14-Dec-2020 08:04:23 America/Chicago] PHP Warning:  mysqli::__construct(): (08004/1040): Too many connections in /home1/sismedic/sis.medicfitcen.com/model/Conexion.php on line 5
