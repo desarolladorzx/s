@@ -1,5 +1,5 @@
 <?php
-	$conexion = new mysqli("localhost", "sismedic_medicfit", "IRcOjz9B.U*E", "sismedic_medicfit");
+	$conexion = new mysqli("localhost", "root", "tH!4Fpf9WsSMMqH7", "medicfitcen_gp");
 
 	if (mysqli_connect_errno()) {
 	    printf("Connect failed: %s\n", mysqli_connect_error());
