@@ -546,6 +546,7 @@ function ConsultarDetallesPed() {
                     $("#txtClienteCel").val(celular);
                     $("#txtClienteVent").val(Cliente);
                     $("#txtClienteDir").val(direccion);// MUESTRA DETALLE DE VENTA
+                    $("#cboTipo_documento").val(documento_per);
                     $("#txtClienteDni").val(dni);// MUESTRA DETALLE DE VENTA
                     $("#txtSerieVent").val(r.serie_comprobante);
                     $("#txtNumeroVent").val(r.num_comprobante);

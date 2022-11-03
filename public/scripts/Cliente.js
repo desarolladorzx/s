@@ -105,7 +105,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 		}
 	})
 }
-
+//Datos que se muestran en el ticket
  function cargarDataCliente(id, tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
@@ -114,8 +114,8 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 		$("#txtIdPersona").val(id);// recibimos la variable id a la caja de texto
 		$("#cboTipoPersona").val(tipo_persona);
 	    $("#txtNombre").val(nombre);// recibimos la variable nombre a la caja de texto txtNombre
-		$("#txtApellido").val(apellido);// recibimos la variable nombre a la caja de texto txtApellido
-		$("#cboTipo_Documento").val(tipo_documento);
+		$("#txtApellido").val(apellido);// recibimos la variable apellido a la caja de texto txtApellido
+		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
  		$("#txtNum_Documento").val(num_documento);
 	    $("#txtDireccion_Departamento").val(direccion_departamento);
 	    $("#txtDireccion_Provincia").val(direccion_provincia);

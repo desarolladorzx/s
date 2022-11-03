@@ -8,7 +8,7 @@
 			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
 				concat(pe.nombre,' ',pe.apellido) as cliente,
-				pe.num_documento as dni,pe.telefono as celular, pe.direccion_departamento as departamento,
+				pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
 				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
 				v.metodo_pago as cuenta_abonada,
 				v.tipo_comprobante as comprobante,v.agencia_envio as transporte,

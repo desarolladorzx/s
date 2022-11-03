@@ -45,10 +45,10 @@ $reg_igv = $query_global->fetch_object();
         <td>CLIENTE: <font size=3> <?php echo mb_strtoupper($reg_cli->nombre." ".$reg_cli->apellido,'UTF-8');?> </font> </td>
     </tr>
     <tr>
-        <td>DNI: <font size=3> <?php echo $reg_cli->num_documento; ?> </font> </td>
+        <td><font size=2> <?php echo $reg_cli->documento_per." : "; ?> </font> <font size=3> <?php echo $reg_cli->num_documento; ?> </font> </td>
     </tr>
     <tr>
-        <td>CELULAR: <font size=3> <?php echo $reg_cli->telefono; ?> </font> </td>
+        <td>CELULAR: <font size=3> <?php echo $reg_cli->telefono. " - " .$reg_cli->telefono_2; ?> </font> </td>
     </tr>
     <tr>
         <td>DESTINO:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_provincia." - ".$reg_cli->direccion_departamento,'UTF-8'); ?> </font> </td>
