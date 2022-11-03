@@ -90,7 +90,7 @@ $reg_igv = $query_global->fetch_object();
         <td><strong>CLIENTE : </strong><?php echo $reg_cli->nombre; ?> <?php echo $reg_cli->apellido; ?></td>
     </tr>
     <tr>
-        <td><strong>DNI : </strong><?php echo $reg_cli->num_documento; ?></td>
+        <td><font size=2> <?php echo $reg_cli->documento_per." : "; ?> </font> <font size=3> <?php echo $reg_cli->num_documento; ?> </font> </td>
     </tr>
     <tr>
         <td><strong>ATENDIO : </strong><?php echo mb_strtoupper($reg_cli->empleado) ; ?></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
