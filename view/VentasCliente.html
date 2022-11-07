@@ -13,10 +13,122 @@
         <div class="box-body">
               <div class="row">
                   <div class="col-md-12">
-                    <!--Contenido-->
-                    
-<div class="col-sm-14">
+                    <!--Contenido se añadio ver detalle del pedido-->
+ <div class="col-sm-14"  id="VerFormVentaPed">
+<form role="form" name="frmVentas" id="frmVentas" >
+    <div class="row">
+        <h3 class="col-lg-12" id="txtVenta" ></h3>
+        <div class="col-lg-4 left">
+            <label for="inputMarca">Tipo de Venta</label>
+            <div class="form-group  has-success">
+                <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta" required="" placeholder="" autofocus="" />
+                <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>" maxlength="50" class="form-control" name="txtIdUsuario" required="" placeholder="" autofocus="" />
+                <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required="" placeholder="" autofocus="" />
+                <select id="cboTipoVenta" name="cboTipoVenta" class="form-control">
+                    <option value="Contado">Contado</option>
+                    <option value="Credito">Credito</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 left">
+            <label for="inputMarca">T. Comprobante</label>
+            <div class="form-group  has-success">
+                
+                <select id="cboTipoComprobante" name="cboTipoComprobante" class="form-control">
 
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-5 left">
+            <label for="inputMarca">Serie</label>
+            <div class="form-group  has-success">
+                <input id="txtIdTipoDoc" type="hidden" maxlength="50" class="form-control" name="txtIdTipoDoc" required="" autofocus="" placeholder="" readonly="readonly"/>
+                <input id="txtSerieVent" type="text" maxlength="50" class="form-control" name="txtSerieVent" required="" autofocus="" placeholder="" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="col-lg-5 left">
+            <label for="inputInscripcion">Numero</label>
+            <div class="form-group  has-success">
+                
+                <input id="txtNumeroVent" type="text" class="form-control" name="txtNumeroVent" required="" placeholder="" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="col-lg-3 left">
+            <label for="inputInscripcion">Impuesto</label>
+            <div class="form-group  has-success">
+                
+                <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" placeholder="" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="col-lg-3 left">
+            <label id="inputTotal">Total</label>
+            <div class="form-group  has-success">
+                
+                <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required="" placeholder="" readonly="readonly"/>
+            </div>
+        </div>
+        <div class="col-lg-12 left">
+
+            <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i> Registrar</button>
+            <a href="VentasFechas.php" class="btn btn-primary" ><i class="fa fa-remove"></i> Cancelar</a>
+            <hr>
+            <span class="lead text-primary"></span>
+        </div>
+
+        <div class="col-sm-9 col-lg-12 main" id="VerVentaDetallePedido">
+        <div class="table-responsive">
+                <table class="table table-striped table-bordered table-condensed table-hover" cellpadding="0" cellspacing="0" border="1" class="display" id="tblDetallePedidoVer">
+                    <thead>
+                        <tr>
+                            <th>Articulo</th>
+                            <th>Codigo</th>
+                            <th>Serie</th>
+                            <th>Stock</th>
+                            <th>P. Venta</th>
+                            <th>Cantidad</th>
+                            <th>Descuento</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-2 main">
+            <div class="row">
+                <div class="col-lg-4 left">
+                    <div class="input-group has-error">
+                        <div id="SubTotal_Ver" class="input-group-addon"></div>
+                        <input type="text" class="form-control" id="txtSubTotalPedVer" name="txtSubTotalPedVer" placeholder="Sub Total" disabled>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 left  has-error">
+                    <div class="input-group">
+                        <div id="IGV_Ver" class="input-group-addon"></div>
+                        <input type="text" class="form-control" id="txtIgvPedVer" name="txtIgvPedVer" placeholder="I.G.V" disabled>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 left has-error">
+                    <div class="input-group">
+                        <div id="Total_Ver" class="input-group-addon"></div>
+                        <input type="text" class="form-control" id="txtTotalPedVer" name="txtTotalPedVer" placeholder="Total" disabled>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</form>
+</div>
+                 
+<div class="col-sm-14">
 <form role="form">
     <div class="row">
         <div class="col-lg-12 left">
