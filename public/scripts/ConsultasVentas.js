@@ -410,17 +410,20 @@ function init(){
 			            'pdfHtml5'
 			        ],
 		        	"aoColumns":[
-		        	     	{   "mDataProp": "0"},
-		                    {   "mDataProp": "1"},
-		                    {   "mDataProp": "2"},
-		                    {   "mDataProp": "3"},
-		                    {   "mDataProp": "4"},
-		                    {   "mDataProp": "5"},
-		                    {   "mDataProp": "6"},
-		                    {   "mDataProp": "7"},
-		                    {   "mDataProp": "8"},
-		                    {   "mDataProp": "9"},
-		                    {   "mDataProp": "10"}
+						{   "mDataProp": "0"},
+						{   "mDataProp": "1"},
+						{   "mDataProp": "2"},
+						{   "mDataProp": "3"},
+						{   "mDataProp": "4"},
+						{   "mDataProp": "5"},
+						{   "mDataProp": "6"},
+						{   "mDataProp": "7"},
+						{   "mDataProp": "8"},
+						{   "mDataProp": "9"},
+						{   "mDataProp": "10"},
+						{   "mDataProp": "11"},
+						/* {   "mDataProp": "12"},
+						{   "mDataProp": "13"} */
 
 		        	],"ajax": 
 			        	{

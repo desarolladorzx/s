@@ -222,13 +222,17 @@
                          "1"=>$reg->sucursal,
                          "2"=>$reg->empleado,
                          "3"=>$reg->cliente,
-                         "4"=>$reg->comprobante,
-                         "5"=>$reg->serie,
-                         "6"=>$reg->numero,
-                         "7"=>$reg->impuesto,
-                         "8"=>$reg->subtotal,
-                         "9"=>$reg->totalimpuesto,
-                         "10"=>$reg->total
+                         "4"=>$reg->dni,
+                         "5"=>$reg->celular.' - '.$reg->telefono_2,
+                         "6"=>$reg->ticket,
+                         "7"=>$reg->departamento,
+                         "8"=>$reg->transporte,
+                         "9"=>$reg->cuenta_abonada,
+/*                          "10"=>$reg->num_ope,
+                         "11"=>$reg->fecha_operacion, */
+                         "10"=>$reg->total,
+                         "11"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->cliente.'\',\''.$reg->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+                    '<a href="./Reportes/exVenta.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                     );
                }
                $results = array(

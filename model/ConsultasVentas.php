@@ -188,9 +188,13 @@
 
 		public function ListarVentasCliente($idsucursal, $idcliente, $fecha_desde, $fecha_hasta){
 			global $conexion;
-			$sql = "select v.fecha,s.razon_social as sucursal,
+			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
-				concat(pe.nombre,' ',pe.apellido) as cliente,v.tipo_comprobante as comprobante,
+				concat(pe.nombre,' ',pe.apellido) as cliente,
+				pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
+				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
+				v.metodo_pago as cuenta_abonada,
+				v.tipo_comprobante as comprobante,v.agencia_envio as transporte,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
 				v.impuesto,
 				format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,

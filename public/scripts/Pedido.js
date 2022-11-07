@@ -204,6 +204,7 @@ function init() {
 
     function Limpiar(){
         $("#txtIdCliente").val("");
+
         $("#cboTipoPedido").val("Pedido");
         $("#txtNumeroPed").val("");
         elementos.length = 0;
@@ -811,8 +812,8 @@ function ConsultarDetallesPed() {
     function GetPrimerCliente() {
         $.getJSON("./ajax/PedidoAjax.php?op=GetPrimerCliente", function(r) {
                 if (r) {
-                    $("#txtIdCliente").val(r.idpersona);
-                    $("#txtCliente").val(r.nombre);
+                    $("#txtIdCliente").val("");
+                    $("#txtCliente").val("");
                 }
         });
     }
