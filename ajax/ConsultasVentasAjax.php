@@ -166,7 +166,7 @@
                          "9"=>$reg->totalimpuesto,
                          "10"=>$reg->total
                     );
-               }            
+               }
                $results = array(
                "sEcho" => 1,
                "iTotalRecords" => count($data),

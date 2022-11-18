@@ -3,7 +3,7 @@
 	require_once "../model/Venta.php";
 	$objVenta = new Venta();
 	switch ($_GET["op"]) {
-		case 'SaveOrUpdate':			
+		case 'SaveOrUpdate':
 
 			$idpedido = $_POST["idPedido"];
 			$idusuario = $_POST["idUsuario"];
@@ -40,7 +40,6 @@
 						echo "La información del Venta no ha podido ser actualizada.";
 					}
 				}
-
 			break;
 
 		case "delete":
@@ -71,8 +70,7 @@
                         <td><button class="btn btn-danger" onclick="eliminarVenta('.$reg->idVenta.')"><i class="fa fa-trash"></i> </button></td>
 	                   </tr>';
 	             $i++; 
-            }
-            
+            } 
 			break;
 		// case "listTipoPedidoPedido":	
 		// 	require_once "../model/Pedido.php";
@@ -144,7 +142,6 @@
 		        while ($reg = $query_tipo_Documento->fetch_object()) {
 		            echo '<option value=' . $reg->nombre . '>' . $reg->nombre . '</option>';
 		        }
-
 		    break;
 
 		 case "GetTipoDocSerieNum":
