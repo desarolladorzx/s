@@ -5,10 +5,10 @@
 		public function __construct(){
 		}
 		//Se aumenta la celda apellidos
-		public function Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado){
+		public function Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado_modificado,$fecha_registro,$fecha_modificado){
 			global $conexion;
-			$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idusuario,fecha_registro) 
-					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado', CURRENT_TIMESTAMP())";
+			$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado) 
+					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado','$fecha_registro','$fecha_modificado')";
 			$query = $conexion->query($sql);
 			return $query;
 		}

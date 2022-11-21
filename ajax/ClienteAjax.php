@@ -20,7 +20,7 @@
 			$numero_cuenta = isset($_POST["txtNumero_Cuenta"])?$_POST["txtNumero_Cuenta"]:"";
 			$estado = $_POST["txtEstado"];
 			$idempleado = $_POST["txtIdEmpleado"];
-			$fecha_registro = $_POST['txtFecha_registro'];
+			$fecha_registro = isset($_POST["txtFecha_registro"])?$_POST["txtFecha_registro"]:"";
 
 			if(empty($_POST["txtIdPersona"])){
 				if($objCliente->Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$fecha_registro)){
