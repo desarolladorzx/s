@@ -27,18 +27,19 @@
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <label>Los campos con (*) son obligatorios</label>
                             <input id="txtIdEmpleado" type="text" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
+                            <input id="txtIdEmpleado_modificado" type="text" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
                             <input id="txtIdPersona" type="text" maxlength="50" class="form-control" name="txtIdPersona" placeholder="" autofocus="" />
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="form-group has-success">
                                 <label>Creado por :</label>
-                                <input id="txtEmpleado" type="text" value="<?php echo $_SESSION["empleado"] ?>" maxlength="50" class="form-control" name="txtEmpleado" required="" placeholder="" autofocus="" disabled />
+                                <input id="txtEmpleado" type="text" maxlength="40" name="txtEmpleado" required="" class="form-control" placeholder="Sin Modificaciones"  disabled />
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="form-group has-success">
                                 <label>Fecha de Creacion :</label>
-                                <input id="txtFecha_registro" type="text" value="<?php echo "Fecha : ".date("Y-m-d")." Hora: ".date("H:i:s"); ?>" axlength="50" class="form-control" name="txtFecha_registro" required="" placeholder="" autofocus="" disabled />
+                                <input id="txtFecha_registro" type="text" maxlength="40" name="txtFecha_registro" required="" class="form-control" placeholder="Sin Modificaciones"  disabled />
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">

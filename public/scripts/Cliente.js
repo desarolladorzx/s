@@ -41,7 +41,7 @@ function init(){
 		$("#txtTelefono_2").val("");
 	    $("#txtEmail").val("");
 	    $("#txtNumero_cuenta").val("");
-		$("#txtIdUsuario").val("");
+		$("#txtIdEmpleado").val("");
 		$("#txtEmpleado").val("");
 		$("#txtIdEmpleado_modificado").val("");
 		$("#txtEmpleado_modificado").val("");
@@ -112,7 +112,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
- function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,fecha_registro,idempleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,idempleado_modificado,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
@@ -133,7 +133,9 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
  		$("#txtNumero_Cuenta").val(numero_cuenta);
  		$("#cboEstado").val(estado);
 		$('#txtIdEmpleado').val(idempleado);//Campo empleado ID
+		$('#txtEmpleado').val(empleado);//Campo empleado ID
 		$('#txtFecha_registro').val(fecha_registro);//Campo empleado
-		$('#txtIdEmpleado_modificado').val(idempleado_modificado);//Campo empleado
+		$('#txtIdEmpleado_modificado').val(idempleado);//Campo empleado
+		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo empleado ID
 		$('#txtFecha_modificado').val(fecha_modificado);//Campo empleado
  	}

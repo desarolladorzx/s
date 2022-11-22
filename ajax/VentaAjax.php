@@ -129,7 +129,7 @@
         	"iTotalRecords" => count($data),
         	"iTotalDisplayRecords" => count($data),
             "aaData"=>$data);
-			echo json_encode($results);            
+			echo json_encode($results);
 			break;
 			
 		case "listTipo_DocumentoPersona":
