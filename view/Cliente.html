@@ -26,9 +26,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <label>Los campos con (*) son obligatorios</label>
-                            <input id="txtIdEmpleado" type="text" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
-                            <input id="txtIdEmpleado_modificado" type="text" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
-                            <input id="txtIdPersona" type="text" maxlength="50" class="form-control" name="txtIdPersona" placeholder="" autofocus="" />
+                            <input id="txtIdEmpleado" type="hidden" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
+                            <input id="txtIdEmpleado_modificado" type="hidden" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
+                            <input id="txtIdPersona" type="hidden" maxlength="50" class="form-control" name="txtIdPersona" placeholder="" autofocus="" />
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="form-group has-success">
@@ -186,12 +186,16 @@
                     <thead>
                         <tr>
                         	<th>#</th>
-                            <th>N°.Tipo</th>
+                            <th>Tipo de Cliente</th>
                             <th>Nombre</th>
-                            <th>Email</th>
-                            <th>DNI</th>
-                            <th>Celular</th>
+                            <th>Documento</th>
+                            <th>Teléfono</th>
                             <th>Direccion</th>
+                            <th>Correo Electronico</th>
+                            <th>Creado por</th>
+                            <th>Fecha de creación</th>
+                            <th>Modificado por</th>
+                            <th>Fecha de modificación</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -199,12 +203,16 @@
                     <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>N°.Tipo</th>
+                            <th>Tipo de Cliente</th>
                             <th>Nombre</th>
-                            <th>Email</th>
-                            <th>DNI</th>
-                            <th>Celular</th>
+                            <th>Documento</th>
+                            <th>Teléfono</th>
                             <th>Direccion</th>
+                            <th>Correo Electronico</th>
+                            <th>Creado por</th>
+                            <th>Fecha de creación</th>
+                            <th>Modificado por</th>
+                            <th>Fecha de modificación</th>
                             <th>Opciones</th>
                         </tr>
                     </tfoot>

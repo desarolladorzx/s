@@ -87,7 +87,11 @@ function ListadoCliente(){
 				{   "mDataProp": "4"},
 				{   "mDataProp": "5"},
 				{   "mDataProp": "6"},
-				{   "mDataProp": "7"}
+				{   "mDataProp": "7"},
+				{   "mDataProp": "8"},
+				{   "mDataProp": "9"},
+				{   "mDataProp": "10"},
+				{   "mDataProp": "11"}
         	],"ajax":
 	        	{
 	        		url: './ajax/ClienteAjax.php?op=list',

@@ -57,11 +57,15 @@
 					"id"=>$i,
 					"1"=>$reg->tipo_persona.' - '.$reg->numero_cuenta,
 					"2"=>$reg->nombre.'&nbsp;'.$reg->apellido,
-					"3"=>$reg->email,
-					"4"=>$reg->tipo_documento.': '.$reg->num_documento,
-					"5"=>$reg->telefono.' - '.$reg->telefono_2,
-					"6"=>$reg->direccion_calle,
-					"7"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente('.$reg->idpersona.',\''.$reg->tipo_persona.'\',\''.$reg->nombre.'\',\''.$reg->apellido.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion_departamento.'\',\''.$reg->direccion_provincia.'\',\''.$reg->direccion_distrito.'\',\''.$reg->direccion_calle.'\',\''.$reg->telefono.'\',\''.$reg->telefono_2.'\',\''.$reg->email.'\',\''.$reg->numero_cuenta.'\',\''.$reg->estado.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->fecha_registro.'\',\''.$reg->empleado_modificado.'\',\''.$reg->fecha_modificado.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
+					"3"=>$reg->tipo_documento.': '.$reg->num_documento,
+					"4"=>$reg->telefono.' - '.$reg->telefono_2,
+					"5"=>$reg->direccion_calle.': '.$reg->direccion_distrito.': '.$reg->direccion_provincia.': '.$reg->direccion_departamento,
+					"6"=>$reg->email,
+					"7"=>$reg->empleado,
+					"8"=>$reg->fecha_registro,
+					"9"=>$reg->empleado_modificado,
+					"10"=>$reg->fecha_modificado,
+					"11"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente('.$reg->idpersona.',\''.$reg->tipo_persona.'\',\''.$reg->nombre.'\',\''.$reg->apellido.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion_departamento.'\',\''.$reg->direccion_provincia.'\',\''.$reg->direccion_distrito.'\',\''.$reg->direccion_calle.'\',\''.$reg->telefono.'\',\''.$reg->telefono_2.'\',\''.$reg->email.'\',\''.$reg->numero_cuenta.'\',\''.$reg->estado.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->fecha_registro.'\',\''.$reg->empleado_modificado.'\',\''.$reg->fecha_modificado.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 				    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente('.$reg->idpersona.')"><i class="fa fa-trash"></i> </button>');
 				$i++;
 			}
