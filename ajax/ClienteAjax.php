@@ -20,17 +20,17 @@
 			$numero_cuenta = isset($_POST["txtNumero_Cuenta"])?$_POST["txtNumero_Cuenta"]:"";
 			$estado = $_POST["txtEstado"];
 			$idempleado = $_POST["txtIdEmpleado"];
-			$idempleado_modificado = $_POST["txtIdEmpleado_modificado"];
+			$idempleado = isset($_POST["txtIdEmpleado_modificado"])?$_POST["txtIdEmpleado_modificado"]:"";
 
 			if(empty($_POST["txtIdPersona"])){
-				if($objCliente->Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado_modificado)){
+				if($objCliente->Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado)){
 					echo "Cliente registrado correctamente";
 				}else{
 					echo "El Cliente no ha podido ser registrado.";
 				}
 			}else{
 				$idpersona = $_POST["txtIdPersona"];
-				if($objCliente->Modificar($idpersona,$tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado_modificado)){
+				if($objCliente->Modificar($idpersona,$tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado)){
 					echo "La informacion del Cliente ha sido actualizada";
 				}else{
 					echo "La informacion del Cliente no ha podido ser actualizada.";
@@ -61,7 +61,7 @@
 					"4"=>$reg->tipo_documento.': '.$reg->num_documento,
 					"5"=>$reg->telefono.' - '.$reg->telefono_2,
 					"6"=>$reg->direccion_calle,
-					"7"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente('.$reg->idpersona.',\''.$reg->tipo_persona.'\',\''.$reg->nombre.'\',\''.$reg->apellido.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion_departamento.'\',\''.$reg->direccion_provincia.'\',\''.$reg->direccion_distrito.'\',\''.$reg->direccion_calle.'\',\''.$reg->telefono.'\',\''.$reg->telefono_2.'\',\''.$reg->email.'\',\''.$reg->numero_cuenta.'\',\''.$reg->estado.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->fecha_registro.'\',\''.$reg->idempleado_modificado.'\',\''.$reg->empleado_modificado.'\',\''.$reg->fecha_modificado.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
+					"7"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente('.$reg->idpersona.',\''.$reg->tipo_persona.'\',\''.$reg->nombre.'\',\''.$reg->apellido.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion_departamento.'\',\''.$reg->direccion_provincia.'\',\''.$reg->direccion_distrito.'\',\''.$reg->direccion_calle.'\',\''.$reg->telefono.'\',\''.$reg->telefono_2.'\',\''.$reg->email.'\',\''.$reg->numero_cuenta.'\',\''.$reg->estado.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->fecha_registro.'\',\''.$reg->empleado_modificado.'\',\''.$reg->fecha_modificado.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 				    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente('.$reg->idpersona.')"><i class="fa fa-trash"></i> </button>');
 				$i++;
 			}
