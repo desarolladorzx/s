@@ -41,6 +41,12 @@ function init(){
 		$("#txtTelefono_2").val("");
 	    $("#txtEmail").val("");
 	    $("#txtNumero_cuenta").val("");
+		$("#txtIdEmpleado").val("");
+		$("#txtEmpleado").val("");
+		$("#txtIdEmpleado_modificado").val("");
+		$("#txtEmpleado_modificado").val("");
+		$("#txtFecha_creacion").val("");
+		$("#txtFecha_modificacion").val("");
 	}
 
 	function ComboTipo_Documento() {
@@ -81,7 +87,11 @@ function ListadoCliente(){
 				{   "mDataProp": "4"},
 				{   "mDataProp": "5"},
 				{   "mDataProp": "6"},
-				{   "mDataProp": "7"}
+				{   "mDataProp": "7"},
+				{   "mDataProp": "8"},
+				{   "mDataProp": "9"},
+				{   "mDataProp": "10"},
+				{   "mDataProp": "11"}
         	],"ajax":
 	        	{
 	        		url: './ajax/ClienteAjax.php?op=list',
@@ -106,11 +116,11 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
- function cargarDataCliente(id, tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
-
+ 
 		$("#txtIdPersona").val(id);// recibimos la variable id a la caja de texto
 		$("#cboTipoPersona").val(tipo_persona);
 	    $("#txtNombre").val(nombre);// recibimos la variable nombre a la caja de texto txtNombre
@@ -126,4 +136,10 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
  		$("#txtEmail").val(email);
  		$("#txtNumero_Cuenta").val(numero_cuenta);
  		$("#cboEstado").val(estado);
+		$('#txtIdEmpleado').val(idempleado);//Campo empleado ID
+		$('#txtEmpleado').val(empleado);//Campo empleado ID
+		$('#txtFecha_registro').val(fecha_registro);//Campo empleado
+		//$('#txtIdEmpleado_modificado').val(idempleado_modificado);//Campo empleado
+		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo empleado ID
+		$('#txtFecha_modificado').val(fecha_modificado);//Campo empleado
  	}

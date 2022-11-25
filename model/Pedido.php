@@ -221,7 +221,7 @@
 
 		public function ListarTipoDocumento($idsucursal){
 			global $conexion;
-			$sql = "select dds.*, td.nombre 
+			$sql = "select dds.*, td.nombre
 			from detalle_documento_sucursal dds inner join tipo_documento td on dds.idtipo_documento = td.idtipo_documento
 			where dds.idsucursal = $idsucursal and operacion = 'Comprobante'";
 			$query = $conexion->query($sql);
@@ -245,7 +245,7 @@
 		public function GetClienteSucursalPedido($idpedido){
 			global $conexion;
 			$sql = "select p.*, ped.fecha, s.razon_social, ped.numero, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,p.tipo_documento as doc
-			from persona p inner join pedido ped on ped.idcliente = p.idpersona 
+			from persona p inner join pedido ped on ped.idcliente = p.idpersona
 			inner join sucursal s on ped.idsucursal = s.idsucursal
 			where ped.idpedido = $idpedido";
 			$query = $conexion->query($sql);
