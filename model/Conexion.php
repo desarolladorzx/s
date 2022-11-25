@@ -1,5 +1,5 @@
 <?php
-	$conexion = new mysqli("localhost", "root", "tH!4Fpf9WsSMMqH7", "medicfitcen_dev");
+	$conexion = new mysqli("localhost", "sismedic_medicfit", "IRcOjz9B.U*E", "sismedic_medicfit");
 	$conexion->set_charset("UTF8");
 
 	if (mysqli_connect_errno()) {
