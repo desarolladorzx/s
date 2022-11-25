@@ -62,16 +62,21 @@
 			$sql = "SELECT
 			p.*,
 			concat( e.nombre, ' ', e.apellidos ) AS empleado,
-			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado 
+			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado
 			FROM
 			persona p
 			INNER JOIN empleado e ON p.idempleado = e.idempleado
 			INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
 			WHERE
-			tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' 
+			tipo_persona = 'Cliente'
 			ORDER BY
-			idpersona DESC;";
+			idpersona DESC";
 			$query = $conexion->query($sql);
+			return $query;
+		}
+		public function BuscarClientePorNroDoc($numeroDocumento){
+			global $conexion;
+			$query = $conexion->query("SELECT * FROM persona WHERE num_documento = ".$numeroDocumento);
 			return $query;
 		}
 	}

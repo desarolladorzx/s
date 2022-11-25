@@ -15,6 +15,7 @@ function init(){
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmCliente").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
+	$("#btnBuscarCliente").click(buscarPorNumeroDocumento);
 
 	function SaveOrUpdate(e){
 		e.preventDefault();// para que no se recargue la pagina
@@ -116,7 +117,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
- function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
@@ -137,9 +138,99 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
  		$("#txtNumero_Cuenta").val(numero_cuenta);
  		$("#cboEstado").val(estado);
 		$('#txtIdEmpleado').val(idempleado);//Campo empleado ID
-		$('#txtEmpleado').val(empleado);//Campo empleado ID
+		$('#txtEmpleado').val(empleado);//Campo nombre empleado 
 		$('#txtFecha_registro').val(fecha_registro);//Campo empleado
-		//$('#txtIdEmpleado_modificado').val(idempleado_modificado);//Campo empleado
-		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo empleado ID
-		$('#txtFecha_modificado').val(fecha_modificado);//Campo empleado
+		//$('#txtIdEmpleado_modificado').val(idempleado_modificado);//Campo  empleado ID
+		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo nombre del empleado
+		$('#txtFecha_modificado').val(fecha_modificado);//Campo fecha de modificacion empleado 
  	}
+
+function buscarPorNumeroDocumento() {
+	$("#cboTipo_Persona").val("");
+	$("#txtNumero_Cuenta").val("");
+	$("#txtNombre").val("");
+	$("#txtApellido").val("");
+	$("#cboTipo_Documento").val("");
+	$("#txtDireccion_Departamento").val("");
+	$("#txtDireccion_Provincia").val("");
+	$("#txtDireccion_Distrito").val("");
+	$("#txtDireccion_Calle").val("");
+	$("#txtTelefono").val("");
+	$("#txtTelefono_2").val("");
+	$("#txtEmail").val("");
+	$("#txtEstado").val("");
+
+	$("#txtIdPersona").val("");
+	//$("#txtEmpleado").val("");
+	//$("#txtIdEmpleado_modificado").val("");
+	//$("#txtEmpleado_modificado").val("");
+	//$("#txtFecha_creacion").val("");
+	//$("#txtFecha_modificacion").val("");
+
+	if ($("#txtNum_Documento").val() != "") {
+		$.ajax({
+			url: "./ajax/ClienteAjax.php?op=buscarClienteSunat",
+			dataType: "json",
+			data: {
+				numerodoc: $("#txtNum_Documento").val(),
+				origen: "moduloCliente",
+			},
+			success: function (rpta) {
+				//alert(rpta['estado'])
+				switch (rpta["estado"]) {
+					case "encontrado":
+						//$("#txtIdCliente").val(rpta['idCliente']);
+						//alert(rpta['tipo_persona'])
+						$("#cboTipo_Persona").val(rpta["tipo_persona"]);
+						$("#txtNumero_Cuenta").val(rpta["cuenta"]);
+						$("#txtNombre").val(rpta["nombre"]);
+						$("#txtApellido").val(rpta["apellido"]);
+						$("#cboTipo_Documento").val(rpta["tipo_documento"]);
+						$("#txtNum_Documento").val($("#txtNum_Documento").val());
+						$("#txtDireccion_Departamento").val(rpta["direccion_departamento"]);
+						$("#txtDireccion_Provincia").val(rpta["direccion_provincia"]);
+						$("#txtDireccion_Distrito").val(rpta["direccion_distrito"]);
+						$("#txtDireccion_Calle").val(rpta["direccion_calle"]);
+						$("#txtTelefono").val(rpta["telefono"]);
+						$("#txtTelefono_2").val(rpta["telefono_2"]);
+						$("#txtEmail").val(rpta["email"]);
+						$("#txtEstado").val(rpta["estado_cliente"]);
+
+						$("#txtIdPersona").val(rpta["idCliente"]);
+						/*
+										$("#txtCliente").val(rpta['nombre']);
+										$("#txtClienteNroDocumento").val("");
+										$("#modalBuscarClientes").modal("hide");
+										$("#btnEditarCliente").show(200);
+										*/
+						break;
+					case "error":
+						alert("Ocurrio un error al registrar cliente...");
+						break;
+					case "no_encontrado":
+						$("#cboTipo_Persona").val("Cliente");
+						$("#txtNumero_Cuenta").val(rpta["cuenta"]);
+						$("#txtNombre").val("");
+						$("#txtApellido").val("");
+						$("#cboTipo_Documento").val("");
+						$("#txtNum_Documento").val($("#txtNum_Documento").val());
+						$("#txtDireccion_Departamento").val();
+						$("#txtDireccion_Provincia").val();
+						$("#txtDireccion_Distrito").val();
+						$("#txtDireccion_Calle").val();
+						$("#txtTelefono").val();
+						$("#txtTelefono_2").val();
+						$("#txtEmail").val();
+						$("#txtEstado").val();
+						$("#txtIdPersona").val();
+						break;
+				}
+			},
+			error: function (e) {
+				console.log(e.responseText);
+			},
+		});
+	} else {
+		alert("Ingresar número de documento válido...");
+	}
+}

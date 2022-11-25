@@ -89,14 +89,21 @@
                             <div class="form-group has-success">
                                 <label>Tipo Documento (*):</label>
                                 <select required="" id="cboTipo_Documento" name="cboTipo_Documento" class="form-control">
-
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
-                                <label>Numero de Documento (*):</label>
-                                <input id="txtNum_Documento" type="number" maxlength="20" name="txtNum_Documento" required="" class="form-control" placeholder="Número de documento" autofocus="" />
+                                <label>Número (RUC, DNI, Etc) (*):</label>
+                                <div class="input-group">
+                                    <input id="txtNum_Documento" type="number" maxlength="20" name="txtNum_Documento" required="" class="form-control" placeholder="Número de documento" autofocus="" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-success" id="btnBuscarCliente"><i class="fa fa-search"></i>
+                                            EXTRAER
+                                        </button>
+                                    </span>     
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -2,13 +2,13 @@
 
 	session_start();
 
-	require_once "../model/Articulo.php";
+	require_once "../model/Articulo.php";fwe
 
 	$objArticulo = new Articulo();
 
 	switch ($_GET["op"]) {
 
-		case 'SaveOrUpdate':			
+		case 'SaveOrUpdate':
 
 			$idcategoria = $_POST["cboCategoria"];
 			$idmarca = $_POST["cboMarca"];
