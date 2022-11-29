@@ -31,7 +31,7 @@ function init(){
 
 	                url: "./ajax/ArticuloAjax.php?op=SaveOrUpdate",
 	                type: "POST",
-	               data: formData,
+	                data: formData,
 	                contentType: false,
 	                processData: false,
 	                success: function(datos)

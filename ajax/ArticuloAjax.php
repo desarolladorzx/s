@@ -2,7 +2,7 @@
 
 	session_start();
 
-	require_once "../model/Articulo.php";fwe
+	require_once "../model/Articulo.php";
 
 	$objArticulo = new Articulo();
 
