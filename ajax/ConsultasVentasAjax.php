@@ -53,7 +53,7 @@
                          "1"=>$reg->fecha,
                          "2"=>$reg->empleado,
                          "3"=>$reg->cliente,
-                         //"3"=>$reg->serie,
+                         //"3"=>$reg->serie,                         
                          "4"=>$reg->numero,
                          //"5"=>$reg->impuesto,
                          "5"=>$reg->articulo,
@@ -69,7 +69,8 @@
                          "15"=>$reg->costo_total,
                          "16"=>$reg->ganancia,
                          "17"=>$reg->tipo,
-                         "18"=>$reg->promocion
+                         "18"=>$reg->promocion,
+                         "19"=>$reg->departamento
                     );
                }
                $results = array(

@@ -43,7 +43,7 @@
 				di.precio_compra as costo,
 				(dp.cantidad*di.precio_compra) as costo_total,
 				((dp.cantidad*(dp.precio_venta-dp.descuento))-(di.precio_compra*dp.cantidad)) as ganancia,
-				v.tipo_promocion as promocion
+				v.tipo_promocion as promocion, pe.direccion_departamento as departamento
 				from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso=di.iddetalle_ingreso
 				inner join articulo a on di.idarticulo=a.idarticulo
 				inner join categoria c on a.idcategoria=c.idcategoria
