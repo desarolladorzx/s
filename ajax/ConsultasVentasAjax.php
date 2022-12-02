@@ -70,7 +70,8 @@
                          "16"=>$reg->ganancia,
                          "17"=>$reg->tipo,
                          "18"=>$reg->promocion,
-                         "19"=>$reg->departamento
+                         "19"=>$reg->departamento,
+                         "20"=>$reg->distrito,
                     );
                }
                $results = array(
