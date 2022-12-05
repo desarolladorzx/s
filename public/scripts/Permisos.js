@@ -30,5 +30,22 @@ function init(){
 
 		$("#liConsultaVentas").hide();
 	};
+	if ($("#chkMnuDocEV").val() == "0") {
+
+		$("#liDocsEV").hide();
+	};
+	if ($("#chkMnuDocJV").val() == "0") {
+
+		$("#liDocsJV").hide();
+	};
+	if ($("#chkMnuDocJA").val() == "0") {
+
+		$("#liDocsJA").hide();
+	};
+	if ($("#chkMnuDocJL").val() == "0") {
+
+		$("#liDocsJL").hide();
+	};
+
 
 }

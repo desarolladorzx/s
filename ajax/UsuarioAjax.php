@@ -60,7 +60,26 @@
 			} else {
 				$cons_vent = 0;
 			}
-
+			if(isset($_POST["chkMnuDocEV"])){
+				$docs_ev = true;
+			} else {
+				$docs_ev = 0;
+			}
+			if(isset($_POST["chkMnuDocJV"])){
+				$docs_jv = true;
+			} else {
+				$docs_jv = 0;
+			}
+			if(isset($_POST["chkMnuDocJA"])){
+				$docs_ja = true;
+			} else {
+				$docs_ja = 0;
+			}
+			if(isset($_POST["chkMnuDocJL"])){
+				$docs_jl = true;
+			} else {
+				$docs_jl = 0;
+			}
 			if(isset($_POST["chkMnuAdmin"])){
 				$admin = true;
 			} else {
@@ -70,7 +89,7 @@
 				if(empty($_POST["txtIdUsuario"])){
 					
 					if($objusuario->Registrar($idsucursal, $idempleado, $tipo_usuario, $alm, $comp, $vent, $mant, $seg, $cons_comp, 
-						$cons_vent, $admin)){
+						$cons_vent,$docs_ev,$docs_jv,$docs_ja,$docs_jl,$admin)){
 						echo "Registrado Exitosamente";
 					}else{
 						echo "Usuario no ha podido ser registado.";
@@ -79,7 +98,7 @@
 					
 					$idusuario = $_POST["txtIdUsuario"];
 					if($objusuario->Modificar($idusuario, $idsucursal, $idempleado, $tipo_usuario, $alm, $comp, $vent, $mant, $seg, $cons_comp, 
-						$cons_vent, $admin)){
+						$cons_vent,$docs_ev,$docs_jv,$docs_ja,$docs_jl,$admin)){
 						echo "Informacion del Usuario ha sido actualizada";
 					}else{
 						echo "Informacion del usuario no ha podido ser actualizada.";
@@ -110,7 +129,7 @@
                     "2"=>$reg->empleado,
                     "3"=>$reg->tipo_usuario,
                     "4"=>$reg->fecha_registro,
-                    "5"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataUsuario('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_usuario.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
+                    "5"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataUsuario('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_usuario.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_documentacion_ev.'\',\''.$reg->mnu_documentacion_jv.'\',\''.$reg->mnu_documentacion_ja.'\',\''.$reg->mnu_documentacion_jl.'\',\''.$reg->mnu_admin.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
                     '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarUsuario('.$reg->idusuario.')"><i class="fa fa-trash"></i> </button>');
                 $i++;
             }
@@ -193,6 +212,10 @@
 				$_SESSION["mnu_seguridad"] = $fetch->mnu_seguridad;
 				$_SESSION["mnu_consulta_compras"] = $fetch->mnu_consulta_compras;
 				$_SESSION["mnu_consulta_ventas"] = $fetch->mnu_consulta_ventas;
+				$_SESSION["mnu_documentacion_ev"] = $fetch->mnu_documentacion_ev;
+				$_SESSION["mnu_documentacion_jv"] = $fetch->mnu_documentacion_jv;
+				$_SESSION["mnu_documentacion_ja"] = $fetch->mnu_documentacion_ja;
+				$_SESSION["mnu_documentacion_jl"] = $fetch->mnu_documentacion_jl;
 				$_SESSION["mnu_admin"] = $fetch->mnu_admin;
 				$_SESSION["superadmin"] = $fetch->superadmin;
 			}
@@ -221,6 +244,10 @@
 				$_SESSION["mnu_seguridad"] = $_POST["mnu_seguridad"];
 				$_SESSION["mnu_consulta_compras"] = $_POST["mnu_consulta_compras"];
 				$_SESSION["mnu_consulta_ventas"] = $_POST["mnu_consulta_ventas"];
+				$_SESSION["mnu_documentacion_ev"] = $_POST["mnu_documentacion_ev"];
+				$_SESSION["mnu_documentacion_jv"] = $_POST["mnu_documentacion_jv"];
+				$_SESSION["mnu_documentacion_ja"] = $_POST["mnu_documentacion_ja"];
+				$_SESSION["mnu_documentacion_jl"] = $_POST["mnu_documentacion_jl"];
 				$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
 		break;
 
@@ -247,6 +274,10 @@
 				$_SESSION["mnu_seguridad"] = $_POST["mnu_seguridad"];
 				$_SESSION["mnu_consulta_compras"] = $_POST["mnu_consulta_compras"];
 				$_SESSION["mnu_consulta_ventas"] = $_POST["mnu_consulta_ventas"];
+				$_SESSION["mnu_documentacion_ev"] = $_POST["mnu_documentacion_ev"];
+				$_SESSION["mnu_documentacion_jv"] = $_POST["mnu_documentacion_jv"];
+				$_SESSION["mnu_documentacion_ja"] = $_POST["mnu_documentacion_ja"];
+				$_SESSION["mnu_documentacion_jl"] = $_POST["mnu_documentacion_jl"];
 				$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
 		break;
 

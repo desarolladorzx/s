@@ -73,6 +73,10 @@ function init(){
 	    $("#chkMnuSeguridad").attr('checked', false);
 	    $("#chkConsultaCompras").attr('checked', false);
 	    $("#chkConsultaVentas").attr('checked', false);
+		$("#chkMnuDocEV").attr('checked', false);
+		$("#chkMnuDocJV").attr('checked', false);
+		$("#chkMnuDocJA").attr('checked', false);
+		$("#chkMnuDocJL").attr('checked', false);
 	    $("#chkMnuAdmin").attr('checked', false);
 	}
 
@@ -142,7 +146,7 @@ function ListadoUsuarios(){
 };
 
 function cargarDataUsuario(idUsuario, idSucursal, idempleado, empleado, tipo_usuario, mnu_almacen, mnu_compras, mnu_ventas,
-	 mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin){
+	 mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas,mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl, mnu_admin){
 		$("#VerForm").show();
 		$("#btnNuevo").hide();
 		$("#VerListado").hide();
@@ -187,6 +191,26 @@ function cargarDataUsuario(idUsuario, idSucursal, idempleado, empleado, tipo_usu
 	    	$("#chkConsultaVentas").attr('checked', true);
 	    } else {
 	    	$("#chkConsultaVentas").attr('checked', false);
+	    }
+		if (mnu_documentacion_ev == 1) {
+	    	$("#chkMnuDocEV").attr('checked', true);
+	    } else {
+	    	$("#chkMnuDocEV").attr('checked', false);
+	    }
+		if (mnu_documentacion_jv == 1) {
+	    	$("#chkMnuDocJV").attr('checked', true);
+	    } else {
+	    	$("#chkMnuDocJV").attr('checked', false);
+	    }
+		if (mnu_documentacion_ja == 1) {
+	    	$("#chkMnuDocJA").attr('checked', true);
+	    } else {
+	    	$("#chkMnuDocJA").attr('checked', false);
+	    }
+		if (mnu_documentacion_jl == 1) {
+	    	$("#chkMnuDocJL").attr('checked', true);
+	    } else {
+	    	$("#chkMnuDocJL").attr('checked', false);
 	    }
 	    if (mnu_admin == 1) {
 	    	$("#chkMnuAdmin").attr('checked', true);

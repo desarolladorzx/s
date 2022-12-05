@@ -7,17 +7,17 @@
 		public function __construct(){
 		}
 
-		public function Registrar($idsucursal, $idempleado, $tipo_usuario, $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas, $mnu_admin){
+		public function Registrar($idsucursal, $idempleado, $tipo_usuario, $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas,$mnu_documentacion_ev,$mnu_documentacion_jv,$mnu_documentacion_ja,$mnu_documentacion_jl, $mnu_admin){
 			global $conexion;
-			$sql = "INSERT INTO usuario(idsucursal, idempleado, tipo_usuario, fecha_registro, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, estado)
-						VALUES($idsucursal, $idempleado, '$tipo_usuario', curdate(), $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas, $mnu_admin, 'A')";
+			$sql = "INSERT INTO usuario(idsucursal, idempleado, tipo_usuario, fecha_registro, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas,mnu_documentacion_ev,mnu_documentacion_jv,mnu_documentacion_ja,mnu_documentacion_jl, mnu_admin, estado)
+						VALUES($idsucursal, $idempleado, '$tipo_usuario', curdate(), $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas,$mnu_documentacion_ev,$mnu_documentacion_jv,$mnu_documentacion_ja,$mnu_documentacion_jl, $mnu_admin, 'A')";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 		
-		public function Modificar($idusuario, $idsucursal, $idempleado, $tipo_usuario, $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas, $mnu_admin){
+		public function Modificar($idusuario, $idsucursal, $idempleado, $tipo_usuario, $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas,$mnu_documentacion_ev,$mnu_documentacion_jv,$mnu_documentacion_ja,$mnu_documentacion_jl, $mnu_admin){
 			global $conexion;
-			$sql = "UPDATE usuario set idsucursal = $idsucursal, idempleado = $idempleado, tipo_usuario = '$tipo_usuario', mnu_almacen = $mnu_almacen, mnu_compras = $mnu_compras, mnu_ventas = $mnu_ventas, mnu_mantenimiento = $mnu_mantenimiento, mnu_seguridad = $mnu_seguridad, mnu_consulta_compras = $mnu_consulta_compras, mnu_consulta_ventas = $mnu_consultas_ventas, mnu_admin = $mnu_admin
+			$sql = "UPDATE usuario set idsucursal = $idsucursal, idempleado = $idempleado, tipo_usuario = '$tipo_usuario', mnu_almacen = $mnu_almacen, mnu_compras = $mnu_compras, mnu_ventas = $mnu_ventas, mnu_mantenimiento = $mnu_mantenimiento, mnu_seguridad = $mnu_seguridad, mnu_consulta_compras = $mnu_consulta_compras, mnu_consulta_ventas = $mnu_consultas_ventas, mnu_documentacion_ev = $mnu_documentacion_ev, mnu_documentacion_jv = $mnu_documentacion_jv, mnu_documentacion_ja = $mnu_documentacion_ja, mnu_documentacion_jl = $mnu_documentacion_jl, mnu_admin = $mnu_admin
 						WHERE idusuario = $idusuario";
 			$query = $conexion->query($sql);
 			return $query;

@@ -2,7 +2,7 @@
 
 	session_start();
 
-	if(isset($_SESSION["idusuario"])){
+	if(isset($_SESSION["idusuario"])&& $_SESSION["mnu_consulta_compras"] == 1){
 
 		if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
