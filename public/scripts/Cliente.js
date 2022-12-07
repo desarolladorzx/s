@@ -15,7 +15,7 @@ function init(){
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmCliente").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
-	$("#btnBuscarCliente").click(buscarPorNumeroDocumento);
+	$("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon 
 
 	function SaveOrUpdate(e){
 		e.preventDefault();// para que no se recargue la pagina
