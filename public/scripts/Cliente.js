@@ -173,7 +173,7 @@ function buscarPorNumeroDocumento() {
 			dataType: "json",
 			data: {
 				numerodoc: $("#txtNum_Documento").val(),
-				origen: "moduloCliente",
+				//origen: "moduloCliente",
 			},
 			success: function (rpta) {
 				//alert(rpta['estado'])
