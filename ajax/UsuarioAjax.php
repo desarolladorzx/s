@@ -218,6 +218,7 @@
 				$_SESSION["mnu_documentacion_jl"] = $fetch->mnu_documentacion_jl;
 				$_SESSION["mnu_admin"] = $fetch->mnu_admin;
 				$_SESSION["superadmin"] = $fetch->superadmin;
+				//$_SESSION["rol"] = $fetch->rol;
 			}
 			break;
 

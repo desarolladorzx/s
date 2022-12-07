@@ -88,6 +88,7 @@ switch ($_GET["op"]) {
 		}
 		break;
 
+	/*
 	case "buscarClienteSunat":
 		//require_once "../public/curl/Curl.php";
 		//$server = $_SERVER["HTTP_HOST"];
@@ -131,27 +132,7 @@ switch ($_GET["op"]) {
 					//var_dump($origen);
 					//exit;
 
-					/* if ($origen == "moduloVenta") {
-								//echo  "moduloVenta";
-								// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-								if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-									// BUSCA ID DE CLIENTE REGISTRADO
-									$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
-									$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-									$datos = array(
-										'estado' => 'encontrado', 
-										'idCliente' => $reg->idpersona,
-										'nombre' => $nombre,
-										'apellido' => $apellido, 
-										'numeroDocumento' => $num_documento,
-										'cuenta' => 'Nuevo'
-									);
-								}else{
-									$datos = array(
-										'estado' => 'error'
-									);
-								}
-							} else if ($origen == "moduloCliente"){ */
+	
 					if ($origen == "moduloCliente") {
 						$datos = array(
 							'estado' => 'encontrado',
@@ -176,34 +157,14 @@ switch ($_GET["op"]) {
 				}
 				//var_dump($data);
 				//exit;
-				/*
-						$datos = array(
-							'estado' => 'encontrado', 
-							'numeroDocumento' => $info['numeroDocumento'],
-							'apellidoPaterno' => $info['apellidoPaterno'],
-							'apellidoMaterno' => $info['apellidoMaterno'],
-							'nombres' => $info['nombres']
-						);
-						*/
+			
 			} else if (strlen($numerodoc) == 11) {
 				$headers = get_headers("https://api.apis.net.pe/v1/dni?numero=" . $numerodoc);
 				$raptaURL = substr($headers[0], 9, 3);
 				if ($raptaURL != '404') {
 					$data = file_get_contents("https://api.apis.net.pe/v1/ruc?numero=" . $numerodoc);
 					$info = json_decode($data, true);
-					/*
-							$datos = array(
-								'estado' => 'encontrado', 
-								'nombre' => $info['nombre'], 
-								'numeroDocumento' => $info['numeroDocumento'],
-								'direccion' => $info['direccion'],
-								'zonaCodigo' => $info['zonaCodigo'],
-								'zonaTipo' => $info['zonaTipo'],
-								'distrito' => $info['distrito'],
-								'provincia' => $info['provincia'],
-								'departamento' => $info['departamento']
-							);
-							*/
+	
 
 					$tipo_persona = 'Distribuidor';
 					$nombre = $info['nombre'];
@@ -220,32 +181,7 @@ switch ($_GET["op"]) {
 					$numero_cuenta = '';
 					$estado = 'A';
 
-					/* if ($origen == "moduloVenta") {
-	
-								// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-								if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-									
-									// BUSCA ID DE CLIENTE REGISTRADO
-									$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
 				
-									$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-				
-									$datos = array(
-										'estado' => 'encontrado', 
-										'idCliente' => $reg->idpersona,
-										'nombre' => $nombre,
-										'apellido' => $apellido, 
-										'numeroDocumento' => $num_documento,
-										'cuenta' => 'Nuevo'
-									);
-				
-								}else{
-									$datos = array(
-										'estado' => 'error'
-									);
-								}
-	
-							} else if ($origen == "moduloCliente"){ */
 					if ($origen == "moduloCliente") {
 
 						// SI NO SE ENCUENTRA NUMERO DE DOCUMENTO EN API NI EN BASE DE DATOS
@@ -257,16 +193,7 @@ switch ($_GET["op"]) {
 							'numeroDocumento' => $numerodoc,
 						);
 					}
-					}/* else{
-							$datos = array(
-								'estado' => 'no_encontrado', 
-								'idCliente' => "",
-								'nombre' => "",
-								'apellido' => "", 
-								'numeroDocumento' => $numerodoc,
-								//'cuenta' => 'Nuevo'
-							);
-						} */
+					}
 				} else {
 					// SI EL TIPO DE DOCUEMNTO ES DIFERENTE A 8 DIGITOS O A 11
 					$datos = array(
@@ -303,6 +230,7 @@ switch ($_GET["op"]) {
 			echo json_encode($datos, true);
 			break;
 		}
+		*/
 		/* case "buscarDatosCliente":
 					//require_once "../public/curl/Curl.php";
 					//$server = $_SERVER["HTTP_HOST"];
@@ -428,3 +356,4 @@ switch ($_GET["op"]) {
 					//var_dump($info);exit;
 					echo json_encode($datos,true);	
 					break; */
+}
