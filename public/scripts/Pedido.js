@@ -286,34 +286,36 @@ function init() {
         $("#VerListado").show();
     }
 
-    
-
+//Destruccion de tabla busqueda de Clientes
     $("#btnCerrarBusqueda").click(function(){
-
-        
-
         if ( $.fn.DataTable.isDataTable('#tblClientees') ) {
             $('#tblClientees').DataTable().destroy();
         }
-          
         $('#tblClientees tbody').empty();
-
         $("#modalListadoCliente").modal("hide");
-
     });
 
+    $("#btnAgregarCliente").click(function(){
+        if ( $.fn.DataTable.isDataTable('#tblClientees') ) {
+            $('#tblClientees').DataTable().destroy();
+        }
+        $('#tblClientees tbody').empty();
+        $("#modalListadoCliente").modal("hide");
+    });
 
     function AbrirModalCliente(){
 
 		$("#modalListadoCliente").modal("show");
 		$.post("./ajax/PedidoAjax.php?op=listClientes", function(r){
             $("#Cliente").html(r);
-            $("#tblClientees").dataTable({                  
-                /*"aProcessing": true,
-                "aServerSide": true,*/
-                "pageLength": 10,
-                //"iDisplayLength": 8,
-                //"aLengthMenu": [0, 7],
+            $("#tblClientees").dataTable(
+            {                  
+                //"aProcessing": true,
+                //"aServerSide": true,
+                "pageLength": 7,
+                //"iDisplayLength": 7,
+                //"aLengthMenu": [0,3],
+                //"bDestroy": true ,
                 retrieve: true,
                 paging: true,
                 searching: true,

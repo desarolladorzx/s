@@ -79,4 +79,10 @@
 			$query = $conexion->query("SELECT * FROM persona WHERE num_documento = ".$numeroDocumento);
 			return $query;
 		}
+		public function BuscarExistePedido($idpersona){
+			global $conexion;
+			$query = $conexion->query("SELECT  COUNT(idpedido) AS countidpedido FROM pedido WHERE idcliente = ".$idpersona);
+			//var_dump($query);exit;
+			return $query;
+		}
 	}

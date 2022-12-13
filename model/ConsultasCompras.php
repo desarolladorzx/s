@@ -87,13 +87,15 @@
 				p.nombre as proveedor,i.tipo_comprobante as comprobante,
 				i.serie_comprobante as serie,i.num_comprobante as numero,
 				i.impuesto,
-				a.nombre as articulo,di.codigo,di.serie as serie_art,di.stock_ingreso,
+				a.nombre as articulo,c.nombre as marca,m.nombre as categoria,di.codigo,di.serie as serie_art,di.stock_ingreso,
 				di.stock_actual,
 				(di.stock_ingreso-di.stock_actual)as stock_vendido,
 				di.precio_compra,di.precio_ventapublico,
 				di.precio_ventadistribuidor
 				from detalle_ingreso di inner join articulo a
 				on di.idarticulo=a.idarticulo
+				inner join categoria c on a.idcategoria=c.idcategoria
+				inner join marca m on a.idmarca=m.idmarca
 				inner join ingreso i on di.idingreso=i.idingreso
 				inner join sucursal s on i.idsucursal=s.idsucursal
 				inner join usuario u on i.idusuario=u.idusuario
@@ -104,7 +106,6 @@
 				order by i.fecha desc";
 			$query = $conexion->query($sql);
 			return $query;
-
 		}
 
 		public function ListarComprasProveedor($idsucursal, $idproveedor, $fecha_desde, $fecha_hasta){

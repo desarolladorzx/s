@@ -15,7 +15,7 @@ function init(){
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmCliente").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
-	$("#btnBuscarCliente").click(buscarPorNumeroDocumento);
+	$("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon 
 
 	function SaveOrUpdate(e){
 		e.preventDefault();// para que no se recargue la pagina
@@ -176,13 +176,13 @@ function buscarPorNumeroDocumento() {
 				origen: "moduloCliente",
 			},
 			success: function (rpta) {
-				//alert(rpta['estado'])
+				alert(rpta['estado'])
 				switch (rpta["estado"]) {
 					case "encontrado":
 						//$("#txtIdCliente").val(rpta['idCliente']);
 						//alert(rpta['tipo_persona'])
 						$("#cboTipo_Persona").val(rpta["tipo_persona"]);
-						$("#txtNumero_Cuenta").val(rpta["cuenta"]);
+						$("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
 						$("#txtNombre").val(rpta["nombre"]);
 						$("#txtApellido").val(rpta["apellido"]);
 						$("#cboTipo_Documento").val(rpta["tipo_documento"]);
@@ -195,7 +195,7 @@ function buscarPorNumeroDocumento() {
 						$("#txtTelefono_2").val(rpta["telefono_2"]);
 						$("#txtEmail").val(rpta["email"]);
 						$("#txtEstado").val(rpta["estado_cliente"]);
-
+						
 						$("#txtIdPersona").val(rpta["idCliente"]);
 						/*
 										$("#txtCliente").val(rpta['nombre']);
@@ -209,7 +209,7 @@ function buscarPorNumeroDocumento() {
 						break;
 					case "no_encontrado":
 						$("#cboTipo_Persona").val("Cliente");
-						$("#txtNumero_Cuenta").val(rpta["cuenta"]);
+						$("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
 						$("#txtNombre").val("");
 						$("#txtApellido").val("");
 						$("#cboTipo_Documento").val("");
