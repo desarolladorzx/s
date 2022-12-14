@@ -10,6 +10,7 @@ switch ($_GET["op"]) {
 		$apellido = mb_strtoupper($_POST["txtApellido"]);
 		$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
+		$genero = $_POST["optionsRadios"];
 		$direccion_departamento = isset($_POST["txtDireccion_Departamento"]) ? $_POST["txtDireccion_Departamento"] : "";
 		$direccion_provincia = isset($_POST["txtDireccion_Provincia"]) ? $_POST["txtDireccion_Provincia"] : "";
 		$direccion_distrito = isset($_POST["txtDireccion_Distrito"]) ? $_POST["txtDireccion_Distrito"] : "";
@@ -23,14 +24,14 @@ switch ($_GET["op"]) {
 		$idempleado = isset($_POST["txtIdEmpleado_modificado"]) ? $_POST["txtIdEmpleado_modificado"] : "";
 
 		if (empty($_POST["txtIdPersona"])) {
-			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado)) {
+			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado)) {
 				echo "Cliente registrado correctamente";
 			} else {
 				echo "El Cliente no ha podido ser registrado.";
 			}
 		} else {
 			$idpersona = $_POST["txtIdPersona"];
-			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado)) {
+			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado)) {
 				echo "La informacion del Cliente ha sido actualizada";
 			} else {
 				echo "La informacion del Cliente no ha podido ser actualizada.";

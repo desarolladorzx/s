@@ -34,6 +34,7 @@ function init(){
 		$("#txtNombre").val("");
 		$("#txtApellido").val("");
 	    $("#txtNum_Documento").val("");
+		$("#optionsRadios").val("");
 	    $("#txtDireccion_Departamento").val("");
 	    $("#txtDireccion_Provincia").val("");
 	    $("#txtDireccion_Distrito").val("");
@@ -75,10 +76,10 @@ function ListadoCliente(){
        		"aServerSide": true,
        		dom: 'Bfrtip',
 	        buttons: [
-	        'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+	        //'copyHtml5',
+            //'excelHtml5',
+            //'csvHtml5',
+            //'pdfHtml5'
 	        ],
         	"aoColumns":[
 				{   "mDataProp": "id"},
@@ -117,7 +118,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
-function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
@@ -128,6 +129,15 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		$("#txtApellido").val(apellido);// recibimos la variable apellido a la caja de texto txtApellido
 		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
  		$("#txtNum_Documento").val(num_documento);
+
+		 if (genero == 1) {
+	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
+	    } else if(genero == 2){
+	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
+	    } else {
+	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
+	    }
+
 	    $("#txtDireccion_Departamento").val(direccion_departamento);
 	    $("#txtDireccion_Provincia").val(direccion_provincia);
 	    $("#txtDireccion_Distrito").val(direccion_distrito);
@@ -151,6 +161,7 @@ function buscarPorNumeroDocumento() {
 	$("#txtNombre").val("");
 	$("#txtApellido").val("");
 	$("#cboTipo_Documento").val("");
+	$("#optionsRadios").val("");
 	$("#txtDireccion_Departamento").val("");
 	$("#txtDireccion_Provincia").val("");
 	$("#txtDireccion_Distrito").val("");
@@ -186,6 +197,7 @@ function buscarPorNumeroDocumento() {
 						$("#txtNombre").val(rpta["nombre"]);
 						$("#txtApellido").val(rpta["apellido"]);
 						$("#cboTipo_Documento").val(rpta["tipo_documento"]);
+						$("#optionsRadios").val(rpta["genero"]);
 						$("#txtNum_Documento").val($("#txtNum_Documento").val());
 						$("#txtDireccion_Departamento").val(rpta["direccion_departamento"]);
 						$("#txtDireccion_Provincia").val(rpta["direccion_provincia"]);
@@ -214,6 +226,7 @@ function buscarPorNumeroDocumento() {
 						$("#txtApellido").val("");
 						$("#cboTipo_Documento").val("");
 						$("#txtNum_Documento").val($("#txtNum_Documento").val());
+						$("#optionsRadios").val("");
 						$("#txtDireccion_Departamento").val();
 						$("#txtDireccion_Provincia").val();
 						$("#txtDireccion_Distrito").val();
