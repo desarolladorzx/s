@@ -1,10 +1,14 @@
 <?php
 	session_start();
 	require_once "../model/Venta.php";
+	require_once "../model/Persona.php";
+
 	$objVenta = new Venta();
+	$objCliente = new Persona();
 	switch ($_GET["op"]) {
 		case 'SaveOrUpdate':
 
+			$idCliente = $_POST["idCliente"];
 			$idpedido = $_POST["idPedido"];
 			$idusuario = $_POST["idUsuario"];
 			$tipo_venta = $_POST["tipo_venta"];
@@ -26,20 +30,35 @@
 			$suma = $entero + 1;
 			$numero = $parte_izquierda."".$suma;
 
-				if(empty($_POST["txtIdVenta"])){
-					if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"])){
-							echo "Venta Registrada correctamente.";
-					}else{
-							echo "Venta no ha podido ser registado.";
-					}
+			/* CONSULTAR NUMERO DE PEDIDOS POR ID CLIENTE */
+			$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($idCliente);
+			$resultExiste = $rptaBuscarExistePedido->fetch_object();
+
+			if ($resultExiste->countidpedido >= 1) {
+				$estadoCuenta = "CLIENTE ANTIGUO";
+			} else {
+				$estadoCuenta = "CLIENTE NUEVO";
+			}
+
+			/* ACTUALIZA SEGUN NUMERO DE PEDIDOS - LA CUENTE DE CLIENTE */
+			$objCliente->ActualizarCuentaCliente($idCliente,$estadoCuenta);
+
+
+			if(empty($_POST["txtIdVenta"])){
+				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"])){
+						echo "Venta Registrada correctamente.";
 				}else{
-					$idVenta = $_POST["txtIdVenta"];
-					if($objVenta->Modificar($idventa,$idpedido, $idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado)){
-						echo "La información del Venta ha sido actualizada.";
-					}else{
-						echo "La información del Venta no ha podido ser actualizada.";
-					}
+						echo "Venta no ha podido ser registado.";
 				}
+			}else{
+				$idVenta = $_POST["txtIdVenta"];
+				if($objVenta->Modificar($idventa,$idpedido, $idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado)){
+					echo "La información del Venta ha sido actualizada.";
+				}else{
+					echo "La información del Venta no ha podido ser actualizada.";
+				}
+			}
+
 			break;
 
 		case "delete":

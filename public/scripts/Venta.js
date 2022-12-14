@@ -54,6 +54,7 @@ function init(){
                 
                 impuesto : $("#txtImpuesto").val(),
                 total_vent : $("#txtTotalVent").val(),
+                idCliente : $("#hdn_idcliente").val(),
                 detalle : detalle
             };
 
@@ -122,6 +123,7 @@ function init(){
         } else {
             bootbox.alert("Debe seleccionar un comprobante");
         }
+        
 	};
 
     function SaveCredito(e){
