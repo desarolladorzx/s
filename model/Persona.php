@@ -74,15 +74,25 @@
 			$query = $conexion->query($sql);
 			return $query;
 		}
+
 		public function BuscarClientePorNroDoc($numeroDocumento){
 			global $conexion;
 			$query = $conexion->query("SELECT * FROM persona WHERE num_documento = ".$numeroDocumento);
 			return $query;
 		}
+
 		public function BuscarExistePedido($idpersona){
 			global $conexion;
 			$query = $conexion->query("SELECT  COUNT(idpedido) AS countidpedido FROM pedido WHERE idcliente = ".$idpersona);
 			//var_dump($query);exit;
 			return $query;
 		}
+
+		public function ActualizarCuentaCliente($idcliente,$cuenta){
+			global $conexion;
+			$sql = "UPDATE persona set numero_cuenta='$cuenta' WHERE idpersona = $idcliente";
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
 	}
