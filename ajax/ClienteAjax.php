@@ -112,7 +112,7 @@ switch ($_GET["op"]) {
 				'nombre' => "",
 				'apellido' => "",
 				'numeroDocumento' => $numerodoc,
-				'estadoCuenta' => $estadoCuenta
+				//'estadoCuenta' => $estadoCuenta
 			);
 
 			echo json_encode($datos, true);
@@ -127,12 +127,11 @@ switch ($_GET["op"]) {
 			$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
 			if ($resultExiste->countidpedido > 1) {
-				$estadoCuenta = "CLIENTE ANTIGUO";
+				$estadoCuenta = "ANTIGUO";
 			} else {
-				$estadoCuenta = "CLIENTE NUEVO";
+				$estadoCuenta = "NUEVO";
 			}
 			
-
 			//var_dump($resultExiste->countidpedido);exit;
 
 			if (strlen($numerodoc) == 8) {
@@ -170,10 +169,21 @@ switch ($_GET["op"]) {
 					if ($origen == "moduloCliente") {
 						$datos = array(
 							'estado' => 'encontrado',
-							'nombre' => $nombre,
-							'apellido' => $apellido,
-							'numeroDocumento' => $num_documento,
-							'tipoDocumento' => $tipo_documento,
+							'idCliente' => $reg->idpersona,
+							'tipo_persona' => $reg->tipo_persona,
+							'nombre' => $reg->nombre,
+							'apellido' => $reg->apellido,
+							'tipo_documento' => $reg->tipo_documento,
+							'num_documento' => $reg->num_documento,
+							'direccion_departamento' => $reg->direccion_departamento,
+							'direccion_provincia' => $reg->direccion_provincia,
+							'direccion_distrito' => $reg->direccion_distrito,
+							'direccion_calle' => $reg->direccion_calle,
+							'telefono' => $reg->telefono,
+							'telefono_2' => $reg->telefono_2,
+							'email' => $reg->email,
+							'numero_cuenta' => $reg->numero_cuenta,
+							'estado_cliente' => $reg->estado,
 							'estadoCuenta' => $estadoCuenta
 						);
 						//echo  "moduloCliente";
@@ -202,7 +212,6 @@ switch ($_GET["op"]) {
 					$data = file_get_contents("https://api.apis.net.pe/v1/ruc?numero=" . $numerodoc);
 					$info = json_decode($data, true);
 	
-
 					$tipo_persona = 'Distribuidor';
 					$nombre = $info['nombre'];
 					$apellido = '';
@@ -218,7 +227,6 @@ switch ($_GET["op"]) {
 					$numero_cuenta = '';
 					$estado = 'A';
 
-				
 					if ($origen == "moduloCliente") {
 
 						// SI NO SE ENCUENTRA NUMERO DE DOCUMENTO EN API NI EN BASE DE DATOS
@@ -231,7 +239,7 @@ switch ($_GET["op"]) {
 							'estadoCuenta' => $estadoCuenta
 						);
 					}
-					
+
 				} else {
 					// SI EL TIPO DE DOCUEMNTO ES DIFERENTE A 8 DIGITOS O A 11
 					$datos = array(
@@ -265,14 +273,8 @@ switch ($_GET["op"]) {
 					//'cuenta' => 'Antiguo'
 				);
 			}
-
 			//var_dump($info);exit;
 			echo json_encode($datos, true);
-
-
 		}
-		
 	break;
-		
-
 }
