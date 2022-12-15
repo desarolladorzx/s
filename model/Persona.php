@@ -9,6 +9,7 @@
 			global $conexion;
 			$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado) 
 					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$genero','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado',CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
+			//var_dump($sql);exit;
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -18,6 +19,9 @@
 			$sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
 			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP()
 						WHERE idpersona = $idpersona";
+
+			//var_dump($sql);exit;
+
 			$query = $conexion->query($sql);
 			return $query;
 		}

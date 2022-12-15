@@ -20,11 +20,12 @@ function init(){
 	function SaveOrUpdate(e){
 		e.preventDefault();// para que no se recargue la pagina
         $.post("./ajax/ClienteAjax.php?op=SaveOrUpdate", $(this).serialize(), function(r){// llamamos la url por post. function(r). r-> llamada del callback
-            Limpiar();
+            
             ListadoCliente();
             //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
             swal("Mensaje del Sistema", r, "success");
             OcultarForm();
+			Limpiar();
         });
 	};
 
@@ -43,12 +44,17 @@ function init(){
 		$("#txtTelefono_2").val("");
 	    $("#txtEmail").val("");
 	    $("#txtNumero_cuenta").val("");
-		$("#txtIdEmpleado").val("");
+		//$("#txtIdEmpleado").val("");
 		$("#txtEmpleado").val("");
 		$("#txtIdEmpleado_modificado").val("");
 		$("#txtEmpleado_modificado").val("");
 		$("#txtFecha_creacion").val("");
 		$("#txtFecha_modificacion").val("");
+
+		//$("#optionsRadios1").prop("checked", false);
+		//$("#optionsRadios2").prop("checked", false);
+		//$("#optionsRadios3").prop("checked", false);
+
 	}
 
 	function ComboTipo_Documento() {
@@ -61,6 +67,12 @@ function init(){
 		$("#VerForm").show();// Mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
+
+		$("#optionsRadios1").prop("checked", false);
+		$("#optionsRadios2").prop("checked", false);
+		$("#optionsRadios3").prop("checked", false);
+		
+
 	}
 
 	function OcultarForm(){
@@ -130,13 +142,19 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
  		$("#txtNum_Documento").val(num_documento);
 
-		 if (genero == 1) {
+		
+		//alert(genero)
+
+		/*
+		if (genero == 1) {
 	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
 	    } else if(genero == 2){
 	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
 	    } else {
 	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
 	    }
+		*/
+		
 
 	    $("#txtDireccion_Departamento").val(direccion_departamento);
 	    $("#txtDireccion_Provincia").val(direccion_provincia);
@@ -172,6 +190,8 @@ function buscarPorNumeroDocumento() {
 	$("#txtEstado").val("");
 
 	$("#txtIdPersona").val("");
+	$("#txtIdEmpleado_modificado").val("");
+
 	//$("#txtEmpleado").val("");
 	//$("#txtIdEmpleado_modificado").val("");
 	//$("#txtEmpleado_modificado").val("");
@@ -187,9 +207,20 @@ function buscarPorNumeroDocumento() {
 				origen: "moduloCliente",
 			},
 			success: function (rpta) {
-				alert(rpta['estado'])
+				//alert(rpta['estado'])
 				switch (rpta["estado"]) {
 					case "encontrado":
+
+						if (rpta["genero"] == 1) {
+							$("#optionsRadios1").prop("checked", true);
+						} else if(rpta["genero"] == 2){
+							$("#optionsRadios2").prop("checked", true);
+						} else if(rpta["genero"] == 3){
+							$("#optionsRadios3").prop("checked", true);
+						}
+
+						//alert(rpta["genero"]);
+
 						//$("#txtIdCliente").val(rpta['idCliente']);
 						//alert(rpta['tipo_persona'])
 						$("#cboTipo_Persona").val(rpta["tipo_persona"]);
@@ -209,6 +240,10 @@ function buscarPorNumeroDocumento() {
 						$("#txtEstado").val(rpta["estado_cliente"]);
 						
 						$("#txtIdPersona").val(rpta["idCliente"]);
+						$("#txtIdEmpleado_modificado").val(rpta["idEmpleado_modificado"]);
+						
+						// txtIdEmpleado
+
 						/*
 										$("#txtCliente").val(rpta['nombre']);
 										$("#txtClienteNroDocumento").val("");
