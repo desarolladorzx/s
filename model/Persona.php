@@ -72,7 +72,7 @@
 			INNER JOIN empleado e ON p.idempleado = e.idempleado
 			INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
 			WHERE
-			tipo_persona = 'Cliente'
+			tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
 			ORDER BY
 			idpersona DESC";
 			$query = $conexion->query($sql);
