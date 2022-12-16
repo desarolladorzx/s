@@ -48,6 +48,7 @@ function init() {
 
     $("#btnGenerarVenta").click(GenerarVenta);
 
+    
     $("#btnAgregarCliente").click(function(e){
 		e.preventDefault();
 
@@ -57,7 +58,16 @@ function init() {
         email = opt.attr("data-email");
 
 		$("#modalListadoCliente").modal("hide");
+
+        /* DESTRUIR TABLA DE CLIENTES AL MOMENTO DE ELEGIR CLIENTE*/
+        if ( $.fn.DataTable.isDataTable('#tblClientees') ) {
+            $('#tblClientees').DataTable().destroy();
+        }
+        $('#tblClientees tbody').empty();
+        $("#modalListadoCliente").modal("hide");
+
 	});
+    
 
 	$("#btnAgregarArtPed").click(function(e){
 		e.preventDefault();
@@ -160,7 +170,7 @@ function init() {
                             $("#txtIgvPed").val("");
                             $("#txtTotalPed").val("");
                             $("#txtSubTotalPed").val("");
-                            Limpiar();
+                            
                             ListadoPedidos();
                             ListadoPedidos2();
                             $.getJSON("./ajax/PedidoAjax.php?op=GetIdPedido", function(r) {
@@ -176,6 +186,7 @@ function init() {
                                     var cli = $("#txtCliente").val();
                                     $("#txtClienteVent").val(cli);
                                     $("#txtClienteDni").val(r.num_documento);
+                                    $("#hdn_idcliente").val($("#txtIdCliente").val());
                                     $("#txtIdPedido").val(r.idpedido);
                                     //$("#VerVentaDetallePedido").hide();
                                     $("#btnEnviarCorreo").hide();
@@ -192,7 +203,14 @@ function init() {
                                             $("table#tblDetallePedido tbody").html(r);
                                     })
                                 }
+
+                                Limpiar();
+                                
                             });
+
+                            
+
+
                 });
             } else {
                 bootbox.alert("Debe agregar articulos al detalle");
@@ -295,6 +313,7 @@ function init() {
         $("#modalListadoCliente").modal("hide");
     });
 
+    /*
     $("#btnAgregarCliente").click(function(){
         if ( $.fn.DataTable.isDataTable('#tblClientees') ) {
             $('#tblClientees').DataTable().destroy();
@@ -302,8 +321,10 @@ function init() {
         $('#tblClientees tbody').empty();
         $("#modalListadoCliente").modal("hide");
     });
+    */
 
     function AbrirModalCliente(){
+
 		$("#modalListadoCliente").modal("show");
 		$.post("./ajax/PedidoAjax.php?op=listClientes", function(r){
             $("#Cliente").html(r);
@@ -321,7 +342,7 @@ function init() {
                 destroy: true
             });
         });
-	 }
+	}
 
 	function AbrirModalDetPed(){
         $("#modalListadoArticulosPed").modal("show");
@@ -573,6 +594,11 @@ function ConsultarDetallesPed() {
                     $("#cboTipoVenta").val(r.tipo_venta);
                     $("#cboTipoPromocion").val(r.tipo_promocion);
                     $("#cboMetodoPago").val(r.metodo_pago);
+
+                    //$("#hdn_idcliente").val(r.metodo_pago);
+
+                    
+
                     /* $("#txtNumeroOpe").val(r.num_operacion);
                     $("#txtHoraOpe").val(r.hora_operacion); */
                     $("#cboAgenEnvio").val(r.agencia_envio);

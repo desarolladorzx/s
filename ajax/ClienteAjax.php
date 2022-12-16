@@ -5,11 +5,13 @@ $objCliente = new Persona();
 switch ($_GET["op"]) {
 
 	case 'SaveOrUpdate':
+
 		$tipo_persona = $_POST["cboTipo_Persona"];
 		$nombre = mb_strtoupper($_POST["txtNombre"]);
 		$apellido = mb_strtoupper($_POST["txtApellido"]);
 		$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
+		$genero = $_POST["optionsRadios"];
 		$direccion_departamento = isset($_POST["txtDireccion_Departamento"]) ? $_POST["txtDireccion_Departamento"] : "";
 		$direccion_provincia = isset($_POST["txtDireccion_Provincia"]) ? $_POST["txtDireccion_Provincia"] : "";
 		$direccion_distrito = isset($_POST["txtDireccion_Distrito"]) ? $_POST["txtDireccion_Distrito"] : "";
@@ -19,18 +21,20 @@ switch ($_GET["op"]) {
 		$email = isset($_POST["txtEmail"]) ? $_POST["txtEmail"] : "";
 		$numero_cuenta = isset($_POST["txtNumero_Cuenta"]) ? $_POST["txtNumero_Cuenta"] : "";
 		$estado = $_POST["txtEstado"];
-		$idempleado = $_POST["txtIdEmpleado"];
-		$idempleado = isset($_POST["txtIdEmpleado_modificado"]) ? $_POST["txtIdEmpleado_modificado"] : "";
+		//$idempleado = $_POST["txtIdEmpleado"];
+		$idempleado = $_POST["txtIdEmpleado_modificado"] != "" ? $_POST["txtIdEmpleado_modificado"] : $_POST["txtIdEmpleado"];
+
+		//var_dump($idempleado);exit;
 
 		if (empty($_POST["txtIdPersona"])) {
-			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado)) {
+			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado)) {
 				echo "Cliente registrado correctamente";
 			} else {
 				echo "El Cliente no ha podido ser registrado.";
 			}
 		} else {
 			$idpersona = $_POST["txtIdPersona"];
-			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado)) {
+			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado)) {
 				echo "La informacion del Cliente ha sido actualizada";
 			} else {
 				echo "La informacion del Cliente no ha podido ser actualizada.";
@@ -88,6 +92,7 @@ switch ($_GET["op"]) {
 		}
 		break;
 
+	
 	case "buscarClienteSunat":
 		//require_once "../public/curl/Curl.php";
 		//$server = $_SERVER["HTTP_HOST"];
@@ -97,7 +102,13 @@ switch ($_GET["op"]) {
 		$rptaBuscarClientePorNroDoc = $objCliente->BuscarClientePorNroDoc($numerodoc);
 		$reg = $rptaBuscarClientePorNroDoc->fetch_object();
 
-		if (is_null($reg)) {
+		//var_dump($origen);exit;
+
+		// SI ES NULL NO SE ENCUENTRA EN BASE DE DATOS - SE BUSCA EN API
+
+		if ($reg == NULL || is_null($reg)) {  // $reg->idpersona
+
+			$estadoCuenta = "NUEVO";
 
 			if (strlen($numerodoc) == 8) {
 
@@ -121,7 +132,7 @@ switch ($_GET["op"]) {
 					$telefono = '';
 					$telefono_2 = 0;
 					$email = '';
-					$numero_cuenta = '';
+					$numero_cuenta = $estadoCuenta;
 					$estado = 'A';
 
 					// CONSULTA VARIABLE ORIDEN
@@ -130,40 +141,28 @@ switch ($_GET["op"]) {
 
 					//var_dump($origen);
 					//exit;
+					
+					$datos = array(
+						'estado' => 'encontrado',
+						'idCliente' => "",
+						'tipo_persona' => "CLIENTE",
+						'nombre' => $nombre,
+						'apellido' => $apellido,
+						'tipo_documento' => $tipo_documento,
+						'num_documento' => $num_documento,
+						'direccion_departamento' => $direccion_departamento,
+						'direccion_provincia' => $direccion_provincia,
+						'direccion_distrito' => $direccion_distrito,
+						'direccion_calle' => $direccion_calle,
+						'telefono' => $telefono,
+						'telefono_2' => $telefono_2,
+						'email' => $email,
+						'numero_cuenta' => $numero_cuenta,
+						'estado_cliente' => $estado,
+						'estadoCuenta' => $estadoCuenta
+					);
 
-					/* if ($origen == "moduloVenta") {
-								//echo  "moduloVenta";
-								// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-								if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-									// BUSCA ID DE CLIENTE REGISTRADO
-									$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
-									$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-									$datos = array(
-										'estado' => 'encontrado', 
-										'idCliente' => $reg->idpersona,
-										'nombre' => $nombre,
-										'apellido' => $apellido, 
-										'numeroDocumento' => $num_documento,
-										'cuenta' => 'Nuevo'
-									);
-								}else{
-									$datos = array(
-										'estado' => 'error'
-									);
-								}
-							} else if ($origen == "moduloCliente"){ */
-					if ($origen == "moduloCliente") {
-						$datos = array(
-							'estado' => 'encontrado',
-							'nombre' => $nombre,
-							'apellido' => $apellido,
-							'numeroDocumento' => $num_documento,
-							'tipoDocumento' => $tipo_documento,
-						);
-						//echo  "moduloCliente";
-					}
-					//var_dump($datos);
-					//exit;
+
 				} else {
 					// SI NO SE ENCUENTRA NUMERO DE DOCUMENTO EN API NI EN BASE DE DATOS
 					$datos = array(
@@ -172,39 +171,19 @@ switch ($_GET["op"]) {
 						'nombre' => "",
 						'apellido' => "",
 						'numeroDocumento' => $numerodoc,
+						'estadoCuenta' => $estadoCuenta
 					);
 				}
 				//var_dump($data);
 				//exit;
-				/*
-						$datos = array(
-							'estado' => 'encontrado', 
-							'numeroDocumento' => $info['numeroDocumento'],
-							'apellidoPaterno' => $info['apellidoPaterno'],
-							'apellidoMaterno' => $info['apellidoMaterno'],
-							'nombres' => $info['nombres']
-						);
-						*/
+			
 			} else if (strlen($numerodoc) == 11) {
 				$headers = get_headers("https://api.apis.net.pe/v1/dni?numero=" . $numerodoc);
 				$raptaURL = substr($headers[0], 9, 3);
 				if ($raptaURL != '404') {
 					$data = file_get_contents("https://api.apis.net.pe/v1/ruc?numero=" . $numerodoc);
 					$info = json_decode($data, true);
-					/*
-							$datos = array(
-								'estado' => 'encontrado', 
-								'nombre' => $info['nombre'], 
-								'numeroDocumento' => $info['numeroDocumento'],
-								'direccion' => $info['direccion'],
-								'zonaCodigo' => $info['zonaCodigo'],
-								'zonaTipo' => $info['zonaTipo'],
-								'distrito' => $info['distrito'],
-								'provincia' => $info['provincia'],
-								'departamento' => $info['departamento']
-							);
-							*/
-
+	
 					$tipo_persona = 'Distribuidor';
 					$nombre = $info['nombre'];
 					$apellido = '';
@@ -220,53 +199,26 @@ switch ($_GET["op"]) {
 					$numero_cuenta = '';
 					$estado = 'A';
 
-					/* if ($origen == "moduloVenta") {
-	
-								// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-								if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-									
-									// BUSCA ID DE CLIENTE REGISTRADO
-									$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
-				
-									$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-				
-									$datos = array(
-										'estado' => 'encontrado', 
-										'idCliente' => $reg->idpersona,
-										'nombre' => $nombre,
-										'apellido' => $apellido, 
-										'numeroDocumento' => $num_documento,
-										'cuenta' => 'Nuevo'
-									);
-				
-								}else{
-									$datos = array(
-										'estado' => 'error'
-									);
-								}
-	
-							} else if ($origen == "moduloCliente"){ */
-					if ($origen == "moduloCliente") {
+					$datos = array(
+						'estado' => 'encontrado',
+						'idCliente' => "",
+						'tipo_persona' => "CLIENTE",
+						'nombre' => $nombre,
+						'apellido' => $apellido,
+						'tipo_documento' => $tipo_documento,
+						'num_documento' => $num_documento,
+						'direccion_departamento' => $direccion_departamento,
+						'direccion_provincia' => $direccion_provincia,
+						'direccion_distrito' => $direccion_distrito,
+						'direccion_calle' => $direccion_calle,
+						'telefono' => $telefono,
+						'telefono_2' => $telefono_2,
+						'email' => $email,
+						'numero_cuenta' => $numero_cuenta,
+						'estado_cliente' => $estado,
+						'estadoCuenta' => $estadoCuenta
+					);
 
-						// SI NO SE ENCUENTRA NUMERO DE DOCUMENTO EN API NI EN BASE DE DATOS
-						$datos = array(
-							'estado' => 'no_encontrado',
-							'idCliente' => "",
-							'nombre' => "",
-							'apellido' => "",
-							'numeroDocumento' => $numerodoc,
-						);
-					}
-					}/* else{
-							$datos = array(
-								'estado' => 'no_encontrado', 
-								'idCliente' => "",
-								'nombre' => "",
-								'apellido' => "", 
-								'numeroDocumento' => $numerodoc,
-								//'cuenta' => 'Nuevo'
-							);
-						} */
 				} else {
 					// SI EL TIPO DE DOCUEMNTO ES DIFERENTE A 8 DIGITOS O A 11
 					$datos = array(
@@ -275,156 +227,69 @@ switch ($_GET["op"]) {
 						'nombre' => "",
 						'apellido' => "",
 						'numeroDocumento' => $numerodoc,
-						//'cuenta' => 'Nuevo'
+						'estadoCuenta' => $estadoCuenta
 					);
 				}
-			} else {
-				$datos = array(
-					'estado' => 'encontrado',
-					'idCliente' => $reg->idpersona,
-					'tipo_persona' => $reg->tipo_persona,
-					'nombre' => $reg->nombre,
-					'apellido' => $reg->apellido,
-					'tipo_documento' => $reg->tipo_documento,
-					'num_documento' => $reg->num_documento,
-					'direccion_departamento' => $reg->direccion_departamento,
-					'direccion_provincia' => $reg->direccion_provincia,
-					'direccion_distrito' => $reg->direccion_distrito,
-					'direccion_calle' => $reg->direccion_calle,
-					'telefono' => $reg->telefono,
-					'telefono_2' => $reg->telefono_2,
-					'email' => $reg->email,
-					'numero_cuenta' => $reg->numero_cuenta,
-					'estado_cliente' => $reg->estado,
-					//'cuenta' => 'Antiguo'
-				);
 			}
-			//var_dump($info);exit;
-			echo json_encode($datos, true);
-			break;
-		}
-		/* case "buscarDatosCliente":
-					//require_once "../public/curl/Curl.php";
-					//$server = $_SERVER["HTTP_HOST"];
-					$idCliente = $_REQUEST["idCliente"];
-					//var_dump($idCliente);exit;
-					// COMPROBAR SI EL CLIENTEYA SE ENCUENTRA REGITRADO EN BASE DE DATOS
-					$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($numerodoc);
-					$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-					//var_dump($reg);exit;
-					if (is_null($reg)) {
-						if (strlen($numerodoc) == 8) {
-							$data = file_get_contents("https://api.apis.net.pe/v1/dni?numero=".$numerodoc);
-							$info = json_decode($data,true);
-							/*$datos = array(
-								'estado' => 'encontrado', 
-								'numeroDocumento' => $info['numeroDocumento'],
-								'apellidoPaterno' => $info['apellidoPaterno'],
-								'apellidoMaterno' => $info['apellidoMaterno'],
-								'nombres' => $info['nombres']);//
 
-							$tipo_persona = 'CLIENTE';
-							$nombre = $info['nombres'];
-							$apellido = $info['apellidoPaterno'].' '.$info['apellidoMaterno'];
-							$tipo_documento = 'DNI';
-							$num_documento = $info['numeroDocumento'];
-							$direccion_departamento = '';
-							$direccion_provincia = '';
-							$direccion_distrito = '';
-							$direccion_calle = '';
-							$telefono = '';
-							$telefono_2 = 0;
-							$email = '';
-							$numero_cuenta = '';
-							$estado = 'A';
-	
-							// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-							if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-								// BUSCA ID DE CLIENTE REGISTRADO
-								$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
-								$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-								$datos = array(
-									'estado' => 'encontrado', 
-									'idCliente' => $reg->idpersona,
-									'nombre' => $nombre.' '.$apellido, 
-									'numeroDocumento' => $num_documento
-								);
-							}else{
-								$datos = array(
-									'estado' => 'error'
-								);
-							}
-						}else if(strlen($numerodoc) == 11){
-							$data = file_get_contents("https://api.apis.net.pe/v1/ruc?numero=".$numerodoc);
-							$info = json_decode($data,true);
-							/*
-							$datos = array(
-								'estado' => 'encontrado', 
-								'nombre' => $info['nombre'], 
-								'numeroDocumento' => $info['numeroDocumento'],
-								'direccion' => $info['direccion'],
-								'zonaCodigo' => $info['zonaCodigo'],
-								'zonaTipo' => $info['zonaTipo'],
-								'distrito' => $info['distrito'],
-								'provincia' => $info['provincia'],
-								'departamento' => $info['departamento']
-							);
-							////////////
-							$tipo_persona = 'CLIENTE';
-							$nombre = $info['nombre'];
-							$apellido = '';
-							$tipo_documento = 'RUC';
-							$num_documento = $info['numeroDocumento'];
-							$direccion_departamento = $info['departamento'];
-							$direccion_provincia = $info['provincia'];
-							$direccion_distrito = $info['distrito'];
-							$direccion_calle = $info['direccion'];
-							$telefono = '';
-							$telefono_2 = 0;
-							$email = '';
-							$numero_cuenta = '';
-							$estado = 'A';
-							// REGISTRA CLIENTE CON DATOS ENCONTRADOS DE SUNAT
-							if($objVenta->RegistrarCliente($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado)){
-								// BUSCA ID DE CLIENTE REGISTRADO
-								$rptaBuscarClientePorNroDoc = $objVenta->BuscarClientePorNroDoc($num_documento);
-								$reg = $rptaBuscarClientePorNroDoc->fetch_object();
-								$datos = array(
-									'estado' => 'encontrado',
-									'idCliente' => $reg->idpersona,
-									'nombre' => $nombre.' '.$apellido,
-									'numeroDocumento' => $num_documento
-								);
-							}else{
-								$datos = array(
-									'estado' => 'error'
-								);
-							}
-						} else{
-							$datos = array(
-								'estado' => 'error'
-							);
-						}
-					}else{
-						$datos = array(
-							'estado' => 'encontrado',
-							'idCliente' => $reg->idpersona,
-							'tipo_persona' => $reg->tipo_persona,
-							'nombre' => $reg->nombre, 
-							'apellido' => $reg->apellido,
-							'tipo_documento' => $reg->tipo_documento, 
-							'num_documento' => $reg->num_documento, 
-							'direccion_departamento' => $reg->direccion_departamento, 
-							'direccion_provincia' => $reg->direccion_provincia, 
-							'direccion_distrito' => $reg->direccion_distrito, 
-							'direccion_calle' => $reg->direccion_calle, 
-							'telefono' => $reg->telefono, 
-							'telefono_2' => $reg->telefono_2, 
-							'email' => $reg->email, 
-							'numero_cuenta' => $reg->numero_cuenta, 
-							'estado' => $reg->estado
-						);
-					}
-					//var_dump($info);exit;
-					echo json_encode($datos,true);	
-					break; */
+			//var_dump($info);exit;
+			
+
+			/*
+			$estadoCuenta = "CLIENTE NUEVO";
+			$datos = array(
+				'estado' => 'no_encontrado',
+				'idCliente' => "",
+				'nombre' => "",
+				'apellido' => "",
+				'numeroDocumento' => $numerodoc,
+				//'estadoCuenta' => $estadoCuenta
+			);
+			echo json_encode($datos, true);
+			*/
+
+		}else{
+
+			// SI SE ENCONTRO CLIENTE EN BASE DE DATOS SE MUESTRA DATOS
+
+			// BUSCAR SI TIENEN MAS DE UN PEDIDO
+			$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($reg->idpersona);
+			$resultExiste = $rptaBuscarExistePedido->fetch_object();
+
+			if ($resultExiste->countidpedido > 1) {
+				$estadoCuenta = "ANTIGUO";
+			} else {
+				$estadoCuenta = "NUEVO";
+			}
+
+			$datos = array(
+				'estado' => 'encontrado',
+				'idCliente' => $reg->idpersona,
+				'tipo_persona' => $reg->tipo_persona,
+				'nombre' => $reg->nombre,
+				'apellido' => $reg->apellido,
+				'tipo_documento' => $reg->tipo_documento,
+				'num_documento' => $reg->num_documento,
+				'direccion_departamento' => $reg->direccion_departamento,
+				'direccion_provincia' => $reg->direccion_provincia,
+				'direccion_distrito' => $reg->direccion_distrito,
+				'direccion_calle' => $reg->direccion_calle,
+				'telefono' => $reg->telefono,
+				'telefono_2' => $reg->telefono_2,
+				'email' => $reg->email,
+				'numero_cuenta' => $reg->numero_cuenta,
+				'estado_cliente' => $reg->estado,
+				'estadoCuenta' => $estadoCuenta,
+				'genero' => $reg->genero,
+				'idEmpleado_modificado' => $reg->idempleado
+				//'cuenta' => 'Antiguo'
+			);
+
+			//echo json_encode($datos, true);
+
+		}
+
+		echo json_encode($datos, true);
+
+	break;
+}

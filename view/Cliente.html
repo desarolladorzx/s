@@ -26,8 +26,8 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <label>Los campos con (*) son obligatorios</label>
-                            <input id="txtIdEmpleado" type="hidden" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
-                            <input id="txtIdEmpleado_modificado" type="hidden" value="<?php echo $_SESSION["idempleado"] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
+                            <input id="txtIdEmpleado" type="hidden" value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
+                            <input id="txtIdEmpleado_modificado" type="hidden" value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
                             <input id="txtIdPersona" type="hidden" maxlength="50" class="form-control" name="txtIdPersona" placeholder="" autofocus="" />
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -56,34 +56,37 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
-                                <label>Tipo de Cliente (*):</label>
+                                <label>Tipo de Cliente:</label>
                                 <select required="" class="form-control" name="cboTipo_Persona">
                                   <option>CLIENTE</option>
                                   <option>DISTRIBUIDOR</option>
+                                  <option>SUPERDISTRIBUIDOR</option>
+                                  <option>REPRESENTANTE</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
-                                <label>Nuevo o Antiguo(*) :</label>
-                                <input id="txtNumero_Cuenta" type="text" maxlength="40" name="txtNumero_Cuenta" required="" class="form-control" placeholder="Nuevo o Antiguo / Mes / Canal"   />
+                                <label>Nuevo o Antiguo :</label>
+                                <input id="txtNumero_Cuenta" type="text" maxlength="40" name="txtNumero_Cuenta" required="" class="form-control" placeholder="Nuevo o Antiguo"/>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
                                 <label>Nombres (*):</label>
-                                <input id="txtNombre" type="text" maxlength="40" name="txtNombre" required="" class="form-control" placeholder="Nombres Completos" autofocus="" />
+                                <input id="txtNombre" type="text" maxlength="40" name="txtNombre" required="" class="form-control" placeholder="Nombres Completos" autofocus=""/>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
                                 <label>Apellidos (*):</label>
-                                <input id="txtApellido" type="text" maxlength="40" name="txtApellido" required="" class="form-control" placeholder="Apellidos Completos" autofocus="" />
+                                <input id="txtApellido" type="text" maxlength="40" name="txtApellido" required="" class="form-control" placeholder="Apellidos Completos" autofocus=""/>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
-                <div class="col-lg-12 left">
+
+                <div class="col-lg-6 left">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group has-success">
@@ -101,14 +104,25 @@
                                         <button type="button" class="btn btn-success" id="btnExtraerClientes"><i class="fa fa-search"></i>
                                             EXTRAER
                                         </button>
-                                    </span>     
+                                    </span>
                                 </div>
                                 
                             </div>
                         </div>
                     </div>
-                    
                 </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                        <label>Género (*):</label>
+                        <div class="radio" id="optionsRadios">
+                            <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="1">Mujer</label>
+                            <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2" checked="">Hombre</label>
+                            <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="3">Prefiere no decirlo</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-lg-12 left">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">

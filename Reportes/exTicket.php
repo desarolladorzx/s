@@ -87,6 +87,9 @@ $reg_igv = $query_global->fetch_object();
     </tr>
       <td>&nbsp;</td>
     <tr>
+        <td><strong>TIPO DE CLIENTE : </strong><?php echo $reg_cli->tipo_cliente; ?></td>
+    </tr>
+    <tr>
         <td><strong>CLIENTE : </strong><?php echo $reg_cli->nombre; ?> <?php echo $reg_cli->apellido; ?></td>
     </tr>
     <tr>
