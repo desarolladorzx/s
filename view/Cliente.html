@@ -1,257 +1,308 @@
+<style>
+    select option:disabled {
+        color: #858585;
+        /* font-weight: bold; */
+        background: #e2e2e2;
+    }
+</style>
+<input type="hidden" id="hdn_superadmin" name="hdn_superadmin" value="<?php echo $_SESSION['superadmin'];?>">
 <div class="box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Clientes</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  	<div class="row">
-	                  	<div class="col-md-12">
-		                    <!--Contenido-->
-                            
-		                    <div class="col-sm-14"  id="VerForm">
-                          <!--
+    <div class="box-header with-border">
+        <h3 class="box-title">Clientes</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <!--Contenido-->
+
+                <div class="col-sm-14" id="VerForm">
+                    <!--
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">Categoria</h3>
             </div>
         </div>
       -->
-        <form role="form" name="frmCliente" id="frmCliente" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-lg-12 left">
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                            <label>Los campos con (*) son obligatorios</label>
-                            <input id="txtIdEmpleado" type="text" value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50" class="form-control" name="txtIdEmpleado" required="" placeholder="" autofocus="" />
-                            <input id="txtIdEmpleado_modificado" type="text" value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50" class="form-control" name="txtIdEmpleado_modificado" required="" placeholder="" autofocus="" />
-                            <input id="txtIdPersona" type="hidden" maxlength="50" class="form-control" name="txtIdPersona" placeholder="" autofocus="" />
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Creado por :</label>
-                                <input id="txtEmpleado" type="text" maxlength="40" name="txtEmpleado" required="" class="form-control" placeholder="Sin Modificaciones"  disabled />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Fecha de Creacion :</label>
-                                <input id="txtFecha_registro" type="text" maxlength="40" name="txtFecha_registro" required="" class="form-control" placeholder="Sin Modificaciones"  disabled />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Modificado por :</label>
-                                <input id="txtEmpleado_modificado" type="text" maxlength="40" name="txtEmpleado_modificado" required="" class="form-control" placeholder="Sin Modificaciones"  disabled />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Fecha de Modificacion :</label>
-                                <input id="txtFecha_modificado" type="text" maxlength="40" name="txtFecha_modificado" required="" class="form-control" placeholder="Sin fecha de Modificacion"  disabled />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Tipo de Cliente:</label>
-                                <select required="" class="form-control" name="cboTipo_Persona">
-                                  <option>CLIENTE</option>
-                                  <option>DISTRIBUIDOR</option>
-                                  <option>SUPERDISTRIBUIDOR</option>
-                                  <option>REPRESENTANTE</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Nuevo o Antiguo :</label>
-                                <input id="txtNumero_Cuenta" type="text" maxlength="40" name="txtNumero_Cuenta" required="" class="form-control" placeholder="Nuevo o Antiguo"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Nombres (*):</label>
-                                <input id="txtNombre" type="text" maxlength="40" name="txtNombre" required="" class="form-control" placeholder="Nombres Completos" autofocus=""/>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Apellidos (*):</label>
-                                <input id="txtApellido" type="text" maxlength="40" name="txtApellido" required="" class="form-control" placeholder="Apellidos Completos" autofocus=""/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 left">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Tipo Documento (*):</label>
-                                <select required="" id="cboTipo_Documento" name="cboTipo_Documento" class="form-control">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Número (RUC, DNI, Etc) (*):</label>
-                                <div class="input-group">
-                                    <input id="txtNum_Documento" type="number" maxlength="20" name="txtNum_Documento" required="" class="form-control" placeholder="Número de documento" autofocus="" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-success" id="btnExtraerClientes"><i class="fa fa-search"></i>
-                                            EXTRAER
-                                        </button>
-                                    </span>
+                    <form role="form" name="frmCliente" id="frmCliente" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <label>Los campos con (*) son obligatorios</label>
+                                        <input id="txtIdEmpleado" type="hidden"
+                                            value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50"
+                                            class="form-control" name="txtIdEmpleado" required="" placeholder=""
+                                            autofocus="" />
+                                        <input id="txtIdEmpleado_modificado" type="hidden"
+                                            value="<?php echo $_SESSION['idempleado'] ?>" maxlength="50"
+                                            class="form-control" name="txtIdEmpleado_modificado" required=""
+                                            placeholder="" autofocus="" />
+                                        <input id="txtIdPersona" type="hidden" maxlength="50" class="form-control"
+                                            name="txtIdPersona" placeholder="" autofocus="" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Creado por :</label>
+                                            <input id="txtEmpleado" type="text" maxlength="40" name="txtEmpleado"
+                                                required="" class="form-control" placeholder="Sin Modificaciones"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Fecha de Creacion :</label>
+                                            <input id="txtFecha_registro" type="text" maxlength="40"
+                                                name="txtFecha_registro" required="" class="form-control"
+                                                placeholder="Sin Modificaciones" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Modificado por :</label>
+                                            <input id="txtEmpleado_modificado" type="text" maxlength="40"
+                                                name="txtEmpleado_modificado" required="" class="form-control"
+                                                placeholder="Sin Modificaciones" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Fecha de Modificacion :</label>
+                                            <input id="txtFecha_modificado" type="text" maxlength="40"
+                                                name="txtFecha_modificado" required="" class="form-control"
+                                                placeholder="Sin fecha de Modificacion" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Tipo de Cliente:</label>
+                                            <select required="" class="form-control" name="cboTipo_Persona"
+                                                id="cboTipo_Persona">
+                                                <option value="CLIENTE">CLIENTE</option>
+                                                <option value="DISTRIBUIDOR">DISTRIBUIDOR</option>
+                                                <option value="SUPERDISTRIBUIDOR">SUPERDISTRIBUIDOR</option>
+                                                <option value="REPRESENTANTE">REPRESENTANTE</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Nuevo o Antiguo :</label>
+                                            <input id="txtNumero_Cuenta" type="text" maxlength="40"
+                                                name="txtNumero_Cuenta" required="" class="form-control"
+                                                placeholder="Nuevo o Antiguo" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Nombres (*):</label>
+                                            <input id="txtNombre" type="text" maxlength="40" name="txtNombre"
+                                                required="" class="form-control" placeholder="Nombres Completos"
+                                                autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Apellidos (*):</label>
+                                            <input id="txtApellido" type="text" maxlength="40" name="txtApellido"
+                                                required="" class="form-control" placeholder="Apellidos Completos"
+                                                autofocus="" />
+                                        </div>
+                                    </div>
                                 </div>
-                                
                             </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                        <label>Género (*):</label>
-                        <div class="radio" id="optionsRadios">
-                            <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="1">Mujer</label>
-                            <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2" checked="">Hombre</label>
-                            <label><input type="radio" name="optionsRadios" id="optionsRadios3" value="3">Prefiere no decirlo</label>
-                        </div>
-                    </div>
-                </div>
+                            <div class="col-lg-6 left">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Tipo Documento (*):</label>
+                                            <select required="" id="cboTipo_Documento" name="cboTipo_Documento"
+                                                class="form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Número (RUC, DNI, Etc) (*):</label>
+                                            <div class="input-group">
+                                                <input id="txtNum_Documento" type="number" maxlength="20"
+                                                    name="txtNum_Documento" required="" class="form-control"
+                                                    placeholder="Número de documento" autofocus="" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-success"
+                                                        id="btnExtraerClientes"><i class="fa fa-search"></i>
+                                                        EXTRAER
+                                                    </button>
+                                                </span>
+                                            </div>
 
-                <div class="col-lg-12 left">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Departamento (*):</label>
-                                <input id="txtDireccion_Departamento" type="text" maxlength="45" name="txtDireccion_Departamento" required="" placeholder="Departamento" class="form-control" autofocus="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group has-success">
+                                    <label>Género (*):</label>
+                                    <div class="radio" id="optionsRadios">
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios1"
+                                                value="1">Mujer</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2"
+                                                checked="">Hombre</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios3"
+                                                value="3">Prefiere no decirlo</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Departamento (*):</label>
+                                            <input id="txtDireccion_Departamento" type="text" maxlength="45"
+                                                name="txtDireccion_Departamento" required="" placeholder="Departamento"
+                                                class="form-control" autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Provincia (*):</label>
+                                            <input id="txtDireccion_Provincia" type="text" maxlength="45"
+                                                name="txtDireccion_Provincia" class="form-control" required=""
+                                                placeholder="Provincia" autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Distrito (*):</label>
+                                            <input id="txtDireccion_Distrito" type="text" maxlength="45"
+                                                name="txtDireccion_Distrito" class="form-control" required=""
+                                                placeholder="Distrito" autofocus="" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Direccion (*):</label>
+                                            <input id="txtDireccion_Calle" type="text" maxlength="300"
+                                                name="txtDireccion_Calle" required=""
+                                                placeholder="Direccion Completa Departamento,Provincia,Distrito y Calle - ROTULO OLVA"
+                                                class="form-control" autofocus="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Teléfono (*):</label>
+                                            <input id="txtTelefono" type="number" maxlength="20" name="txtTelefono"
+                                                required="" class="form-control" placeholder="Ingrese el teléfono"
+                                                autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Teléfono 2:</label>
+                                            <input id="txtTelefono_2" type="number" maxlength="20" name="txtTelefono_2"
+                                                class="form-control" placeholder="Ingrese el 2do teléfono"
+                                                autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Email:</label>
+                                            <input id="txtEmail" type="email" maxlength="50" name="txtEmail"
+                                                class="form-control" placeholder="Ingrese el email" autofocus="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Estado (*):</label>
+                                            <select required="" class="form-control" name="txtEstado">
+                                                <option>A</option>
+                                                <option>C</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Provincia (*):</label>
-                                <input id="txtDireccion_Provincia" type="text" maxlength="45" name="txtDireccion_Provincia" class="form-control" required="" placeholder="Provincia" autofocus="" />
+                        <div class="row">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                                <h5></h5>
+                                <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i>
+                                    Registrar</button>
+                                <a href="Cliente.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
+                                <hr>
+                                <span class="lead text-primary"></span>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Distrito (*):</label>
-                                <input id="txtDireccion_Distrito" type="text" maxlength="45" name="txtDireccion_Distrito"  class="form-control" required="" placeholder="Distrito" autofocus="" />
-                            </div>
-                        </div>
-                    </div>
-                    
+                    </form>
                 </div>
-                <div class="col-lg-12 left">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Direccion (*):</label>
-                                <input id="txtDireccion_Calle" type="text" maxlength="300" name="txtDireccion_Calle" required="" placeholder="Direccion Completa Departamento,Provincia,Distrito y Calle - ROTULO OLVA" class="form-control" autofocus="" />
-                            </div>
-                        </div>
-                    </div>
+                <button class="btn btn-primary" id="btnNuevo"><i class="fa fa-file"></i> Nuevo</button>
+                <br><br>
+                <div id="VerListado" class="table-responsive">
+                    <table id="tblCliente" class="table table-striped table-bordered table-condensed table-hover"
+                        cellpadding="0" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tipo de Cliente</th>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Teléfono</th>
+                                <th>Direccion</th>
+                                <th>Correo Electronico</th>
+                                <th>Creado por</th>
+                                <th>Fecha de creación</th>
+                                <th>Modificado por</th>
+                                <th>Fecha de modificación</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Tipo de Cliente</th>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Teléfono</th>
+                                <th>Direccion</th>
+                                <th>Correo Electronico</th>
+                                <th>Creado por</th>
+                                <th>Fecha de creación</th>
+                                <th>Modificado por</th>
+                                <th>Fecha de modificación</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody id="cliente">
+
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-lg-12 left">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Teléfono (*):</label>
-                                <input id="txtTelefono" type="number" maxlength="20" name="txtTelefono" required="" class="form-control" placeholder="Ingrese el teléfono" autofocus="" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Teléfono 2:</label>
-                                <input id="txtTelefono_2" type="number" maxlength="20" name="txtTelefono_2" class="form-control" placeholder="Ingrese el 2do teléfono" autofocus="" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Email:</label>
-                                <input id="txtEmail" type="email" maxlength="50" name="txtEmail"  class="form-control" placeholder="Ingrese el email" autofocus="" />
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <div class="form-group has-success">
-                                <label>Estado (*):</label>
-                                <select required="" class="form-control" name="txtEstado">
-                                  <option>A</option>
-                                  <option>C</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>        
-                </div>
+                <!--Fin-Contenido-->
             </div>
-            <div class="row">   
-
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
-                        <h5></h5>
-                        <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i> Registrar</button>
-                        <a href="Cliente.php" class="btn btn-primary" ><i class="fa fa-remove"></i> Cancelar</a>
-                        <hr>
-                        <span class="lead text-primary"></span> 
-                </div>
-            </div>
-        </form>
-    </div>
-<button class="btn btn-primary" id="btnNuevo"><i class="fa fa-file"></i> Nuevo</button>
-		                    <br><br>
-		                    <div id="VerListado" class="table-responsive">
-            		<table id="tblCliente" class="table table-striped table-bordered table-condensed table-hover" cellpadding="0" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                        	<th>#</th>
-                            <th>Tipo de Cliente</th>
-                            <th>Nombre</th>
-                            <th>Documento</th>
-                            <th>Teléfono</th>
-                            <th>Direccion</th>
-                            <th>Correo Electronico</th>
-                            <th>Creado por</th>
-                            <th>Fecha de creación</th>
-                            <th>Modificado por</th>
-                            <th>Fecha de modificación</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-             
-                    <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Tipo de Cliente</th>
-                            <th>Nombre</th>
-                            <th>Documento</th>
-                            <th>Teléfono</th>
-                            <th>Direccion</th>
-                            <th>Correo Electronico</th>
-                            <th>Creado por</th>
-                            <th>Fecha de creación</th>
-                            <th>Modificado por</th>
-                            <th>Fecha de modificación</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </tfoot>
-             
-                    <tbody id="cliente">
-
-                    </tbody>
-                </table>
-</div>
-		                    <!--Fin-Contenido-->
-                  		</div>
-                  	</div><!-- /.row -->
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
+        </div><!-- /.row -->
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
 
 <script type="text/javascript">
-    
     $('#liVentas').addClass("treeview active");
     $('#liClientes').addClass("active");
-
 </script>
