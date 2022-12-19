@@ -34,7 +34,7 @@
 			$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($idCliente);
 			$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
-			if ($resultExiste->countidpedido >= 1) {
+			if ($resultExiste->countidpedido >= 2) {
 				$estadoCuenta = "CLIENTE ANTIGUO";
 			} else {
 				$estadoCuenta = "CLIENTE NUEVO";
