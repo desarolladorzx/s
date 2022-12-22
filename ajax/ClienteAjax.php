@@ -7,8 +7,8 @@ switch ($_GET["op"]) {
 	case 'SaveOrUpdate':
 
 		$tipo_persona = $_POST["cboTipo_Persona"];
-		$nombre = mb_strtoupper($_POST["txtNombre"]);
-		$apellido = mb_strtoupper($_POST["txtApellido"]);
+		$nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"]: "";
+		$apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"]: "";
 		$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
 		$genero = $_POST["optionsRadios"];

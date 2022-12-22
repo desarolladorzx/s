@@ -10,6 +10,19 @@ function init(){
         ]
     }); */
 
+
+	if ($("#hdn_superadmin").val() == 'A') {
+		$('#cboTipo_Persona option[value="CLIENTE"]').attr("disabled", false);
+		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+	} else if ($("#hdn_superadmin").val() == 'S'){
+		$('#cboTipo_Persona option[value="CLIENTE"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+	}
+
 	ListadoCliente();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
