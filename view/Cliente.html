@@ -82,7 +82,7 @@
                                             <label>Tipo de Cliente:</label>
                                             <select required="" class="form-control" name="cboTipo_Persona"
                                                 id="cboTipo_Persona">
-                                                <option value="CLIENTE">CLIENTE</option>
+                                                <option value="FINAL">FINAL</option>
                                                 <option value="DISTRIBUIDOR">DISTRIBUIDOR</option>
                                                 <option value="SUPERDISTRIBUIDOR">SUPERDISTRIBUIDOR</option>
                                                 <option value="REPRESENTANTE">REPRESENTANTE</option>
@@ -94,7 +94,7 @@
                                             <label>Nuevo o Antiguo :</label>
                                             <input id="txtNumero_Cuenta" type="text" maxlength="40"
                                                 name="txtNumero_Cuenta" required="" class="form-control"
-                                                placeholder="Nuevo o Antiguo" />
+                                                placeholder="Nuevo o Antiguo" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -102,7 +102,7 @@
                                             <label>Nombres (*):</label>
                                             <input id="txtNombre" type="text" maxlength="40" name="txtNombre"
                                                 required="" class="form-control" placeholder="Nombres Completos"
-                                                autofocus="" />
+                                                autofocus="" disabled/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -110,7 +110,7 @@
                                             <label>Apellidos (*):</label>
                                             <input id="txtApellido" type="text" maxlength="40" name="txtApellido"
                                                 required="" class="form-control" placeholder="Apellidos Completos"
-                                                autofocus="" />
+                                                autofocus="" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group has-success">
                                     <label>Género (*):</label>
-                                    <div class="radio" id="optionsRadios">
+                                    <div class="radio" id="optionsRadios" required="">
                                         <label><input type="radio" name="optionsRadios" id="optionsRadios1"
                                                 value="1">Mujer</label>
                                         <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2"
