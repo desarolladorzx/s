@@ -15,7 +15,7 @@ function init(){
 	ListadoUsuarios();
 	ComboSucursal();
 	$("#VerForm").hide();
-	$("#txtRutaImgArt").hide();
+	//$("#txtRutaImgArt").hide();     IMAGEN DE ARTICULO
 	$("form#frmUsuarios").submit(SaveOrUpdate);
 	
 	$("#btnNuevo").click(VerForm);

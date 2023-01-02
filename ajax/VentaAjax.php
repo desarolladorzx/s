@@ -8,6 +8,8 @@
 	switch ($_GET["op"]) {
 		case 'SaveOrUpdate':
 
+			
+
 			$idCliente = $_POST["idCliente"];
 			$idpedido = $_POST["idPedido"];
 			$idusuario = $_POST["idUsuario"];
@@ -16,11 +18,11 @@
 			$tipo_comprobante = $_POST["tipo_comprobante"];
 			$serie_comprobante = $_POST["serie_vent"];
 			$num_comprobante = $_POST["num_vent"];
-			$tipo_promocion = $_POST["tipo_promocion"];
+			/* $tipo_promocion = $_POST["tipo_promocion"];
 			$metodo_pago = $_POST["metodo_pago"];
-			/* $num_operacion = $_POST["num_operacion"];
-			$hora_operacion = $_POST["hora_operacion"]; */
-			$agencia_envio = $_POST["agencia_envio"];
+			$num_operacion = $_POST["num_operacion"];
+			$hora_operacion = $_POST["hora_operacion"];
+			$agencia_envio = $_POST["agencia_envio"]; */
 			$impuesto = $_POST["impuesto"];
 			$total = $_POST["total_vent"];
 			$estado = "A";
@@ -34,7 +36,7 @@
 			$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($idCliente);
 			$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
-			if ($resultExiste->countidpedido >= 1) {
+			if ($resultExiste->countidpedido >= 2) {
 				$estadoCuenta = "CLIENTE ANTIGUO";
 			} else {
 				$estadoCuenta = "CLIENTE NUEVO";
@@ -45,14 +47,14 @@
 
 
 			if(empty($_POST["txtIdVenta"])){
-				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"])){
+				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"])){
 						echo "Venta Registrada correctamente.";
 				}else{
 						echo "Venta no ha podido ser registado.";
 				}
 			}else{
 				$idVenta = $_POST["txtIdVenta"];
-				if($objVenta->Modificar($idventa,$idpedido, $idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado)){
+				if($objVenta->Modificar($idventa,$idpedido, $idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado)){
 					echo "La información del Venta ha sido actualizada.";
 				}else{
 					echo "La información del Venta no ha podido ser actualizada.";
@@ -72,7 +74,7 @@
 			}
 			break;
 		
-		case "list":
+/* 		case "list":
 			$query_Tipo = $objVenta->Listar();
             $data = Array();
         	$i = 1;
@@ -90,7 +92,8 @@
 	                   </tr>';
 	             $i++; 
             } 
-			break;
+			break; */
+
 		// case "listTipoPedidoPedido":	
 		// 	require_once "../model/Pedido.php";
 		// 	$objPed = new Pedido();
@@ -121,35 +124,91 @@
 		// 	echo json_encode($results);            
 		// 	break;
 
-		case "listTipoPedidoPedido":	
+		case "list":
 			require_once "../model/Pedido.php";
-			$objPed = new Pedido();
-
-			$query_Tipo = $objPed->ListarTipoPedidoPedido($_SESSION["idsucursal"]);
-			$data = Array();
-            $i = 1;
-     		while ($reg = $query_Tipo->fetch_object()) {
-     			$regTotal = $objPed->GetTotal($reg->idpedido);
-     			$fetch = $regTotal->fetch_object();
-     			$data[] = array(
-     				"0"=>$i,
-                    "1"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
-                    "2"=>$reg->tipo_pedido,
-                    "3"=>$reg->fecha,
-                    "4"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
-                    '<button class="btn btn-success" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
-                    '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
-                    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'
-                    );
-                $i++;
-            }
-            $results = array(
-            "sEcho" => 1,
-        	"iTotalRecords" => count($data),
-        	"iTotalDisplayRecords" => count($data),
-            "aaData"=>$data);
-			echo json_encode($results);
+			$data= Array();
+			$objPedido = new Pedido();
+			if ( !isset($_SESSION['idsucursal']))
+			{
+				$_SESSION['idsucursal'] = 1;
+			}
+			$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"]);
+			$i = 1;
+			while ($reg = $query_Pedido->fetch_object()) {
+				$query_total = $objPedido->TotalPedido($reg->idpedido);
+				$reg_total = $query_total->fetch_object();
+				$data[] = array("0"=>$i,
+					"1"=>$reg->fecha,
+					"2"=>$reg->serie.'-'.$reg->ticket,
+					"3"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
+					"4"=>($reg->tipo_pedido=="Pedido")?'<span class="badge bg-blue">Pedido</span>':(($reg->tipo_pedido=="Venta")?'<span class="badge bg-aqua">Venta</span>':'<span class="badge bg-green">Proforma</span>'),
+					//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
+					"5"=>$reg_total->Total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+					"6"=>($reg->estado=="A")?'<span class="badge bg-green">ACEPTADO</span>':'<span class="badge bg-red">CANCELADO</span>',
+					"7"=>($reg->estado=="A")?'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->email.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					/* '<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTASASSS" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'. */
+					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>':
+					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;');
+				$i++;
+			}
+				$results = array(
+				"sEcho" => 1,
+				"iTotalRecords" => count($data),
+				"iTotalDisplayRecords" => count($data),
+				"aaData"=>$data);
+				echo json_encode($results);
 			break;
+	
+		case "listAdmin":
+				require_once "../model/Pedido.php";
+				$data= Array();
+				$objPedido = new Pedido();
+				if ( !isset($_SESSION['idsucursal']))
+				{
+					$_SESSION['idsucursal'] = 1;
+				}
+				$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"]);
+		
+				$i = 1;
+				while ($reg = $query_Pedido->fetch_object()) {
+					$query_total = $objPedido->TotalPedido($reg->idpedido);
+					$reg_total = $query_total->fetch_object();
+					/* $data[] = array("0"=>$i,
+						"1"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
+						"2"=>($reg->tipo_pedido=="Pedido")?'<span class="badge bg-blue">Pedido</span>':(($reg->tipo_pedido=="Venta")?'<span class="badge bg-aqua">Venta</span>':'<span class="badge bg-green">Proforma</span>'),
+						"3"=>$reg->fecha,
+						//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
+						"4"=>$reg_total->Total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+						"5"=>($reg->estado=="A")?'<span class="badge bg-green">ACEPTADO</span>':'<span class="badge bg-red">CANCELADO</span>',
+						"6"=>($reg->estado=="A")?'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->email.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+						'<button class="btn btn-warning" data-toggle="tooltip" title="ANULAR VENTA" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'.
+						'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>':
+						'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+						'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;');
+					$i++; */
+					$data[] = array("0"=>$i,
+					"1"=>$reg->fecha,
+					"2"=>$reg->serie.'-'.$reg->ticket,
+					"3"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
+					"4"=>($reg->tipo_pedido=="Pedido")?'<span class="badge bg-blue">Pedido</span>':(($reg->tipo_pedido=="Venta")?'<span class="badge bg-aqua">Venta</span>':'<span class="badge bg-green">Proforma</span>'),
+					//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
+					"5"=>$reg_total->Total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+					"6"=>($reg->estado=="A")?'<span class="badge bg-green">ACEPTADO</span>':'<span class="badge bg-red">CANCELADO</span>',
+					"7"=>($reg->estado=="A")?'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->email.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					'<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTAS ADMIN" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'.
+					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>':
+					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$reg_total->Total.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;');
+				$i++;
+				}
+					$results = array(
+					"sEcho" => 1,
+					"iTotalRecords" => count($data),
+					"iTotalDisplayRecords" => count($data),
+					"aaData"=>$data);
+					echo json_encode($results);
+				break;
 			
 		case "listTipo_DocumentoPersona":
 		        require_once "../model/Tipo_Documento.php";
