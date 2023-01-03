@@ -12,17 +12,15 @@ switch ($_GET["op"]) {
         $name=$files['name'];
         */
 
-
-
-
-
         $idCliente = $_POST["idCliente"];
         $idUsuario = $_POST["idUsuario"];
         $idSucursal = $_POST["idSucursal"];
         $tipo_pedido = trim($_POST["tipo_pedido"]);
+        /*
         $tipo_promocion = $_POST["tipo_promocion"];
         $metodo_pago = $_POST["metodo_pago"];
         $agencia_envio = $_POST["agencia_envio"];
+        */
         //$imagen = $_FILES["imagenVoucher"]["tmp_name"];
 		//$ruta = $_FILES["imagenVoucher"]["name"];
         $numero = $_POST["numero"];
@@ -31,7 +29,7 @@ switch ($_GET["op"]) {
 
         //if(move_uploaded_file($imagen, "../Files/Voucher/".$ruta)){
             if(empty($_POST["idPedido"])){
-                $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $tipo_promocion, $metodo_pago, $agencia_envio, $numero, $_POST["detalle"]);
+                $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"]);
 
                 //var_dump($hosp);exit;
 
@@ -134,10 +132,12 @@ switch ($_GET["op"]) {
                     "1"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
                     "2"=>$reg->tipo_pedido,
                     "3"=>$reg->fecha,
-                    "4"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+                    "4"=>$reg->estado,
+                    "5"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
                     '<button class="btn btn-success" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
                     '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
-                    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'
+                    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
+                    '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp'
                     );
                 $i++;
             }
@@ -336,11 +336,11 @@ switch ($_GET["op"]) {
     case "GetImagenes":
             require_once "../model/Pedido.php";
             $objPedido = new Pedido();
-            $query_total = $objPedido->GetImagenes($_REQUEST["numero"]);
+            $query_total = $objPedido->GetImagenes($_REQUEST["idPedido"]);
 
+            //var_dump($query_total->fetch_object());
+            //exit;
 
-
-            $i = 1;
             while ($reg = $query_total->fetch_object()) {
 
                 echo '<li>
@@ -352,16 +352,14 @@ switch ($_GET["op"]) {
                     <div class="mailbox-attachment-info">
                     <a href="./Files/Voucher/'.$reg->imagen.'" class="mailbox-attachment-name" target="_blank">'.$reg->imagen.'</a>
                     <span class="mailbox-attachment-size"> -
-                    <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen('.$reg->id.','.$reg->numero.')"><i class="fa fa-trash"></i></a>
+                    <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen('.$reg->id.','.$reg->idpedido.')"><i class="fa fa-trash"></i></a>
                     </span>
                     </div>
                     </li>';
 
-                $i++; 
             }
 
 
-            
             break;
     case "DeleteImagenes":
             require_once "../model/Pedido.php";
@@ -372,7 +370,17 @@ switch ($_GET["op"]) {
             break;
 
                 
-
+    case "cambiarEstadoPedido" :
+            require_once "../model/Pedido.php";
+            $obj= new Pedido();
+            $idPedido = $_POST["idPedido"];
+            $hosp = $obj->cambiarEstadoPedido($idPedido);
+                    if ($hosp) {
+                        echo "Estado de pedido cambiado";
+                    } else {
+                        echo "No se ha podido eliminar el Pedido";
+                    }
+            break;
 
 
 }
