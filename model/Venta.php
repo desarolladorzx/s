@@ -16,13 +16,13 @@
 				//var_dump($sql);
 				$conexion->query($sql);	 */
 
-		public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$tipo_promocion,$metodo_pago,$agencia_envio,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle){
+		public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle){
 			global $conexion;
 			$sw = true;
 			try {
 
-				$sql = "INSERT INTO venta(idpedido,idusuario,tipo_venta,tipo_comprobante,serie_comprobante,num_comprobante,tipo_promocion,metodo_pago,agencia_envio,fecha ,impuesto,total,estado)
-						VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante','$tipo_promocion','$metodo_pago','$agencia_envio', CURRENT_TIMESTAMP(),'$impuesto','$total','$estado')";
+				$sql = "INSERT INTO venta(idpedido,idusuario,tipo_venta,tipo_comprobante,serie_comprobante,num_comprobante,fecha ,impuesto,total,estado)
+						VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante', CURRENT_TIMESTAMP(),'$impuesto','$total','$estado')";
 				//var_dump($sql);
 				$conexion->query($sql);
 
