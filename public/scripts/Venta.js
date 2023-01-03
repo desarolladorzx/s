@@ -73,6 +73,7 @@ function init(){
 
                 if ($("#cboTipoVenta").val() == "Contado") {
 
+                    /*
                     swal("Mensaje del Sistema", r, "success");
 
                     $("#btnNuevoPedido").show();
@@ -93,6 +94,8 @@ function init(){
                       }
                     });
                     //location.reload();
+                    */
+
                 } else {
 
                     $("#btnNuevoPedido").show();
