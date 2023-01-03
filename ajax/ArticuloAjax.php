@@ -23,15 +23,15 @@
 				if(empty($_POST["txtIdArticulo"])){
 					
 					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta)){
-						echo "Articulo Registrado";
+						echo "Articulo RegistradoN";
 					}else{
-						echo "Articulo no ha podido ser registado.";
+						echo "Articulo no ha podido ser registadoON.";
 					}
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
 					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta)){
-						echo "Informacion del Articulo ha sido actualizada";
+						echo "Informacion del Articulo ha sido actualizadON";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
 					}
@@ -41,15 +41,15 @@
 				if(empty($_POST["txtIdArticulo"])){
 					
 					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img)){
-						echo "Articulo Registrado";
+						echo "Articulo RegistradA";
 					}else{
-						echo "Articulo no ha podido ser registado.";
+						echo "Articulo no ha podido ser registadAN.";
 					}
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
 					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img)){
-						echo "Informacion del Articulo ha sido actualizada";
+						echo "Informacion del Articulo ha sido actualizadAN";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
 					}
@@ -58,7 +58,7 @@
 
 			break;
 
-		case "delete":			
+		case "delete":
 			
 			$id = $_POST["id"];
 			$result = $objArticulo->Eliminar($id);

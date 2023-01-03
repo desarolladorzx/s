@@ -3,28 +3,62 @@
 	require "Conexion.php";
 	class Pedido{
 
-		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle){
+		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$tipo_promocion,$metodo_pago,$agencia_envio,$numero, $detalle){
 			global $conexion;
 			$sw = true;
 			try {
-				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha, numero, estado)
-						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(), $numero, 'A')";
+
+				//exit;
+
+				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha, tipo_promocion, metodo_pago, agencia_envio, numero, estado)
+						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$tipo_promocion','$metodo_pago','$agencia_envio','$numero','A')";
 				//var_dump($sql);
 				$conexion->query($sql);
 				$idpedido=$conexion->insert_id;
 				$conexion->autocommit(true);
-				foreach($detalle as $indice => $valor){
+				
+				//var_dump($idpedido);
+				//exit;
+
+				//$array1 = explode(",", $detalle);
+				//var_dump($detalle);
+				//exit;
+
+				for ($i=0; $i < count($detalle); $i++) { 
+					
+					$array = explode(",", $detalle[$i]);
+
 					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
-											VALUES($idpedido, ".$valor[0].", ".$valor[3].", ".$valor[2].", ".$valor[4].")";
+											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."')";
+
+					$conexion->query($sql_detalle) or $sw = false;
+
+				}
+
+				//var_dump($sql_detalle);
+				//exit;
+
+				/*
+				foreach($detalle as $indice){
+					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
+											VALUES($idpedido, ".$indice[0].", ".$indice[3].", ".$indice[2].", ".$indice[4].")";
 					$conexion->query($sql_detalle) or $sw = false;
 				}
+				*/
+
+				//exit;
+
+				/*
 				if ($conexion != null) {
                 	$conexion->close();
             	}
+				*/
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
-			return $sw;
+
+			//return $sw;
+			return [$sw,$idpedido];
 		}
 		
 		// Se cambio la cantidad del orden a 10K
@@ -35,7 +69,7 @@
             inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
             where p.idsucursal = $idsucursal
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
+			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -154,7 +188,7 @@
 			global $conexion;
 			$sql = "select p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono
 			from pedido p inner join persona c on p.idcliente = c.idpersona where p.idsucursal = $idsucursal 
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,10000";
+			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -194,7 +228,7 @@
 		// lista modal clientes en la ventana de ventas
 		public function ListarClientes(){
 			global $conexion;
-			$sql = "select * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and estado = 'A' order by idpersona desc ";
+			$sql = "select * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -287,4 +321,48 @@
 			$query = $conexion->query($sql);
 			return $query;
 		}
+
+		public function RegistrarDetalleImagenes($idpedido,$idcliente, $idusuario, $idsucursal, $imagen){
+
+			global $conexion;
+			$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado)
+						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1)";
+			//var_dump($sql);
+			$query = $conexion->query($sql);
+
+			/*
+			if ($conexion != null) {
+				$conexion->close();
+			}
+			*/
+
+			return $query;
+
+		}
+
+		public function GetImagenes($numero){
+			global $conexion;
+			$sql = "select
+					iddetalle_img AS id,
+					numero AS numero,
+					idcliente AS idcliente,
+					idusuario AS idusuario,
+					idsucursal AS idsucursal,
+					imagen AS imagen
+			 		from detalle_pedido_img where numero = $numero AND estado = 1";
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
+
+		public function DeleteImagenes($iddetalleimg){
+			global $conexion;
+			$sql = "UPDATE detalle_pedido_img set estado = '0' WHERE iddetalle_img = $iddetalleimg";
+			$query = $conexion->query($sql);
+			return $query;
+		}
+		
+
+
+
 	}
