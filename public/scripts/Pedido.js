@@ -540,7 +540,8 @@ function ListadoVenta(){
                 {   "mDataProp": "1"},
                 {   "mDataProp": "2"},
                 {   "mDataProp": "3"},
-                {   "mDataProp": "4"}
+                {   "mDataProp": "4","sClass": "text-center"},
+                {   "mDataProp": "5"}
         ],"ajax":
             {
                 url: './ajax/PedidoAjax.php?op=listTipoPedidoPedido',
@@ -715,16 +716,16 @@ function ConsultarDetallesPed() {
 
         // CARGA DETALLE DE IMAGENES
 
-        mostrarDetalleImagenes(numero);
+        mostrarDetalleImagenes(idPedido);
 
 
     }
     
-    function mostrarDetalleImagenes(numero) {
+    function mostrarDetalleImagenes(idPedido) {
 
         $("#detalleImagenes").html("");
 
-        $.post("./ajax/PedidoAjax.php?op=GetImagenes",{numero: numero}, function(r){
+        $.post("./ajax/PedidoAjax.php?op=GetImagenes",{idPedido: idPedido}, function(r){
 
             if (r != "") {
                 $("#detalleImagenes").html(r);
@@ -736,11 +737,11 @@ function ConsultarDetallesPed() {
 
     }
 
-    function eliminarDetalleImagen(id,numero) {
+    function eliminarDetalleImagen(id,idpedido) {
 
         $.post("./ajax/PedidoAjax.php?op=DeleteImagenes",{id: id}, function(r){
 
-            mostrarDetalleImagenes(numero);
+            mostrarDetalleImagenes(idpedido);
 
         });
 
@@ -793,7 +794,7 @@ function ConsultarDetallesPed() {
        // alert(idPedido);
         
             //alert(detalleTraerCantidad[0]);
-        bootbox.confirm("Solo el ADMINISTRADOR debe anular las ventas ¿Esta Seguro de Anular la Venta?", function(result){
+        bootbox.confirm("Solo el ADMINISTRADOR debe anular las ventas ¿Esta seguro de Anular la Venta?", function(result){
 
             if(result){
                 
@@ -832,7 +833,7 @@ function ConsultarDetallesPed() {
     } 
 
     function eliminarPedido(idPedido){
-        bootbox.confirm("¿Esta Seguro de eliminar el pedido?", function(result){
+        bootbox.confirm("¿Esta seguro de eliminar el pedido?", function(result){
             if(result){
                 $.post("./ajax/PedidoAjax.php?op=EliminarPedido", {idPedido : idPedido}, function(e){
                     
@@ -844,6 +845,21 @@ function ConsultarDetallesPed() {
             
         })
     }
+
+    function cambiarEstadoPedido(idPedido){
+        bootbox.confirm("¿Esta seguro de cambiar el estado del pedido?", function(result){
+            if(result){
+                $.post("./ajax/PedidoAjax.php?op=cambiarEstadoPedido", {idPedido : idPedido}, function(e){
+                    
+                    swal("Mensaje del Sistema", e, "success");
+                    ListadoPedidos();
+                    ListadoVenta();
+                });
+            }
+            
+        })
+    }
+
 
     function VerMsj(){
         bootbox.alert("No se puede generar la venta, este pedido esta cancelado");
