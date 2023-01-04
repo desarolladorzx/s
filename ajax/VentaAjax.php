@@ -8,8 +8,6 @@
 	switch ($_GET["op"]) {
 		case 'SaveOrUpdate':
 
-			
-
 			$idCliente = $_POST["idCliente"];
 			$idpedido = $_POST["idPedido"];
 			$idusuario = $_POST["idUsuario"];
@@ -18,6 +16,12 @@
 			$tipo_comprobante = $_POST["tipo_comprobante"];
 			$serie_comprobante = $_POST["serie_vent"];
 			$num_comprobante = $_POST["num_vent"];
+
+			$tipo_promocion = $_POST["tipo_promocion"];
+			$metodo_pago = $_POST["metodo_pago"];
+			$agencia_envio = $_POST["agencia_envio"];
+
+
 			/* $tipo_promocion = $_POST["tipo_promocion"];
 			$metodo_pago = $_POST["metodo_pago"];
 			$num_operacion = $_POST["num_operacion"];
@@ -44,10 +48,10 @@
 
 			/* ACTUALIZA SEGUN NUMERO DE PEDIDOS - LA CUENTE DE CLIENTE */
 			$objCliente->ActualizarCuentaCliente($idCliente,$estadoCuenta);
-
+			
 
 			if(empty($_POST["txtIdVenta"])){
-				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"])){
+				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"],$tipo_promocion,$metodo_pago,$agencia_envio)){
 						echo "Venta Registrada correctamente.";
 				}else{
 						echo "Venta no ha podido ser registado.";

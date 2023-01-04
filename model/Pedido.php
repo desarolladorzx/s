@@ -3,15 +3,15 @@
 	require "Conexion.php";
 	class Pedido{
 
-		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle){
+		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion){
 			global $conexion;
 			$sw = true;
 			try {
 
 				//exit;
 
-				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado)
-						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A')";
+				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion)
+						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion')";
 				//var_dump($sql);
 				$conexion->query($sql);
 				$idpedido=$conexion->insert_id;
@@ -192,7 +192,10 @@
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
 				WHEN p.estado = 'B' THEN '<span class=\'badge bg-aqua\'>Cancelado</span>'
 				WHEN p.estado = 'C' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
-			END ) AS estado
+			END ) AS estado,
+			p.metodo_pago AS metodo_pago,
+			p.agencia_envio AS agencia_envio,
+			p.tipo_promocion AS tipo_promocion
 
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			where p.idsucursal = $idsucursal 
