@@ -7,8 +7,8 @@
 		public function ListarKardexValorizado($idsucursal){
 			global $conexion;
 
-			$sql = "select s.razon_social as sucursal,a.nombre as articulo,a.imagen,
-				c.nombre as categoria,
+			$sql = "select s.razon_social as sucursal,m.nombre as categoria,a.nombre as articulo,a.imagen,
+				c.nombre as marca,
 				u.nombre as unidad,
 				sum(di.stock_ingreso) as totalingreso,
 				sum(di.stock_ingreso*di.precio_compra) as valorizadoingreso,
@@ -19,6 +19,7 @@
 				sum((di.precio_ventapublico-di.precio_compra)*di.stock_ingreso) as utilidadvalorizada
 				from articulo a inner join detalle_ingreso di
 				on di.idarticulo=a.idarticulo
+				inner join marca m on a.idmarca=m.idmarca
 				inner join ingreso i on di.idingreso=i.idingreso
 				inner join sucursal s on i.idsucursal=s.idsucursal
 				inner join categoria c on a.idcategoria=c.idcategoria

@@ -116,7 +116,8 @@ function init(){
 				{   "mDataProp": "8"},
 				{   "mDataProp": "9"},
 				{   "mDataProp": "10"},
-				{   "mDataProp": "11"}
+				{   "mDataProp": "11"},
+				{   "mDataProp": "12"}
 
         	],"ajax": 
 	        	{

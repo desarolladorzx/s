@@ -17,17 +17,19 @@
 			while ($reg = $query_Tipo->fetch_object()) {
 				$data[] = array(
                          "0"=>$reg->sucursal,
-                         "1"=>$reg->articulo,
-                         "2"=>$reg->categoria,
-                         "3"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
-                         "4"=>$reg->unidad,
-                         "5"=>$reg->totalingreso,
-                         "6"=>$reg->valorizadoingreso,
-                         "7"=>$reg->totalstock,
+                         "1"=>$reg->categoria,
+                         "2"=>$reg->articulo,
+                         "3"=>$reg->marca,
+                         "4"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
+                         "5"=>$reg->unidad,
+                         "6"=>$reg->totalingreso,
+                         "7"=>$reg->valorizadoingreso,
+                         "8"=>'<span class="btn btn-danger">'.$reg->totalstock.'</span>',
+                         //"8"=>$reg->totalstock,
                          "9"=>$reg->valorizadostock,
-                         "8"=>$reg->totalventa,
-                         "10"=>$reg->valorizadoventa,
-                         "11"=>$reg->utilidadvalorizada
+                         "10"=>$reg->totalventa,
+                         "11"=>$reg->valorizadoventa,
+                         "12"=>$reg->utilidadvalorizada
                          );
 			}
                $results = array(
