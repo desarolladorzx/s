@@ -12,10 +12,19 @@ switch ($_GET["op"]) {
         $name=$files['name'];
         */
 
+        //var_dump($_POST["metodo_pago"],' - ',$_POST["agencia_envio"],' - ',$_POST["tipo_promocion"]);
+        //exit;
+
         $idCliente = $_POST["idCliente"];
         $idUsuario = $_POST["idUsuario"];
         $idSucursal = $_POST["idSucursal"];
         $tipo_pedido = trim($_POST["tipo_pedido"]);
+
+        $metodo_pago = $_POST["metodo_pago"];
+        $agencia_envio = $_POST["agencia_envio"];
+        $tipo_promocion = $_POST["tipo_promocion"];
+
+
         /*
         $tipo_promocion = $_POST["tipo_promocion"];
         $metodo_pago = $_POST["metodo_pago"];
@@ -29,7 +38,7 @@ switch ($_GET["op"]) {
 
         //if(move_uploaded_file($imagen, "../Files/Voucher/".$ruta)){
             if(empty($_POST["idPedido"])){
-                $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"]);
+                $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion);
 
                 //var_dump($hosp);exit;
 
@@ -115,7 +124,9 @@ switch ($_GET["op"]) {
             } */
         //}
         break;
-    
+        
+        
+        
         
 	case "listTipoPedidoPedido":	
 			require_once "../model/Pedido.php";
@@ -134,7 +145,7 @@ switch ($_GET["op"]) {
                     "3"=>$reg->fecha,
                     "4"=>$reg->estado,
                     "5"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
-                    '<button class="btn btn-success" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
+                    '<button class="btn btn-success" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
                     '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
                     '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
                     '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp'

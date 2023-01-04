@@ -49,9 +49,11 @@ function init(){
                 serie_vent : $("#txtSerieVent").val(),
                 num_vent : $("#txtNumeroVent").val(),
 
-                metodo_pago : $("#cboMetodoPago").val(), // Cuenta donde es abonada
-                agencia_envio : $("#cboAgenEnvio").val(), // Transporte
-                tipo_promocion : $("#cboTipoPromocion").val(), // Promociones de ventas
+                
+
+                metodo_pago : $("#hdn_metodo_pago").val(), // Cuenta donde es abonada
+                agencia_envio : $("#hdn_agencia_envio").val(), // Transporte
+                tipo_promocion : $("#hdn_tipo_promocion").val(), // Promociones de ventas
                 //num_operacion : $("#txtNumeroOpe").val(), // Comprobantes de pago 
                 //hora_operacion : $("#txtHoraOpe").val(),  // Fecha en que se registra la operacion
                 
@@ -73,7 +75,7 @@ function init(){
 
                 if ($("#cboTipoVenta").val() == "Contado") {
 
-                    /*
+                    
                     swal("Mensaje del Sistema", r, "success");
 
                     $("#btnNuevoPedido").show();
@@ -94,7 +96,7 @@ function init(){
                       }
                     });
                     //location.reload();
-                    */
+                    
 
                 } else {
 
@@ -304,14 +306,19 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido, total, correo,idcliente){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado
         $("#btnNuevoPedido").hide();
         $("#VerTotalesDetPedido").hide();
 		$("#txtIdPedido").val(idPedido);
+
         $("#hdn_idClientePedido").val(idcliente);
+        $("#hdn_metodo_pago").val(metodo_pago);
+        $("#hdn_agencia_envio").val(agencia_envio);
+        $("#hdn_tipo_promocion").val(tipo_promocion);
+
 		$("#txtTotalVent").val(total);
         email = correo;
         AgregatStockCant(idPedido);

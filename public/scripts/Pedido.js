@@ -130,9 +130,11 @@ function init() {
                 formData.append('idCliente', $('#txtIdCliente').val());
                 formData.append('idSucursal', $('#txtIdSucursal').val());
                 formData.append('tipo_pedido', $('#cboTipoPedido').val());
-                formData.append('tipo_promocion', $('#cboTipoPromocion').val());
+
                 formData.append('metodo_pago', $('#cboMetodoPago').val());
                 formData.append('agencia_envio', $('#cboAgenEnvio').val());
+                formData.append('tipo_promocion', $('#cboTipoPromocion').val());
+                
                 formData.append('numero', $('#txtNumeroPed').val());
                 for (var i = 0; i < detalle.length; i++) {
                     formData.append('detalle[]', detalle[i]);
@@ -149,6 +151,7 @@ function init() {
         
                     success: function (data) {
                         
+                    
                         swal("Mensaje del Sistema", data, "success");
                         // delete this.elementos;
 
@@ -163,6 +166,7 @@ function init() {
                         $("#txtCliente").val("");
                         ListadoVenta();
                         GetPrimerCliente();
+                        
         
                     }
         
@@ -597,7 +601,8 @@ function ConsultarDetallesPed() {
 
     function calcularTotalPed(posi){
         if(posi != null){
-          ModificarPed(posi);
+          //ModificarPed(posi);
+          Modificar(posi);
         }
         var suma = 0;
         var data = JSON.parse(objinit.consultar());
@@ -608,6 +613,7 @@ function ConsultarDetallesPed() {
         calcularSubTotalPed();
         $("#txtTotalPed").val(Math.round(suma*100)/100);
     }
+
 
     function cargarDataPedido(idPedido, tipo_pedido, numero, Cliente, total, correo, direccion,dni,date,celular,hora_operacion,imagen){ // el numero crea el espacio en la celda 
         bandera = 2;
