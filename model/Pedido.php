@@ -198,6 +198,7 @@
 			p.tipo_promocion AS tipo_promocion
 
 			from pedido p inner join persona c on p.idcliente = c.idpersona
+			
 			where p.idsucursal = $idsucursal 
 			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 
