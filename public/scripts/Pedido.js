@@ -34,6 +34,7 @@ function init() {
     GetImpuesto();
     GetPrimerCliente();
 
+    $("#txtRutaImgVoucher").hide();
     $("#VerForm").hide();
     $("#VerFormVentaPed").hide();
 
@@ -97,6 +98,87 @@ function init() {
     
         if ($("#txtIdCliente").val() != "") {
             if (elementos.length > 0) {
+
+                /*
+                var file_name=$('#imagenVoucher').val();
+                var index_dot=file_name.lastIndexOf(".")+1;
+                var ext=file_name.substr(index_dot);
+
+                if (file_name == "") {
+                    var archivo = "";
+                    var fileName = "";
+                }else{
+                    var archivo = $('#imagenVoucher')[0].files[0];
+                    var fileName = file_name;
+                }
+                */
+
+                
+                var formData = new FormData();
+
+                var detalle =  JSON.parse(consultar());
+
+                // alert(detalle);
+
+                $.each($("input[type='file']")[0].files, function(i, file) {
+                    //alert(file)
+
+                    formData.append('fileupload[]', file);
+                });
+
+                formData.append('idUsuario', $('#txtIdUsuario').val());
+                formData.append('idCliente', $('#txtIdCliente').val());
+                formData.append('idSucursal', $('#txtIdSucursal').val());
+                formData.append('tipo_pedido', $('#cboTipoPedido').val());
+
+                formData.append('metodo_pago', $('#cboMetodoPago').val());
+                formData.append('agencia_envio', $('#cboAgenEnvio').val());
+                formData.append('tipo_promocion', $('#cboTipoPromocion').val());
+                
+                formData.append('numero', $('#txtNumeroPed').val());
+                for (var i = 0; i < detalle.length; i++) {
+                    formData.append('detalle[]', detalle[i]);
+                }
+                //formData.append('detalle', detalle);
+                //formData.append('ext', ext);
+        
+                $.ajax({
+                    url: "./ajax/PedidoAjax.php?op=Save",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+        
+                    success: function (data) {
+                        
+                    
+                        swal("Mensaje del Sistema", data, "success");
+                        // delete this.elementos;
+
+                        //$("#tblDetallePedido tbody").html("");
+                        $("#txtIgvPed").val("");
+                        $("#txtTotalPed").val("");
+                        $("#txtSubTotalPed").val("");
+                        OcultarForm();
+                        $("#VerFormPed").hide();// Mostramos el formulario
+                        $("#btnNuevoPedido").show();
+                        Limpiar();
+                        $("#txtCliente").val("");
+                        ListadoVenta();
+                        GetPrimerCliente();
+                        
+        
+                    }
+        
+                });
+                
+
+
+
+
+
+                // alert(fileName);
+                /*
                 var detalle =  JSON.parse(consultar());
 
                 var data = { 
@@ -104,7 +186,16 @@ function init() {
                     idCliente : $("#txtIdCliente").val(),
                     idSucursal : $("#txtIdSucursal").val(),
                     tipo_pedido : $("#cboTipoPedido").val(),
+                    
+                    tipo_promocion : $("#cboTipoPromocion").val(), // Promociones de ventas
+                    metodo_pago : $("#cboMetodoPago").val(), // Cuenta donde es abonada
+                    agencia_envio : $("#cboAgenEnvio").val(), // Transporte
+    
                     numero : $("#txtNumeroPed").val(),
+
+                    //fileupload : archivo,
+                    //ext : ext,
+
                     detalle : detalle
                 };
                 
@@ -125,11 +216,17 @@ function init() {
                             GetPrimerCliente();
 
                 });
+
+                */
+
+
+
+
             } else {
-                bootbox.alert("Debe agregar articulos al detalle");
+                bootbox.alert("Debe agregar Productos al detalle para registrar el Pedido");
             }
         } else {
-            bootbox.alert("Debe elegir un cliente");
+            bootbox.alert("Debe elegir un Cliente para registrar el Pedido");
         }
 	}
 
@@ -159,7 +256,12 @@ function init() {
                     idCliente : $("#txtIdCliente").val(),
                     idSucursal : $("#txtIdSucursal").val(),
                     tipo_pedido : "Pedido",
+                    //numero : $("#txtNumeroPed").val(),
+                    metodo_pago : $("#cboMetodoPago").val(), // Cuenta donde es abonada
+                    agencia_envio : $("#cboAgenEnvio").val(), // Transporte
+                    tipo_promocion : $("#cboTipoPromocion").val(), // Promociones de ventas
                     numero : $("#txtNumeroPed").val(),
+                    imagen : $("#txtRutaImgVoucher").val(),
                     detalle : detalle
                 };
 
@@ -208,15 +310,12 @@ function init() {
                                 
                             });
 
-                            
-
-
                 });
             } else {
-                bootbox.alert("Debe agregar articulos al detalle");
+                bootbox.alert("Debe agregar articulos al detalle js GenerarVenta ");
             }
         } else {
-            bootbox.alert("Debe elegir un cliente");
+            bootbox.alert("Debe elegir un cliente js GenerarVenta ");
         }
     }
 
@@ -428,67 +527,30 @@ function init() {
     };
 };
 
-function ListadoPedidos(){ 
-            var tabla = $('#tblVentas').dataTable(
-            {   "aProcessing": true,
-            "aServerSide": true,
-            dom: 'Bfrtip',
-                buttons: [
-                    'copyHtml5',
-                    'excelHtml5',
-                    'csvHtml5',
-                    'pdfHtml5'
-                ],
-            "aoColumns":[
-                    {   "mDataProp": "0"},
-                    {   "mDataProp": "1"},
-                    {   "mDataProp": "2"},
-                    {   "mDataProp": "3"},
-                    {   "mDataProp": "4"},
-                    {   "mDataProp": "5"},
-                    {   "mDataProp": "6"},
-                    {   "mDataProp": "7"}
-            ],"ajax": 
-                {
-                    url: './ajax/PedidoAjax.php?op=list',
-                    type : "get",
-                    dataType : "json",
-                    
-                    error: function(e){
-                        console.log(e.responseText);    
-                    }
-                },
-            "bDestroy": true
-
-        }).DataTable();
-    };
-function ListadoPedidos2(){ 
-        var tabla = $('#tblVentas2').dataTable(
-        {   "aProcessing": true,
+function ListadoVenta(){ 
+    var tabla = $('#tblVentaPedido').dataTable(
+    {   "aProcessing": true,
         "aServerSide": true,
         dom: 'Bfrtip',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ],
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
         "aoColumns":[
+
                 {   "mDataProp": "0"},
                 {   "mDataProp": "1"},
                 {   "mDataProp": "2"},
                 {   "mDataProp": "3"},
-                {   "mDataProp": "4"},
-                {   "mDataProp": "5"},
-                {   "mDataProp": "6"},
-                {   "mDataProp": "7"}
-
-        ],"ajax": 
+                {   "mDataProp": "4","sClass": "text-center"},
+                {   "mDataProp": "5"}
+        ],"ajax":
             {
-                url: './ajax/PedidoAjax.php?op=listAdmin',
+                url: './ajax/PedidoAjax.php?op=listTipoPedidoPedido',
                 type : "get",
                 dataType : "json",
-                
                 error: function(e){
                     console.log(e.responseText);    
                 }
@@ -539,7 +601,8 @@ function ConsultarDetallesPed() {
 
     function calcularTotalPed(posi){
         if(posi != null){
-          ModificarPed(posi);
+          //ModificarPed(posi);
+          Modificar(posi);
         }
         var suma = 0;
         var data = JSON.parse(objinit.consultar());
@@ -551,7 +614,8 @@ function ConsultarDetallesPed() {
         $("#txtTotalPed").val(Math.round(suma*100)/100);
     }
 
-    function cargarDataPedido(idPedido, tipo_pedido, numero, Cliente, total, correo, direccion,dni,date,celular,hora_operacion){ // el numero crea el espacio en la celda 
+
+    function cargarDataPedido(idPedido, tipo_pedido, numero, Cliente, total, correo, direccion,dni,date,celular,hora_operacion,imagen){ // el numero crea el espacio en la celda 
         bandera = 2;
         $("#VerForm").show();
         $("#btnNuevoVent").hide();
@@ -559,6 +623,9 @@ function ConsultarDetallesPed() {
         $("#txtIdPedido").val(idPedido);
         $("#txtCliente").hide();
         $("#cboTipoPedido").hide();
+        $("#txtRutaImgVoucher").val(imagen);
+	    $("#txtRutaImgVoucher").show();
+	    //$("#txtRutaImgArt").prop("disabled", true);
         email = correo;
         direccion_calle = direccion;
         num_documento = dni;
@@ -631,8 +698,7 @@ function ConsultarDetallesPed() {
         $("#inputImpuesto").hide();
         $("#inputTipoPed").hide();
         $("#inputNumero").hide();
-        
-        
+
         CargarDetallePedido(idPedido);
         $("#cboTipoPedido").prop("disabled", true);
         $("#txtNumeroPed").prop("disabled", true);
@@ -652,7 +718,68 @@ function ConsultarDetallesPed() {
         $("#lblHasta").hide();
         $("#btnNuevoPedido").hide();
         $("#txtTotalVent").val(total);
+
+
+        // CARGA DETALLE DE IMAGENES
+
+        mostrarDetalleImagenes(idPedido);
+
+
     }
+    
+    function mostrarDetalleImagenes(idPedido) {
+
+        $("#detalleImagenes").html("");
+
+        $.post("./ajax/PedidoAjax.php?op=GetImagenes",{idPedido: idPedido}, function(r){
+
+            if (r != "") {
+                $("#detalleImagenes").html(r);
+            } else {
+                $("#detalleImagenes").html("Sin datos que mostrar...");
+            }
+
+        });
+
+    }
+
+    function eliminarDetalleImagen(id,idpedido) {
+
+        $.post("./ajax/PedidoAjax.php?op=DeleteImagenes",{id: id}, function(r){
+
+            mostrarDetalleImagenes(idpedido);
+
+        });
+
+        /*
+        $("#modal-eliminar-imagen").modal("show");
+        $("#hdn_iddetalleimagen").val(id);
+        $("#hdn_numerdetalleimagen").val(numero);
+        */
+
+    }
+    
+    $("#btn_cancelar_imagen").click(function(e){
+
+        e.preventDefault();
+
+        $("#modal-eliminar-imagen").modal("hide");
+        $("#hdn_iddetalleimagen").val("");
+        $("#hdn_numerdetalleimagen").val("");
+    });
+
+    $("#btn_eliminar_imagen").click(function(e){
+
+        e.preventDefault();
+
+        
+        $.post("./ajax/PedidoAjax.php?op=DeleteImagenes",{id: $("#hdn_iddetalleimagen").val()}, function(r){
+
+            mostrarDetalleImagenes($("#hdn_numerdetalleimagen").val());
+
+        });
+
+    });
 
     function CargarDetallePedido(idPedido) {
         //$('th:nth-child(2)').hide();
@@ -673,7 +800,7 @@ function ConsultarDetallesPed() {
        // alert(idPedido);
         
             //alert(detalleTraerCantidad[0]);
-        bootbox.confirm("Solo el ADMINISTRADOR debe anular las ventas ¿Esta Seguro de Anular la Venta?", function(result){
+        bootbox.confirm("Solo el ADMINISTRADOR debe anular las ventas ¿Esta seguro de Anular la Venta?", function(result){
 
             if(result){
                 
@@ -712,7 +839,7 @@ function ConsultarDetallesPed() {
     } 
 
     function eliminarPedido(idPedido){
-        bootbox.confirm("¿Esta Seguro de eliminar el pedido?", function(result){
+        bootbox.confirm("¿Esta seguro de eliminar el pedido?", function(result){
             if(result){
                 $.post("./ajax/PedidoAjax.php?op=EliminarPedido", {idPedido : idPedido}, function(e){
                     
@@ -725,11 +852,26 @@ function ConsultarDetallesPed() {
         })
     }
 
+    function cambiarEstadoPedido(idPedido){
+        bootbox.confirm("¿Esta seguro de cambiar el estado del pedido?", function(result){
+            if(result){
+                $.post("./ajax/PedidoAjax.php?op=cambiarEstadoPedido", {idPedido : idPedido}, function(e){
+                    
+                    swal("Mensaje del Sistema", e, "success");
+                    ListadoPedidos();
+                    ListadoVenta();
+                });
+            }
+            
+        })
+    }
+
+
     function VerMsj(){
         bootbox.alert("No se puede generar la venta, este pedido esta cancelado");
     }
 
-    function ModificarPed(pos){
+    function Modificar(pos){
         var idDetIng = document.getElementsByName("txtIdDetIng");
         var pvd = document.getElementsByName("txtPrecioVentPed");
         var cantPed = document.getElementsByName("txtCantidaPed");
@@ -844,7 +986,9 @@ function ConsultarDetallesPed() {
                 $("#cboTipoComprobante").html(r);
         })
     }
-    //Consulta de stock menor a 0 Unidades
+
+    
+    //Consulta de stock menor a 0 Unidades 
     function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta){
             if (stock_actual > 0) {
                 var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);

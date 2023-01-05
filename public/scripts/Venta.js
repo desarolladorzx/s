@@ -35,9 +35,12 @@ function init(){
 		e.preventDefault();// para que no se recargue la pagina
         if ($("#txtSerieVent").val() != "" && $("#txtNumeroVent").val() != "") {
 
+            //alert($("#txtIdPedido").val())
+
             var detalle =  JSON.parse(consultarDet());
             var data = {
 
+                idCliente : $("#hdn_idClientePedido").val(),
                 idUsuario : $("#txtIdUsuario").val(),
                 idPedido : $("#txtIdPedido").val(),
                 tipo_venta : $("#cboTipoVenta").val(),
@@ -46,15 +49,17 @@ function init(){
                 serie_vent : $("#txtSerieVent").val(),
                 num_vent : $("#txtNumeroVent").val(),
 
-                metodo_pago : $("#cboMetodoPago").val(), // Cuenta donde es abonada
-                agencia_envio : $("#cboAgenEnvio").val(), // Transporte
-                tipo_promocion : $("#cboTipoPromocion").val(), // Promociones de ventas
+                
+
+                metodo_pago : $("#hdn_metodo_pago").val(), // Cuenta donde es abonada
+                agencia_envio : $("#hdn_agencia_envio").val(), // Transporte
+                tipo_promocion : $("#hdn_tipo_promocion").val(), // Promociones de ventas
                 //num_operacion : $("#txtNumeroOpe").val(), // Comprobantes de pago 
-                hora_operacion : $("#txtHoraOpe").val(),  // Fecha en que se registra la operacion
+                //hora_operacion : $("#txtHoraOpe").val(),  // Fecha en que se registra la operacion
                 
                 impuesto : $("#txtImpuesto").val(),
                 total_vent : $("#txtTotalVent").val(),
-                idCliente : $("#hdn_idcliente").val(),
+                //idCliente : $("#hdn_idcliente").val(),
                 detalle : detalle
             };
 
@@ -70,6 +75,7 @@ function init(){
 
                 if ($("#cboTipoVenta").val() == "Contado") {
 
+                    
                     swal("Mensaje del Sistema", r, "success");
 
                     $("#btnNuevoPedido").show();
@@ -90,6 +96,8 @@ function init(){
                       }
                     });
                     //location.reload();
+                    
+
                 } else {
 
                     $("#btnNuevoPedido").show();
@@ -216,36 +224,76 @@ function init(){
     }
 }
 
-function ListadoVenta(){ 
-        var tabla = $('#tblVentaPedido').dataTable(
-        {   "aProcessing": true,
-            "aServerSide": true,
-            dom: 'Bfrtip',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ],
-            "aoColumns":[
+function ListadoPedidos(){ 
+    var tabla = $('#tblVentas').dataTable(
+    {   "aProcessing": true,
+    "aServerSide": true,
+    dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ],
+    "aoColumns":[
+            {   "mDataProp": "0"},
+            {   "mDataProp": "1"},
+            {   "mDataProp": "2"},
+            {   "mDataProp": "3"},
+            {   "mDataProp": "4"},
+            {   "mDataProp": "5"},
+            {   "mDataProp": "6"},
+            {   "mDataProp": "7"}
+    ],"ajax": 
+        {
+            url: './ajax/VentaAjax.php?op=list',
+            type : "get",
+            dataType : "json",
+            
+            error: function(e){
+                console.log(e.responseText);    
+            }
+        },
+    "bDestroy": true
 
-                    {   "mDataProp": "0"},
-                    {   "mDataProp": "1"},
-                    {   "mDataProp": "2"},
-                    {   "mDataProp": "3"},
-                    {   "mDataProp": "4"}
-            ],"ajax":
-                {
-                    url: './ajax/VentaAjax.php?op=listTipoPedidoPedido',
-                    type : "get",
-                    dataType : "json",
-                    error: function(e){
-                        console.log(e.responseText);    
-                    }
-                },
-            "bDestroy": true
-        }).DataTable();
-    };
+}).DataTable();
+};
+function ListadoPedidos2(){ 
+var tabla = $('#tblVentas2').dataTable(
+{   "aProcessing": true,
+"aServerSide": true,
+dom: 'Bfrtip',
+    buttons: [
+        'copyHtml5',
+        'excelHtml5',
+        'csvHtml5',
+        'pdfHtml5'
+    ],
+"aoColumns":[
+        {   "mDataProp": "0"},
+        {   "mDataProp": "1"},
+        {   "mDataProp": "2"},
+        {   "mDataProp": "3"},
+        {   "mDataProp": "4"},
+        {   "mDataProp": "5"},
+        {   "mDataProp": "6"},
+        {   "mDataProp": "7"}
+
+],"ajax": 
+    {
+        url: './ajax/VentaAjax.php?op=listAdmin',
+        type : "get",
+        dataType : "json",
+        
+        error: function(e){
+            console.log(e.responseText);    
+        }
+    },
+"bDestroy": true
+}).DataTable();
+};
+
+
 
 function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar el Venta seleccionado?", function(result){ // confirmamos con una pregunta si queremos eliminar
@@ -258,13 +306,19 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido, total, correo){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado
         $("#btnNuevoPedido").hide();
         $("#VerTotalesDetPedido").hide();
 		$("#txtIdPedido").val(idPedido);
+
+        $("#hdn_idClientePedido").val(idcliente);
+        $("#hdn_metodo_pago").val(metodo_pago);
+        $("#hdn_agencia_envio").val(agencia_envio);
+        $("#hdn_tipo_promocion").val(tipo_promocion);
+
 		$("#txtTotalVent").val(total);
         email = correo;
         AgregatStockCant(idPedido);

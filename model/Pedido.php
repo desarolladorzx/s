@@ -3,46 +3,80 @@
 	require "Conexion.php";
 	class Pedido{
 
-		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle){
+		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion){
 			global $conexion;
 			$sw = true;
 			try {
-				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha, numero, estado)
-						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(), $numero, 'A')";
+
+				//exit;
+
+				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion)
+						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion')";
 				//var_dump($sql);
 				$conexion->query($sql);
 				$idpedido=$conexion->insert_id;
 				$conexion->autocommit(true);
-				foreach($detalle as $indice => $valor){
+				
+				//var_dump($sql);
+				//exit;
+
+				//$array1 = explode(",", $detalle);
+				//var_dump($detalle);
+				//exit;
+
+				for ($i=0; $i < count($detalle); $i++) { 
+					
+					$array = explode(",", $detalle[$i]);
+
 					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
-											VALUES($idpedido, ".$valor[0].", ".$valor[3].", ".$valor[2].", ".$valor[4].")";
+											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."')";
+
+					$conexion->query($sql_detalle) or $sw = false;
+
+				}
+
+				//var_dump($sql_detalle);
+				//exit;
+
+				/*
+				foreach($detalle as $indice){
+					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
+											VALUES($idpedido, ".$indice[0].", ".$indice[3].", ".$indice[2].", ".$indice[4].")";
 					$conexion->query($sql_detalle) or $sw = false;
 				}
+				*/
+
+				//exit;
+
+				/*
 				if ($conexion != null) {
                 	$conexion->close();
             	}
+				*/
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
-			return $sw;
+
+			//return $sw;
+			return [$sw,$idpedido];
 		}
 		
 		// Se cambio la cantidad del orden a 10K
 		public function Listar($idsucursal){
 			global $conexion;
-			$sql = "select p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono, v.serie_comprobante as serie,v.num_comprobante as ticket
+			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono, v.serie_comprobante as serie,v.num_comprobante as ticket
 			from pedido p 
             inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
             where p.idsucursal = $idsucursal
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
+			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		// public function Listar($idsucursal){
 		// 	global $conexion;
-		// 	$sql = "select p.*, c.nombre as Cliente, c.email 
+		// 	$sql = "SELECT p.*, c.nombre as Cliente, c.email 
 		// 	from pedido p inner join persona c on p.idcliente = c.idpersona where p.idsucursal = $idsucursal 
 		// 	and c.tipo_persona = 'Cliente' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,2999";
 		// 	$query = $conexion->query($sql);
@@ -51,14 +85,14 @@
 
 		public function VerVenta($idpedido){
 			global $conexion;
-			$sql = "select * from venta where idpedido = $idpedido";
+			$sql = "SELECT * from venta where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function TotalPedido($idpedido){
 			global $conexion;
-			$sql = "select sum((precio_venta * cantidad) - (cantidad * descuento)) as Total
+			$sql = "SELECT sum((precio_venta * cantidad) - (cantidad * descuento)) as Total
 	from detalle_pedido where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
@@ -80,7 +114,7 @@
 				$conexion->query($sql2);
 
 				$sql3 = "UPDATE credito set total_pago = '0.00'
-						WHERE idventa = (select idventa from venta where idpedido=$idpedido)";
+						WHERE idventa = (SELECT idventa from venta where idpedido=$idpedido)";
 				//var_dump($sql);
 				$conexion->query($sql3);
 
@@ -118,21 +152,21 @@
 		public function GetPrimerCliente()
 		{
 			global $conexion;
-			$sql = "select idpersona,nombre from persona where tipo_persona='Cliente' order by idpersona limit 0,1";
+			$sql = "SELECT idpersona,nombre from persona where tipo_persona='Cliente' order by idpersona limit 0,1";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function TraerCantidad($idpedido){
 			global $conexion;
-			$sql = "select iddetalle_ingreso, cantidad from detalle_pedido where idpedido = $idpedido";
+			$sql = "SELECT iddetalle_ingreso, cantidad from detalle_pedido where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function GetDetallePedido($idpedido){
 			global $conexion;
-			$sql = "select a.nombre as articulo, dg.codigo, dg.serie, dp.*
+			$sql = "SELECT a.nombre as articulo, dg.codigo, dg.serie, dp.*
 			from pedido p inner join detalle_pedido dp on p.idpedido = dp.idpedido
 			inner join detalle_ingreso dg on dp.iddetalle_ingreso = dg.iddetalle_ingreso
 			inner join articulo a on dg.idarticulo = a.idarticulo
@@ -143,7 +177,7 @@
 
 		public function GetDetalleCantStock($idpedido){
 			global $conexion;
-			$sql = "select di.iddetalle_ingreso, di.stock_actual, dp.cantidad 
+			$sql = "SELECT di.iddetalle_ingreso, di.stock_actual, dp.cantidad 
 			from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso = di.iddetalle_ingreso
 			where dp.idpedido = $idpedido";
 			$query = $conexion->query($sql);
@@ -152,16 +186,30 @@
 
 		public function ListarTipoPedidoPedido($idsucursal){
 			global $conexion;
-			$sql = "select p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono
-			from pedido p inner join persona c on p.idcliente = c.idpersona where p.idsucursal = $idsucursal 
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,10000";
+			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono,
+
+			(CASE
+				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
+				WHEN p.estado = 'B' THEN '<span class=\'badge bg-aqua\'>Cancelado</span>'
+				WHEN p.estado = 'C' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
+			END ) AS estado,
+			p.metodo_pago AS metodo_pago,
+			p.agencia_envio AS agencia_envio,
+			p.tipo_promocion AS tipo_promocion
+
+			from pedido p inner join persona c on p.idcliente = c.idpersona
+			where p.idsucursal = $idsucursal 
+			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
+
+			//var_dump($sql);exit;
+
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		// public function ListarTipoPedidoPedido($idsucursal){
 		// 	global $conexion;
-		// 	$sql = "select p.*, c.nombre as Cliente,c.email,
+		// 	$sql = "SELECT p.*, c.nombre as Cliente,c.email,
 		// 	from pedido p inner join persona c 
 		// 	on p.idcliente = c.idpersona where p.estado = 'A' and p.idsucursal = $idsucursal 
 		// 	and p.tipo_pedido <> 'Venta' 
@@ -172,21 +220,21 @@
 
 		public function GetTotal($idpedido){
 			global $conexion;
-			$sql = "select sum((cantidad * precio_venta) - descuento) as total from detalle_pedido where idpedido = $idpedido";
+			$sql = "SELECT sum((cantidad * precio_venta) - descuento) as total from detalle_pedido where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function GetIdPedido(){
 			global $conexion;
-			$sql = "select max(idpedido) as idpedido from pedido";
+			$sql = "SELECT max(idpedido) as idpedido from pedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function GetNextNumero($idsucursal){
 			global $conexion;
-			$sql = "select max(numero) + 1 as numero from pedido where idsucursal = $idsucursal";
+			$sql = "SELECT max(numero) + 1 as numero from pedido where idsucursal = $idsucursal";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -194,7 +242,7 @@
 		// lista modal clientes en la ventana de ventas
 		public function ListarClientes(){
 			global $conexion;
-			$sql = "select * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and estado = 'A' order by idpersona desc ";
+			$sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -202,7 +250,7 @@
 		// lista modal productos en la ventana de ventas
 		public function ListarDetalleIngresos($idsucursal){
 			global $conexion;
-			$sql = "select distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion
+			$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion
 			from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 			inner join articulo a on di.idarticulo = a.idarticulo
 			inner join categoria c on a.idcategoria = c.idcategoria
@@ -214,14 +262,14 @@
 
 		public function ListarProveedor(){
 			global $conexion;
-			$sql = "select * from persona where tipo_persona = 'Proveedor' and estado = 'A'";
+			$sql = "SELECT * from persona where tipo_persona = 'Proveedor' and estado = 'A'";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function ListarTipoDocumento($idsucursal){
 			global $conexion;
-			$sql = "select dds.*, td.nombre
+			$sql = "SELECT dds.*, td.nombre
 			from detalle_documento_sucursal dds inner join tipo_documento td on dds.idtipo_documento = td.idtipo_documento
 			where dds.idsucursal = $idsucursal and operacion = 'Comprobante'";
 			$query = $conexion->query($sql);
@@ -230,21 +278,21 @@
 
 		public function GetTipoDocSerieNum($nombre){
 			global $conexion;
-			$sql = "select ultima_serie, ultimo_numero from tipo_documento where operacion = 'Comprobante' and nombre = '$nombre'";
+			$sql = "SELECT ultima_serie, ultimo_numero from tipo_documento where operacion = 'Comprobante' and nombre = '$nombre'";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function ListarProveedores(){
 			global $conexion;
-			$sql = "select * from persona where tipo_perssona = 'Proveedor'";
+			$sql = "SELECT * from persona where tipo_perssona = 'Proveedor'";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function GetClienteSucursalPedido($idpedido){
 			global $conexion;
-			$sql = "select p.*, ped.fecha, s.razon_social, ped.numero, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,p.tipo_documento as doc
+			$sql = "SELECT p.*, ped.fecha, s.razon_social, ped.numero, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,p.tipo_documento as doc
 			from persona p inner join pedido ped on ped.idcliente = p.idpersona
 			inner join sucursal s on ped.idsucursal = s.idsucursal
 			where ped.idpedido = $idpedido";
@@ -254,7 +302,7 @@
 
 		public function GetVenta($idpedido){
 			global $conexion;
-			$sql = "select p.*,concat(e.apellidos,' ',e.nombre) as empleado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante, v.serie_comprobante, v.metodo_pago, v.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado
+			$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante, v.serie_comprobante, v.metodo_pago, v.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado
 			from persona p inner join pedido ped on ped.idcliente = p.idpersona
 			inner join detalle_pedido dp on dp.idpedido = ped.idpedido
 			inner join sucursal s on ped.idsucursal = s.idsucursal
@@ -268,7 +316,7 @@
 
 		public function GetComprobanteTipo($idpedido){
 			global $conexion;
-			$sql = "select v.tipo_comprobante from venta v inner join pedido p on p.idpedido=v.idpedido
+			$sql = "SELECT v.tipo_comprobante from venta v inner join pedido p on p.idpedido=v.idpedido
 			where p.idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
@@ -276,7 +324,7 @@
 
 		public function ImprimirDetallePedido($idpedido){
 			global $conexion;
-			$sql = "select di.codigo,concat(e.apellidos,' ',e.nombre) as empleado,di.serie, c.nombre as marca,di.codigo as codigo, a.nombre as articulo, dp.*, (dp.cantidad * dp.precio_venta) - dp.descuento as sub_total
+			$sql = "SELECT di.codigo,concat(e.apellidos,' ',e.nombre) as empleado,di.serie, c.nombre as marca,di.codigo as codigo, a.nombre as articulo, dp.*, (dp.cantidad * dp.precio_venta) - dp.descuento as sub_total
 			from detalle_pedido dp inner join pedido p on dp.idpedido = p.idpedido
 			inner join detalle_ingreso di on dp.iddetalle_ingreso = di.iddetalle_ingreso
 			inner join articulo a on di.idarticulo = a.idarticulo
@@ -287,4 +335,54 @@
 			$query = $conexion->query($sql);
 			return $query;
 		}
+
+		public function RegistrarDetalleImagenes($idpedido,$idcliente, $idusuario, $idsucursal, $imagen){
+
+			global $conexion;
+			$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado)
+						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1)";
+			//var_dump($sql);
+			$query = $conexion->query($sql);
+
+			/*
+			if ($conexion != null) {
+				$conexion->close();
+			}
+			*/
+
+			return $query;
+
+		}
+
+		public function GetImagenes($idpedido){
+			global $conexion;
+			$sql = "SELECT
+					iddetalle_img AS id,
+					idpedido AS idpedido,
+					idcliente AS idcliente,
+					idusuario AS idusuario,
+					idsucursal AS idsucursal,
+					imagen AS imagen
+			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1";
+			//var_dump($sql);exit;
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
+
+		public function DeleteImagenes($iddetalleimg){
+			global $conexion;
+			$sql = "UPDATE detalle_pedido_img set estado = '0' WHERE iddetalle_img = $iddetalleimg";
+			$query = $conexion->query($sql);
+			return $query;
+		}
+		
+
+		public function cambiarEstadoPedido($idpedido){
+			global $conexion;
+			$sql = "UPDATE pedido set estado = 'C',idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
 	}
