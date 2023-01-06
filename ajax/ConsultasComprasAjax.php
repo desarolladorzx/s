@@ -41,42 +41,6 @@
 
 			break;
 
-		case "listStockArticulos":
-           if ( !isset($_REQUEST['idsucursal'])) $_REQUEST['idsucursal'] = 1;
-          $idsucursal = $_REQUEST["idsucursal"];
-          $data =Array();
-
-			$query_Tipo = $objCategoria->ListarStockArticulos($idsucursal);
-
-			while ($reg = $query_Tipo->fetch_object()) {
-
-				$data[] = array(
-                         "0"=>$reg->sucursal,
-                         "1"=>$reg->articulo,
-                         "2"=>$reg->marca,
-                         "3"=>$reg->categoria,
-                         "4"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
-                         "5"=>$reg->codigo,
-                         "6"=>$reg->serie,
-                         "7"=>$reg->totalingreso,
-                         "8"=>$reg->valorizadoingreso,
-                         "9"=>$reg->totalstock,
-                         "10"=>$reg->preciocompra,
-                         "11"=>$reg->valorizadostock,
-                         "12"=>$reg->totalventa,
-                         "13"=>$reg->valorizadoventa,
-                         "14"=>$reg->utilidadvalorizada
-                         );
-			}
-               $results = array(
-               "sEcho" => 1,
-               "iTotalRecords" => count($data),
-               "iTotalDisplayRecords" => count($data),
-               "aaData"=>$data);
-               echo json_encode($results);
-            
-			break;
-
           case "listStockArticulos":
            if ( !isset($_REQUEST['idsucursal'])) $_REQUEST['idsucursal'] = 1;
           $idsucursal = $_REQUEST["idsucursal"];
@@ -96,12 +60,13 @@
                          "6"=>$reg->serie,
                          "7"=>$reg->totalingreso,
                          "8"=>$reg->valorizadoingreso,
-                         "9"=>$reg->totalstock,
-                         "10"=>$reg->preciocompra,
+                         "9"=>'<span class="btn btn-danger">'.$reg->totalstock.'</span>',
+                         "10"=>'<span class="btn btn-warning">'.'S/.'.$reg->preciocompra.'</span>',
                          "11"=>$reg->valorizadostock,
                          "12"=>$reg->totalventa,
-                         "13"=>$reg->valorizadoventa,
-                         "14"=>$reg->utilidadvalorizada
+                         "13"=>'<span class="btn btn-success">'.'S/.'.$reg->precioventa.'</span>',
+                         "14"=>$reg->valorizadoventa,
+                         "15"=>$reg->utilidadvalorizada
                          );
 			}
                $results = array(
