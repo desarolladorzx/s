@@ -350,9 +350,7 @@
 				$conexion->close();
 			}
 			*/
-
 			return $query;
-
 		}
 
 		public function GetImagenes($idpedido){
@@ -370,7 +368,6 @@
 			return $query;
 		}
 
-
 		public function DeleteImagenes($iddetalleimg){
 			global $conexion;
 			$sql = "UPDATE detalle_pedido_img set estado = '0' WHERE iddetalle_img = $iddetalleimg";
@@ -378,12 +375,10 @@
 			return $query;
 		}
 		
-
 		public function cambiarEstadoPedido($idpedido){
 			global $conexion;
 			$sql = "UPDATE pedido set estado = 'C',idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
-
 	}

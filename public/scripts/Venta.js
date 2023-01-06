@@ -318,6 +318,7 @@ function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_env
         $("#hdn_metodo_pago").val(metodo_pago);
         $("#hdn_agencia_envio").val(agencia_envio);
         $("#hdn_tipo_promocion").val(tipo_promocion);
+        $("#txtClientePed").val(metodo_pago);
 
        /*  $("#txtRutaImgVoucher").val(imagen);
 	    $("#txtRutaImgVoucher").show(); */

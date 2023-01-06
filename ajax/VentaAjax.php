@@ -41,15 +41,15 @@
 			$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
 			if ($resultExiste->countidpedido >= 2) {
-				$estadoCuenta = "CLIENTE ANTIGUO";
+				$estadoCuenta = "ANTIGUO";
 			} else {
-				$estadoCuenta = "CLIENTE NUEVO";
+				$estadoCuenta = "NUEVO";
 			}
 
 			/* ACTUALIZA SEGUN NUMERO DE PEDIDOS - LA CUENTE DE CLIENTE */
 			$objCliente->ActualizarCuentaCliente($idCliente,$estadoCuenta);
 			
-
+ 
 			if(empty($_POST["txtIdVenta"])){
 				if($objVenta->Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_doc_suc, $_POST["detalle"],$tipo_promocion,$metodo_pago,$agencia_envio)){
 						echo "Venta Registrada correctamente.";
