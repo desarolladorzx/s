@@ -42,7 +42,7 @@
 			sum(di.stock_actual) as totalstock,
 			precio_compra as preciocompra,
 			sum(di.stock_actual*di.precio_compra) as valorizadostock,
-			sum(di.stock_ingreso-di.stock_actual) as totalventa,
+			sum(di.stock_ingreso-di.stock_actual) as totalventa,precio_ventapublico as precioventa,
 			sum((di.stock_ingreso-di.stock_actual)*di.precio_ventapublico) as valorizadoventa,
 			sum((di.precio_ventapublico-di.precio_compra)*di.stock_ingreso) as utilidadvalorizada
 			from articulo a inner join detalle_ingreso di on di.idarticulo=a.idarticulo
