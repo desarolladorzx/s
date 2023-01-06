@@ -306,7 +306,7 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado
@@ -319,6 +319,9 @@ function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_env
         $("#hdn_agencia_envio").val(agencia_envio);
         $("#hdn_tipo_promocion").val(tipo_promocion);
 
+       /*  $("#txtRutaImgVoucher").val(imagen);
+	    $("#txtRutaImgVoucher").show(); */
+
 		$("#txtTotalVent").val(total);
         email = correo;
         AgregatStockCant(idPedido);
@@ -328,4 +331,23 @@ function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_env
         var subTotalPed=total - (total * parseInt($("#txtImpuesto").val())/(100+parseInt($("#txtImpuesto").val())));
         $("#txtSubTotalPed").val(Math.round(subTotalPed*100)/100);
         $("#txtTotalPed").val(Math.round(total*100)/100);
+
+        // CARGA DETALLE DE IMAGENES 
+        mostrarDetalleImagenes(idPedido);
  	}
+
+function mostrarDetalleImagenes(idPedido) {
+
+        $("#detalleImagenes").html("");
+
+        $.post("./ajax/PedidoAjax.php?op=GetImagenes",{idPedido: idPedido}, function(r){
+
+            if (r != "") {
+                $("#detalleImagenes").html(r);
+            } else {
+                $("#detalleImagenes").html("Sin datos que mostrar...");
+            }
+
+        });
+
+    }
