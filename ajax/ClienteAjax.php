@@ -120,7 +120,7 @@ switch ($_GET["op"]) {
 					$data = file_get_contents("https://api.apis.net.pe/v1/dni?numero=" . $numerodoc);
 					$info = json_decode($data, true);
 
-					$tipo_persona = 'Cliente';
+					$tipo_persona = 'Final';
 					$nombre = $info['nombres'];
 					$apellido = $info['apellidoPaterno'] . ' ' . $info['apellidoMaterno'];
 					$tipo_documento = 'DNI'; //El tipo de documento no se actualiza tiene un valor "1" en la API
@@ -145,7 +145,7 @@ switch ($_GET["op"]) {
 					$datos = array(
 						'estado' => 'encontrado',
 						'idCliente' => "",
-						'tipo_persona' => "CLIENTE",
+						'tipo_persona' => "FINAL",
 						'nombre' => $nombre,
 						'apellido' => $apellido,
 						'tipo_documento' => $tipo_documento,
@@ -202,7 +202,7 @@ switch ($_GET["op"]) {
 					$datos = array(
 						'estado' => 'encontrado',
 						'idCliente' => "",
-						'tipo_persona' => "CLIENTE",
+						'tipo_persona' => "FINAL",
 						'nombre' => $nombre,
 						'apellido' => $apellido,
 						'tipo_documento' => $tipo_documento,
