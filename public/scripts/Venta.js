@@ -306,7 +306,7 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function pasarIdPedido(idPedido, total, correo,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado

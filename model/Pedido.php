@@ -92,7 +92,7 @@
 
 		public function TotalPedido($idpedido){
 			global $conexion;
-			$sql = "SELECT sum((precio_venta * cantidad) - (cantidad * descuento)) as Total
+			$sql = "SELECT sum((precio_venta * cantidad) - (descuento * cantidad)) as Total
 	from detalle_pedido where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
@@ -221,7 +221,7 @@
 
 		public function GetTotal($idpedido){
 			global $conexion;
-			$sql = "SELECT sum((cantidad * precio_venta) - descuento) as total from detalle_pedido where idpedido = $idpedido";
+			$sql = "SELECT sum((cantidad * precio_venta) - (cantidad * descuento)) as total from detalle_pedido where idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -325,7 +325,7 @@
 
 		public function ImprimirDetallePedido($idpedido){
 			global $conexion;
-			$sql = "SELECT di.codigo,concat(e.apellidos,' ',e.nombre) as empleado,di.serie, c.nombre as marca,di.codigo as codigo, a.nombre as articulo, dp.*, (dp.cantidad * dp.precio_venta) - dp.descuento as sub_total
+			$sql = "SELECT di.codigo,concat(e.apellidos,' ',e.nombre) as empleado,di.serie, c.nombre as marca,di.codigo as codigo, a.nombre as articulo, dp.*, (dp.cantidad * dp.precio_venta) - (dp.cantidad * dp.descuento) as sub_total
 			from detalle_pedido dp inner join pedido p on dp.idpedido = p.idpedido
 			inner join detalle_ingreso di on dp.iddetalle_ingreso = di.iddetalle_ingreso
 			inner join articulo a on di.idarticulo = a.idarticulo

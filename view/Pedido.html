@@ -222,125 +222,114 @@
                             <div class="col-lg-3 left">
                                 <label for="inputMarca">Tipo de Venta</label>
                                 <div class="form-group  has-success">
-                                    <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control"
-                                        name="txtIdVenta" required="" placeholder="" autofocus="" />
+                                    <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta" required="" placeholder="" autofocus="" />
                                     <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>"
-                                        maxlength="50" class="form-control" name="txtIdUsuario" required=""
-                                        placeholder="" autofocus="" />
-                                    <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido"
-                                        required="" placeholder="" autofocus="" />
-                                    <input id="hdn_idClientePedido" type="hidden" class="form-control" name="hdn_idClientePedido"
-                                        required="" placeholder="" autofocus="" />
-
+                                        maxlength="50" class="form-control" name="txtIdUsuario" required="" placeholder="" autofocus="" />
+                                    <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required="" placeholder="" autofocus="" />
+                                    <input id="hdn_idClientePedido" type="hidden" class="form-control" name="hdn_idClientePedido" required="" placeholder="" autofocus="" />
                                         <!-- <input id="hdn_metodo_pago" type="text" class="form-control" name="hdn_metodo_pago"/>
                                         <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio"/>
                                         <input id="hdn_tipo_promocion" type="text" class="form-control" name="hdn_tipo_promocion"/> -->
-
                                     <select id="cboTipoVenta" name="cboTipoVenta" class="form-control">
                                         <option value="Contado">Contado</option>
                                         <option value="Credito">Crédito</option>
                                     </select>
                                 </div>
                             </div>
-
-
-
                             <div class="col-lg-3 left">
                                 <label for="inputMarca">T. Comprobante* (Seleccionar Ticket)</label>
                                 <div class="form-group  has-success">
-                                    <select id="cboTipoComprobante" name="cboTipoComprobante" class="form-control">
-                                    </select>
+                                    <select id="cboTipoComprobante" name="cboTipoComprobante" class="form-control"></select>
                                 </div>
                             </div>
                             <div class="col-lg-3 left">
                                 <label for="inputMarca">Serie/Folio:</label>
                                 <div class="form-group  has-success">
-                                    <input id="txtIdTipoDoc" type="hidden" maxlength="50" class="form-control"
-                                        name="txtIdTipoDoc" required="" autofocus="" placeholder="" />
-                                    <input id="txtSerieVent" type="text" maxlength="50" class="form-control"
-                                        name="txtSerieVent" required="" autofocus="" placeholder="">
+                                    <input id="txtIdTipoDoc" type="hidden" maxlength="50" class="form-control" name="txtIdTipoDoc" required="" autofocus="" placeholder="" />
+                                    <input id="txtSerieVent" type="text" maxlength="50" class="form-control" name="txtSerieVent" required="" autofocus="" placeholder="">
                                 </div>
                             </div>
                             <div class="col-lg-3 left">
                                 <label for="inputInscripcion">Numero</label>
                                 <div class="form-group  has-success">
-                                    <input id="txtNumeroVent" type="text" class="form-control" name="txtNumeroVent"
-                                        required="" placeholder="">
+                                    <input id="txtNumeroVent" type="text" class="form-control" name="txtNumeroVent" required="" placeholder="">
                                 </div>
                             </div>
-                            
-                            
-                            <div class="col-lg-3 left">
-                                <div class="form-group has-success">
-                                    <label>Nuevo o Antiguo :</label>
-                                    <input id="txtNumero_Cuenta" type="text" maxlength="40" name="txtNumero_Cuenta"
-                                        required="" class="form-control" placeholder="Nuevo o Antiguo" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 left">
-                                <div class="form-group has-warning">
-                                    <label>Tipo de Cliente:</label>
-                                    <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent"
-                                        required="" placeholder="" readonly="readonly" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 left">
-                                <div class="form-group has-success">
-                                    <label>Cliente (*):</label>
-                                    <input id="txtNombre" type="text" maxlength="40" name="txtNombre" required=""
-                                        class="form-control" placeholder="Nombres Completos" autofocus="" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 left">
-                                <div class="form-group has-success">
-                                    <label>Tipo Documento (*):</label>
-                                    <input id="txtNum_Documento" type="number" maxlength="20"
-                                            name="txtNum_Documento" required="" class="form-control"
-                                            required="" placeholder="" readonly="readonly" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 left">
-                                <div class="form-group has-success">
-                                    <label>Género (*):</label>
-                                    <input id="txtNombre" type="text" maxlength="40" name="txtNombre" required=""
-                                        class="form-control" placeholder="Nombres Completos" autofocus="" />
-                                </div>
-                            </div>
-
+        
                             <div class="col-lg-12 left">
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div class="col-lg-3 left">
                                         <div class="form-group has-success">
-                                            <label>Direccion (*):</label>
-                                            <input id="txtDireccion_Departamento" type="text" maxlength="45"
-                                                name="txtDireccion_Departamento" required="" placeholder="Departamento"
-                                                class="form-control" autofocus="" />
+                                            <label>Asesor :</label>
+                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Fecha y Hora de registro :</label>
+                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Nuevo o Antiguo :</label>
+                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-warning">
+                                            <label>Tipo de Cliente:</label>
+                                            <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12 left">
-                                <div class="row">
+                                <div class="row">    
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Cliente (*):</label>
+                                            <input id="txtNombre" type="text" name="txtNombre" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Tipo Documento (*):</label>
+                                            <input id="txtNum_Documento" type="number" name="txtNum_Documento" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
                                             <label>Teléfono (*):</label>
-                                            <input id="txtTelefono" type="number" maxlength="20" name="txtTelefono"
-                                                required="" class="form-control" placeholder="Ingrese el teléfono"
-                                                autofocus="" />
+                                            <input id="txtTelefono" type="number" name="txtTelefono" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
                                             <label>Email:</label>
-                                            <input id="txtEmail" type="email" maxlength="50" name="txtEmail"
-                                                class="form-control" placeholder="Ingrese el email" autofocus="" />
+                                            <input id="txtEmail" type="email" name="txtEmail" class="form-control" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-lg-3 left">
+                                <div class="form-group has-success">
+                                    <label>Género (*):</label>
+                                    <input id="txtNombre" type="text" maxlength="40" name="txtNombre" class="form-control" autofocus="" />
+                                </div>
+                            </div> -->
 
+                            <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group has-success">
+                                            <label>Direccion (*):</label>
+                                            <input id="txtDireccion_Departamento" type="text" name="txtDireccion_Departamento" class="form-control" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-12 left">
                                 <div class="row">
                                     <div class="col-lg-2 left">
@@ -355,7 +344,6 @@
                                             <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio" placeholder="" readonly="readonly"/>
                                         </div>
                                     </div>
-        
                                     <div class="col-lg-2 left">
                                         <label for="inputInscripcion">Promocion</label>
                                         <div class="form-group  has-success">
@@ -365,23 +353,20 @@
                                     <div class="col-lg-2 left">
                                         <label for="inputInscripcion">Impuesto</label>
                                         <div class="form-group  has-success">
-                                            <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto"
-                                                placeholder="" readonly="readonly" />
+                                            <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" placeholder="" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="col-lg-2 left">
                                         <label for="inputInscripcion">Total</label>
                                         <div class="form-group  has-success">
-                                            <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent"
-                                                required="" placeholder="" readonly="readonly" />
+                                            <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required="" placeholder="" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-lg-12 left">
-                                <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i>
-                                    Registrar</button>
+                                <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i>Registrar</button>
                                 <a href="Pedido.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
                                 <hr>
                                 <span class="lead text-primary"></span>
@@ -414,15 +399,11 @@
                     <br><br>
 
                     <div class="col-sm-12 col-lg-12">
-
                         <h4 class="modal-title">Imágenes</h4>
-
                         <div class="box-footer">
                             <ul class="mailbox-attachments clearfix" id="detalleImagenes">
-                                
                             </ul>
                         </div>
-                        
                     </div>
 
                     
