@@ -518,7 +518,7 @@ function addClientAdresse( $cliente,$domicilio,$num_documento,$email,$telefono )
 
 	$this->SetFont( "Arial", "B", 10);
 
-	$this->MultiCell( 60, 4, "CLIENTE");
+	$this->MultiCell( 60, 4, "FINAL");
 
 	$this->SetXY( $r1, $y1+5);
 
@@ -570,7 +570,7 @@ function addReglement( $mode )
 
 	$this->SetFont( "Arial", "B", 10);
 
-	$this->Cell(10,4, "CLIENTE", 0, 0, "C");
+	$this->Cell(10,4, "FINAL", 0, 0, "C");
 
 	$this->SetXY( $r1 + ($r2-$r1)/2 -5 , $y1 + 5 );
 

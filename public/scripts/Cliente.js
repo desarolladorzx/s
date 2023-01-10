@@ -12,12 +12,12 @@ function init(){
 
 
 	if ($("#hdn_superadmin").val() == 'A') {
-		$('#cboTipo_Persona option[value="CLIENTE"]').attr("disabled", false);
+		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
 	} else if ($("#hdn_superadmin").val() == 'S'){
-		$('#cboTipo_Persona option[value="CLIENTE"]').attr("disabled", true);
+		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
