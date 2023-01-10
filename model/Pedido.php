@@ -61,7 +61,7 @@
 			return [$sw,$idpedido];
 		}
 		
-		// Se cambio la cantidad del orden a 10K
+		// Se cambio la cantidad del orden a 10K corregir AP
 		public function Listar($idsucursal){
 			global $conexion;
 			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono, v.serie_comprobante as serie,v.num_comprobante as ticket

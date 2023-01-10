@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="box-header with-border">
-            <h3 class="box-title" id="lblTitle">Pedido</h3>
+            <h3 class="box-title" id="lblTitle">Registro de cotizaciones</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 
@@ -261,19 +261,19 @@
                                     <div class="col-lg-3 left">
                                         <div class="form-group has-success">
                                             <label>Asesor :</label>
-                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                            <input id="txtNombre_Ejecutivo" type="text" name="txtNombre_Ejecutivo" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 left">
                                         <div class="form-group has-success">
                                             <label>Fecha y Hora de registro :</label>
-                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                            <input id="txtFecha_Hora" type="text" name="txtFecha_Hora" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 left">
                                         <div class="form-group has-success">
                                             <label>Nuevo o Antiguo :</label>
-                                            <input id="txtNumero_Cuenta" type="text" name="txtNumero_Cuenta" class="form-control" readonly="readonly"/>
+                                            <input id="txtNuevo_Antiguo" type="text" name="txtNuevo_Antiguo" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 left">
@@ -286,29 +286,29 @@
                             </div>
 
                             <div class="col-lg-12 left">
-                                <div class="row">    
+                                <div class="row">
                                     <div class="col-lg-3 left">
                                         <div class="form-group has-success">
-                                            <label>Cliente (*):</label>
+                                            <label>Cliente:</label>
                                             <input id="txtClienteFech" type="text" name="txtClienteFech" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 left">
                                         <div class="form-group has-success">
-                                            <label>Tipo Documento (*):</label>
+                                            <label>Documento:</label>
                                             <input id="txtNum_Documento" type="number" name="txtNum_Documento" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
-                                            <label>Teléfono (*):</label>
+                                            <label>Teléfonos:</label>
                                             <input id="txtClienteCel" type="number" name="txtClienteCel" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
                                             <label>Email:</label>
-                                            <input id="txtClienteDni" type="email" name="txtClienteDni" class="form-control" readonly="readonly" />
+                                            <input id="txtClienteEmail" type="email" name="txtClienteEmail" class="form-control" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +325,7 @@
                                     <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
                                             <label>Direccion (*):</label>
-                                            <input id="txtDireccion_Departamento" type="text" name="txtDireccion_Departamento" class="form-control" readonly="readonly" />
+                                            <input id="txtDireccion" type="text" name="txtDireccion" class="form-control" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>
@@ -357,7 +357,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-2 left">
-                                        <label for="inputInscripcion">Total</label>
+                                        <label for="inputInscripcion">Total Venta</label>
                                         <div class="form-group  has-success">
                                             <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required="" placeholder="" readonly="readonly" />
                                         </div>
@@ -421,24 +421,24 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Fecha y Hora</th>
                                 <th>Cliente</th>
                                 <th>T. Pedido</th>
-                                <th>Fecha</th>
-                                <th>Fecha</th>
+                                <th>Monto Total</th>
                                 <th>Estado</th>
-                                <th>Generar Venta</th>
+                                <th>Opciones</th>
                             </tr>
                         </thead>
 
                         <tfoot>
                             <tr>
                                 <th>#</th>
+                                <th>Fecha y Hora</th>
                                 <th>Cliente</th>
                                 <th>T. Pedido</th>
-                                <th>Fecha</th>
-                                <th>Fecha</th>
-                                <th>Fecha</th>
-                                <th>Generar Venta</th>
+                                <th>Monto Total</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
                             </tr>
                         </tfoot>
 
@@ -554,7 +554,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Listado de Articulos Ingresados</h4>
+                <h4 class="modal-title">Lista de Productos MedicFitcen</h4>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -562,26 +562,26 @@
                         cellpadding="0" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Seleccione</th>
-                                <th>Articulo</th>
-                                <th>Codigo</th>
-                                <th>Serie</th>
-                                <th>Stock Actual</th>
-                                <th>P. Venta</th>
+                                <th>Añadir</th>
+                                <th>Lote</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Vencimiento</th>
+                                <th>Stock</th>
+                                <th>Precio</th>                        
                                 <th>Imagen</th>
-                                <th>Fecha de Ingreso</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Seleccione</th>
-                                <th>Articulo</th>
-                                <th>Codigo</th>
-                                <th>Serie</th>
-                                <th>Stock Actual</th>
-                                <th>P. Venta</th>
+                                <th>Añadir</th>
+                                <th>Lote</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Vencimiento</th>
+                                <th>Stock</th>
+                                <th>Precio</th>                        
                                 <th>Imagen</th>
-                                <th>Fecha de Ingreso</th>
                             </tr>
                         </tfoot>
                         <tbody id="ArticuloPed" style="text-align:center;">
