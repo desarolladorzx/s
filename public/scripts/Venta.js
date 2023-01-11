@@ -306,7 +306,7 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido,total,APCliente,num_documento,telefono,correo,direccion_calle,idcliente,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
+function pasarIdPedido(idPedido,total,correo,idcliente,APCliente,num_documento,telefono,direccion_calle,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado
@@ -322,7 +322,7 @@ function pasarIdPedido(idPedido,total,APCliente,num_documento,telefono,correo,di
         $("#txtClienteVent").val(APCliente)//.val(APCliente);
         $("#txtClienteDni").val(num_documento);// MUESTRA DETALLE DE VENTA
         $("#txtClienteCel").val(telefono);        
-        $("#txtClienteEmail").val(email);// MUESTRA DETALLE DE VENTA
+        $("#txtClienteEmail").val(correo);// MUESTRA DETALLE DE VENTA
         $("#txtClienteDir").val(direccion_calle);// MUESTRA DETALLE DE VENTA
 
         $("#hdn_idClientePedido").val(idcliente);
