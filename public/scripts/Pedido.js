@@ -616,7 +616,7 @@ function ConsultarDetallesPed() {
     }
 
 
-    function cargarDataPedido(idPedido, tipo_pedido, numero, Cliente, total, correo, direccion,dni,date,celular,hora_operacion,imagen){ // el numero crea el espacio en la celda 
+    function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, correo, direccion,dni,date,celular,hora_operacion,imagen){ // el numero crea el espacio en la celda 
         bandera = 2;
         $("#VerForm").show();
         $("#btnNuevoVent").hide();
@@ -653,10 +653,10 @@ function ConsultarDetallesPed() {
                     $("#VerRegPedido").hide();
                     $("#txtClienteFech").val(date);
                     $("#txtClienteCel").val(celular);
-                    $("#txtClienteVent").val(Cliente);
+                    $("#txtClienteVent").val(APCliente)//.val(APCliente);
                     $("#txtClienteDir").val(direccion);// MUESTRA DETALLE DE VENTA
-                    $("#cboTipo_documento").val(documento_per);
                     $("#txtClienteDni").val(dni);// MUESTRA DETALLE DE VENTA
+                    $("#cboTipo_documento").val(documento_per);
                     $("#txtSerieVent").val(r.serie_comprobante);
                     $("#txtNumeroVent").val(r.num_comprobante);
                     $("#cboTipoVenta").val(r.tipo_venta);
@@ -744,7 +744,7 @@ function ConsultarDetallesPed() {
 
     }
 
-    function eliminarDetalleImagen(id,idpedido) {
+   /*  function eliminarDetalleImagen(id,idpedido) {
 
         $.post("./ajax/PedidoAjax.php?op=DeleteImagenes",{id: id}, function(r){
 
@@ -756,9 +756,9 @@ function ConsultarDetallesPed() {
         $("#modal-eliminar-imagen").modal("show");
         $("#hdn_iddetalleimagen").val(id);
         $("#hdn_numerdetalleimagen").val(numero);
-        */
+        
 
-    }
+    } */
     
     $("#btn_cancelar_imagen").click(function(e){
 

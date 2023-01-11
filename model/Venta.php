@@ -17,13 +17,14 @@
 				$conexion->query($sql);	 */
 
 		public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle,$tipo_promocion,$metodo_pago,$agencia_envio){
+
 			global $conexion;
 			$sw = true;
 			try {
 
 				$sql = "INSERT INTO venta(idpedido,idusuario,tipo_venta,tipo_comprobante,serie_comprobante,num_comprobante,fecha ,impuesto,total,estado,tipo_promocion,metodo_pago,agencia_envio)
 						VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante', CURRENT_TIMESTAMP(),'$impuesto','$total','$estado','$tipo_promocion','$metodo_pago','$agencia_envio')";
-				
+
 				$conexion->query($sql);
 
 				//var_dump($detalle);
@@ -33,7 +34,7 @@
 				//var_dump($sql);
 				$conexion->query($sql_detalle_doc);
 
-				$sql_ped = "UPDATE pedido set tipo_pedido = 'Venta' where idpedido = $idpedido";
+				$sql_ped = "UPDATE pedido set tipo_pedido = 'Venta', estado = 'A' where idpedido = $idpedido";
 				//var_dump($sql);
 				$conexion->query($sql_ped);
 
