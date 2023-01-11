@@ -186,7 +186,7 @@
 
 		public function ListarTipoPedidoPedido($idsucursal){
 			global $conexion;
-			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono,
+			$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 
 			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
@@ -198,8 +198,10 @@
 			p.tipo_promocion AS tipo_promocion
 
 			from pedido p inner join persona c on p.idcliente = c.idpersona
+			inner join usuario u on p.idusuario=u.idusuario
+			inner join empleado e on u.idempleado=e.idempleado
 			
-			where p.idsucursal = $idsucursal 
+			where p.idsucursal =  $idsucursal
 			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 
 			//var_dump($sql);exit;

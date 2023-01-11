@@ -544,9 +544,10 @@ function ListadoVenta(){
                 {   "mDataProp": "1"},
                 {   "mDataProp": "2"},
                 {   "mDataProp": "3"},
-                {   "mDataProp": "4","sClass": "text-center"},
-                {   "mDataProp": "5"},
-                {   "mDataProp": "6"}
+                {   "mDataProp": "4"},
+                {   "mDataProp": "5","sClass": "text-center"},
+                {   "mDataProp": "6"},
+                {   "mDataProp": "7"}
         ],"ajax":
             {
                 url: './ajax/PedidoAjax.php?op=listTipoPedidoPedido',
