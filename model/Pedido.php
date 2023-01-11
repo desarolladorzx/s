@@ -61,7 +61,7 @@
 			return [$sw,$idpedido];
 		}
 		
-		// Se cambio la cantidad del orden a 10K
+		// Se cambio la cantidad del orden a 10K corregir AP
 		public function Listar($idsucursal){
 			global $conexion;
 			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono, v.serie_comprobante as serie,v.num_comprobante as ticket
@@ -190,8 +190,8 @@
 
 			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
-				WHEN p.estado = 'B' THEN '<span class=\'badge bg-aqua\'>Cancelado</span>'
-				WHEN p.estado = 'C' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
+				WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
+				WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
 			END ) AS estado,
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
@@ -377,7 +377,7 @@
 		
 		public function cambiarEstadoPedido($idpedido){
 			global $conexion;
-			$sql = "UPDATE pedido set estado = 'C',idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
+			$sql = "UPDATE pedido set estado = 'D',idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;
 		}
