@@ -227,7 +227,7 @@
 		        }
 		    break;
 
-		 case "GetTipoDocSerieNum":
+		case "GetTipoDocSerieNum":
 
             $nombre = $_REQUEST["nombre"];
             $idsucursal = $_REQUEST["idsucursal"];
@@ -257,4 +257,51 @@
 				echo "Venta Registrada correctamente. No se pudo realizar el envio";
 			}
 			break;
+
+		case 'VerificarStockProductos':
+			require_once "../model/Venta.php";
+			$objDetalleIngreso = new Venta();
+
+			$detalle = $_GET["detalle"];
+
+			foreach($detalle as $indice => $valor){
+
+				$cantidadProducto = $valor[2];
+				
+				// BUSCA EN TABLA DETALLE INGRESO, EL STOCK ACTUAL DE LOS PRODUCTOS
+				$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[0]);
+				$reg = $query_DetalleIngreso->fetch_object();
+				
+				$stockActual = $reg->stock_actual;
+
+				// SI EL STOCK ACTUAL ES MENOR A LA CANTIDA A DESCONTAR, REGISTRA UN FALSE PARA INDICA QUE NO SE PUEDE REALIZAR LA ACCION
+				if ($stockActual>=$cantidadProducto) {
+					$result = true;
+				}else{
+					$result = false;
+				}
+
+				$data[] = $result;
+
+				//var_dump($data);
+
+			}
+
+			// SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
+			if (in_array(false, $data)) {
+				echo json_encode(false);
+			}else{
+				echo json_encode(true);
+			}
+
+			//var_dump($data);
+
+			break;
+
+		
+
+
+
+
+
 	}

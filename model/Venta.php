@@ -91,4 +91,13 @@
 			$query = $conexion->query($sql);
 			return $query;
 		}
+
+		public function buscarDetalleIngreso($iddetalle_ingreso){
+			global $conexion;
+			$sql = "SELECT * FROM detalle_ingreso WHERE iddetalle_ingreso = ".$iddetalle_ingreso;
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
+
 	}

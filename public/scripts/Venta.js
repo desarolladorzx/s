@@ -17,7 +17,7 @@ function init(){
 	ComboTipo_Documento();
     $("#VerFormPed").hide();
 	$("#VerForm").hide();// Ocultamos el formulario
-	$("form#frmVentas").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
+	$("form#frmVentas").submit(SaveOrUpdate);//VerificarStockProductos  // Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	$("#cboTipoComprobante").change(VerNumSerie);
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
     $("#btnNuevoPedido").click(VerFormPedido);
@@ -28,7 +28,35 @@ function init(){
         $.get("./ajax/PedidoAjax.php?op=listTipoDoc", function(r) {
                 $("#cboTipoComprobante").html(r);
         })
+
     }
+
+    // VERIFICA STOCK DE PRODUTOS DEL DETALLE
+    /*
+    function VerificarStockProductos(e) {
+
+        e.preventDefault();// para que no se recargue la pagina
+        var detalle =  JSON.parse(consultarDet());
+
+        var data = {
+            detalle : detalle
+        };
+
+        $.get("./ajax/VentaAjax.php?op=VerificarStockProductos",data, function(r) {
+                
+            if (r == false || r == 'false') {
+
+                alert("No se puede completar el proceso ya que existen productos sin stock...")
+                
+            } else {
+             
+
+            }
+        })
+
+    }
+    */
+
 
 	function SaveOrUpdate(e){
 
@@ -49,8 +77,6 @@ function init(){
                 serie_vent : $("#txtSerieVent").val(),
                 num_vent : $("#txtNumeroVent").val(),
 
-                
-
                 metodo_pago : $("#hdn_metodo_pago").val(), // Cuenta donde es abonada
                 agencia_envio : $("#hdn_agencia_envio").val(), // Transporte
                 tipo_promocion : $("#hdn_tipo_promocion").val(), // Promociones de ventas
@@ -63,72 +89,90 @@ function init(){
                 detalle : detalle
             };
 
-            $.post("./ajax/VentaAjax.php?op=SaveOrUpdate", data, function(r){// llamamos la url por post. function(r). r-> llamada del callback
-                if ($("#cboTipoComprobante").val() == "TICKET") {
-                        //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
-                       // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
-                        //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
-                    //EN LA WEB 
-                    //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
-                    window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
-                }
+            $.get("./ajax/VentaAjax.php?op=VerificarStockProductos",data, function(r) {
 
-                if ($("#cboTipoVenta").val() == "Contado") {
+                if (r == false || r == 'false') {
 
-                    
-                    swal("Mensaje del Sistema", r, "success");
+                    alert("No se puede completar el proceso ya que existen productos sin stock...")
 
-                    $("#btnNuevoPedido").show();
-                    OcultarForm();
-                    ListadoVenta();
-                    ListadoPedidos();
-                    LimpiarPedido();
+                }else{
 
-                    bootbox.prompt({
-                      title: "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
-                      value: email,
-                      callback: function(result) {
-                        if (result !== null) {                                             
-                           $.post("./ajax/VentaAjax.php?op=EnviarCorreo", {result:result, idPedido : $("#txtIdPedido").val()}, function(r){
-                              bootbox.alert(r);
-                           })                     
+                    $.post("./ajax/VentaAjax.php?op=SaveOrUpdate", data, function(r){// llamamos la url por post. function(r). r-> llamada del callback
+
+                        if ($("#cboTipoComprobante").val() == "TICKET") {
+                                //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
+                               // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
+                                //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
+                            //EN LA WEB 
+                            //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
+                            window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
                         }
-                      }
-                    });
-                    //location.reload();
-                    
-                    
-
-                } else {
-
-                    $("#btnNuevoPedido").show();
-
-                    bootbox.prompt({
-
-                      title: "Ingrese el correo para enviar el detalle de la compra",
-                      value: email,
-                      callback: function(result) {
-                        if (result !== null) {
-                            $.post("./ajax/VentaAjax.php?op=EnviarCorreo", {result:result, idPedido : $("#txtIdPedido").val()}, function(r){
-                              bootbox.alert(r);
-                            }) 
-                            bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
-
-                              $("#modalCredito").modal("show");
-                              GetIdVenta();
+        
+                        if ($("#cboTipoVenta").val() == "Contado") {
+        
+                            
+                            swal("Mensaje del Sistema", r, "success");
+        
+                            $("#btnNuevoPedido").show();
+                            OcultarForm();
+                            ListadoVenta();
+                            ListadoPedidos();
+                            LimpiarPedido();
+        
+                            bootbox.prompt({
+                              title: "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
+                              value: email,
+                              callback: function(result) {
+                                if (result !== null) {                                             
+                                   $.post("./ajax/VentaAjax.php?op=EnviarCorreo", {result:result, idPedido : $("#txtIdPedido").val()}, function(r){
+                                      bootbox.alert(r);
+                                   })                     
+                                }
+                              }
                             });
-
+                            //location.reload();
+        
                         } else {
-
-                            bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
-                              $("#modalCredito").modal("show");
-                              GetIdVenta();
+        
+                            $("#btnNuevoPedido").show();
+        
+                            bootbox.prompt({
+        
+                              title: "Ingrese el correo para enviar el detalle de la compra",
+                              value: email,
+                              callback: function(result) {
+                                if (result !== null) {
+                                    $.post("./ajax/VentaAjax.php?op=EnviarCorreo", {result:result, idPedido : $("#txtIdPedido").val()}, function(r){
+                                      bootbox.alert(r);
+                                    }) 
+                                    bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
+        
+                                      $("#modalCredito").modal("show");
+                                      GetIdVenta();
+                                    });
+        
+                                } else {
+        
+                                    bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
+                                      $("#modalCredito").modal("show");
+                                      GetIdVenta();
+                                    });
+                                }
+                              }
                             });
                         }
-                      }
                     });
+
                 }
-            });
+
+            })
+
+
+
+
+
+
+            
         } else {
             bootbox.alert("Debe seleccionar un comprobante");
         }
@@ -348,6 +392,7 @@ function pasarIdPedido(idPedido,total,correo,idcliente,empleado,cliente,num_docu
 
         // CARGA DETALLE DE IMAGENES 
         mostrarDetalleImagenes(idPedido);
+
  	}
 
 function mostrarDetalleImagenes(idPedido) {
