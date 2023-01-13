@@ -255,6 +255,7 @@ function init(){
         $("#txtNumeroPed").val("");
         elementos.length = 0;
         $("#tblDetallePedido tbody").html("");
+        $("#cboTipoComprobante").val("--Seleccione Comprobante--");
         $("#txtSerieVent").val("");
         $("#txtNumeroVent").val("");
         GetNextNumero();
