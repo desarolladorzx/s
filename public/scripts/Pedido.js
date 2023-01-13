@@ -318,12 +318,17 @@ function init() {
             bootbox.alert("Debe elegir un cliente js GenerarVenta ");
         }
     }
-
-    function Limpiar(){
+    // Limpia los campos de nueva cotizacion
+    function Limpiar(){ 
         $("#txtIdCliente").val("");
-
         $("#cboTipoPedido").val("Pedido");
         $("#txtNumeroPed").val("");
+        $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+        $("#cboMetodoPago").val("");
+        $("#cboAgenEnvio").val("");
+        $("#cboTipoPromocion").val("");
+        $("#imagenVoucher").val("");
+        //$("#txtRutaImgVoucher").val("");
         elementos.length = 0;
         $("#tblDetallePedido tbody").html("");
         GetNextNumero();

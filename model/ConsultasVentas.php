@@ -35,7 +35,7 @@
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				v.tipo_comprobante as comprobante,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
-				v.impuesto,c.nombre as marca,
+				v.impuesto,c.nombre as marca,m.nombre as categoria,
 				a.nombre as articulo,di.codigo as codigo,di.serie as serie_art,
 				dp.cantidad,dp.precio_venta,dp.descuento,
 				(dp.precio_venta-dp.descuento) as venta_unitario,
@@ -47,6 +47,7 @@
 				from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso=di.iddetalle_ingreso
 				inner join articulo a on di.idarticulo=a.idarticulo
 				inner join categoria c on a.idcategoria=c.idcategoria
+				inner join marca m on a.idmarca=m.idmarca
 				inner join pedido p on dp.idpedido=p.idpedido
 				inner join venta v on v.idpedido=p.idpedido
 				inner join sucursal s on p.idsucursal=s.idsucursal
