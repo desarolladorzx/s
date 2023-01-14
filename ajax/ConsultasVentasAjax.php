@@ -73,6 +73,7 @@
                          "19"=>$reg->promocion,
                          "20"=>$reg->departamento,
                          "21"=>$reg->distrito,
+                         "22"=>$reg->banco_abono,
                     );
                }
                $results = array(
