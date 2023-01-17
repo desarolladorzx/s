@@ -295,3 +295,42 @@ function buscarPorNumeroDocumento() {
 		alert("Ingresar número de documento válido...");
 	}
 }
+
+
+
+
+
+function clasificacion_final(tipo) {
+	
+
+	$.ajax({
+		url: "./ajax/ClienteAjax.php?op=cambiarEstadoCliente_final",
+		dataType: "json",
+		data: {
+			tipo: tipo
+		},
+		success: function (rpta) {
+
+
+			if (rpta['result'] == true) {
+				
+				alert("Se actualizaron "+rpta['cantidadRegistros']+" registros.")
+
+			} else {
+				
+				alert("Error al actualizar registros...")
+
+			}
+
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		},
+	});
+
+
+
+
+
+
+}

@@ -99,4 +99,71 @@
 			return $query;
 		}
 
+
+		public function cambiarEstadoCliente_final($tipo){
+
+			global $conexion;
+
+			switch ($tipo) {
+				case '1':
+					$consulta = "AND ( DATE_FORMAT(ped.fecha, '%Y-%m') >= DATE_FORMAT(CURRENT_DATE - INTERVAL 2 MONTH, '%Y-%m') ) ";
+					$estadoFinal = "A";
+				break;
+				
+				case '2':
+					$consulta = "AND (DATE_FORMAT(ped.fecha, '%Y-%m') BETWEEN DATE_FORMAT(CURRENT_DATE - INTERVAL 4 MONTH, '%Y-%m' ) AND  DATE_FORMAT(CURRENT_DATE - INTERVAL 2 MONTH, '%Y-%m') )";
+					$estadoFinal = "C";
+				break;
+
+				case '3':
+					$consulta = "AND ( DATE_FORMAT(ped.fecha, '%Y-%m') <= DATE_FORMAT(CURRENT_DATE - INTERVAL 4 MONTH, '%Y-%m') )";
+					$estadoFinal = "P";
+				break;
+			}
+
+			$sql = "SELECT
+					ped.idcliente AS idcliente
+					FROM
+					pedido ped
+					INNER JOIN persona per ON per.idpersona = ped.idcliente
+					WHERE per.tipo_persona = 'Cliente' AND ped.estado = 'A' ".$consulta."
+					GROUP BY ped.idcliente
+					ORDER BY ped.fecha DESC";
+
+			$query = $conexion->query($sql);
+
+			$i = 0;
+
+			// A : Activo
+			// C : Inactivo
+			// P : Perdido
+
+			while ($reg = $query->fetch_object()) {
+
+				$sql_update = "UPDATE persona SET estado = '".$estadoFinal."' WHERE idpersona = ".$reg->idcliente;
+
+				$rpta_sql_update = $conexion->query($sql_update);
+
+				$i++;
+
+			}
+
+			$results = array(
+				"cantidadRegistros" => $i,
+				"result" => $rpta_sql_update
+			);
+
+
+			//var_dump($sql_update);
+
+			return $results;
+
+		}
+
+
+
+
+
+
+
 	}

@@ -264,6 +264,9 @@
 
 			$detalle = $_GET["detalle"];
 
+			//var_dump($detalle);
+			//exit;
+
 			foreach($detalle as $indice => $valor){
 
 				$cantidadProducto = $valor[2];
@@ -273,28 +276,40 @@
 				$reg = $query_DetalleIngreso->fetch_object();
 				
 				$stockActual = $reg->stock_actual;
+				$descripcionProducto = $reg->descripcion;
 
 				// SI EL STOCK ACTUAL ES MENOR A LA CANTIDA A DESCONTAR, REGISTRA UN FALSE PARA INDICA QUE NO SE PUEDE REALIZAR LA ACCION
 				if ($stockActual>=$cantidadProducto) {
+					$dataProd = "";
 					$result = true;
 				}else{
+					$dataProd = $descripcionProducto;
+					//$result = array('estado'=>false,'detalle'=>$dataProd);
 					$result = false;
 				}
 
 				$data[] = $result;
-
-				//var_dump($data);
+				$dataDet[] = $dataProd;
+				
 
 			}
+
+			//var_dump($dataDet);
 
 			// SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
 			if (in_array(false, $data)) {
-				echo json_encode(false);
+				//echo json_encode(false,$dataDet);
+				$estado = false;
 			}else{
-				echo json_encode(true);
+				//echo json_encode(true,$dataDet);
+				$estado = true;
 			}
 
-			//var_dump($data);
+			$results = array(
+				'estado' => $estado,
+				'detalle' => $dataDet);
+
+			echo json_encode($results,true);
 
 			break;
 
