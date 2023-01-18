@@ -289,7 +289,7 @@
 				}
 
 				$data[] = $result;
-				$dataDet[] = $dataProd;
+				$dataDet[] = '- '.$dataProd.' [x'.$stockActual.']';
 				
 
 			}
