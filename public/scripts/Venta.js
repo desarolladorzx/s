@@ -168,7 +168,7 @@ function init(){
 
                     
 
-                    alert("No se puede completar el proceso ya que existen productos sin stock... ---- "+obj.detalle)
+                    bootbox.alert("No se puede completar el proceso ya que existen productos sin stock... ---- "+obj.detalle)
 
                 }
 

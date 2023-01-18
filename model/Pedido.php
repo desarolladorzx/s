@@ -166,10 +166,11 @@
 
 		public function GetDetallePedido($idpedido){
 			global $conexion;
-			$sql = "SELECT a.nombre as articulo, dg.codigo, dg.serie, dp.*
+			$sql = "SELECT a.nombre as articulo, dg.codigo, dg.serie, c.nombre as marca, dp.*,((dp.precio_venta * dp.cantidad) - (dp.descuento * dp.cantidad)) as total
 			from pedido p inner join detalle_pedido dp on p.idpedido = dp.idpedido
 			inner join detalle_ingreso dg on dp.iddetalle_ingreso = dg.iddetalle_ingreso
 			inner join articulo a on dg.idarticulo = a.idarticulo
+			inner join categoria c on a.idcategoria = c.idcategoria
 			where dp.idpedido = $idpedido";
 			$query = $conexion->query($sql);
 			return $query;

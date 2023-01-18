@@ -168,13 +168,13 @@
         </table>
         </div>
 
-<!-- Tabla de lista de ventas -->
+<!-- Tabla de Detalle de Registros de Ventas -->
 <div class="col-sm-14"  id="VerFormVentaPed">
     <form role="form" name="frmVentas" id="frmVentas" >
             <div class="row">
                 <h3 class="col-lg-12" id="txtVenta" ></h3>             
 
-                <div class="col-lg-3 left">
+<!--                 <div class="col-lg-3 left">
                     <label for="inputMarca">CUENTA ABONADA/MEDIO DE PAGO</label>
                     <div class="form-group has-success">
                         <select id="cboMetodoPago" name="cboMetodoPago" class="form-control">
@@ -193,7 +193,7 @@
                             <option value="DESCUENTO FIN DE MES">DESCUENTO FIN DE MES</option>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
 <!--                 <div class="col-lg-3 left">
                     <label for="inputInscripcion">NÚMERO DE OPERACIÓN</label>
@@ -210,7 +210,7 @@
                     </div>
                 </div>
  -->
-                <div class="col-lg-3 left">
+                <!-- <div class="col-lg-3 left">
                     <label for="inputMarca">TRANSPORTE/AGENCIA DE ENVIO</label>
                     <div class="form-group  has-success">
                         <select id="cboAgenEnvio" name="cboAgenEnvio" class="form-control">
@@ -263,7 +263,7 @@
                         </select>
                     </div>
                 </div>
-
+ 
                 <div class="col-lg-3 left">
                     <label for="inputMarca">SERIE</label>
                     <div class="form-group  has-success">
@@ -291,15 +291,15 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="col-lg-3 left">
+-->
+                <!-- <div class="col-lg-3 left">
                     <label for="inputInscripcion">IMPUESTO</label>
                     <div class="form-group  has-success">
                         <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" placeholder="" readonly="readonly"/>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="col-lg-3 left">
+                <!-- <div class="col-lg-3 left">
                     <label for="inputInscripcion">FECHA DE REGISTRO</label>
                     <div class="form-group  has-success">
                         <input id="txtClienteCel" type="text" class="form-control" name="txtClienteCel" placeholder="" readonly="readonly"/>
@@ -341,7 +341,146 @@
                         
                         <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required="" placeholder="" readonly="readonly"/>
                     </div>
+                </div> -->
+
+
+
+                <div class="col-lg-3 left">
+                    <label for="inputInscripcion">Numero de Nota de Venta</label>
+                    <div class="form-group  has-success">
+                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                    </div>
                 </div>
+                <div class="col-lg-3 left">
+                    <label for="inputInscripcion">Aprobacion de Cuenta Abonada</label>
+                    <div class="form-group  has-success">
+                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-lg-3 left">
+                    <label for="inputInscripcion">Aprobacion de Venta</label>
+                    <div class="form-group  has-success">
+                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                    </div>
+                </div>
+                <div class="col-lg-3 left">
+                    <div class="form-group has-warning">
+                        <label>Ejecutivo de Ventas:</label>
+                        <input id="txtEmpleadoVent" type="text" name="txtEmpleadoVent" class="form-control" readonly="readonly"/>
+                    </div>
+                </div> 
+
+                <!-- <div class="col-lg-12 left">
+                    <div class="row">
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Asesor :</label>
+                                <input id="txtEjecutivo" type="text" name="txtEjecutivo" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Fecha y Hora de registro :</label>
+                                <input id="txtClienteFech" type="text" name="txtClienteFech" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Nuevo o Antiguo :</label>
+                                <input id="txtNuevo_Antiguo" type="text" name="txtNuevo_Antiguo" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-warning">
+                                <label>Tipo de Cliente:</label>
+                                <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-lg-12 left">
+                    <div class="row">
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Tipo de Cliente:</label>
+                                <input id="txtClienteVent" type="text" name="txtClienteVent" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Cliente:</label>
+                                <input id="txtClienteVent" type="text" name="txtClienteVent" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Documento:</label>
+                                <input id="txtClienteDni" type="text" name="txtClienteDni" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 left">
+                            <div class="form-group has-success">
+                                <label>Teléfonos:</label>
+                                <input id="txtClienteCel" type="text" name="txtClienteCel" class="form-control" readonly="readonly"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-3 left">
+                    <div class="form-group has-success">
+                        <label>Género (*):</label>
+                        <input id="txtNombre" type="text" maxlength="40" name="txtNombre" class="form-control" autofocus="" />
+                    </div>
+                </div> -->
+
+                <div class="col-lg-12 left">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group has-success">
+                                <label>Direccion:</label>
+                                <input id="txtClienteDir" type="text" name="txtClienteDir" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 left">
+                    <div class="row">
+                        <div class="col-lg-2 left">
+                            <label for="inputInscripcion">Cuenta Abonada</label>
+                            <div class="form-group  has-success">
+                                <input id="hdn_metodo_pago" type="text" class="form-control" name="hdn_metodo_pago" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 left">
+                            <label for="inputInscripcion">Agencia de Transporte</label>
+                            <div class="form-group  has-success">
+                                <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 left">
+                            <label for="inputInscripcion">Promocion</label>
+                            <div class="form-group  has-success">
+                                <input id="hdn_tipo_promocion" type="text" class="form-control" name="hdn_tipo_promocion" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 left">
+                            <label for="inputInscripcion">Impuesto</label>
+                            <div class="form-group  has-success">
+                                <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="col-lg-2 left">
+                            <label for="inputInscripcion">Total Venta</label>
+                            <div class="form-group  has-success">
+                                <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" readonly="readonly" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
                 <div class="col-lg-12 left">
 
                     <input type="hidden" name="hdn_idcliente" id="hdn_idcliente">
@@ -358,19 +497,20 @@
                         <table class="table table-striped table-bordered table-condensed table-hover" cellpadding="0" cellspacing="0" border="1" class="display" id="tblDetallePedidoVer">
                             <thead>
                                 <tr>
-                                    <th>Articulo</th>
-                                    <th>Lote</th>
-                                    <th>F.Vencimiento</th>
+                                    <th>Productos</th>
+                                    <th>Marca</th>
+                                    <th>Codigo-Lote</th>
                                     <th>Stock</th>
+                                    <th>F.Vencimiento</th>
+                                    <th>Cantidad</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
                                     <th>Descuento</th>
-                                    <th>Eliminar</th>
+                                    <th>Total</th>
+                                    <!-- <th>Eliminar</th> -->
                                 </tr>
                             </thead>
-                            <tbody>
-                            
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                 </div>
 
