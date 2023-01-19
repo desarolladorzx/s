@@ -141,10 +141,11 @@
 			while ($reg = $query_Pedido->fetch_object()) {
 				$query_total = $objPedido->TotalPedido($reg->idpedido);
 				$reg_total = $query_total->fetch_object();
-				$data[] = array("0"=>$i,
+				$data[] = array(
+					"0"=>$i,
 					"1"=>$reg->fecha,
-					"2"=>$reg->serie.'-'.$reg->ticket,
-					"3"=>$reg->Cliente.'&nbsp;'.$reg->APCliente,
+					"2"=>$reg->ticket,
+					"3"=>$reg->cliente,
 					"4"=>($reg->tipo_pedido=="Pedido")?'<span class="badge bg-blue">Pedido</span>':(($reg->tipo_pedido=="Venta")?'<span class="badge bg-aqua">Venta</span>':'<span class="badge bg-green">Proforma</span>'),
 					//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
 					"5"=>$reg_total->Total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO

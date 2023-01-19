@@ -121,7 +121,7 @@ $reg_igv = $query_global->fetch_object();
 
         while ($reg = $query_ped->fetch_object()) {
         echo "<tr>";
-        echo "<td>".$reg->articulo. " | ".$reg->marca." | ".$reg->codigo."</td>";
+        echo "<td>".$reg->articulo. " | ".$reg->marca." | ".$reg->codigo." | ".$reg->serie."</td>";
         echo "<td align='center'>".$reg->cantidad."</td>";
         echo "<td align='right'>". $reg_igv->simbolo_moneda." ".$precio_venta=$reg->cantidad*($reg->precio_venta-$reg->descuento)."</td>";
         echo "</tr>";
