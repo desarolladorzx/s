@@ -311,9 +311,88 @@
 
 			echo json_encode($results,true);
 
-			break;
+		break;
 
-		
+		case 'VerificarStockProductos_CambiarEstado':
+
+			require_once "../model/Pedido.php";
+			$objPedido = new Pedido();
+
+			$idPedido = $_GET["idPedido"];
+
+			$query_prov = $objPedido->GetDetallePedido($idPedido);
+			$i = 1;
+				while ($reg = $query_prov->fetch_object()) {
+
+					$resultsDetalle[] = array(
+						$reg->articulo,
+						$reg->codigo,
+						$reg->serie,
+						$reg->marca,
+						$reg->iddetalle_pedido,
+						$reg->idpedido,
+						$reg->iddetalle_ingreso,
+						$reg->cantidad,
+						$reg->precio_venta,
+						$reg->descuento,
+						$reg->total
+					);
+
+				}
+
+			require_once "../model/Venta.php";
+			$objDetalleIngreso = new Venta();
+
+			//var_dump($resultsDetalle);
+
+			foreach($resultsDetalle as $valor){
+
+
+				//var_dump($valor[0]);
+				//exit;
+				$cantidadProducto = $valor[7];
+				
+				// BUSCA EN TABLA DETALLE INGRESO, EL STOCK ACTUAL DE LOS PRODUCTOS
+				$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[6]);
+				$reg = $query_DetalleIngreso->fetch_object();
+				
+				$stockActual = $reg->stock_actual;
+				$descripcionProducto = $reg->descripcion;
+
+				// SI EL STOCK ACTUAL ES MENOR A LA CANTIDA A DESCONTAR, REGISTRA UN FALSE PARA INDICA QUE NO SE PUEDE REALIZAR LA ACCION
+				if ($stockActual>=$cantidadProducto) {
+					$dataProd = "";
+					$result = true;
+					$dataDet = "";
+				}else{
+					$dataProd = $descripcionProducto;
+					//$result = array('estado'=>false,'detalle'=>$dataProd);
+					$result = false;
+					$dataDet[] = '- '.$dataProd.' [x'.$stockActual.']';
+				}
+
+				$data[] = $result;
+				
+
+			}
+
+
+			// SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
+			if (in_array(false, $data)) {
+				//echo json_encode(false,$dataDet);
+				$estado = false;
+			}else{
+				//echo json_encode(true,$dataDet);
+				$estado = true;
+			}
+
+			$results = array(
+				'estado' => $estado,
+				'detalle' => $dataDet);
+
+			echo json_encode($results,true);
+
+		break;
 
 
 

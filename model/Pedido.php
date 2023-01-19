@@ -172,6 +172,10 @@
 			inner join articulo a on dg.idarticulo = a.idarticulo
 			inner join categoria c on a.idcategoria = c.idcategoria
 			where dp.idpedido = $idpedido";
+
+			//var_dump($sql);
+			//exit;
+
 			$query = $conexion->query($sql);
 			return $query;
 		}

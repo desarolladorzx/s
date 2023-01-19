@@ -946,19 +946,43 @@ function eliminarPedido(idPedido) {
 }
 
 function cambiarEstadoPedido(idPedido) {
-    bootbox.confirm("¿Esta seguro de cambiar el estado del pedido?", function (result) {
-        if (result) {
-            $.post("./ajax/PedidoAjax.php?op=cambiarEstadoPedido", {
-                idPedido: idPedido
-            }, function (e) {
 
-                swal("Mensaje del Sistema", e, "success");
-                ListadoPedidos();
-                ListadoVenta();
-            });
+
+    // COMPRIEBA PRIMERO STOCK DE PRODUCTOS
+
+    $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido="+idPedido, function(r) {
+
+        var obj = jQuery.parseJSON(r);
+        
+        if (obj.estado == true || obj.estado == 'true') {
+
+            bootbox.confirm("¿Esta seguro de cambiar el estado del pedido?", function (result) {
+                if (result) {
+                    $.post("./ajax/PedidoAjax.php?op=cambiarEstadoPedido", {
+                        idPedido: idPedido
+                    }, function (e) {
+        
+                        swal("Mensaje del Sistema", e, "success");
+                        ListadoPedidos();
+                        ListadoVenta();
+                    });
+                }
+        
+            })
+
+
+        }else{
+
+            var  arr = obj.detalle;
+            alert("No se puede completar el proceso ya que existen productos sin stock:\n"+arr.join('\n'))
+
+
         }
 
     })
+
+
+
 }
 
 
