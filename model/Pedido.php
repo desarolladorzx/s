@@ -64,12 +64,18 @@
 		// Se cambio la cantidad del orden a 10K corregir AP
 		public function Listar($idsucursal){
 			global $conexion;
-			$sql = "SELECT p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono, v.serie_comprobante as serie,v.num_comprobante as ticket
-			from pedido p 
-            inner join persona c on p.idcliente = c.idpersona
+			$sql = "SELECT p.*, concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos) as empleado2,concat(eva.nombre,' ',eva.apellidos) as empleado3
+			from pedido p
+						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
+						inner join usuario u on p.idusuario=u.idusuario
+						inner join empleado e on u.idempleado=e.idempleado
+						inner join usuario uv on v.idusuario=uv.idusuario
+						inner join empleado ev on uv.idempleado=ev.idempleado
+						inner join usuario uva on p.idusuario_est=uva.idusuario
+						inner join empleado eva on uva.idempleado=eva.idempleado
             where p.idsucursal = $idsucursal
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
+			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -193,11 +199,11 @@
 			global $conexion;
 			$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 
-			(CASE
+			/* (CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
 				WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
 				WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
-			END ) AS estado,
+			END ) AS estado, */
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion

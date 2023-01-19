@@ -693,7 +693,7 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, correo, direccion, dni, date, celular, hora_operacion, imagen) { // el numero crea el espacio en la celda 
+function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, correo, cliente,num_documento,celular,destino,metodo_pago,agencia_envio,tipo_promocion) { // el numero crea el espacio en la celda 
     bandera = 2;
     $("#VerForm").show();
     $("#btnNuevoVent").hide();
@@ -701,8 +701,22 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, corre
     $("#txtIdPedido").val(idPedido);
     $("#txtCliente").hide();
     $("#cboTipoPedido").hide();
-    $("#txtRutaImgVoucher").val(imagen);
-    $("#txtRutaImgVoucher").show();
+    /* $("#txtRutaImgVoucher").val(imagen);
+    $("#txtRutaImgVoucher").show(); */
+
+    $("#txtEmpleadoVent").val(empleado)//.Empleado que registro el pedido;
+    $("#txtClienteVent").val(cliente)//.falta concatenar nombre y apellido desde js;
+    $("#txtClienteDni").val(num_documento);// MUESTRA DETALLE DE VENTA
+    $("#txtClienteCel").val(celular);
+    $("#txtClienteEmail").val(correo);// MUESTRA DETALLE DE VENTA
+    $("#txtClienteDir").val(destino);// MUESTRA DETALLE DE VENTA
+
+    $("#hdn_idClientePedido").val(idcliente);
+    $("#hdn_metodo_pago").val(metodo_pago);
+    $("#hdn_agencia_envio").val(agencia_envio);
+    $("#hdn_tipo_promocion").val(tipo_promocion);
+    $("#txtClientePed").val(metodo_pago);
+
     //$("#txtRutaImgArt").prop("disabled", true);
     email = correo;
     direccion_calle = direccion;
