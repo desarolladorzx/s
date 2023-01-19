@@ -21,7 +21,7 @@ switch ($_GET["op"]) {
                     echo "No se ha podido registrar el Ingreso";
                 }
         } else {
-            /*
+            /*  
             if($obj->Modificar($_POST["idIngreso"], $idCategoria, $titulo, $descripcion, $slide, $imagen_principal)){
                 echo "Ingreso Modificada";
             } else {
