@@ -292,4 +292,46 @@ switch ($_GET["op"]) {
 		echo json_encode($datos, true);
 
 	break;
+
+
+	case "cambiarEstadoCliente_final":
+
+		require_once "../model/Persona.php";
+        $objPersona = new Persona();
+
+		$tipo = $_REQUEST["tipo"];
+
+		$rpta = $objPersona->cambiarEstadoCliente_final($tipo);
+
+		echo json_encode($rpta, true);
+
+	break;
+
+	case "cambiarEstadoCliente_distribuidor":
+
+		require_once "../model/Persona.php";
+        $objPersona = new Persona();
+
+		$tipo = $_REQUEST["tipo"];
+
+		$rpta = $objPersona->cambiarEstadoCliente_distribuidor($tipo);
+
+		echo json_encode($rpta, true);
+
+	break;
+
+	case "cambiarEstadoCliente_representante":
+
+		require_once "../model/Persona.php";
+        $objPersona = new Persona();
+
+		$tipo = $_REQUEST["tipo"];
+
+		$rpta = $objPersona->cambiarEstadoCliente_representante($tipo);
+
+		echo json_encode($rpta, true);
+
+	break;
+
+
 }

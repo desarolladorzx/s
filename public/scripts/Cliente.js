@@ -295,3 +295,79 @@ function buscarPorNumeroDocumento() {
 		alert("Ingresar número de documento válido...");
 	}
 }
+
+
+
+
+
+function clasificacion_final(tipo) {
+	
+	$.ajax({
+		url: "./ajax/ClienteAjax.php?op=cambiarEstadoCliente_final",
+		dataType: "json",
+		data: {
+			tipo: tipo
+		},
+		success: function (rpta) {
+			if (rpta['result'] == true) {
+				alert("Se actualizaron "+rpta['cantidadRegistros']+" registros.")
+			}else if(rpta['result'] == null || rpta['result'] == "null"){
+				alert("Sin datos que actualizar...")
+			}else{
+				alert("Error al actualizar registros...")
+			}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		},
+	});
+
+}
+
+function clasificacion_distribuidor(tipo) {
+	
+	$.ajax({
+		url: "./ajax/ClienteAjax.php?op=cambiarEstadoCliente_distribuidor",
+		dataType: "json",
+		data: {
+			tipo: tipo
+		},
+		success: function (rpta) {
+			if (rpta['result'] == true) {
+				alert("Se actualizaron "+rpta['cantidadRegistros']+" registros.")
+			}else if(rpta['result'] == null || rpta['result'] == "null"){
+				alert("Sin datos que actualizar...")
+			}else{
+				alert("Error al actualizar registros...")
+			}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		},
+	});
+	
+}
+
+function clasificacion_representante(tipo) {
+	
+	$.ajax({
+		url: "./ajax/ClienteAjax.php?op=cambiarEstadoCliente_representante",
+		dataType: "json",
+		data: {
+			tipo: tipo
+		},
+		success: function (rpta) {
+			if (rpta['result'] == true) {
+				alert("Se actualizaron "+rpta['cantidadRegistros']+" registros.")
+			}else if(rpta['result'] == null || rpta['result'] == "null"){
+				alert("Sin datos que actualizar...")
+			}else{
+				alert("Error al actualizar registros...")
+			}
+		},
+		error: function (e) {
+			console.log(e.responseText);
+		},
+	});
+	
+}

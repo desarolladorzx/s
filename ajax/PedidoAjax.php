@@ -212,11 +212,13 @@ switch ($_GET["op"]) {
             while ($reg = $query_prov->fetch_object()) {
                  echo '<tr>
                         <td>'.$reg->articulo.'</td>
+                        <td>'.$reg->marca.'</td>
                         <td>'.$reg->codigo.'</td>
                         <td>'.$reg->serie.'</td>
-                        <td>'.$reg->precio_venta.'</td>
                         <td>'.$reg->cantidad.'</td>
-                        <td>'.$reg->descuento.'</td>
+                        <td>'.'S/ .'.$reg->precio_venta.'</td>
+                        <td>'.'S/ .'.$reg->descuento.'</td>
+                        <td>'.'S/ .'.$reg->total.'</td>
                        </tr>';
                  $i++; 
             }
