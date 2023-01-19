@@ -282,15 +282,15 @@
 				if ($stockActual>=$cantidadProducto) {
 					$dataProd = "";
 					$result = true;
+					$dataDet = "";
 				}else{
 					$dataProd = $descripcionProducto;
 					//$result = array('estado'=>false,'detalle'=>$dataProd);
 					$result = false;
+					$dataDet[] = '- '.$dataProd.' [x'.$stockActual.']';
 				}
 
 				$data[] = $result;
-				$dataDet[] = '- '.$dataProd.' [x'.$stockActual.']';
-				
 
 			}
 
