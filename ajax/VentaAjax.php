@@ -150,11 +150,11 @@
 					//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
 					"5"=>$reg_total->Total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
 					"6"=>($reg->estado=="A")?'<span class="badge bg-green">ACTIVO</span>':'<span class="badge bg-red">CANCELADO</span>',
-					"7"=>($reg->estado=="A")?'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'&nbsp;'.$reg->APCliente.'\',\''.$reg_total->Total.'\',\''.$reg->email.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					"7"=>($reg->estado=="A")?'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->cliente.'\',\''.$reg_total->Total.'\',\''.$reg->email.'\',\''.$reg->destino.'\',\''.$reg->num_documento.'\',\''.$reg->celular	.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
 
 					/* '<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTASASSS" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'. */
 					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>':
-					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'&nbsp;'.$reg->APCliente.'\',\''.$reg_total->Total.'\',\''.$reg->direccion_calle.'\',\''.$reg->num_documento.'\',\''.$reg->telefono.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->cliente.'\',\''.$reg_total->Total.'\',\''.$reg->destino.'\',\''.$reg->num_documento.'\',\''.$reg->celular	.'\',\''.$reg->fecha.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
 					'<a href="./Reportes/exTicket.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;');
 				$i++;
 			}
