@@ -172,195 +172,24 @@
 <div class="col-sm-14"  id="VerFormVentaPed">
     <form role="form" name="frmVentas" id="frmVentas" >
             <div class="row">
-                <h3 class="col-lg-12" id="txtVenta" ></h3>             
-
-<!--                 <div class="col-lg-3 left">
-                    <label for="inputMarca">CUENTA ABONADA/MEDIO DE PAGO</label>
-                    <div class="form-group has-success">
-                        <select id="cboMetodoPago" name="cboMetodoPago" class="form-control">
-                            <option value="EFECTIVO">CONTRAENTREGA-EFECTIVO</option>
-                            <option value="IZIPAY">CONTRAENTREGA-IZIPAY</option>
-                            <option value="BCP">BCP-TRANSFERENCIA</option>
-                            <option value="BCP-Yape">BCP-YAPE</option>
-                            <option value="INTERBANK">INTERBANK</option>
-                            <option value="BBVA">BBVA</option>
-                            <option value="BANCO DE LA NACION">BANCO DE LA NACION</option>
-                            <option value="MERCADO PAGO">MERCADO PAGO</option>
-                            <option value="WESTERN UNION">WESTERN UNION</option>
-                            <option value="+2 MEDIOS DE PAGO">+2 MEDIOS DE PAGO</option>
-                            <option value="AUSPICIO">AUSPICIO</option>
-                            <option value="CONTRAENTREGA-YAPE">CONTRAENTREGA-YAPE</option>
-                            <option value="DESCUENTO FIN DE MES">DESCUENTO FIN DE MES</option>
-                        </select>
-                    </div>
-                </div> -->
-
-<!--                 <div class="col-lg-3 left">
-                    <label for="inputInscripcion">NÚMERO DE OPERACIÓN</label>
-                    <div class="form-group has-success">
-                        <input id="txtNumeroOpe" type="text" class="form-control" name="txtNumeroOpe" required="" placeholder=""/>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 left">
-                    <div class="form-group has-success" id="labelFecha">
-                        <label for="inputMarca">FECHA Y HORA DEL COMPROBANTE </label>
-                        <input id="cboFechaDesdeDetProv" class="form-control" type="datetime-local"  value="<?php echo date('Y-m-d H:i:s'); ?>"  maxlength="50" class="form-control" name="cboFechaDesdeDetProv" required="" />
-                        <input id="txtHoraOpe"  type="datetime-local" class="form-control" name="txtHoraOpe" value="<?php echo date("Y-m-d H:i:s"); ?>" required="" placeholder="" />
-                    </div>
-                </div>
- -->
-                <!-- <div class="col-lg-3 left">
-                    <label for="inputMarca">TRANSPORTE/AGENCIA DE ENVIO</label>
-                    <div class="form-group  has-success">
-                        <select id="cboAgenEnvio" name="cboAgenEnvio" class="form-control">
-                            <option value="RECOJO"> RECOJO EN OFICINA</option>
-                            <option value="DELIVERY-LIMA">DELIVERY-LIMA</option>
-                            <option value="DELIVERY-AQP">DELIVERY-AQP</option>
-                            <option value="OLVA">OLVA COURIER</option>
-                            <option value="SHALOM">SHALOM</option>
-                            <option value="SHALOM-PAGODESTINO">SHALOM-PAGO DESTINO</option>
-                            <option value="MARVISUR">MARVISUR</option>
-                            <option value="MARVISUR-PAGO-DESTINO">MARVISUR-PAGO DESTINO</option>
-                            <option value="CARGO SUR">CARGO SUR</option>
-                            <option value="FLORES">FLORES</option>
-                            <option value="GRAEL">GRAEL</option>
-                            <option value="MINIVAN">MINIVAN</option>
-                            <option value="PERU-BUS">PERU BUS</option>
-                            <option value="DHL">DHL</option>
-                            <option value="TARAPOTO-COURIER">TARAPOTO COURIER</option>
-                            <option value="MENDEVIL">MENDEVIL</option>
-                            <option value="ANGELES-TOURS">ANGELES-TOURS</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 left">
-                    <label for="inputMarca">COMPROBANTE</label>
-                    <div class="form-group  has-success">
-                        <select id="cboTipoComprobante" name="cboTipoComprobante" class="form-control">
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 left">
-                    <label for="inputMarca">PROMOCIONES</label>
-                    <div class="form-group  has-success">
-                        <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta" required="" placeholder="" autofocus="" />
-                        <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>" maxlength="50" class="form-control" name="txtIdUsuario" required="" placeholder="" autofocus="" />
-                        <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required="" placeholder="" autofocus="" />
-                        <select id="cboTipoPromocion" name="cboTipoPromocion" class="form-control" required="">
-                            <option value=""></option>
-                            <option value="Sin Promocion">Sin Promocion</option>
-                            <option value="Primobolan Androx+Anavar XT+LADY GAIN 2KG INN">Primobolan Androx +Anavar XT+LADY GAIN 2KG INN</option>
-                            <option value="Sustanon ZPHC+Decadurabolin Androx+GLUTA INN">Sustanon ZPHC+ Decadurabolin Androx + GLUTA INN</option>
-                            <option value="Ostarine MDH+Anavar MDH+LADY GAIN 2KG INN">Ostarine MDH+ Anavar MDH + LADY GAIN 2KG INN</option>
-                            <option value="Sustanon ZPHC+Tritrembolona Androx+GLUTA INN">Sustanon ZPHC + Tritrembolona Androx + GLUTA INN</option>
-                            <option value="TritreM Androx+Testoviron Fortex+CAJA BLEND 10 TOMAS INN">Tritrembolona Androx+Testoviron Fortex+CAJA BLEND 10 TOMAS INN</option>
-                            <option value="Ligandrol MDH+Anadrol MDH+GLUTA INN">Ligandrol MDH+ Anadrol MDH + GLUTA INN</option>
-                            <option value="Winstrol vial Vector+Ostarine MDH+CAJA BLEND 10 TOMAS INN">Winstrol vial Vector+Ostarine MDH+CAJA BLEND 10 TOMAS INN</option>
-                            <option value="Wintrol oral MDH+Cytomel kiev+GLUTA INN+Clembuterol Kiev">Wintrol oral MDH+Cytomel kiev+GLUTA INN+Clembuterol Kiev</option>
-                        </select>
-                    </div>
-                </div>
- 
-                <div class="col-lg-3 left">
-                    <label for="inputMarca">SERIE</label>
-                    <div class="form-group  has-success">
-                        <input id="txtIdTipoDoc" type="hidden" maxlength="50" class="form-control" name="txtIdTipoDoc" required="" autofocus="" placeholder="" readonly="readonly"/>
-                        <input id="txtSerieVent" type="text" maxlength="50" class="form-control" name="txtSerieVent" required="" autofocus="" placeholder=""/>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 left">
-                    <label for="inputInscripcion">NÚMERO DE VENTA</label>
-                    <div class="form-group  has-success">
-                        <input id="txtNumeroVent" type="text" class="form-control" name="txtNumeroVent" required="" placeholder=""/>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 left">
-                    <label for="inputMarca">TIPO DE VENTA</label>
-                    <div class="form-group  has-success">
-                        <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta" required="" placeholder="" autofocus="" />
-                        <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>" maxlength="50" class="form-control" name="txtIdUsuario" required="" placeholder="" autofocus="" />
-                        <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required="" placeholder="" autofocus="" />
-                        <select id="cboTipoVenta" name="cboTipoVenta" class="form-control">
-                            <option value="Contado">Contado</option>
-                            <option value="Credito">Crédito</option>
-                        </select>
-                    </div>
-                </div>
--->
-                <!-- <div class="col-lg-3 left">
-                    <label for="inputInscripcion">IMPUESTO</label>
-                    <div class="form-group  has-success">
-                        <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" placeholder="" readonly="readonly"/>
-                    </div>
-                </div> -->
-
-                <!-- <div class="col-lg-3 left">
-                    <label for="inputInscripcion">FECHA DE REGISTRO</label>
-                    <div class="form-group  has-success">
-                        <input id="txtClienteCel" type="text" class="form-control" name="txtClienteCel" placeholder="" readonly="readonly"/>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 left">
-                    <label for="inputInscripcion">CLIENTE</label>
-                    <div class="form-group  has-success">
-                        <input id="txtClienteVent" type="text" class="form-control" name="txtClienteVent" placeholder="" readonly="readonly"/>
-                    </div>
-                </div>
-
-                <div class="col-lg-5 left">
-                    <label for="inputInscripcion">DIRECCION</label>
-                    <div class="form-group  has-success">
-                        <input id="txtClienteDir" type="text" class="form-control" name="txtClienteDir" placeholder="" readonly="readonly"/>
-                    </div>
-                </div>
-    
-                <div class="col-lg-2 left">
-                    <label for="inputInscripcion">DNI</label>
-                    <div class="form-group  has-success">
-                        
-                        <input id="txtClienteDni" type="text" class="form-control" name="txtClienteDni" placeholder="" readonly="readonly"/>
-                    </div>
-                </div>
-    
-                <div class="col-lg-2 left">
-                    <label for="inputInscripcion">TELEFONOS</label>
-                    <div class="form-group  has-success">  
-                        <input id="txtClienteFech" type="text" class="form-control" name="txtClienteFech" placeholder="" readonly="readonly"/>
-                    </div>
-                </div>
-    
-                <div class="col-lg-3 left">
-                    <label id="inputTotal">TOTAL</label>
-                    <div class="form-group  has-success">
-                        
-                        <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required="" placeholder="" readonly="readonly"/>
-                    </div>
-                </div> -->
-
-
+                <h3 class="col-lg-12" id="txtVenta" ></h3>
 
                 <div class="col-lg-3 left">
                     <label for="inputInscripcion">Numero de Nota de Venta</label>
                     <div class="form-group  has-success">
-                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                        <input id="txtNotaVenta" type="text" name="txtNotaVenta" class="form-control" readonly="readonly">
                     </div>
                 </div>
                 <div class="col-lg-3 left">
                     <label for="inputInscripcion">Aprobacion de Cuenta Abonada</label>
                     <div class="form-group  has-success">
-                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                        <input id="txtAprobaCuenAbo" type="text" name="txtAprobaCuenAbo" class="form-control" readonly="readonly">
                     </div>
                 </div>
                 <div class="col-lg-3 left">
                     <label for="inputInscripcion">Aprobacion de Venta</label>
                     <div class="form-group  has-success">
-                        <input id="txtNumeroVent" type="text" name="txtNumeroVent" class="form-control" readonly="readonly">
+                        <input id="txtAprobaVenta" type="text" name="txtAprobaVenta" class="form-control" readonly="readonly">
                     </div>
                 </div>
                 <div class="col-lg-3 left">
@@ -370,41 +199,12 @@
                     </div>
                 </div> 
 
-                <!-- <div class="col-lg-12 left">
-                    <div class="row">
-                        <div class="col-lg-3 left">
-                            <div class="form-group has-success">
-                                <label>Asesor :</label>
-                                <input id="txtEjecutivo" type="text" name="txtEjecutivo" class="form-control" readonly="readonly"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 left">
-                            <div class="form-group has-success">
-                                <label>Fecha y Hora de registro :</label>
-                                <input id="txtClienteFech" type="text" name="txtClienteFech" class="form-control" readonly="readonly"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 left">
-                            <div class="form-group has-success">
-                                <label>Nuevo o Antiguo :</label>
-                                <input id="txtNuevo_Antiguo" type="text" name="txtNuevo_Antiguo" class="form-control" readonly="readonly"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 left">
-                            <div class="form-group has-warning">
-                                <label>Tipo de Cliente:</label>
-                                <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
                 <div class="col-lg-12 left">
                     <div class="row">
                         <div class="col-lg-3 left">
                             <div class="form-group has-success">
                                 <label>Tipo de Cliente:</label>
-                                <input id="txtClienteVent" type="text" name="txtClienteVent" class="form-control" readonly="readonly"/>
+                                <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="col-lg-3 left">
@@ -427,12 +227,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-lg-3 left">
-                    <div class="form-group has-success">
-                        <label>Género (*):</label>
-                        <input id="txtNombre" type="text" maxlength="40" name="txtNombre" class="form-control" autofocus="" />
-                    </div>
-                </div> -->
 
                 <div class="col-lg-12 left">
                     <div class="row">
@@ -444,6 +238,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-12 left">
                     <div class="row">
                         <div class="col-lg-2 left">
@@ -473,13 +268,12 @@
                         <div class="col-lg-2 left">
                             <label for="inputInscripcion">Total Venta</label>
                             <div class="form-group  has-success">
-                                <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" readonly="readonly" />
+                                <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" readonly="readonly" />
                             </div>
                         </div>
 
                     </div>
                 </div>
-
 
                 <div class="col-lg-12 left">
 
