@@ -693,7 +693,7 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total,celular, correo,num_documento, celular, destino, date, agencia_envio) { // el numero crea el espacio en la celda 
+function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
     bandera = 2;
     $("#VerForm").show();
     $("#btnNuevoVent").hide();
@@ -702,7 +702,7 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total,celular,
     $("#txtCliente").hide();
     $("#cboTipoPedido").hide();
 
-    $("#hdn_agencia_envio").val(agencia_envio);
+    //$("#hdn_agencia_envio").val(agencia_envio);
     //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
     /* $("#txtRutaImgVoucher").val(imagen);
     $("#txtRutaImgVoucher").show(); */
@@ -712,7 +712,7 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total,celular,
     //destino = direccion;
     //num_documento = dni;
     //celular = celular;
-    fecha = date;
+    //fecha = date;
     //hora_operacion = hora_operacion;
     var igvPed = total * parseInt($("#txtImpuesto").val()) / (100 + parseInt($("#txtImpuesto").val()));
     $("#txtIgvPed").val(Math.round(igvPed * 100) / 100);
@@ -734,23 +734,23 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total,celular,
                 $("#inputTotal").hide();
                 $("#txtTotalVent").hide();
                 $("#VerRegPedido").hide();
-                $("#txtClienteFech").val(date);
-                $("#txtClienteCel").val(celular);
                 $("#txtClienteVent").val(cliente) //.val(cliente);
-                $("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
-                $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
-                $("#cboTipo_documento").val(documento_per);
                 $("#txtSerieVent").val(r.serie_comprobante);
                 $("#txtNumeroVent").val(r.num_comprobante);
-                $("#cboTipoVenta").val(r.tipo_venta);
-                $("#cboTipoPromocion").val(r.tipo_promocion);
-                $("#cboMetodoPago").val(r.metodo_pago);
+                $("#cboTipoVenta").val(r.tipo_venta);//$("#txtClienteFech").val(date);
+                $("#cboTipoComprobante").html("<option>" + r.tipo_comprobante + "</option>");
+                //$("#txtClienteCel").val(celular);
+                //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
+                //$("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+                //$("#cboTipo_documento").val(documento_per);
+                
+                //$("#cboTipoPromocion").val(r.tipo_promocion);
+                //$("#cboMetodoPago").val(r.metodo_pago);
                 //$("#hdn_agencia_envio").val(agencia_envio);
                 //$("#hdn_idcliente").val(r.metodo_pago);
                 /* $("#txtNumeroOpe").val(r.num_operacion);
                 $("#txtHoraOpe").val(r.hora_operacion); */
                 //$("#cboAgenEnvio").val(r.agencia_envio);
-                $("#cboTipoComprobante").html("<option>" + r.tipo_comprobante + "</option>");
 
                 var igvPed = r.total * parseInt($("#txtImpuesto").val()) / (100 + parseInt($("#txtImpuesto").val()));
                 $("#txtIgvPedVer").val(Math.round(igvPed * 100) / 100);

@@ -199,11 +199,11 @@
 			global $conexion;
 			$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 
-			/* (CASE
+			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
 				WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
 				WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
-			END ) AS estado, */
+			END ) AS estado,
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion
