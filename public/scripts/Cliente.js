@@ -201,15 +201,18 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 
 		$("input[name=optionsRadios][value=" + genero + "]").prop('checked', true);
 
-		if (tipo_documento == "DNI" || tipo_documento == "RUC") {
+		//PROBLEMA CUANDO SE EDITA UN CLIENTE
+		/* if (tipo_documento == "DNI" || tipo_documento == "RUC") {
 	
 			$('#txtNombre').prop('disabled', true);
 			$('#txtApellido').prop('disabled', true);
+			$('#txtNum_Documento').prop('disabled', true);
 			
 		} else if (tipo_documento == "PASAPORTE" || tipo_documento == "CE") {
 			
 			$('#txtNombre').prop('disabled', false);
 			$('#txtApellido').prop('disabled', false);
+			$('#txtNum_Documento').prop('disabled', false);
 
 		}
 
@@ -219,15 +222,17 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 	
 				$('#txtNombre').prop('disabled', true);
 				$('#txtApellido').prop('disabled', true);
+				$('#txtNum_Documento').prop('disabled', true);
 				
 			} else if ($(this).val() == "PASAPORTE" || $(this).val() == "CE") {
 				
 				$('#txtNombre').prop('disabled', false);
 				$('#txtApellido').prop('disabled', false);
+				$('#txtNum_Documento').prop('disabled', false);
 	
 			}
 	
-		});
+		}); */
 
  	}
 

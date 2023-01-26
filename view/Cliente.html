@@ -94,7 +94,7 @@
                                             <label>Nuevo o Antiguo :</label>
                                             <input id="txtNumero_Cuenta" type="text" maxlength="40"
                                                 name="txtNumero_Cuenta" required="" class="form-control"
-                                                placeholder="Nuevo o Antiguo"/>
+                                                placeholder="Nuevo o Antiguo" readonly/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -148,13 +148,13 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group has-success">
                                     <label>Género (*):</label>
-                                    <div class="radio" id="optionsRadios" required="">
+                                    <div class="radio" id="optionsRadios">
                                         <label><input type="radio" name="optionsRadios" id="optionsRadios1"
                                                 value="1">Mujer</label>
-                                        <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2"
-                                                checked="">Hombre</label>
-                                        <label><input type="radio" name="optionsRadios" id="optionsRadios3"
-                                                value="3">Prefiere no decirlo</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios2" 
+                                                value="2" required>Hombre</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios3" 
+                                                value="3" checked>Prefiere no decirlo</label>
                                     </div>
                                 </div>
                             </div>
