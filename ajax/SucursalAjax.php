@@ -128,7 +128,7 @@
 
      		while ($reg = $query_Tipo->fetch_object()) {
 	             echo '<tr>
-	             		<td><button type="button" onclick="Acceder('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_documento.'\',\''.$reg->tipo_usuario.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->foto.'\',\''.$reg->logo.'\',\''.$reg->email.'\',\''.$reg->login.'\',\''.$reg->razon_social.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\')" class="btn btn-info pull-left">Acceder</button></td>
+	             		<td><button type="button" onclick="Acceder('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_documento.'\',\''.$reg->tipo_usuario.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->foto.'\',\''.$reg->logo.'\',\''.$reg->email.'\',\''.$reg->login.'\',\''.$reg->razon_social.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\',\''.$reg->superadmin.'\')" class="btn btn-info pull-left">Acceder</button></td>
 		                <td>'.$reg->razon_social.'</td>
 		                <td><img class="img-thumbnail" width="100px" height="100px" src="./'.$reg->logo.'" /></td>
 	                   </tr>';
