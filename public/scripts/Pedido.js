@@ -277,7 +277,7 @@ function init() {
                     $("#txtIgvPed").val("");
                     $("#txtTotalPed").val("");
                     $("#txtSubTotalPed").val("");
-
+                    //Limpiar(); //Se añadio limpiar
                     ListadoPedidos();
                     ListadoPedidos2();
                     $.getJSON("./ajax/PedidoAjax.php?op=GetIdPedido", function (r) {
@@ -679,8 +679,8 @@ function calcularSubTotalPed() {
 
 function calcularTotalPed(posi) {
     if (posi != null) {
-        //ModificarPed(posi);
-        Modificar(posi);
+        ModificarPed(posi);
+        //Modificar(posi);
     }
     var suma = 0;
     var data = JSON.parse(objinit.consultar());
@@ -693,7 +693,7 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, cliente, total,celular, correo,num_documento, celular, destino, date, agencia_envio) { // el numero crea el espacio en la celda 
+function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total,celular, correo,num_documento, celular, destino, date, agencia_envio) { // el numero crea el espacio en la celda 
     bandera = 2;
     $("#VerForm").show();
     $("#btnNuevoVent").hide();
@@ -991,7 +991,7 @@ function VerMsj() {
     bootbox.alert("No se puede generar la venta, este pedido esta cancelado");
 }
 
-function Modificar(pos) {
+function ModificarPed(pos) {
     var idDetIng = document.getElementsByName("txtIdDetIng");
     var pvd = document.getElementsByName("txtPrecioVentPed");
     var cantPed = document.getElementsByName("txtCantidaPed");
