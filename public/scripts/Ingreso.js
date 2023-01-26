@@ -94,7 +94,7 @@ function init() {
         var prec_ventaD = document.getElementsByName("txtPrecioVentD");
         var prec_ventaP = document.getElementsByName("txtPrecioVentaP");
 
-        alert(idArt)
+        //alert(idArt)
         /*
 		var idArt = document.frmIngresos.elements["txtIdArticulo[]"];
 		var cod = document.frmIngresos.elements["txtCodgo[]"];
@@ -374,7 +374,7 @@ function ConsultarDetalles() {
             detalle += "<td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" + pos + ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" + data[pos][0] + ",\"" + data[pos][1] +"\",\"" + data[pos][2] + "\",\"" + "" + "\",\"" + data[pos][4] + "\",\"" + data[pos][5] + "\",\"" + data[pos][6] + "\",\"" + data[pos][7] + "\",\"" + data[pos][8] + "\",\"" + data[pos][9] + "\",\"" + pos + "\")' class='btn btn-success'><i class='fa fa-plus' ></i> </button></td></tr>";
             */
 
-            detalle = "<tr><td>" + data[pos][1] + " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" + data[pos][0] + "' /></td>";
+            /* detalle = "<tr><td>" + data[pos][1] + " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" + data[pos][0] + "' /></td>";
             detalle += "<td><input class='form-control' type='text' onkeyup='ModificarIngreso(" + pos + ");' name='txtCodgo' id='txtCodgo[]' value='" + data[pos][2] + "' /></td>";
             detalle += "<td><input class='form-control' type='text' name='txtSeries' onkeyup='ModificarIngreso(" + pos + ");' id='txtSeries[]'  value='" + data[pos][3] + "' /></td>";
             detalle += "<td><input class='form-control' type='text' name='txtDescripcion' onkeyup='ModificarIngreso(" + pos + ");' id='txtDescripcion[]' value='" + data[pos][4] + "' /></td>";
@@ -383,9 +383,10 @@ function ConsultarDetalles() {
             detalle += "<td><input class='form-control' type='text' name='txtPrecioVentD' id='txtPrecioVentD[]'  value='" + data[pos][8] + "' onchange='calcularTotal(" + pos + ");' required /></td>";
             detalle += "<td><input class='form-control' type='text' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" + data[pos][9] + "' onchange='calcularTotal(" + pos + ");' required /></td>";
             detalle += "<td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" + pos + ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" + data[pos][0] + ",\"" + data[pos][1] +"\",\"" + data[pos][2] + "\",\"" + "" + "\",\"" + data[pos][4] + "\",\"" + data[pos][5] + "\",\"" + data[pos][6] + "\",\"" + data[pos][7] + "\",\"" + data[pos][8] + "\",\"" + data[pos][9] + "\",\"" + pos + "\")' class='btn btn-success'><i class='fa fa-plus' ></i> </button></td></tr>";
+ */
+            $("table#tblDetalleIngreso").append("<tr><td>" + data[pos][1] + " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" + data[pos][0] + "' /></td><td><input class='form-control' type='text' onkeyup='Modificar(" + pos + ");' name='txtCodgo' id='txtCodgo[]' value='" + data[pos][2] + "' /></td><td><input class='form-control' type='text' name='txtSeries' onkeyup='Modificar(" + pos + ");' id='txtSeries[]'  value='" + data[pos][3] + "' /></td><td><input class='form-control' type='text' name='txtDescripcion' onkeyup='Modificar(" + pos + ");' id='txtDescripcion[]' value='" + data[pos][4] + "' /></td><td><input class='form-control' type='text' onkeypress='return justNumbers(event);' name='txtStockIng' id='txtStockIng[]'   value='" + data[pos][5] + "' onkeyup='calcularTotal(" + pos + ");' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioComp' id='txtPrecioComp[]'  value='" + data[pos][6] + "' onkeyup='calcularTotal(" + pos + ");' required /></td><td><input class='form-control' type='text' onkeyup='Modificar(" + pos + ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentD' id='txtPrecioVentD[]'  value='" + data[pos][7] + "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" + pos + ");' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" + data[pos][8] + "' required /></td><td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" + pos + ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" + data[pos][0] + ",\"" + data[pos][1] +"\",\"" + data[pos][2] + "\",\"" + "" + "\",\"" + data[pos][4] + "\",\"" + data[pos][5] + "\",\"" + data[pos][6] + "\",\"" + data[pos][7] + "\",\"" + data[pos][8] + "\",\"" + data[pos][9] + "\",\"" + pos + "\")' class='btn btn-success'><i class='fa fa-plus' ></i> </button></td></tr>");
 
-
-            $("table#tblDetalleIngreso").append(detalle);
+            //$("table#tblDetalleIngreso").append(detalle);
         }
         calcularIgv();
         calcularSubTotal();
@@ -422,7 +423,7 @@ function ListadoIngresos(){
                     dataType : "json",
                     
                     error: function(e){
-                        console.log(e.responseText);    
+                        console.log(e.responseText);
                     }
                 },
             "bDestroy": true
@@ -511,25 +512,22 @@ function ListadoIngresos(){
     }
 
     function calcularTotal(posi){
-
-        alert(posi)
-        if(posi != null){
-            ModificarIngreso(posi);
-              //alert(pos);
-        }
+        
         var suma = 0;
         var data = JSON.parse(objinit.consultar());
         for (var pos in data) {
-            //suma += parseFloat(data[pos][5] * data[pos][6]);
-            suma += parseFloat(data[pos][6] * data[pos][7]);
+            suma += parseFloat(data[pos][5] * data[pos][6]);
         }
         calcularIgv();
         calcularSubTotal();
         $("#txtTotal").val(Math.round(suma*100)/100);
-        
+        if(posi != null){
+          Modificar(posi);
+            //alert(pos);
+        }
     }
 
-    function ModificarIngreso(pos){
+    function Modificar(pos){
         var idArt = document.getElementsByName("txtIdArticulo");
         var cod = document.getElementsByName("txtCodgo");
         var serie = document.getElementsByName("txtSeries");
