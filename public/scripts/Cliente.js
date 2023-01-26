@@ -11,16 +11,23 @@ function init(){
     }); */
 
 
-	if ($("#hdn_superadmin").val() == 'A') {
+
+	$("#btnNuevo").show();
+
+	if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
+		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
+		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", false);
+		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", false);
+		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", false);
+
+		
+	} else if ($("#hdn_rol_usuario").val() == 'A'){
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
-	} else if ($("#hdn_superadmin").val() == 'S'){
-		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", true);
-		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
-		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
-		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+
+		//$("#btnNuevo").show();
 	}
 
 	ListadoCliente();// Ni bien carga la pagina que cargue el metodo
@@ -39,6 +46,7 @@ function init(){
             swal("Mensaje del Sistema", r, "success");
             OcultarForm();
 			Limpiar();
+			
         });
 	};
 
@@ -64,6 +72,8 @@ function init(){
 		$("#txtFecha_creacion").val("");
 		$("#txtFecha_modificacion").val("");
 
+		$("input[name=optionsRadios]").prop('checked', false);
+
 		//$("#optionsRadios1").prop("checked", false);
 		//$("#optionsRadios2").prop("checked", false);
 		//$("#optionsRadios3").prop("checked", false);
@@ -78,7 +88,7 @@ function init(){
 
 	function VerForm(){
 		$("#VerForm").show();// Mostramos el formulario
-		$("#btnNuevo").hide();// ocultamos el boton nuevo
+		//$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
 
 		$("#optionsRadios1").prop("checked", false);
@@ -90,7 +100,7 @@ function init(){
 
 	function OcultarForm(){
 		$("#VerForm").hide();// Mostramos el formulario
-		$("#btnNuevo").show();// ocultamos el boton nuevo
+		//$("#btnNuevo").show();// ocultamos el boton nuevo
 		$("#VerListado").show();
 	}
 }
@@ -143,9 +153,9 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
-function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
-		$("#btnNuevo").hide();// ocultamos el boton nuevo
+		//$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
  
 		$("#txtIdPersona").val(id);// recibimos la variable id a la caja de texto
@@ -153,8 +163,10 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 	    $("#txtNombre").val(nombre);// recibimos la variable nombre a la caja de texto txtNombre
 		$("#txtApellido").val(apellido);// recibimos la variable apellido a la caja de texto txtApellido
 		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
- 		$("#txtNum_Documento").val(num_documento);
+ 		
+		$("#txtNum_Documento").val(num_documento);
 
+		
 		
 		//alert(genero)
 
@@ -184,6 +196,44 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		//$('#txtIdEmpleado_modificado').val(idempleado_modificado);//Campo  empleado ID
 		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo nombre del empleado
 		$('#txtFecha_modificado').val(fecha_modificado);//Campo fecha de modificacion empleado 
+
+		//$("#optionsRadios").val(genero);
+
+		$("input[name=optionsRadios][value=" + genero + "]").prop('checked', true);
+
+		//PROBLEMA CUANDO SE EDITA UN CLIENTE
+		/* if (tipo_documento == "DNI" || tipo_documento == "RUC") {
+	
+			$('#txtNombre').prop('disabled', true);
+			$('#txtApellido').prop('disabled', true);
+			$('#txtNum_Documento').prop('disabled', true);
+			
+		} else if (tipo_documento == "PASAPORTE" || tipo_documento == "CE") {
+			
+			$('#txtNombre').prop('disabled', false);
+			$('#txtApellido').prop('disabled', false);
+			$('#txtNum_Documento').prop('disabled', false);
+
+		}
+
+		$("#cboTipo_Documento").change(function(){
+
+			if ($(this).val() == "DNI" || $(this).val() == "RUC") {
+	
+				$('#txtNombre').prop('disabled', true);
+				$('#txtApellido').prop('disabled', true);
+				$('#txtNum_Documento').prop('disabled', true);
+				
+			} else if ($(this).val() == "PASAPORTE" || $(this).val() == "CE") {
+				
+				$('#txtNombre').prop('disabled', false);
+				$('#txtApellido').prop('disabled', false);
+				$('#txtNum_Documento').prop('disabled', false);
+	
+			}
+	
+		}); */
+
  	}
 
 function buscarPorNumeroDocumento() {

@@ -5,7 +5,7 @@
         background: #e2e2e2;
     }
 </style>
-<input type="hidden" id="hdn_superadmin" name="hdn_superadmin" value="<?php echo $_SESSION['superadmin'];?>">
+<input type="hidden" id="hdn_rol_usuario" name="hdn_rol_usuario" value="<?php echo $_SESSION['rol_usuario'];?>">
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Clientes</h3>
@@ -94,7 +94,7 @@
                                             <label>Nuevo o Antiguo :</label>
                                             <input id="txtNumero_Cuenta" type="text" maxlength="40"
                                                 name="txtNumero_Cuenta" required="" class="form-control"
-                                                placeholder="Nuevo o Antiguo"/>
+                                                placeholder="Nuevo o Antiguo" readonly/>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -121,8 +121,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="form-group has-success">
                                             <label>Tipo Documento (*):</label>
-                                            <select required="" id="cboTipo_Documento" name="cboTipo_Documento"
-                                                class="form-control">
+                                            <select required="" id="cboTipo_Documento" name="cboTipo_Documento" class="form-control">
                                             </select>
                                         </div>
                                     </div>
@@ -149,13 +148,13 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group has-success">
                                     <label>Género (*):</label>
-                                    <div class="radio" id="optionsRadios" required="">
+                                    <div class="radio" id="optionsRadios">
                                         <label><input type="radio" name="optionsRadios" id="optionsRadios1"
                                                 value="1">Mujer</label>
-                                        <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="2"
-                                                checked="">Hombre</label>
-                                        <label><input type="radio" name="optionsRadios" id="optionsRadios3"
-                                                value="3">Prefiere no decirlo</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios2" 
+                                                value="2" required>Hombre</label>
+                                        <label><input type="radio" name="optionsRadios" id="optionsRadios3" 
+                                                value="3" checked>Prefiere no decirlo</label>
                                     </div>
                                 </div>
                             </div>
