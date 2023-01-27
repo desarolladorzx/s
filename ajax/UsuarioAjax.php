@@ -219,6 +219,7 @@
 				$_SESSION["mnu_admin"] = $fetch->mnu_admin;
 				$_SESSION["superadmin"] = $fetch->superadmin;
 				$_SESSION["rol"] = $fetch->rol_id;
+				
 			}
 			break;
 
@@ -250,7 +251,8 @@
 				$_SESSION["mnu_documentacion_ja"] = $_POST["mnu_documentacion_ja"];
 				$_SESSION["mnu_documentacion_jl"] = $_POST["mnu_documentacion_jl"];
 				$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
-				$_SESSION["rol"] = $fetch->rol_id;
+				/*$_SESSION["rol"] = $fetch->rol_id;*/
+				$_SESSION["rol_usuario"] = $_POST["superadmin"];
 		break;
 
 		case "IngresarPanelSuperAdmin" :
@@ -281,7 +283,8 @@
 				$_SESSION["mnu_documentacion_ja"] = $_POST["mnu_documentacion_ja"];
 				$_SESSION["mnu_documentacion_jl"] = $_POST["mnu_documentacion_jl"];
 				$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
-				$_SESSION["rol"] = $fetch->rol_id;
+				//$_SESSION["rol"] = $fetch->rol_id;
+				$_SESSION["rol_usuario"] = $_POST["superadmin"];
 		break;
 
 		case "Salir":

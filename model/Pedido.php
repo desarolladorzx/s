@@ -64,7 +64,7 @@
 		// Se cambio la cantidad del orden a 10K corregir AP
 		public function Listar($idsucursal){
 			global $conexion;
-			$sql = "SELECT p.*, concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos) as empleado2,concat(eva.nombre,' ',eva.apellidos) as empleado3
+			$sql = "SELECT p.*, concat(e.nombre,' ',e.apellidos,'  | F-H : ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,'  | F-H : ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
@@ -199,11 +199,11 @@
 			global $conexion;
 			$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 
-			/* (CASE
+			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
 				WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
 				WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
-			END ) AS estado, */
+			END ) AS estado,
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion

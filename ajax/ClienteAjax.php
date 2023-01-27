@@ -6,6 +6,9 @@ switch ($_GET["op"]) {
 
 	case 'SaveOrUpdate':
 
+		//var_dump($_POST["txtIdPersona"]);
+		//exit;
+
 		$tipo_persona = $_POST["cboTipo_Persona"];
 		$nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"]: "";
 		$apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"]: "";
@@ -57,6 +60,15 @@ switch ($_GET["op"]) {
 		$data = array();
 		$i = 1;
 		while ($reg = $query_Tipo->fetch_object()) {
+
+			if ($_SESSION['rol_usuario'] == "S") {
+				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\' )"><i class="fa fa-pencil"></i> </button>';
+			}else{
+				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\' )"><i class="fa fa-pencil"></i> </button>';
+			}
+
+			$boton_eliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>';
+
 			$data[] = array(
 				"id" => $i,
 				"1" => $reg->tipo_persona . ' - ' . $reg->numero_cuenta,
@@ -69,8 +81,7 @@ switch ($_GET["op"]) {
 				"8" => $reg->fecha_registro,
 				"9" => $reg->empleado_modificado,
 				"10" => $reg->fecha_modificado,
-				"11" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\')"><i class="fa fa-pencil"></i> </button>&nbsp;' .
-					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>'
+				"11" => $boton_editar . ' ' . $boton_eliminar
 			);
 			$i++;
 		}

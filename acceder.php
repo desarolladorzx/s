@@ -131,7 +131,10 @@
         };
       }
 
-      function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin,mnu_documentacion_ev,mnu_documentacion_jv,mnu_documentacion_ja,mnu_documentacion_jl){
+      function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin,superadmin,mnu_documentacion_ev,mnu_documentacion_jv,mnu_documentacion_ja,mnu_documentacion_jl){
+
+        //alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
+
         var data = {
             idusuario : idusuario,
             idsucursal : idsucursal,
@@ -159,11 +162,15 @@
             mnu_documentacion_jv : mnu_documentacion_jv,
             mnu_documentacion_ja : mnu_documentacion_ja,
             mnu_documentacion_jl : mnu_documentacion_jl,
-            mnu_admin : mnu_admin
+            mnu_admin : mnu_admin,
+            superadmin: superadmin
         };
+
+        //console.log(data)
+
         $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r){
-                $(location).attr("href", "EscritorioEmp.php");
-          });
+              $(location).attr("href", "EscritorioEmp.php");
+        });
       }
 
       function AccederSuperAdmin(idempleado, idusuario, idsucursal, estadoAdmin, empleado, tipo_documento, direccion, telefono, foto, email, login, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl, mnu_admin, logo){

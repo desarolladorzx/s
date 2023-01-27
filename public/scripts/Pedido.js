@@ -277,7 +277,7 @@ function init() {
                     $("#txtIgvPed").val("");
                     $("#txtTotalPed").val("");
                     $("#txtSubTotalPed").val("");
-
+                    //Limpiar(); //Se añadio limpiar
                     ListadoPedidos();
                     ListadoPedidos2();
                     $.getJSON("./ajax/PedidoAjax.php?op=GetIdPedido", function (r) {
@@ -679,8 +679,8 @@ function calcularSubTotalPed() {
 
 function calcularTotalPed(posi) {
     if (posi != null) {
-        //ModificarPed(posi);
-        Modificar(posi);
+        ModificarPed(posi);
+        //Modificar(posi);
     }
     var suma = 0;
     var data = JSON.parse(objinit.consultar());
@@ -693,7 +693,7 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, correo, cliente,num_documento,celular,destino,metodo_pago,agencia_envio,tipo_promocion) { // el numero crea el espacio en la celda 
+function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
     bandera = 2;
     $("#VerForm").show();
     $("#btnNuevoVent").hide();
@@ -701,29 +701,19 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, corre
     $("#txtIdPedido").val(idPedido);
     $("#txtCliente").hide();
     $("#cboTipoPedido").hide();
+
+    //$("#hdn_agencia_envio").val(agencia_envio);
+    //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
     /* $("#txtRutaImgVoucher").val(imagen);
     $("#txtRutaImgVoucher").show(); */
 
-    $("#txtEmpleadoVent").val(empleado)//.Empleado que registro el pedido;
-    $("#txtClienteVent").val(cliente)//.falta concatenar nombre y apellido desde js;
-    $("#txtClienteDni").val(num_documento);// MUESTRA DETALLE DE VENTA
-    $("#txtClienteCel").val(celular);
-    $("#txtClienteEmail").val(correo);// MUESTRA DETALLE DE VENTA
-    $("#txtClienteDir").val(destino);// MUESTRA DETALLE DE VENTA
-
-    $("#hdn_idClientePedido").val(idcliente);
-    $("#hdn_metodo_pago").val(metodo_pago);
-    $("#hdn_agencia_envio").val(agencia_envio);
-    $("#hdn_tipo_promocion").val(tipo_promocion);
-    $("#txtClientePed").val(metodo_pago);
-
     //$("#txtRutaImgArt").prop("disabled", true);
     email = correo;
-    direccion_calle = direccion;
-    num_documento = dni;
-    telefono = celular;
-    fecha = date;
-    hora_operacion = hora_operacion;
+    //destino = direccion;
+    //num_documento = dni;
+    //celular = celular;
+    //fecha = date;
+    //hora_operacion = hora_operacion;
     var igvPed = total * parseInt($("#txtImpuesto").val()) / (100 + parseInt($("#txtImpuesto").val()));
     $("#txtIgvPed").val(Math.round(igvPed * 100) / 100);
 
@@ -744,26 +734,34 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, APCliente, total, corre
                 $("#inputTotal").hide();
                 $("#txtTotalVent").hide();
                 $("#VerRegPedido").hide();
-                $("#txtClienteFech").val(date);
-                $("#txtClienteCel").val(celular);
-                $("#txtClienteVent").val(APCliente) //.val(APCliente);
-                $("#txtClienteDir").val(direccion); // MUESTRA DETALLE DE VENTA
-                $("#txtClienteDni").val(dni); // MUESTRA DETALLE DE VENTA
-                $("#cboTipo_documento").val(documento_per);
+                $("#txtClienteVent").val(cliente) //.val(cliente);
                 $("#txtSerieVent").val(r.serie_comprobante);
                 $("#txtNumeroVent").val(r.num_comprobante);
-                $("#cboTipoVenta").val(r.tipo_venta);
-                $("#cboTipoPromocion").val(r.tipo_promocion);
-                $("#cboMetodoPago").val(r.metodo_pago);
-
-                //$("#hdn_idcliente").val(r.metodo_pago);
-
-
+                $("#cboTipoVenta").val(r.tipo_venta);//$("#txtClienteFech").val(date);
+                $("#cboTipoComprobante").html("<option>" + r.tipo_comprobante + "</option>");
+                $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+                $("#txtClienteCel").val(celular);
+                $("#txtTipoCliente").val(tipo_cliente);
+                $("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
+                $("#txtNotaVenta").val(ticket);
+                $("#txtAprobaCuenAbo").val(aproba_venta);
+                $("#txtAprobaVenta").val(aproba_pedido);
+                $("#txtEmpleadoVent").val(empleado);
+                $("#hdn_metodo_pago").val(metodo_pago);
+                $("#hdn_agencia_envio").val(agencia_envio);
+                $("#hdn_tipo_promocion").val(tipo_promocion);
 
                 /* $("#txtNumeroOpe").val(r.num_operacion);
+
+                //$("#cboTipo_documento").val(documento_per);
+                
+                //$("#cboTipoPromocion").val(r.tipo_promocion);
+                //$("#cboMetodoPago").val(r.metodo_pago);
+                //$("#hdn_agencia_envio").val(agencia_envio);
+                //$("#hdn_idcliente").val(r.metodo_pago);
+                /* $("#txtNumeroOpe").val(r.num_operacion);
                 $("#txtHoraOpe").val(r.hora_operacion); */
-                $("#cboAgenEnvio").val(r.agencia_envio);
-                $("#cboTipoComprobante").html("<option>" + r.tipo_comprobante + "</option>");
+                //$("#cboAgenEnvio").val(r.agencia_envio);
 
                 var igvPed = r.total * parseInt($("#txtImpuesto").val()) / (100 + parseInt($("#txtImpuesto").val()));
                 $("#txtIgvPedVer").val(Math.round(igvPed * 100) / 100);
@@ -1004,7 +1002,7 @@ function VerMsj() {
     bootbox.alert("No se puede generar la venta, este pedido esta cancelado");
 }
 
-function Modificar(pos) {
+function ModificarPed(pos) {
     var idDetIng = document.getElementsByName("txtIdDetIng");
     var pvd = document.getElementsByName("txtPrecioVentPed");
     var cantPed = document.getElementsByName("txtCantidaPed");
