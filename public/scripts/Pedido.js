@@ -693,7 +693,7 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
+function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
     bandera = 2;
     $("#VerForm").show();
     $("#btnNuevoVent").hide();
@@ -739,9 +739,20 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo)
                 $("#txtNumeroVent").val(r.num_comprobante);
                 $("#cboTipoVenta").val(r.tipo_venta);//$("#txtClienteFech").val(date);
                 $("#cboTipoComprobante").html("<option>" + r.tipo_comprobante + "</option>");
-                //$("#txtClienteCel").val(celular);
-                //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
-                //$("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+                $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+                $("#txtClienteCel").val(celular);
+                $("#txtTipoCliente").val(tipo_cliente);
+                $("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
+                $("#txtNotaVenta").val(ticket);
+                $("#txtAprobaCuenAbo").val(aproba_venta);
+                $("#txtAprobaVenta").val(aproba_pedido);
+                $("#txtEmpleadoVent").val(empleado);
+                $("#hdn_metodo_pago").val(metodo_pago);
+                $("#hdn_agencia_envio").val(agencia_envio);
+                $("#hdn_tipo_promocion").val(tipo_promocion);
+
+                /* $("#txtNumeroOpe").val(r.num_operacion);
+
                 //$("#cboTipo_documento").val(documento_per);
                 
                 //$("#cboTipoPromocion").val(r.tipo_promocion);

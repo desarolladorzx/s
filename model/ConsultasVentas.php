@@ -5,23 +5,23 @@
 		}
 		public function ListarVentasFechas($idsucursal, $fecha_desde, $fecha_hasta){
 			global $conexion;
-			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
-				concat(e.apellidos,' ',e.nombre) as empleado,
-				concat(pe.nombre,' ',pe.apellido) as cliente,
-				pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
-				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
-				v.metodo_pago as cuenta_abonada,
-				v.tipo_comprobante as comprobante,v.agencia_envio as transporte,
-				v.serie_comprobante as serie,v.num_comprobante as numero,
-				v.impuesto,
-				format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,
-				format((v.impuesto*v.total/(100+v.impuesto)),2) as totalimpuesto,
-				v.total
-				from venta v inner join pedido p on v.idpedido=p.idpedido
-				inner join sucursal s on p.idsucursal=s.idsucursal
-				inner join usuario u on p.idusuario=u.idusuario
-				inner join empleado e on u.idempleado=e.idempleado
-				inner join persona pe on p.idcliente=pe.idpersona
+			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,pe.tipo_persona as tipo_cliente,pe.numero_cuenta as nuevo_antiguo,
+							concat(e.apellidos,' ',e.nombre) as empleado,
+							concat(pe.nombre,' ',pe.apellido) as cliente,
+							pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
+							concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
+							v.metodo_pago as cuenta_abonada,
+							v.tipo_comprobante as comprobante,v.agencia_envio as transporte,
+							v.serie_comprobante as serie,v.num_comprobante as numero,
+							v.impuesto,
+							format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,
+							format((v.impuesto*v.total/(100+v.impuesto)),2) as totalimpuesto,
+							v.total
+							from venta v inner join pedido p on v.idpedido=p.idpedido
+							inner join sucursal s on p.idsucursal=s.idsucursal
+							inner join usuario u on p.idusuario=u.idusuario
+							inner join empleado e on u.idempleado=e.idempleado
+							inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and s.idsucursal= $idsucursal and v.estado='A'
 				order by v.fecha desc ";
 			$query = $conexion->query($sql);
