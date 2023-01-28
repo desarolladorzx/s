@@ -21,7 +21,7 @@ function init(){
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", false);
 
 		
-	} else if ($("#hdn_rol_usuario").val() == 'A'){
+	} else if ($("#hdn_rol_usuario").val() == 'A'){ // USUARIO / TRABAJADOR
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
@@ -39,15 +39,16 @@ function init(){
 
 	function SaveOrUpdate(e){
 		e.preventDefault();// para que no se recargue la pagina
+
+		console.log($(this).serialize())
         $.post("./ajax/ClienteAjax.php?op=SaveOrUpdate", $(this).serialize(), function(r){// llamamos la url por post. function(r). r-> llamada del callback
-            
             ListadoCliente();
             //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
             swal("Mensaje del Sistema", r, "success");
             OcultarForm();
 			Limpiar();
-			
         });
+		
 	};
 
 	function Limpiar(){
@@ -73,7 +74,8 @@ function init(){
 		$("#txtFecha_modificacion").val("");
 
 		$("input[name=optionsRadios]").prop('checked', false);
-
+		$('#optionsRadios_edit').val("");
+		$('#optionsRadios_id_edit').val("");
 		//$("#optionsRadios1").prop("checked", false);
 		//$("#optionsRadios2").prop("checked", false);
 		//$("#optionsRadios3").prop("checked", false);
@@ -94,6 +96,11 @@ function init(){
 		$("#optionsRadios1").prop("checked", false);
 		$("#optionsRadios2").prop("checked", false);
 		$("#optionsRadios3").prop("checked", false);
+
+		$("#panel_rbg_habilitado").show(200);
+		$("#panel_rbg_desabilitado").hide(200);
+		$('#optionsRadios_edit').val("");
+		$('#optionsRadios_id_edit').val("");
 		
 
 	}
@@ -153,7 +160,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
-function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero,genero_txt){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		//$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
@@ -163,24 +170,7 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 	    $("#txtNombre").val(nombre);// recibimos la variable nombre a la caja de texto txtNombre
 		$("#txtApellido").val(apellido);// recibimos la variable apellido a la caja de texto txtApellido
 		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
- 		
 		$("#txtNum_Documento").val(num_documento);
-
-		
-		
-		//alert(genero)
-
-		/*
-		if (genero == 1) {
-	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
-	    } else if(genero == 2){
-	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
-	    } else {
-	    	$("optionsRadios").find(":radio[name='optionsRadios']").prop("checked", true);​
-	    }
-		*/
-		
-
 	    $("#txtDireccion_Departamento").val(direccion_departamento);
 	    $("#txtDireccion_Provincia").val(direccion_provincia);
 	    $("#txtDireccion_Distrito").val(direccion_distrito);
@@ -197,22 +187,44 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo nombre del empleado
 		$('#txtFecha_modificado').val(fecha_modificado);//Campo fecha de modificacion empleado 
 
-		//$("#optionsRadios").val(genero);
 
-		$("input[name=optionsRadios][value=" + genero + "]").prop('checked', true);
+		
+		
+		
+
+		if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
+
+
+			$("#panel_rbg_habilitado").show(200);
+			$("#panel_rbg_desabilitado").hide(200);
+
+			$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+
+		}else if ($("#hdn_rol_usuario").val() == 'A'){ // USUARIO / TRABAJADOR
+
+
+			$("#panel_rbg_habilitado").hide(200);
+			$("#panel_rbg_desabilitado").show(200);
+			
+			$('#optionsRadios_edit').val(genero_txt);
+			$('#optionsRadios_id_edit').val(genero);
+
+			$('input[name=optionsRadios]').prop('disabled',true); 
+
+		}
 
 		//PROBLEMA CUANDO SE EDITA UN CLIENTE
-		/* if (tipo_documento == "DNI" || tipo_documento == "RUC") {
+		if (tipo_documento == "DNI" || tipo_documento == "RUC") {
 	
-			$('#txtNombre').prop('disabled', true);
-			$('#txtApellido').prop('disabled', true);
-			$('#txtNum_Documento').prop('disabled', true);
+			$('#txtNombre').prop('readonly', true);
+			$('#txtApellido').prop('readonly', true);
+			$('#txtNum_Documento').prop('readonly', true);
 			
 		} else if (tipo_documento == "PASAPORTE" || tipo_documento == "CE") {
 			
-			$('#txtNombre').prop('disabled', false);
-			$('#txtApellido').prop('disabled', false);
-			$('#txtNum_Documento').prop('disabled', false);
+			$('#txtNombre').prop('readonly', false);
+			$('#txtApellido').prop('readonly', false);
+			$('#txtNum_Documento').prop('readonly', false);
 
 		}
 
@@ -220,19 +232,19 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 
 			if ($(this).val() == "DNI" || $(this).val() == "RUC") {
 	
-				$('#txtNombre').prop('disabled', true);
-				$('#txtApellido').prop('disabled', true);
-				$('#txtNum_Documento').prop('disabled', true);
+				$('#txtNombre').prop('readonly', true);
+				$('#txtApellido').prop('readonly', true);
+				$('#txtNum_Documento').prop('readonly', true);
 				
 			} else if ($(this).val() == "PASAPORTE" || $(this).val() == "CE") {
 				
-				$('#txtNombre').prop('disabled', false);
-				$('#txtApellido').prop('disabled', false);
-				$('#txtNum_Documento').prop('disabled', false);
+				$('#txtNombre').prop('readonly', false);
+				$('#txtApellido').prop('readonly', false);
+				$('#txtNum_Documento').prop('readonly', false);
 	
 			}
 	
-		}); */
+		});
 
  	}
 
