@@ -124,7 +124,7 @@
 				//var_dump($sql);
 				$conexion->query($sql3);
 
-				$sql4 = "UPDATE venta set estado = 'C'
+				$sql4 = "UPDATE venta set estado = 'C',idusuario_anu = ".$_SESSION["idusuario"]."
 						WHERE idpedido = $idpedido";
 				//var_dump($sql);
 				$conexion->query($sql4);
