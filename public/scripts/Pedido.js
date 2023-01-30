@@ -960,7 +960,7 @@ function eliminarPedido(idPedido) {
 function cambiarEstadoPedido(idPedido) {
 
 
-    // COMPRIEBA PRIMERO STOCK DE PRODUCTOS
+    // COMPRUEBA PRIMERO STOCK DE PRODUCTOS
 
     $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido="+idPedido, function(r) {
 

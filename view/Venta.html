@@ -280,8 +280,8 @@
                 <div class="col-lg-12 left">
 
                     <input type="hidden" name="hdn_idcliente" id="hdn_idcliente">
-    
-                    <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o"></i> Registrar</button>
+                               
+                    <button class="btn btn-success" type="submit" id="btn-only1click"><i class="fa fa-floppy-o"></i> Registrar</button>
                     <a href="Venta.php" class="btn btn-primary" ><i class="fa fa-remove"></i> Cancelar</a>
                     <a id="btnEnviarCorreo" class="btn btn-default" ><i class="fa fa-envelope"></i> Enviar por correo</a>
                     <hr>
@@ -498,5 +498,19 @@
     
     $('#liVentas').addClass("treeview active");
     $('#liVenta').addClass("active");
-
+    //Script Evitar el doble click 
+   /*  var btn = document.querySelector('#idGenerarVenta');
+                        var btnlbl = btn.textContent;
+                    
+                        btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // deshabilita el botón y previene un doble clic
+                        this.disabled = true;
+                        //this.textContent = 'Espere unos segundos...';
+                        
+                        // simula el proceso y reactiva el clic despues de 3 segundos
+                        setTimeout(function(){ btn.disabled=false; btn.textContent = btnlbl; }, 6000);
+                        });
+ */
 </script>
