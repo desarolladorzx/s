@@ -399,6 +399,27 @@ switch ($_GET["op"]) {
                         echo "No se ha podido eliminar el Pedido";
                     }
             break;
+    
+    case "GetCodigoAleatorio":
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
 
+        $permitted_chars = '123456789';
+        // Output: 54esmdr0qf 
+        $codigoAletorio = substr(str_shuffle($permitted_chars), 0, 10);
+        //$codigoAletorio = 17188;
+
+        $query = $objPedido->GetCodigoAleatorio($codigoAletorio);
+        $reg = $query->fetch_object();
+
+        if (is_null($reg)) {
+            echo json_encode($codigoAletorio);
+        } else {
+            echo json_encode(true);
+        }
+        
+    break;
+
+            
 
 }

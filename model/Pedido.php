@@ -394,4 +394,18 @@
 			$query = $conexion->query($sql);
 			return $query;
 		}
+
+		public function GetCodigoAleatorio($codigoAleatorio){
+			global $conexion;
+			$sql = "SELECT
+					idpedido AS idpedido
+			 		from pedido where numero = $codigoAleatorio";
+			//var_dump($sql);exit;
+			$query = $conexion->query($sql);
+			return $query;
+		}
+
+		
+		//$sql = "SELECT vencab_id FROM tbl_vencab WHERE vencab_codigo = $rptaAleatorio";
+
 	}

@@ -11,12 +11,21 @@ switch ($_GET["op"]) {
 		} else {
 			$genero = $_POST["optionsRadios"];
 		}
+
+		//var_dump($genero);exit;
 		
+		if ($_POST["cboTipo_Documento_edit"] != "") {
+			$tipo_documento = $_POST["cboTipo_Documento_edit"];
+		} else {
+			$tipo_documento = $_POST["cboTipo_Documento"];
+		}
+		//var_dump($tipo_documento);
+		//exit;
 
 		$tipo_persona = $_POST["cboTipo_Persona"];
 		$nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"]: "";
 		$apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"]: "";
-		$tipo_documento = $_POST["cboTipo_Documento"];
+		//$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
 		
 		$direccion_departamento = isset($_POST["txtDireccion_Departamento"]) ? $_POST["txtDireccion_Departamento"] : "";

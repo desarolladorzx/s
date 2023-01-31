@@ -14,20 +14,30 @@ function init(){
 
 	$("#btnNuevo").show();
 
+
+
 	if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", false);
 
-		
+		//$("#cboTipo_Documento").prop('readonly', false);
+		/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", false);
+		$('#cboTipo_Documento option[value="RUC"]').attr("disabled", false);
+		$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", false);
+		$('#cboTipo_Documento option[value="CE"]').attr("disabled", false);*/
+
 	} else if ($("#hdn_rol_usuario").val() == 'A'){ // USUARIO / TRABAJADOR
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
 
-		//$("#btnNuevo").show();
+		/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", true);
+		$('#cboTipo_Documento option[value="RUC"]').attr("disabled", true);
+		$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", true);
+		$('#cboTipo_Documento option[value="CE"]').attr("disabled", true);*/
 	}
 
 	ListadoCliente();// Ni bien carga la pagina que cargue el metodo
@@ -85,6 +95,7 @@ function init(){
 	function ComboTipo_Documento() {
         $.get("./ajax/ClienteAjax.php?op=listTipo_DocumentoPersona", function(r) {
                 $("#cboTipo_Documento").html(r);
+
         })
     }
 
@@ -170,6 +181,8 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 	    $("#txtNombre").val(nombre);// recibimos la variable nombre a la caja de texto txtNombre
 		$("#txtApellido").val(apellido);// recibimos la variable apellido a la caja de texto txtApellido
 		$("#cboTipo_Documento").val(tipo_documento);// recibimos la variale tipo_documento de sucursal
+		$("#cboTipo_Documento_edit").val(tipo_documento);
+		
 		$("#txtNum_Documento").val(num_documento);
 	    $("#txtDireccion_Departamento").val(direccion_departamento);
 	    $("#txtDireccion_Provincia").val(direccion_provincia);
@@ -224,7 +237,7 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 			
 			$('#txtNombre').prop('readonly', false);
 			$('#txtApellido').prop('readonly', false);
-			$('#txtNum_Documento').prop('readonly', false);
+			$('#txtNum_Documento').prop('readonly', true);
 
 		}
 
@@ -240,11 +253,30 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 				
 				$('#txtNombre').prop('readonly', false);
 				$('#txtApellido').prop('readonly', false);
-				$('#txtNum_Documento').prop('readonly', false);
+				$('#txtNum_Documento').prop('readonly', true);
 	
 			}
 	
 		});
+
+		if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
+			//$("#cboTipo_Documento").prop('readonly', false);
+			$('#cboTipo_Documento option:not(:selected)').attr('disabled',false);
+			/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", false);
+			$('#cboTipo_Documento option[value="RUC"]').attr("disabled", false);
+			$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", false);
+			$('#cboTipo_Documento option[value="CE"]').attr("disabled", false);*/
+	
+		} else if ($("#hdn_rol_usuario").val() == 'A'){ // USUARIO / TRABAJADOR
+			//$("#cboTipo_Documento").prop('readonly', true);
+			$('#cboTipo_Documento option:not(:selected)').attr('disabled',true);
+			//$("#cboTipo_Documento").val(tipo_documento);
+			/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", true);
+			$('#cboTipo_Documento option[value="RUC"]').attr("disabled", true);
+			$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", true);
+			$('#cboTipo_Documento option[value="CE"]').attr("disabled", true);*/
+		}
+
 
  	}
 
@@ -254,6 +286,8 @@ function buscarPorNumeroDocumento() {
 	$("#txtNombre").val("");
 	$("#txtApellido").val("");
 	$("#cboTipo_Documento").val("");
+	$("#cboTipo_Documento_edit").val("");
+	
 	$("#optionsRadios").val("");
 	$("#txtDireccion_Departamento").val("");
 	$("#txtDireccion_Provincia").val("");
