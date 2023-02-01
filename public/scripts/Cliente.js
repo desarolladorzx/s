@@ -22,6 +22,8 @@ function init(){
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", false);
 
+		$('#cboTipo_Documento option:not(:selected)').attr('disabled',false);
+
 		//$("#cboTipo_Documento").prop('readonly', false);
 		/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", false);
 		$('#cboTipo_Documento option[value="RUC"]').attr("disabled", false);
@@ -33,6 +35,8 @@ function init(){
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr("disabled", true);
 		$('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+
+		$('#cboTipo_Documento option:not(:selected)').attr('disabled',true);
 
 		/*$('#cboTipo_Documento option[value="DNI"]').attr("disabled", true);
 		$('#cboTipo_Documento option[value="RUC"]').attr("disabled", true);
@@ -52,11 +56,23 @@ function init(){
 
 		console.log($(this).serialize())
         $.post("./ajax/ClienteAjax.php?op=SaveOrUpdate", $(this).serialize(), function(r){// llamamos la url por post. function(r). r-> llamada del callback
-            ListadoCliente();
+            
+			//ListadoCliente();
             //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
-            swal("Mensaje del Sistema", r, "success");
-            OcultarForm();
-			Limpiar();
+            //swal("Mensaje del Sistema", r, "success");
+            //OcultarForm();
+			//Limpiar();
+
+			swal({
+				title: "Mensaje del Sistema", 
+				text: r, 
+				type: "success"
+			  },
+			function(){ 
+				location.reload();
+			}
+		 );
+
         });
 		
 	};
@@ -320,6 +336,42 @@ function buscarPorNumeroDocumento() {
 				switch (rpta["estado"]) {
 					case "encontrado":
 
+
+
+						//$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+						
+						$("#cboTipo_Documento_edit").val(rpta["tipo_documento"]);
+
+						if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
+
+							$("#panel_rbg_habilitado").show(200);
+							$("#panel_rbg_desabilitado").hide(200);
+							$("input[name=optionsRadios][value=" + rpta["genero"] + "]").prop("checked", true);
+
+							$('#txtNombre').prop('readonly', false);
+							$('#txtApellido').prop('readonly', false);
+							$('#txtNum_Documento').prop('readonly', false);
+
+							$('#cboTipo_Documento option:not(:selected)').attr('disabled',false);
+				
+						}else if ($("#hdn_rol_usuario").val() == 'A'){ // USUARIO / TRABAJADOR
+				
+				
+							$("#panel_rbg_habilitado").hide(200);
+							$("#panel_rbg_desabilitado").show(200);
+							$('#optionsRadios_edit').val(rpta["genero_txt"]);
+							$('#optionsRadios_id_edit').val(rpta["genero"]);
+							$('input[name=optionsRadios]').prop('disabled',true);
+
+							$('#txtNombre').prop('readonly', true);
+							$('#txtApellido').prop('readonly', true);
+							$('#txtNum_Documento').prop('readonly', true);
+
+							$('#cboTipo_Documento option:not(:selected)').attr('disabled',true);
+				
+						}
+
+
 						if (rpta["genero"] == 1) {
 							$("#optionsRadios1").prop("checked", true);
 						} else if(rpta["genero"] == 2){
@@ -359,6 +411,9 @@ function buscarPorNumeroDocumento() {
 										$("#modalBuscarClientes").modal("hide");
 										$("#btnEditarCliente").show(200);
 										*/
+						alert("El cliente ya se encuentra registrado, solo está permitido editar los campos habilitados...");
+
+									
 						break;
 					case "error":
 						alert("Ocurrio un error al registrar cliente...");

@@ -19,6 +19,7 @@ switch ($_GET["op"]) {
 		} else {
 			$tipo_documento = $_POST["cboTipo_Documento"];
 		}
+		
 		//var_dump($tipo_documento);
 		//exit;
 
@@ -222,6 +223,7 @@ switch ($_GET["op"]) {
 					$email = '';
 					$numero_cuenta = '';
 					$estado = 'A';
+					
 
 					$datos = array(
 						'estado' => 'encontrado',
@@ -305,7 +307,8 @@ switch ($_GET["op"]) {
 				'estado_cliente' => $reg->estado,
 				'estadoCuenta' => $estadoCuenta,
 				'genero' => $reg->genero,
-				'idEmpleado_modificado' => $reg->idempleado
+				'idEmpleado_modificado' => $reg->idempleado,
+				'genero_txt' => $reg->genero_txt
 				//'cuenta' => 'Antiguo'
 			);
 

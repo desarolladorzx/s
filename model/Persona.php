@@ -89,7 +89,13 @@
 
 		public function BuscarClientePorNroDoc($numeroDocumento){
 			global $conexion;
-			$query = $conexion->query("SELECT * FROM persona WHERE num_documento = ".$numeroDocumento);
+			$query = $conexion->query("SELECT *,
+			(CASE
+				WHEN genero = 1 THEN 'MUJER'
+				WHEN genero = 2 THEN 'HOMBRE'
+				WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
+			END) AS genero_txt
+			FROM persona WHERE num_documento = ".$numeroDocumento);
 			return $query;
 		}
 
