@@ -1,5 +1,6 @@
 $(document).on("ready", init);// Inciamos el jquery
 var email = "";
+var clicando= false;
 function init(){
     //Ver();
 	$('#tblVentaPedido').dataTable({
@@ -11,6 +12,21 @@ function init(){
             'pdfHtml5'
         ]
     });
+
+    
+    $("#btn-only1click").click(function() {
+        // Si ha sido clicado
+        if (clicando){
+          // Mostramos que ya se ha clicado, y no puede clicarse de nuevo
+          alert( "Que ya he realizado un click." );
+        // Si no ha sido clicado
+        } else {
+          // Le decimos que ha sido clicado
+          clicando= true;
+          // Mostramos el mensaje de que ha sido clicado
+          alert( "Handler for only1click.click() called." );
+        }
+      });
 
 	ListadoVenta();// Ni bien carga la pagina que cargue el metodo
 
@@ -415,3 +431,5 @@ function mostrarDetalleImagenes(idPedido) {
         });
 
     }
+
+

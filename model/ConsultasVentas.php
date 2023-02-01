@@ -30,7 +30,7 @@
 
 		public function ListarVentasDetalladas($idsucursal, $fecha_desde, $fecha_hasta){
 			global $conexion;
-				$sql="select s.razon_social as sucursal, v.fecha,pe.numero_cuenta as tipo,
+				$sql="select s.razon_social as sucursal, v.fecha,pe.numero_cuenta as antiguedad,pe.tipo_persona as tipo_cliente,
 				concat(e.apellidos,' ',e.nombre) as empleado,
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				v.tipo_comprobante as comprobante,

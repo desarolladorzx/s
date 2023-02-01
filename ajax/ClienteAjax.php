@@ -6,15 +6,29 @@ switch ($_GET["op"]) {
 
 	case 'SaveOrUpdate':
 
-		//var_dump($_POST["txtIdPersona"]);
+		if ($_POST["optionsRadios_edit"] != "") {
+			$genero = $_POST["optionsRadios_id_edit"];
+		} else {
+			$genero = $_POST["optionsRadios"];
+		}
+
+		//var_dump($genero);exit;
+		
+		if ($_POST["cboTipo_Documento_edit"] != "") {
+			$tipo_documento = $_POST["cboTipo_Documento_edit"];
+		} else {
+			$tipo_documento = $_POST["cboTipo_Documento"];
+		}
+		
+		//var_dump($tipo_documento);
 		//exit;
 
 		$tipo_persona = $_POST["cboTipo_Persona"];
 		$nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"]: "";
 		$apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"]: "";
-		$tipo_documento = $_POST["cboTipo_Documento"];
+		//$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
-		$genero = $_POST["optionsRadios"];
+		
 		$direccion_departamento = isset($_POST["txtDireccion_Departamento"]) ? $_POST["txtDireccion_Departamento"] : "";
 		$direccion_provincia = isset($_POST["txtDireccion_Provincia"]) ? $_POST["txtDireccion_Provincia"] : "";
 		$direccion_distrito = isset($_POST["txtDireccion_Distrito"]) ? $_POST["txtDireccion_Distrito"] : "";
@@ -62,9 +76,9 @@ switch ($_GET["op"]) {
 		while ($reg = $query_Tipo->fetch_object()) {
 
 			if ($_SESSION['rol_usuario'] == "S") {
-				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\' )"><i class="fa fa-pencil"></i> </button>';
+				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' )"><i class="fa fa-pencil"></i> </button>';
 			}else{
-				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\' )"><i class="fa fa-pencil"></i> </button>';
+				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' )"><i class="fa fa-pencil"></i> </button>';
 			}
 
 			$boton_eliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>';
@@ -209,6 +223,7 @@ switch ($_GET["op"]) {
 					$email = '';
 					$numero_cuenta = '';
 					$estado = 'A';
+					
 
 					$datos = array(
 						'estado' => 'encontrado',
@@ -292,7 +307,8 @@ switch ($_GET["op"]) {
 				'estado_cliente' => $reg->estado,
 				'estadoCuenta' => $estadoCuenta,
 				'genero' => $reg->genero,
-				'idEmpleado_modificado' => $reg->idempleado
+				'idEmpleado_modificado' => $reg->idempleado,
+				'genero_txt' => $reg->genero_txt
 				//'cuenta' => 'Antiguo'
 			);
 

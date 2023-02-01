@@ -66,7 +66,12 @@
 			$sql = "SELECT
 			p.*,
 			concat( e.nombre, ' ', e.apellidos ) AS empleado,
-			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado
+			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
+			(CASE
+				WHEN p.genero = 1 THEN 'MUJER'
+				WHEN p.genero = 2 THEN 'HOMBRE'
+				WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
+			END) AS genero_txt
 			FROM
 			persona p
 			INNER JOIN empleado e ON p.idempleado = e.idempleado
@@ -75,13 +80,22 @@
 			tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
 			ORDER BY
 			idpersona DESC";
+
+			//var_dump($sql);exit;
+
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
 		public function BuscarClientePorNroDoc($numeroDocumento){
 			global $conexion;
-			$query = $conexion->query("SELECT * FROM persona WHERE num_documento = ".$numeroDocumento);
+			$query = $conexion->query("SELECT *,
+			(CASE
+				WHEN genero = 1 THEN 'MUJER'
+				WHEN genero = 2 THEN 'HOMBRE'
+				WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
+			END) AS genero_txt
+			FROM persona WHERE num_documento = ".$numeroDocumento);
 			return $query;
 		}
 

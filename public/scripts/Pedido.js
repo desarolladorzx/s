@@ -11,8 +11,9 @@ var email = "";
 function init() {
 
     var total = 0.0;
-    GetNextNumero();
+    //GetNextNumero();
     //GetTotal(19);
+    
 
     $('#tblVentas').dataTable({
         dom: 'Bfrtip',
@@ -44,7 +45,7 @@ function init() {
     $("#btnBuscarDetIng").click(AbrirModalDetPed);
     $("#btnEnviarCorreo").click(EnviarCorreo);
     $("#btnNuevoVent").click(VerForm);
-
+    $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
     $("form#frmPedidos").submit(GuardarPedido);
 
     $("#btnGenerarVenta").click(GenerarVenta);
@@ -338,7 +339,8 @@ function init() {
         //$("#txtRutaImgVoucher").val("");
         elementos.length = 0;
         $("#tblDetallePedido tbody").html("");
-        GetNextNumero();
+        //GetNextNumero();
+        //getCodigoAleatorio();
     }
 
     function GetTotal(idPedido) {
@@ -360,6 +362,7 @@ function init() {
         });
     }
 
+    /*
     function GetNextNumero() {
         $.getJSON("./ajax/PedidoAjax.php?op=GetNextNumero", function (r) {
             if (r) {
@@ -367,6 +370,32 @@ function init() {
             }
         });
     }
+    */
+
+    function VerFormPedido_Nuevo(){
+        $("#VerFormPed").show();// Mostramos el formulario
+        $("#btnNuevoPedido").hide();// ocultamos el boton nuevo
+        $("#btnGenerarVenta").hide();
+        $("#VerListado").hide();// ocultamos el listado
+        $("#btnReporte").hide();
+        getCodigoAleatorio();
+    }
+
+    function getCodigoAleatorio() {
+        $.getJSON("./ajax/PedidoAjax.php?op=GetCodigoAleatorio", function (r) {
+
+            if (r == true) {
+                getCodigoAleatorio()
+            } else {
+                $("#txtNumeroPed").val(r);
+            }
+            
+        });
+    }
+
+    
+
+
 
     function ComboTipoDoc() {
 
@@ -412,6 +441,9 @@ function init() {
         $("#inputNumero").hide();
         $('#btnRegPedido').hide();
         $("#VerListado").hide();
+        
+        
+
     }
 
     function OcultarForm() {
@@ -960,7 +992,7 @@ function eliminarPedido(idPedido) {
 function cambiarEstadoPedido(idPedido) {
 
 
-    // COMPRIEBA PRIMERO STOCK DE PRODUCTOS
+    // COMPRUEBA PRIMERO STOCK DE PRODUCTOS
 
     $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido="+idPedido, function(r) {
 
