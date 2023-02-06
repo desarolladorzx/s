@@ -73,11 +73,11 @@ $reg_igv = $query_global->fetch_object();
       <td align="center">
         .::<strong><?php echo "MEDICFITCEN S.A.C"; ?></strong>::.<br><?php echo $reg_cli->razon_social; ?><br></td>
     </tr>
-    <tr>
+    <!-- <tr>
       <td align="center"><?php echo $reg_cli->direccion; ?><br></td>
-    </tr>
+    </tr> -->
     <tr>
-      <td align="center">NOTA DE VENTA </td>
+      <td align="center">TICKET DE VENTA </td>
     </tr>
     <tr>
       <td align="center"><strong><font size="4"><?php echo $reg_cli->serie_comprobante."-".$reg_cli->num_comprobante;?> <?php echo($reg_cli->estado=='A')?'':'- ANULADO'; ?></strong></td>
