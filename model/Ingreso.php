@@ -18,9 +18,20 @@
 
 				$conexion->autocommit(true);
 				foreach($detalle as $indice => $valor){
+
 					$sql_detalle = "INSERT INTO detalle_ingreso(idingreso, idarticulo, codigo, serie, descripcion, stock_ingreso, stock_actual, precio_compra, precio_ventadistribuidor, precio_ventapublico)
 											VALUES($idingreso, ".$valor[0].", '".$valor[1]."', '".$valor[2]."', '".$valor[3]."', ".$valor[4].", ".$valor[4].", ".$valor[6].", ".$valor[7].", ".$valor[8].")";
 					$conexion->query($sql_detalle) or $sw = false;
+
+
+
+					// INSERTA REGISTROS DE KARDEX
+					$fecact = date('Y-m-d H:i:s');
+					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, cantidad, fecha_creacion, fecha_modificacion)
+					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'ingreso', '".$valor[0]."', '".$idingreso."', '', '".$valor[4]."', '".$fecact."','".$fecact."' )";
+					$conexion->query($sqlKardex) or $sw = false;
+
+
 				}
 				if ($conexion != null) {
                 	$conexion->close();

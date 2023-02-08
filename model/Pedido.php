@@ -33,6 +33,17 @@
 
 					$conexion->query($sql_detalle) or $sw = false;
 
+
+					// INSERTA REGISTROS DE KARDEX
+					/*
+					$fecact = date('Y-m-d H:i:s');
+
+					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, cantidad, fecha_creacion, fecha_modificacion)
+					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'venta', '0', '".$array[0]."', '".$idpedido."', '".$array[3]."', '".$fecact."','".$fecact."' )";
+
+					$conexion->query($sqlKardex);
+					*/
+
 				}
 
 				//var_dump($sql_detalle);
@@ -53,6 +64,7 @@
                 	$conexion->close();
             	}
 				*/
+
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
@@ -391,6 +403,7 @@
 		public function cambiarEstadoPedido($idpedido){
 			global $conexion;
 			$sql = "UPDATE pedido set estado = 'D',fecha_apro_coti=CURRENT_TIMESTAMP() ,idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
+			//var_dump($sql);exit;
 			$query = $conexion->query($sql);
 			return $query;
 		}

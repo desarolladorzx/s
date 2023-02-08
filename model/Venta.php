@@ -18,6 +18,9 @@
 
 		public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle,$tipo_promocion,$metodo_pago,$agencia_envio){
 
+			//var_dump($detalle);
+			//exit;
+
 			global $conexion;
 			$sw = true;
 			try {
@@ -27,8 +30,7 @@
 
 				$conexion->query($sql);
 
-				//var_dump($detalle);
-				//exit;
+				
 
 				$sql_detalle_doc = "UPDATE detalle_documento_sucursal set ultimo_numero = '$numero' where iddetalle_documento_sucursal = $iddetalle_documento_sucursal";
 				//var_dump($sql);
@@ -48,6 +50,18 @@
 					//var_dump($detalle);
 					//var_dump($stockNuevo);
 					//var_dump($sql_detalle);
+
+					
+					// INSERTA REGISTROS DE KARDEX
+
+					$fecact = date('Y-m-d H:i:s');
+
+					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, cantidad, fecha_creacion, fecha_modificacion)
+					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'venta', '0', '', '".$idpedido."', '".$valor[2]."', '".$fecact."','".$fecact."' )";
+
+					// ".$valor[0]." - id detalle de ingreso
+					$conexion->query($sqlKardex) or $sw = false;
+
 				}
 				//exit;
 
