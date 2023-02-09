@@ -42,8 +42,17 @@
 
 				$conexion->autocommit(true);
 				foreach($detalle as $indice => $valor){
+					//1 VERSION
+					
+					/* $sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$valor[1]." - ".$valor[2]." where iddetalle_ingreso = ".$valor[0].""; */
+					 
+
+					//2DA VERSION 
 					/* $stockNuevo = $valor[1] - $valor[2];
 					$sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$stockNuevo." where iddetalle_ingreso = ".$valor[0].""; */
+
+
+					//ACTUALMENTE
 					$sql_detalle = "UPDATE detalle_ingreso set stock_actual = stock_actual - ".$valor[2]." where iddetalle_ingreso = ".$valor[0]."";
 					$conexion->query($sql_detalle) or $sw = false;
 					
