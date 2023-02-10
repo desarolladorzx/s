@@ -218,7 +218,8 @@
 			END ) AS estado,
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
-			p.tipo_promocion AS tipo_promocion
+			p.tipo_promocion AS tipo_promocion,
+			p.estado AS estadoId
 
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			inner join usuario u on p.idusuario=u.idusuario

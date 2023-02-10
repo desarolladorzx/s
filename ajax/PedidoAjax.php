@@ -135,6 +135,14 @@ switch ($_GET["op"]) {
      		while ($reg = $query_Tipo->fetch_object()) {
      			$regTotal = $objPed->GetTotal($reg->idpedido);
      			$fetch = $regTotal->fetch_object();
+
+                if ($reg->estadoId == "D" ) { // APROBADO
+                    $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
+                } else {
+                    $botonPasarAVenta = '';
+                }
+                
+
      			$data[] = array(
      				"0"=>$i,
                     "1"=>$reg->fecha,
@@ -144,7 +152,7 @@ switch ($_GET["op"]) {
                     "5"=>$fetch->total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                     "6"=>$reg->estado,
                     "7"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
-                    '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
+                    $botonPasarAVenta.
                     '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
                     '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
                     '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp' 
