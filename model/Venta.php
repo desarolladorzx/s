@@ -72,6 +72,7 @@
 					$conexion->query($sqlKardex) or $sw = false;
 
 				}
+				
 				//exit;
 
 
