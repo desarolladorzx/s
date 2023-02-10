@@ -1156,9 +1156,36 @@ function ComboTipoDoc() {
 //Consulta de stock menor a 0 Unidades 
 function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta) {
     if (stock_actual > 0) {
+        //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
+        //elementos.push(detalles);
+        //console.log(detalles);
+
+        //let elementosSearch = [];
+        
+        var data = JSON.parse(objinit.consultar());
         var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
-        elementos.push(detalles);
+        // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
+        if (data.length >= 1) {
+
+            let rptaSearch = data.find(element => element[0] == iddet_ing);
+            
+            if (typeof rptaSearch === 'undefined') {
+                elementos.push(detalles);
+            } else {
+                alert("El producto elegido ya se encuentra ingresado en la lista...")
+            }
+
+        }else{
+
+            elementos.push(detalles);
+
+        }
+
+        //console.log(data);
+
         ConsultarDetallesPed();
+
+
     } else {
         bootbox.alert("No se puede agregar al detalle. No tiene stock");
     }

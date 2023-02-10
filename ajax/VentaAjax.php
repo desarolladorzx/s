@@ -277,6 +277,8 @@
 				$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[0]);
 				$reg = $query_DetalleIngreso->fetch_object();
 				
+				
+
 				$stockActual = $reg->stock_actual;
 				$descripcionProducto = $reg->descripcion;
 
@@ -289,7 +291,7 @@
 					$dataProd = $descripcionProducto;
 					//$result = array('estado'=>false,'detalle'=>$dataProd);
 					$result = false;
-					$dataDet[] = '- '.$dataProd.' [x'.$stockActual.']';
+					$dataDet = '- '.$dataProd.' [x'.$stockActual.']';
 				}
 
 				$data[] = $result;
@@ -297,6 +299,7 @@
 			}
 
 			//var_dump($dataDet);
+			//exit;
 
 			// SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
 			if (in_array(false, $data)) {
