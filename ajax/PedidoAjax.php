@@ -141,7 +141,6 @@ switch ($_GET["op"]) {
                 } else {
                     $botonPasarAVenta = '';
                 }
-                
 
      			$data[] = array(
      				"0"=>$i,

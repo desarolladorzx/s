@@ -7,8 +7,7 @@
 			global $conexion;
 			$sw = true;
 			try {
-				
-			
+
 				$sql = "INSERT INTO ingreso(idusuario, idsucursal, idproveedor, tipo_comprobante, serie_comprobante, num_comprobante, fecha, impuesto,
 						total, estado) 
 						VALUES($idusuario, $idsucursal, $idproveedor, '$tipo_comprobante', '$serie_comprobante', '$num_comprobante', CURRENT_TIMESTAMP(), $impuesto, $total, 'A')";
@@ -17,25 +16,42 @@
 				$idingreso=$conexion->insert_id;		
 
 				$conexion->autocommit(true);
+
+				//var_dump($detalle);exit;
+
 				foreach($detalle as $indice => $valor){
 
 					$sql_detalle = "INSERT INTO detalle_ingreso(idingreso, idarticulo, codigo, serie, descripcion, stock_ingreso, stock_actual, precio_compra, precio_ventadistribuidor, precio_ventapublico)
 											VALUES($idingreso, ".$valor[0].", '".$valor[1]."', '".$valor[2]."', '".$valor[3]."', ".$valor[4].", ".$valor[4].", ".$valor[6].", ".$valor[7].", ".$valor[8].")";
 					$conexion->query($sql_detalle) or $sw = false;
 
+					// CONSULTA STOCK ACTUAL DEL PRODUCTO
 
+					$sql_stock_producto = "SELECT
+											i.fecha,di.stock_actual AS stockActual,di.idarticulo
+											FROM detalle_ingreso di
+											INNER JOIN ingreso i ON i.idingreso = di.idingreso
+											WHERE di.idarticulo = ".$valor[0]." AND estado = 'A'
+											ORDER BY i.fecha DESC LIMIT 1,1";
+
+					$rpta_sql_stock_producto = $conexion->query($sql_stock_producto);
+					
+					$regStockAnterior = $rpta_sql_stock_producto->fetch_object();
+
+					$stockAnterior = $regStockAnterior->stockActual;
+					$cantidad = $valor[4];
+					$stock = $stockAnterior + $cantidad;
 
 					// INSERTA REGISTROS DE KARDEX
 					$fecact = date('Y-m-d H:i:s');
-					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, cantidad, fecha_creacion, fecha_modificacion)
-					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'ingreso', '".$valor[0]."', '".$idingreso."', '', '".$valor[4]."', '".$fecact."','".$fecact."' )";
+					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, stock_anterior, cantidad, stock_actual, fecha_creacion, fecha_modificacion)
+					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'ingreso', '".$valor[0]."', '".$idingreso."', '', '".$stockAnterior."', '".$cantidad."', '".$stock."', '".$fecact."','".$fecact."' )";
 					$conexion->query($sqlKardex) or $sw = false;
 
-
-				}
-				if ($conexion != null) {
+				}if ($conexion != null) {
                 	$conexion->close();
             	}
+
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
