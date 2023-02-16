@@ -129,6 +129,7 @@ $reg_igv = $query_global->fetch_object();
         $precio_venta=$reg->cantidad*($reg->precio_venta-$reg->descuento);
         $descuentos+=$reg->descuento*$reg->cantidad;
         $sub_totales+=$reg->sub_total+$reg->descuento;
+        $precio_total+=$reg->cantidad*$reg->precio_venta;
     }
     $query_total = $objPedido->TotalPedido($_GET["id"]);
 
@@ -146,7 +147,7 @@ $reg_igv = $query_global->fetch_object();
       <td colspan="3">Cantidad de productos:  <?php echo $cantidad ?></td>
     </tr>
     <tr>
-      <td colspan="3">Precio de los productos: <?php echo $reg_igv->simbolo_moneda;?> <?php echo $sub_totales ?></td>
+      <td colspan="3">Precio de los productos: <?php echo $reg_igv->simbolo_moneda;?> <?php echo $precio_total ?></td>
     </tr>
     <tr>
       <td colspan="3">Descuentos por tienda: <?php echo $reg_igv->simbolo_moneda;?> <?php echo $descuentos ?></td>
