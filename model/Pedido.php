@@ -4,6 +4,9 @@
 	class Pedido{
 
 		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion){
+			
+			//var_dump($detalle);exit;
+			
 			global $conexion;
 			$sw = true;
 			try {
@@ -28,8 +31,8 @@
 					
 					$array = explode(",", $detalle[$i]);
 
-					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
-											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."')";
+					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo)
+											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."', '".$array[8]."')";
 
 					$conexion->query($sql_detalle) or $sw = false;
 
@@ -277,7 +280,7 @@
 		// lista modal productos en la ventana de ventas
 		public function ListarDetalleIngresos($idsucursal){
 			global $conexion;
-			$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion
+			$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo 
 			from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 			inner join articulo a on di.idarticulo = a.idarticulo
 			inner join categoria c on a.idcategoria = c.idcategoria
