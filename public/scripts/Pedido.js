@@ -121,7 +121,7 @@ function init() {
 
                 var detalle = JSON.parse(consultar());
 
-                // alert(detalle);
+                //alert(detalle);
 
                 $.each($("input[type='file']")[0].files, function (i, file) {
                     //alert(file)
@@ -272,6 +272,7 @@ function init() {
                 };
 
                 $.post("./ajax/PedidoAjax.php?op=Save", data, function (r) {
+                    /*
                     swal("Mensaje del Sistema", r, "success");
                     //delete this.elementos;
                     //$("#tblDetallePedido tbody").html("");
@@ -317,6 +318,7 @@ function init() {
                         Limpiar();
 
                     });
+                    */
 
                 });
             } else {
@@ -1154,11 +1156,38 @@ function ComboTipoDoc() {
 
 
 //Consulta de stock menor a 0 Unidades 
-function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta) {
+function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta,idart) {
     if (stock_actual > 0) {
-        var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
-        elementos.push(detalles);
+        //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
+        //elementos.push(detalles);
+        //console.log(detalles);
+
+        //let elementosSearch = [];
+        
+        var data = JSON.parse(objinit.consultar());
+        var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie,idart);
+        // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
+        if (data.length >= 1) {
+
+            let rptaSearch = data.find(element => element[0] == iddet_ing);
+            
+            if (typeof rptaSearch === 'undefined') {
+                elementos.push(detalles);
+            } else {
+                alert("El producto elegido ya se encuentra ingresado en la lista...")
+            }
+
+        }else{
+
+            elementos.push(detalles);
+
+        }
+
+        //console.log(data);
+
         ConsultarDetallesPed();
+
+
     } else {
         bootbox.alert("No se puede agregar al detalle. No tiene stock");
     }

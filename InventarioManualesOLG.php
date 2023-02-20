@@ -6,13 +6,15 @@
 
 		if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
-			include "view/FOORHGRH001.html";
+			include "view/InventarioManualesOLG.html";
 		} else {
 			include "view/headeradmin.html";
-			include "view/FOORHGRH001.html";
+			include "view/InventarioManualesOLG.html";
 		}
 
 		include "view/footer.html";
 	} else {
 		header("Location:index.html");
 	}
+		
+

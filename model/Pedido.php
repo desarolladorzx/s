@@ -4,6 +4,9 @@
 	class Pedido{
 
 		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion){
+			
+			//var_dump($detalle);exit;
+			
 			global $conexion;
 			$sw = true;
 			try {
@@ -28,10 +31,21 @@
 					
 					$array = explode(",", $detalle[$i]);
 
-					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento)
-											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."')";
+					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo)
+											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."', '".$array[8]."')";
 
 					$conexion->query($sql_detalle) or $sw = false;
+
+
+					// INSERTA REGISTROS DE KARDEX
+					/*
+					$fecact = date('Y-m-d H:i:s');
+
+					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, cantidad, fecha_creacion, fecha_modificacion)
+					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'venta', '0', '".$array[0]."', '".$idpedido."', '".$array[3]."', '".$fecact."','".$fecact."' )";
+
+					$conexion->query($sqlKardex);
+					*/
 
 				}
 
@@ -53,6 +67,7 @@
                 	$conexion->close();
             	}
 				*/
+
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
@@ -206,7 +221,8 @@
 			END ) AS estado,
 			p.metodo_pago AS metodo_pago,
 			p.agencia_envio AS agencia_envio,
-			p.tipo_promocion AS tipo_promocion
+			p.tipo_promocion AS tipo_promocion,
+			p.estado AS estadoId
 
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			inner join usuario u on p.idusuario=u.idusuario
@@ -264,7 +280,7 @@
 		// lista modal productos en la ventana de ventas
 		public function ListarDetalleIngresos($idsucursal){
 			global $conexion;
-			$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion
+			$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo 
 			from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 			inner join articulo a on di.idarticulo = a.idarticulo
 			inner join categoria c on a.idcategoria = c.idcategoria
@@ -391,6 +407,7 @@
 		public function cambiarEstadoPedido($idpedido){
 			global $conexion;
 			$sql = "UPDATE pedido set estado = 'D',fecha_apro_coti=CURRENT_TIMESTAMP() ,idusuario_est = ".$_SESSION["idusuario"]." WHERE idpedido = $idpedido";
+			//var_dump($sql);exit;
 			$query = $conexion->query($sql);
 			return $query;
 		}

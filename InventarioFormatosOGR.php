@@ -6,10 +6,10 @@
 
 		if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
-			include "view/FOORHGRH001.html";
+			include "view/InventarioFormatosOGR.html";
 		} else {
 			include "view/headeradmin.html";
-			include "view/FOORHGRH001.html";
+			include "view/InventarioFormatosOGR.html";
 		}
 
 		include "view/footer.html";
