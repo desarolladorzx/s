@@ -10,9 +10,7 @@
 			global $conexion;
 			$sw = true;
 			try {
-
 				//exit;
-
 				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion)
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion')";
 				//var_dump($sql);

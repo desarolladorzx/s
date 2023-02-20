@@ -631,6 +631,9 @@ function ListadoVenta() {
             },
             {
                 "mDataProp": "7"
+            },
+            {
+                "mDataProp": "8"
             }
         ],
         "ajax": {
