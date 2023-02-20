@@ -40,7 +40,6 @@
 
 				$conexion->autocommit(true);
 
-
 				// BUSCA DETALLE DE PEDIDO DESDE BASE DE DATOS, ANTES SE LE PASABA POR ARRAY, MAS ABAJO ESTA COMENTADO
 
 				$sql_pedido_detalle = "SELECT
@@ -53,68 +52,52 @@
 											idarticulo AS idarticulo
 											FROM detalle_pedido WHERE idpedido = ".$idpedido;
 
-				
-
 				$rpta_sql_pedido_detalle = $conexion->query($sql_pedido_detalle);
-				
-				$list_pedido_detalle = $rpta_sql_pedido_detalle->fetch_object();
 
-				var_dump($list_pedido_detalle);//exit;
+				while ($reg = $rpta_sql_pedido_detalle->fetch_object()) {
 
-				foreach($list_pedido_detalle as $indice){
-
-					// CONSULTA STOCK ACTUAL DEL PRODUCTO
-
-					var_dump($indice['idarticulo']);exit;
+					//var_dump($reg->iddetalle_pedido);
+					//var_dump($reg);
 
 					$sql_stock_producto = "SELECT
 											i.fecha,di.stock_actual AS stockActual,di.idarticulo,di.iddetalle_ingreso AS iddetalle_ingreso
 											FROM detalle_ingreso di
 											INNER JOIN ingreso i ON i.idingreso = di.idingreso
-											WHERE di.idarticulo = ".$valor[4]." AND estado = 'A'
+											WHERE di.idarticulo = ".$reg->idarticulo." AND estado = 'A'
 											ORDER BY i.fecha DESC LIMIT 1,1";
-
-					
 
 					$rpta_sql_stock_producto = $conexion->query($sql_stock_producto);
 
-					
-					
-					$regStockAnterior = $rpta_sql_stock_producto->fetch_object();
+					//$regStockAnterior = $rpta_sql_stock_producto->fetch_object();
 
-					
+					while ($regStockAnterior = $rpta_sql_stock_producto->fetch_object()) {
 
+						$cantidad = $reg->cantidad;
+						$stockAnterior = $regStockAnterior->stockActual;
+						$stock = $stockAnterior - $cantidad;
 
-					$cantidad = $valor[4];
-					$stockAnterior = $regStockAnterior->stockActual;
-					$stock = $stockAnterior + $cantidad;
+						$sql_detalle_actualizar = "UPDATE detalle_ingreso  SET stock_actual = ".$stock." WHERE iddetalle_ingreso = ".$regStockAnterior->iddetalle_ingreso;
+						$conexion->query($sql_detalle_actualizar) or $sw = false;
 
-					$sql_detalle_actualizar = "UPDATE detalle_ingreso  SET stock_actual = ".$stock." WHERE iddetalle_ingreso = ".$regStockAnterior->iddetalle_ingreso;
-					$conexion->query($sql_detalle_actualizar) or $sw = false;
+						//2DA VERSION 
+						//$stockNuevo = $valor[1] - $valor[2];
+						$sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$stock." where iddetalle_ingreso = ".$reg->iddetalle_ingreso."";
+						$conexion->query($sql_detalle) or $sw = false;
+						// INSERTA REGISTROS DE KARDEX
 
-					//2DA VERSION 
-					//$stockNuevo = $valor[1] - $valor[2];
-					$sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$stock." where iddetalle_ingreso = ".$valor[0]."";
-					$conexion->query($sql_detalle) or $sw = false;
-					// INSERTA REGISTROS DE KARDEX
+						$fecact = date('Y-m-d H:i:s');
 
-					$fecact = date('Y-m-d H:i:s');
+						$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, stock_anterior, cantidad, stock_actual, fecha_creacion, fecha_modificacion)
+						VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'venta', $reg->idarticulo, '', '".$idpedido."', '".$stockAnterior."', '".$cantidad."', '".$stock."', '".$fecact."','".$fecact."' )";
 
-					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, stock_anterior, cantidad, stock_actual, fecha_creacion, fecha_modificacion)
-					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'venta', '0', '', '".$idpedido."', '".$stockAnterior."', '".$stock."', '".$valor[2]."', '".$fecact."','".$fecact."' )";
+						// ".$valor[0]." - id detalle de ingreso
+						$conexion->query($sqlKardex) or $sw = false;
 
-					// ".$valor[0]." - id detalle de ingreso
-					$conexion->query($sqlKardex) or $sw = false;
-
-
+					}
 
 				}
 
-
-
-				//var_dump($idpedido);
-				exit;
-
+				//exit;
 
 				/*
 				foreach($detalle as $indice => $valor){
