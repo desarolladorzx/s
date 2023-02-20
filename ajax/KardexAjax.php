@@ -3,8 +3,8 @@ session_start();
 switch ($_GET["op"]) {
 
     case 'BuscarArticulos':
-    require_once "../model/Kardex.php";
-    $obj= new Kardex();
+        require_once "../model/Kardex.php";
+        $obj = new Kardex();
 
         $q = $_GET["q"];
 
@@ -14,19 +14,27 @@ switch ($_GET["op"]) {
 
         while ($reg = $query->fetch_object()) {
             $data[] = array(
-                "id"=>$reg->id,
-                "texto"=>$reg->texto);
+                "id" => $reg->id,
+                "texto" => $reg->texto
+            );
         }
 
         $return = array(
-		    'items' => $data
-		);
+            'items' => $data
+        );
 
-		echo json_encode($return);
+        echo json_encode($return);
 
         //var_dump($obj->BuscarArticulos($q));exit;
 
         break;
-        
+    case 'TraerDatosTablaKardex':
+        require_once "../model/Kardex.php";
+        $obj = new Kardex();
 
+        $q = $_GET["q"];
+        $query = $obj->TraerDatosTablaKardex($q);
+
+        // echo 'hola';
+        break;
 }

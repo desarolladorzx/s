@@ -61,7 +61,10 @@
 
 					//var_dump($stockAnterior.' - '.$stock.' - '.$cantidad);exit;
 
+					
+					// echo "hola ";
 					// INSERTA REGISTROS DE KARDEX
+
 					$fecact = date('Y-m-d H:i:s');
 					$sqlKardex = "INSERT INTO kardex(id_sucursal, fecha_emision, tipo, id_articulo, id_detalle_ingreso,id_detalle_pedido, stock_anterior, cantidad, stock_actual, fecha_creacion, fecha_modificacion)
 					VALUES('".$_SESSION['idsucursal']."', '".$fecact."', 'ingreso', '".$valor[0]."', '".$idingreso."', '', '".$stockAnterior."', '".$cantidad."', '".$stock."', '".$fecact."','".$fecact."' )";
