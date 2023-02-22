@@ -124,9 +124,9 @@
       <th>Order</th>
       <th>Cliente(Nombre/Apellido)</th>
       <th>Proveedor</th>
-      <th>Ingreso</th>
-      <th>Salida</th>
-      <th>Saldo</th>
+      <th>Stock anterior </th>
+      <th>Cantidad</th>
+      <th>Stock Actual</th>
     </tr>
   </thead>
 
@@ -138,9 +138,9 @@
       <th>Order</th>
       <th>Cliente(Nombre/Apellido)</th>
       <th>Proveedor</th>
-      <th>Ingreso</th>
-      <th>Salida</th>
-      <th>Saldo</th>
+      <th>Stock anterior </th>
+      <th>Cantidad</th>
+      <th>Stock Actual</th>
     </tr>
   </tfoot>
 </table>
@@ -158,6 +158,7 @@
   $("#liKardex").addClass("active");
 
   //$("#txtNombre").numeric();
+  var editor = 0;
 
   function ListadoVenta() {
     var tabla = $("#tblKardex")
@@ -181,6 +182,8 @@
           },
           {
             mDataProp: "4",
+            sClass: "text-center",
+
           },
           {
             mDataProp: "5",
@@ -200,8 +203,8 @@
           url: "./ajax/KardexAjax.php?op=TraerDatosTablaKardex",
           type: "get",
           dataType: "json",
-          data: {
-            q: 4942,
+          data:function(d) {
+            d.q=$("#slc_producto").val()
           },
           error: function (e) {
             console.log(e.responseText);
@@ -210,6 +213,10 @@
         bDestroy: true,
       })
       .DataTable();
+
+    $("#slc_producto").on("select2:select", function (e) {
+      tabla.ajax.reload()
+    });
   }
 
   $(function () {
@@ -258,11 +265,6 @@
       },
       templateResult: formatRepo,
       templateSelection: formatRepoSelection,
-    });
-
-    $("#slc_producto").on("select2:select", function (e) {
-        console.log(e.target.value);
-      let idSeleccionado = e.target.value;
     });
   });
 </script>
