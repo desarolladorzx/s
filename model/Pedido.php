@@ -121,35 +121,97 @@
 			global $conexion;
 			$sw = true;
 			try {
+
+
+
+
+			   $sql_data_pedido="select * from pedido where  idpedido=$idpedido";
+				$response_data_pedido = $conexion->query($sql_data_pedido)->fetch_object();
 				
-				$sql = "UPDATE pedido set estado = 'C'
-						WHERE idpedido = $idpedido";
-				//var_dump($sql);
-				$conexion->query($sql);
 
-				$sql2 = "UPDATE venta set impuesto = '0.00',total='0.00'
-						WHERE idpedido = $idpedido";
-				//var_dump($sql);
-				$conexion->query($sql2);
+				foreach($detalle as$indice=>$valor){
 
-				$sql3 = "UPDATE credito set total_pago = '0.00'
-						WHERE idventa = (SELECT idventa from venta where idpedido=$idpedido)";
-				//var_dump($sql);
-				$conexion->query($sql3);
 
-				$sql4 = "UPDATE venta set estado = 'C',idusuario_anu = ".$_SESSION["idusuario"]."
-						WHERE idpedido = $idpedido";
-				//var_dump($sql);
-				$conexion->query($sql4);
+					$sqlDetallePedido ="SELECT * from detalle_pedido where  iddetalle_ingreso=".$valor[0]." and idpedido = $idpedido";
 
-				$conexion->autocommit(true);
-				foreach($detalle as $indice => $valor){
-					$sql_detalle = "UPDATE detalle_ingreso SET stock_actual = stock_actual + ".$valor[1]." WHERE iddetalle_ingreso = ".$valor[0]."";
-					$conexion->query($sql_detalle) or $sw = false;
+
+					$response_detalle_pedido=$conexion->query($sqlDetallePedido)->fetch_object();
+
+					print_r($response_detalle_pedido);
+					
+					$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+					$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
+					$stock_anterior = $rpta_sql_suma_anterior->stock;
+					$stock_actual=
+
+
+					$fecact = date('Y-m-d');
+
+					$detale_ingreso = 0;
+
+					print_r($stock_anterior);
+					$sqlKardex = "INSERT INTO kardex(
+						id_sucursal,
+						fecha_emision,
+						tipo,
+						id_articulo,
+						id_detalle_ingreso,
+						stock_anterior,
+						cantidad,
+						stock_actual,
+						fecha_creacion,
+						fecha_modificacion,
+						id_detalle_pedido
+						)
+					VALUES(
+						'" . $_SESSION['idsucursal'] . "',
+						'" . $fecact . "',
+						'anulado',
+						'" . $response_detalle_pedido->idarticulo . "',
+						 '" . $detale_ingreso."',
+						  '" . $stock_anterior . "',
+						'" . $response_detalle_pedido->cantidad . "',
+						'" . $detale_ingreso. "',
+						 '" . $fecact . "',
+						'" . $fecact . "',
+						'" . $response_detalle_pedido->iddetalle_pedido . "'
+						)";
+				$conexion->query($sqlKardex) or $sw = false;
+
 				}
-				if ($conexion != null) {
-                	$conexion->close();
-            	}
+				
+
+
+
+
+				// $sql = "UPDATE pedido set estado = 'C'
+				// 		WHERE idpedido = $idpedido";
+				// //var_dump($sql);
+				// $conexion->query($sql);
+
+				// $sql2 = "UPDATE venta set impuesto = '0.00',total='0.00'
+				// 		WHERE idpedido = $idpedido";
+				// //var_dump($sql);
+				// $conexion->query($sql2);
+
+				// $sql3 = "UPDATE credito set total_pago = '0.00'
+				// 		WHERE idventa = (SELECT idventa from venta where idpedido=$idpedido)";
+				// //var_dump($sql);
+				// $conexion->query($sql3);
+
+				// $sql4 = "UPDATE venta set estado = 'C',idusuario_anu = ".$_SESSION["idusuario"]."
+				// 		WHERE idpedido = $idpedido";
+				// //var_dump($sql);
+				// $conexion->query($sql4);
+
+				// $conexion->autocommit(true);
+				// foreach($detalle as $indice => $valor){
+				// 	$sql_detalle = "UPDATE detalle_ingreso SET stock_actual = stock_actual + ".$valor[1]." WHERE iddetalle_ingreso = ".$valor[0]."";
+				// 	$conexion->query($sql_detalle) or $sw = false;
+				// }
+				// if ($conexion != null) {
+                // 	$conexion->close();
+            	// }
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
