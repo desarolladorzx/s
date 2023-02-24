@@ -24,7 +24,6 @@ class Ingreso
 
 			foreach ($detalle as $indice => $valor) {
 
-
 				// detalle ingreso anterior
 				$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $valor[0] . "";
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
@@ -76,13 +75,16 @@ class Ingreso
 				// 	$conexion->query($sql_detalle_actualizar) or $sw = false;
 				// }
 
-				$sql = "SELECT iddetalle_ingreso from detalle_ingreso where idingreso =" . $idingreso . " ";
 
-				$detalle_ingreso = $conexion->query($sql)->fetch_object()
-					->iddetalle_ingreso;
+	
 
+				
+				$sql = "SELECT iddetalle_ingreso from detalle_ingreso where idingreso =" . $idingreso . " and idarticulo=$valor[0] ";
+
+				$detalle_ingreso = $conexion->query($sql)->fetch_object()->iddetalle_ingreso;
+
+					
 				$detallePedido = 0;
-				// var_dump($conexion->fetch_object());
 				$fecact = date('Y-m-d ');
 				$sqlKardex = "INSERT INTO kardex(
 						id_sucursal,
@@ -130,7 +132,64 @@ class Ingreso
 	}
 	public function CambiarEstado($idingreso)
 	{
+		// se agrego la consulta para adjuntantar al kardex la cancelacion del ingreso
 		global $conexion;
+
+		$sqlIngresoDatos="select * from  detalle_ingreso where idingreso=$idingreso";
+
+		$response_ingreso_datos=$conexion->query($sqlIngresoDatos)->fetch_all();
+		$fecact = date('Y-m-d ');
+		foreach($response_ingreso_datos as $indice=>$valor){
+			
+
+			print_r($valor);
+			$iddetalle_ingreso=$valor[0];
+			$id_articulo=$valor[2];
+			$id_cantidad=$valor[6];
+			$id_ingreso=$valor[0];
+			
+
+
+			$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $id_articulo . "";
+			$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
+
+			$stock_anterior = $rpta_sql_suma_ingreso->stock;
+
+			var_dump($stock_anterior);
+			$detallePedido = 0;
+			// $stock_anterior=$valor[6];
+			$stock_actual=$stock_anterior-$id_cantidad;
+			$sqlKardex = "INSERT INTO kardex(
+				id_sucursal,
+				fecha_emision,
+				tipo,
+				id_articulo,
+				id_detalle_ingreso,
+				stock_anterior,
+				cantidad,
+				stock_actual,
+				fecha_creacion,
+				fecha_modificacion,
+				id_detalle_pedido
+					 )
+			VALUES(
+				'" . $_SESSION['idsucursal'] . "',
+				 '" . $fecact . "',
+				 'ingreso cancelado',
+				 '" . $id_articulo. "',
+				 '" . $iddetalle_ingreso . "',
+				  '" . $stock_anterior . "',
+				'" . $id_cantidad . "',
+				'" . $stock_actual . "',
+				 '" . $fecact . "',
+				'" . $fecact . "',
+				'" . $detallePedido . "'
+				)";
+		$conexion->query($sqlKardex) or $sw = false;
+
+
+		}
+		// se agrego la consulta para adjuntantar al kardex la cancelacion del ingreso\\
 		$sql = "UPDATE ingreso set estado = 'C'
                         WHERE idingreso = $idingreso";
 		$query = $conexion->query($sql);

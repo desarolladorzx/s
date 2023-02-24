@@ -48,6 +48,8 @@ class Venta
 			$conexion->autocommit(true);
 			foreach ($detalle as $indice => $valor) {
 
+
+				print_r($valor);
 				//1 VERSION
 				/* $sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$valor[1]." - ".$valor[2]." where iddetalle_ingreso = ".$valor[0].""; */
 
@@ -55,15 +57,14 @@ class Venta
 
 
 				$sql_detalle_ingreso ="SELECT idarticulo from detalle_ingreso WHERE iddetalle_ingreso=" . $valor[0] . " ";
+
 				$idarticulo = $conexion->query($sql_detalle_ingreso)->fetch_object()->idarticulo;
-				var_dump($idarticulo);
 
 				$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $idarticulo . "";
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 
 				$stock_anterior = $rpta_sql_suma_anterior->stock;
 
-				var_dump($stock_anterior);
 
 				// $suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $valor[0] . "";
 				// $rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
@@ -80,7 +81,6 @@ class Venta
 				$conexion->query($sql_detalle) or $sw = false;
 
 				//var_dump($detalle);
-				var_dump($valor);
 			
 
 				// INSERTA REGISTROS DE KARDEX
@@ -95,7 +95,7 @@ class Venta
 				// $id_de
 			
 
-				$sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." ";
+				$sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." and iddetalle_ingreso=$valor[0] ";
 				$detalle_pedido = $conexion->query($sql)->fetch_object()->iddetalle_pedido;
 
 				

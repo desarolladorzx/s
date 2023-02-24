@@ -121,35 +121,66 @@
 			global $conexion;
 			$sw = true;
 			try {
-
-
-
-
+				
 			   $sql_data_pedido="select * from pedido where  idpedido=$idpedido";
 				$response_data_pedido = $conexion->query($sql_data_pedido)->fetch_object();
 				
+				$sql = "UPDATE pedido set estado = 'C'
+						WHERE idpedido = $idpedido";
+				//var_dump($sql);
+				$conexion->query($sql);
 
-				foreach($detalle as$indice=>$valor){
+				$sql2 = "UPDATE venta set impuesto = '0.00',total='0.00'
+						WHERE idpedido = $idpedido";
+				//var_dump($sql);
+				$conexion->query($sql2);
 
+				$sql3 = "UPDATE credito set total_pago = '0.00'
+						WHERE idventa = (SELECT idventa from venta where idpedido=$idpedido)";
+				//var_dump($sql);
+				$conexion->query($sql3);
+
+				$sql4 = "UPDATE venta set estado = 'C',idusuario_anu = ".$_SESSION["idusuario"]."
+						WHERE idpedido = $idpedido";
+				//var_dump($sql);
+				$conexion->query($sql4);
+
+				$conexion->autocommit(true);
+				foreach($detalle as $indice => $valor){
 
 					$sqlDetallePedido ="SELECT * from detalle_pedido where  iddetalle_ingreso=".$valor[0]." and idpedido = $idpedido";
-
-
 					$response_detalle_pedido=$conexion->query($sqlDetallePedido)->fetch_object();
-
-					print_r($response_detalle_pedido);
-					
 					$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
 					$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 					$stock_anterior = $rpta_sql_suma_anterior->stock;
-					$stock_actual=
+					$stock_actual=$stock_anterior+$response_detalle_pedido->cantidad;
+
+
+					// codigo anterior
+					$sql_detalle = "UPDATE detalle_ingreso SET stock_actual = stock_actual + ".$valor[1]." WHERE iddetalle_ingreso = ".$valor[0]."";
+					$conexion->query($sql_detalle) or $sw = false;
+					// codigo anterior
+
+					
+
+					#ingreso sql de kardex 
+
+					
+
+
+
+
+					$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+
+					$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
+					$stock_actual = $rpta_sql_suma_ingreso->stock;
 
 
 					$fecact = date('Y-m-d');
 
 					$detale_ingreso = 0;
 
-					print_r($stock_anterior);
+
 					$sqlKardex = "INSERT INTO kardex(
 						id_sucursal,
 						fecha_emision,
@@ -171,47 +202,18 @@
 						 '" . $detale_ingreso."',
 						  '" . $stock_anterior . "',
 						'" . $response_detalle_pedido->cantidad . "',
-						'" . $detale_ingreso. "',
+						'" . $stock_actual. "',
 						 '" . $fecact . "',
 						'" . $fecact . "',
 						'" . $response_detalle_pedido->iddetalle_pedido . "'
 						)";
 				$conexion->query($sqlKardex) or $sw = false;
 
+	
 				}
-				
-
-
-
-
-				// $sql = "UPDATE pedido set estado = 'C'
-				// 		WHERE idpedido = $idpedido";
-				// //var_dump($sql);
-				// $conexion->query($sql);
-
-				// $sql2 = "UPDATE venta set impuesto = '0.00',total='0.00'
-				// 		WHERE idpedido = $idpedido";
-				// //var_dump($sql);
-				// $conexion->query($sql2);
-
-				// $sql3 = "UPDATE credito set total_pago = '0.00'
-				// 		WHERE idventa = (SELECT idventa from venta where idpedido=$idpedido)";
-				// //var_dump($sql);
-				// $conexion->query($sql3);
-
-				// $sql4 = "UPDATE venta set estado = 'C',idusuario_anu = ".$_SESSION["idusuario"]."
-				// 		WHERE idpedido = $idpedido";
-				// //var_dump($sql);
-				// $conexion->query($sql4);
-
-				// $conexion->autocommit(true);
-				// foreach($detalle as $indice => $valor){
-				// 	$sql_detalle = "UPDATE detalle_ingreso SET stock_actual = stock_actual + ".$valor[1]." WHERE iddetalle_ingreso = ".$valor[0]."";
-				// 	$conexion->query($sql_detalle) or $sw = false;
-				// }
-				// if ($conexion != null) {
-                // 	$conexion->close();
-            	// }
+				if ($conexion != null) {
+                	$conexion->close();
+            	}
 			} catch (Exception $e) {
 				$conexion->rollback();
 			}
