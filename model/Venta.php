@@ -91,7 +91,7 @@ class Venta
 				$query = $conexion->query($sql)->fetch_object()->idarticulo;
 				// var_dump($query);
 
-				$fecact = date('Y-m-d');
+				$fecact =date('Y-m-d H:i:s');
 				// $id_de
 			
 
@@ -130,14 +130,14 @@ class Venta
 				)
 					VALUES(
 						'" . $_SESSION['idsucursal'] . "',
-						'" . $fecact . "',
+						CURRENT_TIMESTAMP(),
 						'venta',
 						'" . $query. "',
 						'" . $detale_ingreso . "',
 						'" . $detalle_pedido . "', 
 						'" . $valor[2] . "',
-						'" . $fecact . "',
-						'" . $fecact . "',
+						CURRENT_TIMESTAMP(),
+						CURRENT_TIMESTAMP(),
 						'" . $stock_actual . "',
 						'" . $stock_anterior . "'
 						 )";

@@ -11,7 +11,13 @@ class Kardex
 
 		global $conexion;
 
-		$sql = "SELECT idarticulo AS id,nombre AS texto FROM articulo WHERE CONCAT(nombre,' ',descripcion) LIKE '%" . $q . "%'";
+		$sql = "SELECT 
+		idarticulo AS id, 
+		CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre)AS texto 
+		FROM articulo 
+		join categoria on categoria.idcategoria=articulo.idcategoria
+		
+		WHERE CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre) LIKE '%" . $q . "%'";
 		$query = $conexion->query($sql);
 		//var_dump($reg = $query->fetch_object());exit;
 

@@ -145,8 +145,11 @@
 				//var_dump($sql);
 				$conexion->query($sql4);
 
+				
 				$conexion->autocommit(true);
 				foreach($detalle as $indice => $valor){
+					
+					print_r($detalle);
 
 					$sqlDetallePedido ="SELECT * from detalle_pedido where  iddetalle_ingreso=".$valor[0]." and idpedido = $idpedido";
 					$response_detalle_pedido=$conexion->query($sqlDetallePedido)->fetch_object();
@@ -164,19 +167,13 @@
 					
 
 					#ingreso sql de kardex 
-
-					
-
-
-
-
 					$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
 
 					$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 					$stock_actual = $rpta_sql_suma_ingreso->stock;
 
 
-					$fecact = date('Y-m-d');
+					$fecact = date('Y-m-d H:i:s');
 
 					$detale_ingreso = 0;
 
@@ -196,15 +193,15 @@
 						)
 					VALUES(
 						'" . $_SESSION['idsucursal'] . "',
-						'" . $fecact . "',
-						'anulado',
+						CURRENT_TIMESTAMP(),
+						'venta anulada',
 						'" . $response_detalle_pedido->idarticulo . "',
 						 '" . $detale_ingreso."',
 						  '" . $stock_anterior . "',
 						'" . $response_detalle_pedido->cantidad . "',
 						'" . $stock_actual. "',
-						 '" . $fecact . "',
-						'" . $fecact . "',
+						CURRENT_TIMESTAMP(),
+						CURRENT_TIMESTAMP(),
 						'" . $response_detalle_pedido->iddetalle_pedido . "'
 						)";
 				$conexion->query($sqlKardex) or $sw = false;

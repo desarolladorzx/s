@@ -27,7 +27,7 @@
 				where /* di.stock_actual>'0' and  */ s.idsucursal='$idsucursal'  and i.estado='A'
 				group by a.nombre,a.imagen,c.nombre,u.nombre
 				order by a.nombre asc";
-			$query = $conexion->query($sql);  cdwd
+			$query = $conexion->query($sql);  
 			return $query;
 		}
 

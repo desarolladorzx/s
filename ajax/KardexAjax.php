@@ -18,7 +18,9 @@ switch ($_GET["op"]) {
                 "texto" => $reg->texto
             );
         }
+        // if(@data){
 
+        // }
         $return = array(
             'items' => $data
         );
