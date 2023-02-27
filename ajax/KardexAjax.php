@@ -39,9 +39,12 @@ switch ($_GET["op"]) {
         $data = array();
         $i = 1;
         while ($reg = $queryTablaKardex->fetch_object()) {
+
+            // echo date("d/m/Y H:i:s", strtotime($reg->Fecha));
+         
             $data[] = array(
                 "0" => $i,
-                "1" => $reg->Fecha,
+                "1" => date("d/m/Y H:i:s", strtotime($reg->Fecha)),
                 "2" => $reg->Movimiento,
                 "3" => $reg->Orden,
                 "4" => $reg->Cliente,

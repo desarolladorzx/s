@@ -77,7 +77,7 @@ class Kardex
 		else  persona.idpersona = pedido.idcliente
 		end
 		LEFT join venta on pedido.idpedido=venta.idpedido
-		where kardex.id_articulo=" . $id_articulo . " 
+		where kardex.id_articulo=" . $id_articulo . " and kardex.id_sucursal=" . $_SESSION['idsucursal'] . "
 		ORDER BY id_kardex
 		";
 		$query = $conexion->query($sql);
