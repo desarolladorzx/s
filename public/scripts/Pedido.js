@@ -631,6 +631,9 @@ function ListadoVenta() {
             },
             {
                 "mDataProp": "7"
+            },
+            {
+                "mDataProp": "8"
             }
         ],
         "ajax": {
@@ -943,6 +946,8 @@ function cancelarPedido(idPedido) {
                     idPedido: idPedido
                 },
                 success: function (s) {
+
+                
                     for (var i = 0; i < s.length; i++) {
                         //alert(s[i][0] + " - " + s[i][1]);
                         TraerCantidad(s[i][0], s[i][1]);

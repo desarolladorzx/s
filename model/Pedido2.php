@@ -68,6 +68,7 @@
 			global $conexion;
 			$sw = true;
 			try {
+
 				
 				$sql = "UPDATE pedido set estado = 'C'
 						WHERE idpedido = $idpedido";
