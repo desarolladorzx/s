@@ -311,6 +311,7 @@ function ListadoPedidos(){
 }).DataTable();
 };
 function ListadoPedidos2(){ 
+    
 var tabla = $('#tblVentas2').dataTable(
 {   "aProcessing": true,
 "aServerSide": true,

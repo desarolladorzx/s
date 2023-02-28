@@ -10,9 +10,7 @@
 			global $conexion;
 			$sw = true;
 			try {
-
 				//exit;
-
 				$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion)
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion')";
 				//var_dump($sql);
@@ -124,6 +122,9 @@
 			$sw = true;
 			try {
 				
+			   $sql_data_pedido="select * from pedido where  idpedido=$idpedido";
+				$response_data_pedido = $conexion->query($sql_data_pedido)->fetch_object();
+				
 				$sql = "UPDATE pedido set estado = 'C'
 						WHERE idpedido = $idpedido";
 				//var_dump($sql);
@@ -144,10 +145,68 @@
 				//var_dump($sql);
 				$conexion->query($sql4);
 
+				
 				$conexion->autocommit(true);
 				foreach($detalle as $indice => $valor){
+					
+					print_r($detalle);
+
+					$sqlDetallePedido ="SELECT * from detalle_pedido where  iddetalle_ingreso=".$valor[0]." and idpedido = $idpedido";
+					$response_detalle_pedido=$conexion->query($sqlDetallePedido)->fetch_object();
+					$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+					$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
+					$stock_anterior = $rpta_sql_suma_anterior->stock;
+					$stock_actual=$stock_anterior+$response_detalle_pedido->cantidad;
+
+
+					// codigo anterior
 					$sql_detalle = "UPDATE detalle_ingreso SET stock_actual = stock_actual + ".$valor[1]." WHERE iddetalle_ingreso = ".$valor[0]."";
 					$conexion->query($sql_detalle) or $sw = false;
+					// codigo anterior
+
+					
+
+					#ingreso sql de kardex 
+					$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+
+					$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
+					$stock_actual = $rpta_sql_suma_ingreso->stock;
+
+
+					$fecact = date('Y-m-d H:i:s');
+
+					$detale_ingreso = 0;
+
+
+					$sqlKardex = "INSERT INTO kardex(
+						id_sucursal,
+						fecha_emision,
+						tipo,
+						id_articulo,
+						id_detalle_ingreso,
+						stock_anterior,
+						cantidad,
+						stock_actual,
+						fecha_creacion,
+						fecha_modificacion,
+						id_detalle_pedido
+						)
+					VALUES(
+						'" . $_SESSION['idsucursal'] . "',
+						CURRENT_TIMESTAMP(),
+						'venta anulada',
+						'" . $response_detalle_pedido->idarticulo . "',
+						 '" . $detale_ingreso."',
+						  '" . $stock_anterior . "',
+						'" . $response_detalle_pedido->cantidad . "',
+						'" . $stock_actual. "',
+						CURRENT_TIMESTAMP(),
+						CURRENT_TIMESTAMP(),
+						'" . $response_detalle_pedido->iddetalle_pedido . "'
+						)";
+				$conexion->query($sqlKardex) or $sw = false;
+
+	
 				}
 				if ($conexion != null) {
                 	$conexion->close();
