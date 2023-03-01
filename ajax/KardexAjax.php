@@ -10,14 +10,25 @@ switch ($_GET["op"]) {
 
         $query = $obj->BuscarArticulos($q);
 
-        $reg = $query->fetch_object();
+        $reg = $query->fetch_all();
 
-        while ($reg = $query->fetch_object()) {
-            $data[] = array(
-                "id" => $reg->id,
-                "texto" => $reg->texto
-            );
+        $data=[];
+
+        foreach ($reg as $indice => $valor) {
+            
+            $d=(object)[
+                "id" => $valor[0],
+                "texto" => $valor[1]
+            ];
+            array_push($data,$d);
         }
+
+        // while ($reg = $query->fetch_object()) {
+        //     $data[] = array(
+        //         "id" => $reg->id,
+        //         "texto" => $reg->texto
+        //     );
+        // }
         // if(@data){
 
         // }

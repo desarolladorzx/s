@@ -177,7 +177,8 @@ function init(){
                 }else{
 
                     var  arr = obj.detalle;
-                    bootbox.alert("No se puede completar el proceso ya que existen productos sin stock:\n"+arr.join('\n'))
+                    bootbox.alert("No se puede completar el proceso ya que existen productos sin stock:\n"+arr
+                    )
                 }
             })
 
