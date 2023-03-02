@@ -25,7 +25,7 @@ class Kardex
 
 		return $query;
 	}
-	public function TraerDatosTablaKardex($q)
+	public function TraerDatosTablaKardex($q,$fecha_desde,$fecha_hasta)
 	{
 		global $conexion;
 
@@ -79,12 +79,13 @@ class Kardex
 		else  persona.idpersona = pedido.idcliente
 		end
 		LEFT join venta on pedido.idpedido=venta.idpedido
-		where kardex.id_articulo=" . $id_articulo . " and kardex.id_sucursal=" . $_SESSION['idsucursal'] . "
+		where kardex.id_articulo=" . $id_articulo . "  
+		and kardex.fecha_creacion>='$fecha_desde' and kardex.fecha_creacion<='$fecha_hasta' and
+		kardex.id_sucursal=" . $_SESSION['idsucursal'] . "
 		ORDER BY id_kardex
 		";
 		$query = $conexion->query($sql);
 		
-		// var_dump($query->fetch_object());
 
 		return $query;
 

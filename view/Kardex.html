@@ -17,7 +17,7 @@
   <div class="box-body">
     <div class="row">
       <div class="col-lg-12">
-        <div class="form-group row ">
+        <div class="form-group row">
           <label for="slc_producto" class="col-sm-2 control-label mt-2"
             >Buscar Artículo</label
           >
@@ -27,10 +27,26 @@
               name="slc_producto"
               id="slc_producto"
               required
-              style="width: 100%;"
+              style="width: 100%"
             >
               <option value="- Elegir opción -">- Elegir opción -</option>
             </select>
+          </div>
+        </div>
+        <div class="col-lg-6 fechas_kardex">
+          <div class="form-group ">
+            <label for="inputMarca">Desde :</label>
+            <input id="cboFechaDesdeDetKardex" type="date" value=""
+            maxlength="50" class="form-control" name="cboFechaDesdeDet"
+            required="" />
+          </div>
+        </div>
+        <div class="col-lg-6 fechas_kardex">
+          <div class="form-group ">
+            <label for="inputMarca">Hasta :</label>
+            <input id="cboFechaHastaDetKardex" type="date" value="<?php echo date("Y-m-d"); ?>"
+            maxlength="50" class="form-control" name="cboFechaHastaDet"
+            required="" />
           </div>
         </div>
       </div>
@@ -125,7 +141,7 @@
       <th>Order</th>
       <th>Cliente(Nombre/Apellido)</th>
       <th>Proveedor</th>
-      <th>Stock anterior </th>
+      <th>Stock anterior</th>
       <th>Cantidad</th>
       <th>Stock Actual</th>
     </tr>
@@ -139,7 +155,7 @@
       <th>Order</th>
       <th>Cliente(Nombre/Apellido)</th>
       <th>Proveedor</th>
-      <th>Stock anterior </th>
+      <th>Stock anterior</th>
       <th>Cantidad</th>
       <th>Stock Actual</th>
     </tr>
@@ -157,16 +173,15 @@
 <script type="text/javascript">
   $("#liConsultaCompras").addClass("treeview active");
   $("#liKardex").addClass("active");
-
   //$("#txtNombre").numeric();
   var editor = 0;
-
+  $('.fechas_kardex').hide()
   function ListadoVenta() {
     var tabla = $("#tblKardex")
       .dataTable({
         aProcessing: true,
         aServerSide: true,
-        "pageLength": 30,
+        pageLength: 30,
         dom: "Bfrtip",
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         aoColumns: [
@@ -185,7 +200,6 @@
           {
             mDataProp: "4",
             sClass: "text-center",
-
           },
           {
             mDataProp: "5",
@@ -205,8 +219,10 @@
           url: "./ajax/KardexAjax.php?op=TraerDatosTablaKardex",
           type: "get",
           dataType: "json",
-          data:function(d) {
-            d.q=$("#slc_producto").val()
+          data: function (d) {
+            d.q = $("#slc_producto").val()
+            d.fecha_desde=$("#cboFechaDesdeDetKardex").val()
+            d.fecha_hasta=$("#cboFechaHastaDetKardex").val()
           },
           error: function (e) {
             console.log(e.responseText);
@@ -217,8 +233,18 @@
       .DataTable();
 
     $("#slc_producto").on("select2:select", function (e) {
-      tabla.ajax.reload()
+      tabla.ajax.reload();
+      $('.fechas_kardex').show()
+
     });
+
+    $("#cboFechaDesdeDetKardex").change("select2:select", function (e) {
+      tabla.ajax.reload();
+    });
+	$("#cboFechaHastaDetKardex").change("select2:select", function (e) {
+      tabla.ajax.reload();
+    });
+
   }
 
   $(function () {
