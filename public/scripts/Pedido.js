@@ -657,7 +657,7 @@ function eliminarDetallePed(ele) {
 function ConsultarDetallesPed() {
     $("table#tblDetallePedido tbody").html("");
     var data = JSON.parse(objinit.consultar());
-
+    
     for (var pos in data) {
 
         $("table#tblDetallePedido").append(
