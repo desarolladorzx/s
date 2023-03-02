@@ -110,7 +110,10 @@ function init(){
 
 	$("#cboFechaDesdeVentEmpDet").change(ListadoVentasEmpleadoDet);
 	$("#cboFechaHastaVentEmpDet").change(ListadoVentasEmpleadoDet);
+
 }
+
+
 	function ListadoVentasFechas(){
 
 		if($("#cboFechaDesdeVent").val() != "" && $("#cboFechaHastaVent").val() != ""){
@@ -118,13 +121,53 @@ function init(){
 			var tabla = $('#tblVentaFechas').dataTable(
 				{   "aProcessing": true,
 		       		"aServerSide": true,
-	       			dom: 'Bfrtip',
+					   dom: "Bfrtip",
+
 			        buttons: [
 			            'copyHtml5',
 			            'excelHtml5',
 			            'csvHtml5',
-			            'pdfHtml5'
+			            'pdfHtml5',
+						
 			        ],
+					// searchPanes: {
+					// 	"viewTotal": true,
+					// 	cascadePanes: true,
+					// 	initCollapsed: true,
+					// 	columns: [1,2,3],
+					// 	collapse:true,
+					// 	orderable:false,
+					
+					// },
+					initComplete: function () {
+						
+						this.api()
+							.columns()
+							.every(function () {
+								var column = this;
+
+								if([1,2,3].includes(column[0][0])){
+
+								var select = $('<select><option value=""></option></select>')
+									.appendTo($(column.header()))
+									.on('change', function () {
+										var val = $.fn.dataTable.util.escapeRegex($(this).val());
+										column.search(val ? '^' + val + '$' : '', true, false).draw();
+									});
+									
+							
+
+									column
+									.data()
+									.unique()
+									.sort()
+									.each(function (d, j) {
+										select.append('<option value="' + d + '">' + d + '</option>');
+									});
+								}
+							});
+					}
+					,
 		        	"aoColumns":[
 		        	     	{   "mDataProp": "0"},
 		                    {   "mDataProp": "1"},
@@ -157,6 +200,10 @@ function init(){
 		    	}).DataTable();
 
 		}
+
+
+
+		
 	}
 
 	function ListadoVentasDetalladas(){

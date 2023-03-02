@@ -66,7 +66,6 @@ class Ingreso
 
 
 				$stock_anterior=$stock_actual-$cantidad;
-				var_dump($detalle_ingreso);
 				$detallePedido = 0;
 				$fecact = date('Y-m-d ');
 				$sqlKardex = "INSERT INTO kardex(
@@ -141,8 +140,9 @@ class Ingreso
 
 
 			$stock_porid = "SELECT stock_actual stock from detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso ";
-			$res = $conexion->query($stock_porid)->fetch_object();
-
+			$res = $conexion->query($stock_porid)->fetch_object()->stock;
+			
+			var_dump($res);
 			$ulu=$res-$id_cantidad;
 
 			$sql = "UPDATE detalle_ingreso set  stock_actual=$ulu 

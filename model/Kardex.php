@@ -15,10 +15,12 @@ class Kardex
 		idarticulo AS id, 
 		CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre)AS texto 
 		FROM articulo 
-		join categoria on categoria.idcategoria=articulo.idcategoria
+		left join categoria on categoria.idcategoria=articulo.idcategoria
 		
-		WHERE CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre) LIKE '%" . $q . "%'";
+		WHERE CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre) like '%$q%'";
 		$query = $conexion->query($sql);
+
+
 		//var_dump($reg = $query->fetch_object());exit;
 
 		return $query;

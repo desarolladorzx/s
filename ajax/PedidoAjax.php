@@ -302,7 +302,15 @@ switch ($_GET["op"]) {
                     data-serie="'.$reg->serie.'" data-nombre="'.$reg->Articulo.'" data-precio-venta="'.$reg->precio_ventapublico.'"
                     data-stock-actual="'.$reg->stock_actual.'" id="'.$reg->iddetalle_ingreso.'" value="'.$reg->iddetalle_ingreso.'"
                     data-toggle="tooltip" title="Agregar al carrito"
-                    onclick="AgregarPedCarrito('.$reg->iddetalle_ingreso.',\''.$reg->stock_actual.'\',\''.$reg->Articulo.'\',\''.$reg->codigo.'\',\''.$reg->serie.'\',\''.$reg->precio_ventapublico.'\',\''.$reg->idarticulo.'\')" >
+                    onclick="AgregarPedCarrito(
+                        '.$reg->iddetalle_ingreso.',
+                        \''.$reg->stock_actual.'\',
+                        \''.$reg->Articulo.'\',
+                        \''.$reg->codigo.'\',
+                        \''.$reg->serie.'\',
+                        \''.$reg->precio_ventapublico.'\',
+                        \''.$reg->idarticulo.'\',
+                        \''.$reg->marca.'\')" >
                     <i class="fa fa-check" ></i> </button>',
                     "1"=>$reg->codigo,
                     "2"=>$reg->Articulo,
@@ -396,6 +404,7 @@ switch ($_GET["op"]) {
 
                 
     case "cambiarEstadoPedido" :
+          
             require_once "../model/Pedido.php";
             $obj= new Pedido();
             $idPedido = $_POST["idPedido"];

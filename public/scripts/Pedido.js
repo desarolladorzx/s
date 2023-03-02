@@ -669,6 +669,8 @@ function ConsultarDetallesPed() {
             data[pos][6] +
             "</td><td> " +
             data[pos][7] +
+            "</td><td> " +
+            data[pos][9] +
             "</td><td>" +
             data[pos][5] +
             "</td><td><input class='form-control' type='text' name='txtPrecioVentPed' id='txtPrecioVentPed[]' value='" +
@@ -997,14 +999,12 @@ function eliminarPedido(idPedido) {
 }
 
 function cambiarEstadoPedido(idPedido) {
-
-
     // COMPRUEBA PRIMERO STOCK DE PRODUCTOS
 
     $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido="+idPedido, function(r) {
 
         var obj = jQuery.parseJSON(r);
-        
+
         if (obj.estado == true || obj.estado == 'true') {
 
             bootbox.confirm("¿Esta seguro de cambiar el estado del pedido?", function (result) {
@@ -1161,7 +1161,9 @@ function ComboTipoDoc() {
 
 
 //Consulta de stock menor a 0 Unidades 
-function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta,idart) {
+function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_venta,idart,marca) {
+    
+    
     if (stock_actual > 0) {
         //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
         //elementos.push(detalles);
@@ -1170,7 +1172,7 @@ function AgregarPedCarrito(iddet_ing, stock_actual, art, cod, serie, precio_vent
         //let elementosSearch = [];
         
         var data = JSON.parse(objinit.consultar());
-        var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie,idart);
+        var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie,idart ,marca);
         // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
         if (data.length >= 1) {
 

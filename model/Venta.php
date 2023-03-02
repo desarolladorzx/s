@@ -20,10 +20,6 @@ class Venta
 
 	public function Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_documento_sucursal, $detalle, $tipo_promocion, $metodo_pago, $agencia_envio)
 	{
-
-		//var_dump($detalle);
-		//exit;
-
 		global $conexion;
 		$sw = true;
 		try {
@@ -48,8 +44,6 @@ class Venta
 			$conexion->autocommit(true);
 			foreach ($detalle as $indice => $valor) {
 
-
-				print_r($valor);
 				//1 VERSION
 				/* $sql_detalle = "UPDATE detalle_ingreso set stock_actual = ".$valor[1]." - ".$valor[2]." where iddetalle_ingreso = ".$valor[0].""; */
 
@@ -60,18 +54,16 @@ class Venta
 
 				$idarticulo = $conexion->query($sql_detalle_ingreso)->fetch_object()->idarticulo;
 
-				$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $idarticulo . "";
+				$suma_anterior = "SELECT sum(stock_actual) as stock
+				from detalle_ingreso  
+				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+				 where idarticulo=$idarticulo and estado ='A'  and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
+
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 
+				
 				$stock_anterior = $rpta_sql_suma_anterior->stock;
 
-
-				// $suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $valor[0] . "";
-				// $rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
-
-				// $stock_anterior = $rpta_sql_suma_anterior->stock;
-
-				// var_dump($stock_anterior);
 				$stockNuevo = $valor[1] - $valor[2];
 				$sql_detalle = "UPDATE detalle_ingreso set stock_actual = " . $stockNuevo . " where iddetalle_ingreso = " . $valor[0] . "";
 
@@ -80,37 +72,25 @@ class Venta
 
 				$conexion->query($sql_detalle) or $sw = false;
 
-				//var_dump($detalle);
 			
 
-				// INSERTA REGISTROS DE KARDEX
 
-				// var_dump($valor);
 				global $conexion;
 				$sql = "SELECT * from detalle_ingreso where iddetalle_ingreso =" . $valor[0] . " ";
-				$query = $conexion->query($sql)->fetch_object()->idarticulo;
-				// var_dump($query);
-
-				$fecact =date('Y-m-d H:i:s');
-				// $id_de
-			
-
+				$query = $conexion->query($sql)->fetch_object()->idarticulo;			
 				$sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." and iddetalle_ingreso=$valor[0] ";
 				$detalle_pedido = $conexion->query($sql)->fetch_object()->iddetalle_pedido;
 
-				
-				$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $idarticulo . "";
+
+				$suma_ingreso="SELECT sum(stock_actual) as stock
+				from detalle_ingreso  
+				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+				 where idarticulo=$idarticulo and estado ='A'  and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
 
 				$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 				$stock_actual = $rpta_sql_suma_ingreso->stock;
 
 				$detale_ingreso = 0;
-
-
-				// $sql_array_kardex= "select id_articulo from kardex (id_articulo)";
-				// $response_sql_array_kardex = $conexion->query($sql_array_kardex)->fetch_object();
-
-				// var_dump($response_sql_array_kardex);
 
 
 
@@ -140,9 +120,7 @@ class Venta
 						CURRENT_TIMESTAMP(),
 						'" . $stock_actual . "',
 						'" . $stock_anterior . "'
-						 )";
-
-				// ".$valor[0]." - id detalle de ingreso
+					)";
 				$conexion->query($sqlKardex) or $sw = false;
 			}
 

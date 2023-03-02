@@ -210,7 +210,6 @@ function init() {
 
     function AbrirModalSucursal(){
         $("#modalListadoSucursal").modal("show");
-
         $.post("./ajax/IngresoAjax.php?op=listSucursal", function(r){
             $("#Sucursales").html(r);
             $("#tblSucursales").DataTable();

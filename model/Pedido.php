@@ -149,11 +149,19 @@
 				$conexion->autocommit(true);
 				foreach($detalle as $indice => $valor){
 					
-					print_r($detalle);
 
 					$sqlDetallePedido ="SELECT * from detalle_pedido where  iddetalle_ingreso=".$valor[0]." and idpedido = $idpedido";
+
+
 					$response_detalle_pedido=$conexion->query($sqlDetallePedido)->fetch_object();
-					$suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+
+
+					// $suma_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+
+					$suma_anterior = "SELECT sum(stock_actual) stock from detalle_ingreso  
+				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
+
 					$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 					$stock_anterior = $rpta_sql_suma_anterior->stock;
 					$stock_actual=$stock_anterior+$response_detalle_pedido->cantidad;
@@ -167,7 +175,12 @@
 					
 
 					#ingreso sql de kardex 
-					$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $response_detalle_pedido->idarticulo . "";
+					$suma_ingreso = "SELECT sum(stock_actual) stock
+				from detalle_ingreso  
+				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
+
+
 
 					$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 					$stock_actual = $rpta_sql_suma_ingreso->stock;
