@@ -46,7 +46,14 @@ switch ($_GET["op"]) {
         $obj = new Kardex();
 
         $q = $_GET["q"];
-        $queryTablaKardex = $obj->TraerDatosTablaKardex($q);
+
+        $fecha_desde = $_GET["fecha_desde"];
+        $fecha_hasta = $_GET["fecha_hasta"];
+
+
+        $queryTablaKardex = $obj->TraerDatosTablaKardex($q,$fecha_desde,$fecha_hasta);
+
+
         $data = array();
         $i = 1;
         while ($reg = $queryTablaKardex->fetch_object()) {
