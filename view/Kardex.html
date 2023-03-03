@@ -33,7 +33,7 @@
             </select>
           </div>
         </div>
-        <div class="col-lg-6 fechas_kardex">
+        <div class="col-lg-5 fechas_kardex">
           <div class="form-group ">
             <label for="inputMarca">Desde :</label>
             <input id="cboFechaDesdeDetKardex" type="date" value=""
@@ -41,7 +41,8 @@
             required="" />
           </div>
         </div>
-        <div class="col-lg-6 fechas_kardex">
+
+        <div class="col-lg-5 fechas_kardex">
           <div class="form-group ">
             <label for="inputMarca">Hasta :</label>
             <input id="cboFechaHastaDetKardex" type="date" value="<?php echo date("Y-m-d"); ?>"
@@ -49,6 +50,18 @@
             required="" />
           </div>
         </div>
+
+        <div class="col-lg-2 fechas_kardex">
+          <div class="form-group ">
+            <label for="sucursal_kardex">sucursal</label>
+            <select id="sucursal_kardex" name="sucursal_kardex" class="form-control" required>
+              <option value=""></option>
+              <option value="2">Lima</option>
+              <option value="1">Arequipa</option>
+          </select>
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- /.row -->
@@ -144,6 +157,7 @@
       <th>Stock anterior</th>
       <th>Cantidad</th>
       <th>Stock Actual</th>
+      <th>Sucursal</th>
     </tr>
   </thead>
 
@@ -158,6 +172,7 @@
       <th>Stock anterior</th>
       <th>Cantidad</th>
       <th>Stock Actual</th>
+      <th>Sucursal</th>
     </tr>
   </tfoot>
 </table>
@@ -213,6 +228,8 @@
           },
           {
             mDataProp: "8",
+          }, {
+            mDataProp: "9",
           },
         ],
         ajax: {
@@ -223,6 +240,7 @@
             d.q = $("#slc_producto").val()
             d.fecha_desde=$("#cboFechaDesdeDetKardex").val()
             d.fecha_hasta=$("#cboFechaHastaDetKardex").val()
+            d.sucursal=$("#sucursal_kardex").val()
           },
           error: function (e) {
             console.log(e.responseText);
@@ -241,6 +259,11 @@
     $("#cboFechaDesdeDetKardex").change("select2:select", function (e) {
       tabla.ajax.reload();
     });
+    
+    $("#sucursal_kardex").change( function (e) {
+      tabla.ajax.reload();
+    });
+
 	$("#cboFechaHastaDetKardex").change("select2:select", function (e) {
       tabla.ajax.reload();
     });

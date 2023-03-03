@@ -49,9 +49,9 @@ switch ($_GET["op"]) {
 
         $fecha_desde = $_GET["fecha_desde"];
         $fecha_hasta = $_GET["fecha_hasta"];
+        $sucursal = $_GET["sucursal"];
 
-
-        $queryTablaKardex = $obj->TraerDatosTablaKardex($q,$fecha_desde,$fecha_hasta);
+        $queryTablaKardex = $obj->TraerDatosTablaKardex($q,$fecha_desde,$fecha_hasta,$sucursal);
 
 
         $data = array();
@@ -70,7 +70,8 @@ switch ($_GET["op"]) {
                 // "6" => $reg->id_kardex,
                 "6" => $reg->stock_anterior,
                 "7" => $reg->cantidad,
-                "8" => $reg->stock_actual
+                "8" => $reg->stock_actual,
+                "9" => $reg->sucursal
             );
             //$reg->estado,
             // "8"=>($reg->estado=="A")?'<span class="badge bg-green">ACEPTADO</span>':'<span class="badge bg-red">CANCELADO</span>',

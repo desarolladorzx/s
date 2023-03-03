@@ -57,7 +57,7 @@ class Ingreso
                 
                 $suma_ingreso="SELECT SUM(stock_actual) stock from detalle_ingreso
                     join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-                    where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . "";
+                    where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";
 
 				$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 
@@ -127,8 +127,6 @@ class Ingreso
 		$fecact = date('Y-m-d ');
 		foreach($response_ingreso_datos as $indice=>$valor){
 			
-
-			print_r($valor);
 			$iddetalle_ingreso=$valor[0];
 			$id_articulo=$valor[2];
 			$id_cantidad=$valor[6];
@@ -136,27 +134,46 @@ class Ingreso
 			
 
 
-			$suma_ingreso="SELECT SUM(stock_actual) stock from detalle_ingreso
+			$suma_ingreso_inicial="SELECT SUM(stock_actual) stock from detalle_ingreso
 			join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-			where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . "";			$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
+			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";			
+			
+			$rpta_sql_suma_ingreso_inicial = $conexion->query($suma_ingreso_inicial)->fetch_object();
 
-			$stock_anterior = $rpta_sql_suma_ingreso->stock;
+			// var_dump($rpta_sql_suma_ingreso_inicial->stock);
+			$stock_anterior = ($rpta_sql_suma_ingreso_inicial->stock !== null)?$rpta_sql_suma_ingreso_inicial->stock:0;
+
+
+			var_dump($stock_anterior);
+
+
 			$stock_actual=$stock_anterior-$id_cantidad;
-
 
 			$stock_porid = "SELECT stock_actual stock from detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso ";
 			$res = $conexion->query($stock_porid)->fetch_object()->stock;
 			
-			var_dump($res);
 			$ulu=$res-$id_cantidad;
 
 			$sql = "UPDATE detalle_ingreso set  stock_actual=$ulu 
                         WHERE iddetalle_ingreso = $iddetalle_ingreso";
 			$query = $conexion->query($sql);
 
+
+
+			$suma_ingreso_final="SELECT SUM(stock_actual) stock from detalle_ingreso
+			join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";			
+			$rpta_sql_suma_ingreso_final = $conexion->query($suma_ingreso_final)->fetch_object()->stock;
+
+			$res_stock=($rpta_sql_suma_ingreso_final !== null)?$rpta_sql_suma_ingreso_final:0;
 			$detallePedido = 0;
 			// $stock_anterior=$valor[6];
-		
+			
+			$anterior=$res_stock+$id_cantidad;
+
+			var_dump( $anterior,
+			$id_cantidad,
+		   $res_stock,);
 			$sqlKardex = "INSERT INTO kardex(
 				id_sucursal,
 				fecha_emision,
@@ -173,18 +190,17 @@ class Ingreso
 			VALUES(
 				'" . $_SESSION['idsucursal'] . "',
 				 CURRENT_TIMESTAMP(),
-				 'ingreso cancelado',
+				 'ingreso anulado',
 				 '" . $id_articulo. "',
 				 '" . $iddetalle_ingreso . "',
-				  '" . $stock_anterior . "',
-				'" . $id_cantidad . "',
-				'" . $stock_actual . "',
+				 $stock_anterior,
+				 $id_cantidad,
+				$res_stock,
 				CURRENT_TIMESTAMP(),
 				CURRENT_TIMESTAMP(),
 				'" . $detallePedido . "'
 				)";
 		$conexion->query($sqlKardex) or $sw = false;
-
 
 		}
 		// se agrego la consulta para adjuntantar al kardex la cancelacion del ingreso\\

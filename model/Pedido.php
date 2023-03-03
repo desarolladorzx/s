@@ -17,14 +17,8 @@
 				$conexion->query($sql);
 				$idpedido=$conexion->insert_id;
 				$conexion->autocommit(true);
+
 				
-				//var_dump($sql);
-				//exit;
-
-				//$array1 = explode(",", $detalle);
-				//var_dump($detalle);
-				//exit;
-
 				for ($i=0; $i < count($detalle); $i++) { 
 					
 					$array = explode(",", $detalle[$i]);
