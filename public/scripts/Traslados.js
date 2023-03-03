@@ -32,7 +32,7 @@ function AgregarPedCarritoTraslado(
       "1",
       "0.0",
       stock_actual,
-      cod,
+      1,
       serie,
       idart,
       marca
@@ -76,7 +76,7 @@ function ConsultarDetallesTraslado() {
         data[pos][9] +
         "</td><td>" +
         data[pos][5] +
-        "</td><td><input class='form-control'  max=" +
+        "</td><td><input class='form-control' min="+1+" max=" +
         data[pos][5] +
         " type='number' name='cantidadTrasladar' id='cantidadTrasladar[]' value='" +
         data[pos][6] +
@@ -140,6 +140,12 @@ function init() {
       })
       .DataTable();
   }
+  function Limpiar(){
+    $("#motivo_de_traslado").val("");
+    $("#tblDetallePedidoTraslado tbody").html("");
+
+    elementos.length = 0;
+  }
 
   function GuardarTraslado(e) {
     e.preventDefault();
@@ -173,17 +179,18 @@ function init() {
             success: function (data) {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
-
+              location.href="Traslados.php"
               //$("#tblDetallePedido tbody").html("");
               // $("#txtIgvPed").val("");
               // $("#txtTotalPed").val("");
               // $("#txtSubTotalPed").val("");
               // // OcultarForm();
-              // $("#VerFormPed").hide(); // Mostramos el formulario
+              $("#VerFormPed").hide(); // Mostramos el formulario
               // $("#btnNuevoPedido").show();
-              // Limpiar();
+              Limpiar();
+
               // $("#txtCliente").val("");
-              // ListadoVenta();
+              ListadoTraslados();
               // GetPrimerCliente();
             },
           });

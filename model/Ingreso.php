@@ -53,7 +53,11 @@ class Ingreso
 
 				$cantidad = $valor[4];
 				// detalle actual 
-				$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $valor[0] . "";
+				// $suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $valor[0] . "";
+                
+                $suma_ingreso="SELECT SUM(stock_actual) stock from detalle_ingreso
+                    join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+                    where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . "";
 
 				$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 
@@ -132,8 +136,9 @@ class Ingreso
 			
 
 
-			$suma_ingreso = "SELECT SUM(stock_actual) stock from detalle_ingreso where idarticulo=" . $id_articulo . "";
-			$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
+			$suma_ingreso="SELECT SUM(stock_actual) stock from detalle_ingreso
+			join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+			where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . "";			$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 
 			$stock_anterior = $rpta_sql_suma_ingreso->stock;
 			$stock_actual=$stock_anterior-$id_cantidad;
