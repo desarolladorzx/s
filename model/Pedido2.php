@@ -3,6 +3,7 @@
 	require "Conexion.php";
 	
 	class Pedido{
+		
 	
 		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle){
 			global $conexion;

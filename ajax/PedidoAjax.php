@@ -132,6 +132,13 @@ switch ($_GET["op"]) {
 			$objPed = new Pedido();
 
 			$query_Tipo = $objPed->ListarTipoPedidoPedido($_SESSION["idsucursal"]);
+
+
+            $query_Usuario = $objPed->DatosUsuario($_SESSION["idempleado"]);
+
+         
+            $res_usuario=$query_Usuario->fetch_object();
+            // var_dump($res_usuario);
 			$data = Array();
             $i = 1;
      		while ($reg = $query_Tipo->fetch_object()) {
@@ -143,6 +150,19 @@ switch ($_GET["op"]) {
                 } else {
                     $botonPasarAVenta = '';
                 }
+
+                if ($res_usuario->estado == "S" ) { // APROBADO
+                    $botonEliminar= '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp';
+                } else {
+                    $botonEliminar = '';
+                }
+                if ($reg->estadoId !== "D" ) { // APROBADO
+                    $botonCambiarEstado= '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp' ;
+                } else {
+                    $botonCambiarEstado = '';
+                }
+                
+
      			$data[] = array(
      				"0"=>$i,
                     "1"=>$reg->fecha,
@@ -155,8 +175,9 @@ switch ($_GET["op"]) {
                     "8"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
                     $botonPasarAVenta.
                     '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
-                    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
-                    '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp' 
+                    $botonEliminar.
+                    $botonCambiarEstado 
+                    
                     ,
                     "9"=>$reg->numero,
                     /*  "6"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.

@@ -2,6 +2,12 @@
 
 	require "Conexion.php";
 	class Pedido{
+		public function DatosUsuario($id_usuario){
+			global $conexion;
+			$sql = "SELECT * from empleado where idempleado=$id_usuario";
+			$query = $conexion->query($sql);
+			return $query;
+		}
 
 		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido,$numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion){
 			
@@ -18,10 +24,13 @@
 				$idpedido=$conexion->insert_id;
 				$conexion->autocommit(true);
 
+		
 				
 				for ($i=0; $i < count($detalle); $i++) { 
 					
 					$array = explode(",", $detalle[$i]);
+
+					print_r($array);
 
 					$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo)
 											VALUES($idpedido, '".$array[0]."', '".$array[3]."', '".$array[2]."', '".$array[4]."', '".$array[8]."')";
