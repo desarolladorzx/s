@@ -121,7 +121,7 @@ function init() {
 
                 var detalle = JSON.parse(consultar());
 
-                //alert(detalle);
+                // alert(detalle);
 
                 $.each($("input[type='file']")[0].files, function (i, file) {
                     //alert(file)
@@ -145,6 +145,7 @@ function init() {
                 //formData.append('detalle', detalle);
                 //formData.append('ext', ext);
 
+                
                 $.ajax({
                     url: "./ajax/PedidoAjax.php?op=Save",
                     data: formData,
@@ -232,6 +233,24 @@ function init() {
             bootbox.alert("Debe elegir un Cliente para registrar el Pedido");
         }
     }
+
+    function EnviarCorreo() {
+        bootbox.prompt({
+            title: "Ingrese el correo para enviar el detalle de la compra",
+            value: email,
+            callback: function (result) {
+                if (result !== null) {
+                    $.post("./ajax/VentaAjax.php?op=EnviarCorreo", {
+                        result: result,
+                        idPedido: $("#txtIdPedido").val()
+                    }, function (r) {
+                        bootbox.alert(r);
+                    })
+                }
+            }
+        });
+    }
+
 
     function EnviarCorreo() {
         bootbox.prompt({
@@ -634,6 +653,9 @@ function ListadoVenta() {
             },
             {
                 "mDataProp": "8"
+            },
+            {
+                "mDataProp": "9"
             }
         ],
         "ajax": {
