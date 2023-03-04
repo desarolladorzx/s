@@ -251,7 +251,7 @@ function init(){
 		$("#btnReporte").show();
         $("#btnNuevo").show();
         $("#VerFormVentaPed").hide();
-        $("#btnNuevoVent").show();
+        //$("#btnNuevoVent").show();
        // $("#lblTitlePed").html("Pedidos");
 	}
 

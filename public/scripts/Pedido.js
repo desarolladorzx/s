@@ -44,7 +44,7 @@ function init() {
     $("#btnBuscarCliente").click(AbrirModalCliente);
     $("#btnBuscarDetIng").click(AbrirModalDetPed);
     $("#btnEnviarCorreo").click(EnviarCorreo);
-    $("#btnNuevoVent").click(VerForm);
+    //$("#btnNuevoVent").click(VerForm);
     $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
     $("form#frmPedidos").submit(GuardarPedido);
 
@@ -436,7 +436,7 @@ function init() {
 
     function VerForm() {
         $("#VerForm").show();
-        $("#btnNuevoVent").hide();
+        //$("#btnNuevoVent").hide();
         $("#cboTipoPedido").hide();
         $("#txtNumeroPed").hide();
         $("#inputTipoPed").hide();
@@ -450,7 +450,7 @@ function init() {
 
     function OcultarForm() {
         $("#VerForm").hide();
-        $("#btnNuevoVent").show();
+        //$("#btnNuevoVent").show();
         $("#VerListado").show();
     }
 
@@ -735,7 +735,7 @@ function calcularTotalPed(posi) {
 function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
     bandera = 2;
     $("#VerForm").show();
-    $("#btnNuevoVent").hide();
+    //$("#btnNuevoVent").hide();
     $("#VerListado").hide();
     $("#txtIdPedido").val(idPedido);
     $("#txtCliente").hide();
