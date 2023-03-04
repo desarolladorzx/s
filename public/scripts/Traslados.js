@@ -57,6 +57,10 @@ function AgregarPedCarritoTraslado(
     bootbox.alert("No se puede agregar al detalle. No tiene stock");
   }
 }
+
+function verDetallesTraslados(){
+  console.log('hola')
+}
 function ConsultarDetallesTraslado() {
   $("table#tblDetallePedidoTraslado tbody").html("");
 
