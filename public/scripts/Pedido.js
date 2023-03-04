@@ -754,7 +754,10 @@ function calcularTotalPed(posi) {
 }
 
 
-function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
+function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion
+    
+   
+    ) { // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
     bandera = 2;
     $("#VerForm").show();
     //$("#btnNuevoVent").hide();
@@ -762,6 +765,24 @@ function cargarDataPedido(idPedido, tipo_pedido, numero, cliente, total, correo,
     $("#txtIdPedido").val(idPedido);
     $("#txtCliente").hide();
     $("#cboTipoPedido").hide();
+
+
+    console.log(idPedido, tipo_pedido, numero, cliente, total, correo, num_documento, celular, tipo_cliente, destino, ticket, aproba_venta, aproba_pedido, empleado, metodo_pago, agencia_envio, tipo_promocion)
+
+    $("#txtEmpleadoVent").val(empleado)//.Empleado que registro el pedido;
+    $("#txtClienteVent").val(correo)//.falta concatenar nombre y apellido desde js;
+    $("#txtClienteDni").val(num_documento);// MUESTRA DETALLE DE VENTA
+    $("#txtClienteCel").val(celular);        
+    $("#txtClienteEmail").val(correo);// MUESTRA DETALLE DE VENTA
+    $("#txtClienteDir").val(destino);// MUESTRA DETALLE DE VENTA
+
+    // $("#hdn_idClientePedido").val(idcliente);
+    $("#hdn_metodo_pago").val(metodo_pago);
+    $("#hdn_agencia_envio").val(agencia_envio);
+    $("#hdn_tipo_promocion").val(tipo_promocion);
+    $("#txtClientePed").val(metodo_pago);
+
+    
 
     //$("#hdn_agencia_envio").val(agencia_envio);
     //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
