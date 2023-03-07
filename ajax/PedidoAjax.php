@@ -3,8 +3,8 @@ session_start();
 switch ($_GET["op"]) {
 
     case 'Save':
-    require_once "../model/Pedido.php";
-    $obj= new Pedido();
+        require_once "../model/Pedido.php";
+        $obj = new Pedido();
 
         /*
         $files=$_FILES['fileupload'];
@@ -31,75 +31,66 @@ switch ($_GET["op"]) {
         $agencia_envio = $_POST["agencia_envio"];
         */
         //$imagen = $_FILES["imagenVoucher"]["tmp_name"];
-		//$ruta = $_FILES["imagenVoucher"]["name"];
+        //$ruta = $_FILES["imagenVoucher"]["name"];
         $numero = $_POST["numero"];
 
-        
+
 
         //if(move_uploaded_file($imagen, "../Files/Voucher/".$ruta)){
-            if(empty($_POST["idPedido"])){
-                $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion);
+        if (empty($_POST["idPedido"])) {
+            $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion);
 
-                //var_dump($hosp);exit;
+            //var_dump($hosp);exit;
 
-                $estadoResult = $hosp[0];
-                $idpedido = $hosp[1];
+            $estadoResult = $hosp[0];
+            $idpedido = $hosp[1];
 
-                //var_dump($estadoResult,$idpedido);
+            //var_dump($estadoResult,$idpedido);
 
-                if ($numero==""){
-                    $numero="1";
-                }else{
-        
-                    //$numero = $_POST["numero"];
-                    //move_uploaded_file($tmp_name, "../Files/Voucher/".$name);
-                    
-                    
-                    if(!empty($_FILES["fileupload"])){
+            if ($numero == "") {
+                $numero = "1";
+            } else {
 
-                        $file_names = $_FILES['fileupload']['name'];
-        
-                        for ($i = 0; $i < count($file_names); $i++) {
-                            
-                            $file_name=$file_names[$i];
-
-                            $parte = explode(".", $file_name);
-                            // echo $parte[0]; // nombre del archivo
-                            // echo $parte[1]; // extension del archivo
-
-                            $codigoInterno = strtotime(date('Y-m-d H:i:s'));
-                            $new_file_name = str_replace(' ', '-',$parte[0].'-'.$codigoInterno.'.'.$parte[1]);
-        
-                            // GUARDAR IMAGENES CON EL NUMERO DE COTIZACION
-                            $obj->RegistrarDetalleImagenes($idpedido,$idCliente,$idUsuario,$idSucursal,$new_file_name);
-        
-                            //$extension = end(explode(".", $file_name));
-                            //$original_file_name = pathinfo($file_name, PATHINFO_FILENAME);
-                            //$file_url = $original_file_name . "-" . date("YmdHis") . "." . $extension;
-                            move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Voucher/".$new_file_name);
+                //$numero = $_POST["numero"];
+                //move_uploaded_file($tmp_name, "../Files/Voucher/".$name);
 
 
-                            //var_dump($file_name);
-                        }
-            
+                if (!empty($_FILES["fileupload"])) {
+
+                    $file_names = $_FILES['fileupload']['name'];
+
+                    for ($i = 0; $i < count($file_names); $i++) {
+
+                        $file_name = $file_names[$i];
+
+                        $parte = explode(".", $file_name);
+                        // echo $parte[0]; // nombre del archivo
+                        // echo $parte[1]; // extension del archivo
+
+                        $codigoInterno = strtotime(date('Y-m-d H:i:s'));
+                        $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
+
+                        // GUARDAR IMAGENES CON EL NUMERO DE COTIZACION
+                        $obj->RegistrarDetalleImagenes($idpedido, $idCliente, $idUsuario, $idSucursal, $new_file_name);
+
+                        //$extension = end(explode(".", $file_name));
+                        //$original_file_name = pathinfo($file_name, PATHINFO_FILENAME);
+                        //$file_url = $original_file_name . "-" . date("YmdHis") . "." . $extension;
+                        move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Voucher/" . $new_file_name);
+
+
+                        //var_dump($file_name);
                     }
-        
                 }
+            }
 
 
-                if ($hosp[0]) {
-                    echo "Pedido Registrado";
-                } else {
-                    echo "No se ha podido registrar el Pedido";
-                }
-
-
-                    
-
-
-
-
-            } /* else {
+            if ($hosp[0]) {
+                echo "Pedido Registrado";
+            } else {
+                echo "No se ha podido registrar el Pedido";
+            }
+        } /* else {
                 $idPedido = $_POST["idPedido"];
                 if($obj->Modificar($idPedido, $idCliente, $idUsuario, $idSucursal, $tipo_pedido, $tipo_promocion,$metodo_pago,$agencia_envio, $numero,"Files/Voucher/".$ruta, $_POST["detalle"])){
                     echo "Pedido Modificado";
@@ -126,95 +117,120 @@ switch ($_GET["op"]) {
             } */
         //}
         break;
-        
-	case "listTipoPedidoPedido":
-			require_once "../model/Pedido.php";
-			$objPed = new Pedido();
+    case "imformarCotizacion":
+        require_once "../model/Pedido.php";
+        $objPedi = new Pedido();
+        $query = $objPedi->traerUltimoPedido();
+        $reg = $query->fetch_object();
 
-			$query_Tipo = $objPed->ListarTipoPedidoPedido($_SESSION["idsucursal"]);
+        echo json_encode($reg);
+        break;
+    case "informarVenta":
+        require_once "../model/Pedido.php";
+        $objPedi = new Pedido();
+        $query = $objPedi->traerUltimaVenta();
+        $reg = $query->fetch_object();
+
+        echo json_encode($reg);
+        break;
+    
+    case "informarVentaCancelada":
+            require_once "../model/Pedido.php";
+            $objPedi = new Pedido();
+            $query = $objPedi->traerUltimaVentaCancelada();
+            $reg = $query->fetch_object();
+
+            echo json_encode($reg);
+            break;
+
+    case "listTipoPedidoPedido":
+        require_once "../model/Pedido.php";
+        $objPed = new Pedido();
+
+        $query_Tipo = $objPed->ListarTipoPedidoPedido($_SESSION["idsucursal"]);
 
 
-            $query_Usuario = $objPed->DatosUsuario($_SESSION["idempleado"]);
+        $query_Usuario = $objPed->DatosUsuario($_SESSION["idempleado"]);
 
-         
-            $res_usuario=$query_Usuario->fetch_object();
-            // var_dump($res_usuario);
-			$data = Array();
-            $i = 1;
-     		while ($reg = $query_Tipo->fetch_object()) {
-     			$regTotal = $objPed->GetTotal($reg->idpedido);
-     			$fetch = $regTotal->fetch_object();
 
-                if ($reg->estadoId == "D" ) { // APROBADO
-                    $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
-                } else {
-                    $botonPasarAVenta = '';
-                }
+        $res_usuario = $query_Usuario->fetch_object();
+        // var_dump($res_usuario);
+        $data = array();
+        $i = 1;
+        while ($reg = $query_Tipo->fetch_object()) {
+            $regTotal = $objPed->GetTotal($reg->idpedido);
+            $fetch = $regTotal->fetch_object();
 
-                if ($res_usuario->estado == "S" ) { // APROBADO
-                    $botonEliminar= '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp';
-                } else {
-                    $botonEliminar = '';
-                }
-                if ($reg->estadoId !== "D" ) { // APROBADO
-                    $botonCambiarEstado= '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp' ;
-                } else {
-                    $botonCambiarEstado = '';
-                }
-                
+            if ($reg->estadoId == "D") { // APROBADO
+                $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
+            } else {
+                $botonPasarAVenta = '';
+            }
 
-     			$data[] = array(
-     				"0"=>$i,
-                    "1"=>$reg->fecha,
-                    "2"=>$reg->numero,
-                    "3"=>$reg->empleado,
-                    "4"=>$reg->cliente,
-                    "5"=>$reg->tipo_pedido,
-                    "6"=>$fetch->total,//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
-                    "7"=>$reg->estado,
-                    "8"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->empleado.'\',\''.$reg->cliente.'\',\''.$reg->num_documento.'\',\''.$reg->celular.'\',\''.$reg->destino.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
-                    $botonPasarAVenta.
-                    '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
-                    $botonEliminar.
-                    $botonCambiarEstado 
-                    
-                    ,
-                    "9"=>$reg->numero,
-                    /*  "6"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+            if ($res_usuario->estado == "S") { // APROBADO
+                $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+            } else {
+                $botonEliminar = '';
+            }
+            if ($reg->estadoId !== "D") { // APROBADO
+                $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido(' . $reg->idpedido . ')" ><i class="fa fa-refresh"></i> </button>&nbsp';
+            } else {
+                $botonCambiarEstado = '';
+            }
+
+
+            $data[] = array(
+                "0" => $i,
+                "1" => $reg->fecha,
+                "2" => $reg->numero,
+                "3" => $reg->empleado,
+                "4" => $reg->cliente,
+                "5" => $reg->tipo_pedido,
+                "6" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+                "7" => $reg->estado,
+                "8" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+                    $botonPasarAVenta .
+                    '<a href="./Reportes/exPedido.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;' .
+                    $botonEliminar .
+                    $botonCambiarEstado,
+                "9" => $reg->numero,
+                /*  "6"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
                     '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\',\''.$reg->Cliente.'\',\''.$reg->email.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
                     '<a href="./Reportes/exPedido.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'.
                     '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
                     '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp'  */
-                    );
-                $i++;
-            }
-            $results = array(
+            );
+            $i++;
+        }
+        $results = array(
             "sEcho" => 1,
-        	"iTotalRecords" => count($data),
-        	"iTotalDisplayRecords" => count($data),
-            "aaData"=>$data);
-			echo json_encode($results);
-	break;
+            "iTotalRecords" => count($data),
+            "iTotalDisplayRecords" => count($data),
+            "aaData" => $data
+        );
+        echo json_encode($results);
+        break;
 
     case "GetVenta":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $idpedido = $_REQUEST["idPedido"];
-            $query = $objPedido->VerVenta($idpedido);
-            $reg = $query->fetch_object();
-            echo json_encode($reg);
-            break;
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $idpedido = $_REQUEST["idPedido"];
+        $query = $objPedido->VerVenta($idpedido);
+        $reg = $query->fetch_object();
+        echo json_encode($reg);
+        break;
 
     case "GetDetalleCantStock":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_Pedido = $objPedido->GetDetalleCantStock($_REQUEST["idPedido"]);
-            while ($reg = $query_Pedido->fetch_object()) {
-                $data[] = array($reg->iddetalle_ingreso,
-                    $reg->stock_actual,
-                    $reg->cantidad
-                    );
-            }
+        while ($reg = $query_Pedido->fetch_object()) {
+            $data[] = array(
+                $reg->iddetalle_ingreso,
+                $reg->stock_actual,
+                $reg->cantidad
+            );
+        }
         echo json_encode($data);
         break;
 
@@ -240,58 +256,59 @@ switch ($_GET["op"]) {
         $idPedido = $_POST["idPedido"];
         $query_prov = $objPedido->GetDetallePedido($idPedido);
         $i = 1;
-            while ($reg = $query_prov->fetch_object()) {
-                 echo '<tr>
-                        <td>'.$reg->articulo.'</td>
-                        <td>'.$reg->marca.'</td>
-                        <td>'.$reg->codigo.'</td>
-                        <td>'.$reg->serie.'</td>
-                        <td>'.$reg->cantidad.'</td>
-                        <td>'.'S/ .'.$reg->precio_venta.'</td>
-                        <td>'.'S/ .'.$reg->descuento.'</td>
-                        <td>'.'S/ .'.$reg->total.'</td>
+        while ($reg = $query_prov->fetch_object()) {
+            echo '<tr>
+                        <td>' . $reg->articulo . '</td>
+                        <td>' . $reg->marca . '</td>
+                        <td>' . $reg->codigo . '</td>
+                        <td>' . $reg->serie . '</td>
+                        <td>' . $reg->cantidad . '</td>
+                        <td>' . 'S/ .' . $reg->precio_venta . '</td>
+                        <td>' . 'S/ .' . $reg->descuento . '</td>
+                        <td>' . 'S/ .' . $reg->total . '</td>
                        </tr>';
-                 $i++; 
-            }
+            $i++;
+        }
         break;
 
-    case "TraerCantidad" :
+    case "TraerCantidad":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_Pedido = $objPedido->TraerCantidad($_REQUEST["idPedido"]);
-            while ($reg = $query_Pedido->fetch_object()) {
-                $data[] = array($reg->iddetalle_ingreso,
-                    $reg->cantidad
-                    );
-            }
+        while ($reg = $query_Pedido->fetch_object()) {
+            $data[] = array(
+                $reg->iddetalle_ingreso,
+                $reg->cantidad
+            );
+        }
         echo json_encode($data);
         break;
 
-    case "CambiarEstado" :
+    case "CambiarEstado":
         require_once "../model/Pedido.php";
-        $obj= new Pedido();
+        $obj = new Pedido();
         $idPedido = $_POST["idPedido"];
-        foreach($_POST["detalle"] as $indice => $valor){
-            echo $valor[0]. " - ";
+        foreach ($_POST["detalle"] as $indice => $valor) {
+            echo $valor[0] . " - ";
         }
         $hosp = $obj->CambiarEstado($idPedido, $_POST["detalle"]);
-                if ($hosp) {
-                    echo "Venta Anulada";
-                } else {
-                    echo "No se ha podido Anular la Venta";
-                }
+        if ($hosp) {
+            echo "Venta Anulada";
+        } else {
+            echo "No se ha podido Anular la Venta";
+        }
         break;
 
-    case "EliminarPedido" :
+    case "EliminarPedido":
         require_once "../model/Pedido.php";
-        $obj= new Pedido();
+        $obj = new Pedido();
         $idPedido = $_POST["idPedido"];
         $hosp = $obj->EliminarPedido($idPedido);
-                if ($hosp) {
-                    echo "Pedido Eliminado";
-                } else {
-                    echo "No se ha podido eliminar el Pedido";
-                }
+        if ($hosp) {
+            echo "Pedido Eliminado";
+        } else {
+            echo "No se ha podido eliminar el Pedido";
+        }
         break;
 
     case "listClientes":
@@ -299,147 +316,147 @@ switch ($_GET["op"]) {
         $objPedido = new Pedido();
         $query_cli = $objPedido->ListarClientes();
         $i = 1;
-            while ($reg = $query_cli->fetch_object()) {
-                 echo '<tr>
-                        <td><input type="radio" name="optClienteBusqueda" data-nombre="'.$reg->nombre.' '.$reg->apellido.' | '.$reg->tipo_persona.'" data-email="'.$reg->email.'" id="'.$reg->idpersona.'" value="'.$reg->idpersona.'" data-cliente="'.$reg->tipo_persona.'" data-telefono="'.$reg->telefono.'-'.$reg->telefono_2.'" data-direccion="'.$reg->direccion_departamento.'" /></td>
-                        <td>'.$i.'</td>
-                        <td>'.$reg->tipo_persona.'</td>
-                        <td>'.$reg->num_documento.'</td>
-                        <td>'.$reg->nombre.' '.$reg->apellido.'</td>
-                        <td>'.$reg->telefono.'</td>
-                        <td>'.$reg->direccion_calle.'</td>
-                        <td>'.$reg->email.'</td>
+        while ($reg = $query_cli->fetch_object()) {
+            echo '<tr>
+                        <td><input type="radio" name="optClienteBusqueda" data-nombre="' . $reg->nombre . ' ' . $reg->apellido . ' | ' . $reg->tipo_persona . '" data-email="' . $reg->email . '" id="' . $reg->idpersona . '" value="' . $reg->idpersona . '" data-cliente="' . $reg->tipo_persona . '" data-telefono="' . $reg->telefono . '-' . $reg->telefono_2 . '" data-direccion="' . $reg->direccion_departamento . '" /></td>
+                        <td>' . $i . '</td>
+                        <td>' . $reg->tipo_persona . '</td>
+                        <td>' . $reg->num_documento . '</td>
+                        <td>' . $reg->nombre . ' ' . $reg->apellido . '</td>
+                        <td>' . $reg->telefono . '</td>
+                        <td>' . $reg->direccion_calle . '</td>
+                        <td>' . $reg->email . '</td>
                        </tr>';
-                 $i++; 
-            }
+            $i++;
+        }
         break;
 
     case "listDetIng":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_cli = $objPedido->ListarDetalleIngresos($_SESSION["idsucursal"]);
-        $data= Array();
+        $data = array();
         $i = 1;
-            while ($reg = $query_cli->fetch_object()) {
-                $data[] = array(
-                    "0"=>'<button type="button" class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="'.$reg->codigo.'"
-                    data-serie="'.$reg->serie.'" data-nombre="'.$reg->Articulo.'" data-precio-venta="'.$reg->precio_ventapublico.'"
-                    data-stock-actual="'.$reg->stock_actual.'" id="'.$reg->iddetalle_ingreso.'" value="'.$reg->iddetalle_ingreso.'"
+        while ($reg = $query_cli->fetch_object()) {
+            $data[] = array(
+                "0" => '<button type="button" class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
+                    data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
+                    data-stock-actual="' . $reg->stock_actual . '" id="' . $reg->iddetalle_ingreso . '" value="' . $reg->iddetalle_ingreso . '"
                     data-toggle="tooltip" title="Agregar al carrito"
                     onclick="AgregarPedCarrito(
-                        '.$reg->iddetalle_ingreso.',
-                        \''.$reg->stock_actual.'\',
-                        \''.$reg->Articulo.'\',
-                        \''.$reg->codigo.'\',
-                        \''.$reg->serie.'\',
-                        \''.$reg->precio_ventapublico.'\',
-                        \''.$reg->idarticulo.'\',
-                        \''.$reg->marca.'\')" >
+                        ' . $reg->iddetalle_ingreso . ',
+                        \'' . $reg->stock_actual . '\',
+                        \'' . $reg->Articulo . '\',
+                        \'' . $reg->codigo . '\',
+                        \'' . $reg->serie . '\',
+                        \'' . $reg->precio_ventapublico . '\',
+                        \'' . $reg->idarticulo . '\',
+                        \'' . $reg->marca . '\')" >
                     <i class="fa fa-check" ></i> </button>',
-                    "1"=>$reg->codigo,
-                    "2"=>$reg->Articulo,
-                    "3"=>$reg->marca,
-                    "4"=>$reg->serie,
-                    //"5"=>$reg->presentacion,
-                    "5"=>$reg->stock_actual,
-                    "6"=>$reg->precio_ventapublico,
-                    "7"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />'
-                    );
-                $i++;
-            }
+                "1" => $reg->codigo,
+                "2" => $reg->Articulo,
+                "3" => $reg->marca,
+                "4" => $reg->serie,
+                //"5"=>$reg->presentacion,
+                "5" => $reg->stock_actual,
+                "6" => $reg->precio_ventapublico,
+                "7" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+            );
+            $i++;
+        }
 
-            $results = array(
+        $results = array(
             "sEcho" => 1,
             "iTotalRecords" => count($data),
             "iTotalDisplayRecords" => count($data),
-            "aaData"=>$data);
-            echo json_encode($results);
-            break;
+            "aaData" => $data
+        );
+        echo json_encode($results);
+        break;
 
-     case "listTipoDoc":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query_Categoria = $objPedido->ListarTipoDocumento($_SESSION["idsucursal"]);
-            echo "<option>--Seleccione Comprobante--</option>";
-            while ($reg = $query_Categoria->fetch_object()) {
-                echo '<option value=' . $reg->nombre . '>' . $reg->nombre . '</option>';
-            }
-            break;
+    case "listTipoDoc":
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_Categoria = $objPedido->ListarTipoDocumento($_SESSION["idsucursal"]);
+        echo "<option>--Seleccione Comprobante--</option>";
+        while ($reg = $query_Categoria->fetch_object()) {
+            echo '<option value=' . $reg->nombre . '>' . $reg->nombre . '</option>';
+        }
+        break;
 
     case "GetTipoDocSerieNum":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $nombre = $_REQUEST["nombre"];
-            $query_Categoria = $objPedido->GetTipoDocSerieNum($nombre);
-            $reg = $query_Categoria->fetch_object();
-            echo json_encode($reg);
-            break;
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $nombre = $_REQUEST["nombre"];
+        $query_Categoria = $objPedido->GetTipoDocSerieNum($nombre);
+        $reg = $query_Categoria->fetch_object();
+        echo json_encode($reg);
+        break;
 
     case "GetIdPedido":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query_Categoria = $objPedido->GetIdPedido();
-            $reg = $query_Categoria->fetch_object();
-            echo json_encode($reg);
-            break;
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_Categoria = $objPedido->GetIdPedido();
+        $reg = $query_Categoria->fetch_object();
+        echo json_encode($reg);
+        break;
 
     case "GetTotal":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query_total = $objPedido->TotalPedido($_REQUEST["idPedido"]);
-            $reg_total = $query_total->fetch_object();
-            echo json_encode($reg_total);
-            break;
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_total = $objPedido->TotalPedido($_REQUEST["idPedido"]);
+        $reg_total = $query_total->fetch_object();
+        echo json_encode($reg_total);
+        break;
     case "GetImagenes":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query_total = $objPedido->GetImagenes($_REQUEST["idPedido"]);
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_total = $objPedido->GetImagenes($_REQUEST["idPedido"]);
 
-            //var_dump($query_total->fetch_object());
-            //exit;
+        //var_dump($query_total->fetch_object());
+        //exit;
 
-            while ($reg = $query_total->fetch_object()) {
+        while ($reg = $query_total->fetch_object()) {
 
-                echo '<li>
-                    <a href="./Files/Voucher/'.$reg->imagen.'" target="_blank">
+            echo '<li>
+                    <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
                     <span class="mailbox-attachment-icon has-img">
-                    <img src="./Files/Voucher/'.$reg->imagen.'">
+                    <img src="./Files/Voucher/' . $reg->imagen . '">
                     </span>
                     </a>
                     <div class="mailbox-attachment-info">
-                    <a href="./Files/Voucher/'.$reg->imagen.'" class="mailbox-attachment-name" target="_blank">'.$reg->imagen.'</a>
+                    <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
                     /* <span class="mailbox-attachment-size"> -
-                    <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen('.$reg->id.','.$reg->idpedido.')"><i class="fa fa-trash"></i></a>
+                    <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"><i class="fa fa-trash"></i></a>
                     </span> */
                     </div>
                     </li>';
+        }
 
-            }
 
-
-            break;
+        break;
     case "DeleteImagenes":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query = $objPedido->DeleteImagenes($_REQUEST["id"]);
-            $result = $query->fetch_object();
-            echo json_encode($result);
-            break;
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query = $objPedido->DeleteImagenes($_REQUEST["id"]);
+        $result = $query->fetch_object();
+        echo json_encode($result);
+        break;
 
-                
-    case "cambiarEstadoPedido" :
-          
-            require_once "../model/Pedido.php";
-            $obj= new Pedido();
-            $idPedido = $_POST["idPedido"];
-            $hosp = $obj->cambiarEstadoPedido($idPedido);
-                    if ($hosp) {
-                        echo "Estado de pedido cambiado";
-                    } else {
-                        echo "No se ha podido eliminar el Pedido";
-                    }
-            break;
-    
+
+    case "cambiarEstadoPedido":
+
+        require_once "../model/Pedido.php";
+        $obj = new Pedido();
+        $idPedido = $_POST["idPedido"];
+        $hosp = $obj->cambiarEstadoPedido($idPedido);
+        if ($hosp) {
+            echo "Estado de pedido cambiado";
+        } else {
+            echo "No se ha podido eliminar el Pedido";
+        }
+        break;
+
     case "GetCodigoAleatorio":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
@@ -457,9 +474,6 @@ switch ($_GET["op"]) {
         } else {
             echo json_encode(true);
         }
-        
-    break;
 
-            
-
+        break;
 }
