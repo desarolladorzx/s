@@ -32,6 +32,7 @@ class Traslados
             $impuesto = 18;
 
             $total = 0;
+            $totalTraslado=0;
             for ($i = 0; $i < count($detalle); $i++) {
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
@@ -43,6 +44,7 @@ class Traslados
                 $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();
 
                 $total = $total + $cantidad_de_traslado;
+                $totalTraslado=$totalTraslado+1;
             }
 
 
@@ -243,7 +245,7 @@ class Traslados
             '$motivoDeTraslado',
             $almacenInicial,
             $almacenFinal,
-            $total,
+            $totalTraslado,
             CURRENT_TIMESTAMP(),
             CURRENT_TIMESTAMP(),
             $idUsuario
