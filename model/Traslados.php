@@ -32,7 +32,7 @@ class Traslados
             $impuesto = 18;
 
             $total = 0;
-            $totalTraslado=0;
+            $totalTraslado = 0;
             for ($i = 0; $i < count($detalle); $i++) {
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
@@ -44,7 +44,7 @@ class Traslados
                 $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();
 
                 $total = $total + $cantidad_de_traslado;
-                $totalTraslado=$totalTraslado+1;
+                $totalTraslado = $totalTraslado + 1;
             }
 
 
@@ -165,7 +165,7 @@ class Traslados
 
                 $rpta_sql_suma_ingreso_nuevo_inicial_not_null = ($rpta_sql_suma_ingreso_nuevo_inicial !== null) ? $rpta_sql_suma_ingreso_nuevo_inicial : 0;
 
-              
+
 
                 $rpta_sql_suma_ingreso_nuevo_final_not_null = ($rpta_sql_suma_ingreso_nuevo_final !== null) ? $rpta_sql_suma_ingreso_nuevo_final : 0;
 
@@ -228,6 +228,7 @@ class Traslados
                 $conexion->query($sqlKardex) or $sw = false;
 
 
+
                 $conexion->autocommit(true);
             }
 
@@ -251,9 +252,48 @@ class Traslados
             $idUsuario
             )";
             $conexion->query($sql);
-            $idpedido = $conexion->insert_id;
-            $conexion->autocommit(true);
+            $traslado_id = $conexion->insert_id;
+            $conexion->autocommit(true); 
 
+            for ($i = 0; $i < count($detalle); $i++) {
+         
+                $array = explode(",", $detalle[$i]);
+                $iddetalle_ingreso = $array[0];
+                $cantidad_tras = $array[6];
+                // var_dump($array);
+
+                $sql_detall_ingreso="select * from detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso";
+                $detalle_ingreso = $conexion->query($sql_detall_ingreso)->fetch_object();
+
+                // var_dump($array);
+
+                $sql_inventario = "INSERT INTO inventario(
+                    descripcion,
+                    idarticulo,
+                    sucursal_id,
+                    sucursal_destino_id,
+                    cantidad,
+                    serie,
+                    idtraslado,
+                    fecha_registro,
+                    fecha_modificado
+                ) VALUES (
+                    'traslado',
+                    $detalle_ingreso->idarticulo,
+                    $almacenInicial,
+                    $almacenFinal,
+                    '$cantidad_tras',
+                    '$detalle_ingreso->serie',
+                    $traslado_id,
+                    CURRENT_TIMESTAMP(),
+                    CURRENT_TIMESTAMP()
+                )
+                ";
+                // var_dump($sql_inventario);
+                 $conexion->query($sql_inventario);
+                 $conexion->autocommit(true);
+
+            }
             // if ($hosp[0]) {
             //     echo "Pedido Registrado";
             // } else {
