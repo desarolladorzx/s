@@ -138,7 +138,7 @@ class Pedido
 			//var_dump($sql);
 			$conexion->query($sql);
 
-			$sql2 = "UPDATE venta set impuesto = '0.00',total='0.00',estado = 'C',fecha_anu=CURRENT_TIMESTAMP()
+			$sql2 = "UPDATE venta set impuesto = '0.00',total='0.00',estado = 'C',fecha_anu=CURRENT_TIMESTAMP() ,idusaurio_anu=" . $_SESSION["idempleado"] . "
 						WHERE idpedido = $idpedido";
 			//var_dump($sql);
 			$conexion->query($sql2);
@@ -156,7 +156,6 @@ class Pedido
 
 			$conexion->autocommit(true);
 			foreach ($detalle as $indice => $valor) {
-
 
 				$sqlDetallePedido = "SELECT * from detalle_pedido where  iddetalle_ingreso=" . $valor[0] . " and idpedido = $idpedido";
 
@@ -199,6 +198,20 @@ class Pedido
 				$detale_ingreso = 0;
 
 
+				
+
+				$stock_anterior_not_null=($stock_anterior !== null) ? $stock_anterior: 0 ; 
+				$stock_actual_not_null=($stock_actual !== null) ? $stock_actual: 0 ;
+				
+				
+				// var_dump($response_detalle_pedido->idarticulo);
+				// var_dump($detale_ingreso);
+				// var_dump($stock_anterior);
+				// var_dump($response_detalle_pedido->cantidad);
+				// var_dump($stock_actual);
+				// var_dump($response_detalle_pedido->iddetalle_pedido);
+				// echo "articulo:;";
+
 				$sqlKardex = "INSERT INTO kardex(
 						id_sucursal,
 						fecha_emision,
@@ -218,9 +231,9 @@ class Pedido
 						'venta anulada',
 						'" . $response_detalle_pedido->idarticulo . "',
 						 '" . $detale_ingreso . "',
-						  '" . $stock_anterior . "',
+						  '" . $stock_anterior_not_null . "',
 						'" . $response_detalle_pedido->cantidad . "',
-						'" . $stock_actual . "',
+						'" . $stock_actual_not_null . "',
 						CURRENT_TIMESTAMP(),
 						CURRENT_TIMESTAMP(),
 						'" . $response_detalle_pedido->iddetalle_pedido . "'
@@ -540,7 +553,10 @@ class Pedido
 	public function traerUltimaVentaCancelada()
 	{
 		global $conexion;
-		$sql = "SELECT * FROM venta  WHERE estado='C'  ORDER	BY  fecha_anu  DESC  LIMIT 1";
+		$sql = "SELECT * FROM venta 
+		left join empleado on empleado.idempleado = venta.idusaurio_anu
+		 WHERE estado='C'	
+		  ORDER	BY  fecha_anu  DESC  LIMIT 1";
 		$query = $conexion->query($sql);
 		return $query;
 	}

@@ -93,6 +93,9 @@ class Venta
 				$detale_ingreso = 0;
 
 
+				$stock_anterior_not_null=($stock_anterior !== null) ? $stock_anterior: 0 ; 
+				$stock_actual_not_null=($stock_actual !== null) ? $stock_actual: 0 ;
+
 
 				$sqlKardex = "INSERT INTO 
 					kardex(
@@ -118,8 +121,8 @@ class Venta
 						'" . $valor[2] . "',
 						CURRENT_TIMESTAMP(),
 						CURRENT_TIMESTAMP(),
-						'" . $stock_actual . "',
-						'" . $stock_anterior . "'
+						'" . $stock_actual_not_null . "',
+						'" . $stock_anterior_not_null . "'
 					)";
 				$conexion->query($sqlKardex) or $sw = false;
 			}

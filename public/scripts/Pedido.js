@@ -93,7 +93,7 @@ function notificaciones() {
                 if ((Notification.permission = "grantFd")) {
                   const notification=new Notification("Se ha anulador un pedido ", {
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body: "Venta Anulada -" + JSON.parse(data).serie_comprobante +'-'+JSON.parse(data).num_comprobante,
+                    body: "Venta Anulada -" + JSON.parse(data).serie_comprobante +'-'+JSON.parse(data).num_comprobante
                   });
                   notification.onclick=function(){
                     window.open('https://medicfit.grupopuma.pe/AnulacionVenta.php')

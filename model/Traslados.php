@@ -101,7 +101,7 @@ class Traslados
 
                 $rpta_sql_suma_ingreso_sucursal_final = $conexion->query($suma_ingreso_anterior_sucursal_final)->fetch_object()->stock;
 
-                
+
 
                 $rpta_sql_suma_ingreso_sucursal_inicial = $conexion->query($suma_ingreso_anterior_sucursal_inicial)->fetch_object()->stock;
 
@@ -157,7 +157,15 @@ class Traslados
                 $rpta_sql_suma_ingreso_nuevo_final = $conexion->query($suma_ingreso_nuevo_almacen_inicial)->fetch_object()->stock;
 
 
+
+                $rpta_sql_suma_ingreso_sucursal_inicial_not_null = ($rpta_sql_suma_ingreso_sucursal_inicial !== null) ? $rpta_sql_suma_ingreso_sucursal_inicial : 0;
+
+
+                $rpta_sql_suma_ingreso_nuevo_inicial_not_null = ($rpta_sql_suma_ingreso_nuevo_inicial !== null) ? $rpta_sql_suma_ingreso_nuevo_inicial : 0;
+
               
+
+                $rpta_sql_suma_ingreso_nuevo_final_not_null = ($rpta_sql_suma_ingreso_nuevo_final !== null) ? $rpta_sql_suma_ingreso_nuevo_final : 0;
 
                 $sqlKardex = "INSERT INTO kardex(
                     id_sucursal,
@@ -178,17 +186,17 @@ class Traslados
                      'salida por traslado',
                      '$detalle_ingreso->idarticulo',
                      '" . $kardexDetalle_ingreso . "',
-                      '" . $rpta_sql_suma_ingreso_sucursal_inicial . "',
+                      '" . $rpta_sql_suma_ingreso_sucursal_inicial_not_null . "',
                     '" . $cantidad_de_traslado . "',
-                    '" . $rpta_sql_suma_ingreso_nuevo_inicial . "',
+                    '" . $rpta_sql_suma_ingreso_nuevo_inicial_not_null . "',
                     CURRENT_TIMESTAMP(),
                     CURRENT_TIMESTAMP(),
                     '" . $detallePedido . "'
                     )";
                 $conexion->query($sqlKardex) or $sw = false;
 
-                
-                    $siaca=($rpta_sql_suma_ingreso_sucursal_final !== null) ? $rpta_sql_suma_ingreso_sucursal_final: 0 ;
+
+                $siaca = ($rpta_sql_suma_ingreso_sucursal_final !== null) ? $rpta_sql_suma_ingreso_sucursal_final : 0;
                 $sqlKardex = "INSERT INTO kardex(
                     id_sucursal,
                     fecha_emision,
@@ -208,9 +216,9 @@ class Traslados
                      'ingreso por traslado',
                      '$detalle_ingreso->idarticulo',
                      '" . $id_nuevo_detalle_ingreso . "',
-                      '" .$siaca. "',
+                      '" . $siaca . "',
                     '" . $cantidad_de_traslado . "',
-                    '" . $rpta_sql_suma_ingreso_nuevo_final . "',
+                    '" . $rpta_sql_suma_ingreso_nuevo_final_not_null . "',
                     CURRENT_TIMESTAMP(),
                     CURRENT_TIMESTAMP(),
                     '" . $detallePedido . "'
