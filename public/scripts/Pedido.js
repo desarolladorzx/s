@@ -1236,8 +1236,10 @@ function cambiarEstadoPedido(idPedido) {
     "idPedido=" + idPedido,
     function (r) {
       var obj = jQuery.parseJSON(r);
-      console.log(r)
-      if (obj.estado == true || obj.estado == "true") {
+      console.log(obj.length==0)
+
+      // if (obj.estado == true || obj.estado == "true") {
+        if (obj.length==0) {
         bootbox.confirm(
           "¿Esta seguro de cambiar el estado del pedido?",
           function (result) {
@@ -1257,7 +1259,7 @@ function cambiarEstadoPedido(idPedido) {
           }
         );
       } else {
-        var arr = obj.detalle;
+        var arr = obj;
         alert(
           "No se puede completar el proceso ya que existen productos sin stock:\n" +
             arr.join("\n")

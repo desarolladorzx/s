@@ -329,80 +329,120 @@ switch ($_GET["op"]) {
 		$idPedido = $_GET["idPedido"];
 
 		$query_prov = $objPedido->GetDetallePedido($idPedido);
+
 		$i = 1;
+
 		
-		while ($reg = $query_prov->fetch_object()) {
 
-			$resultsDetalle[] = array(
-				$reg->articulo,
-				$reg->codigo,
-				$reg->serie,
-				$reg->marca,
-				$reg->iddetalle_pedido,
-				$reg->idpedido,
-				$reg->iddetalle_ingreso,
-				$reg->cantidad,
-				$reg->precio_venta,
-				$reg->descuento,
-				$reg->total
-			);
-		}
-
-		require_once "../model/Venta.php";
-		$objDetalleIngreso = new Venta();
-
-		//var_dump($resultsDetalle);
-
-		foreach ($resultsDetalle as $valor) {
+		
+		// echo json_encode ();
 
 
+		$mi_array = array();
 
-			//exit;
-			$cantidadProducto = $valor[7];
-
-			// BUSCA EN TABLA DETALLE INGRESO, EL STOCK ACTUAL DE LOS PRODUCTOS
+		foreach ($query_prov->fetch_all() as &$valor) {
+			// $valor = $valor * 2;
+			$objDetalleIngreso = new Venta();
 			$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[6]);
-			$reg = $query_DetalleIngreso->fetch_object();
+			$detalle_ingreso = $query_DetalleIngreso->fetch_object();
+			
 
+			$descripcionProducto = $valor[0];
+			$cantidadProducto = $valor[7];
+			$stockActual = $detalle_ingreso->stock_actual;
 
-			$stockActual = $reg->stock_actual;
-			$descripcionProducto = $reg->descripcion;
-
-			// SI EL STOCK ACTUAL ES MENOR A LA CANTIDA A DESCONTAR, REGISTRA UN FALSE PARA INDICA QUE NO SE PUEDE REALIZAR LA ACCION
-
-			// var_dump($stockActual);
-			// var_dump($cantidadProducto);
 			if ($stockActual >= $cantidadProducto) {
-				$dataProd = "";
-				$result = true;
-				$dataDet = "";
-			} else {
-				$dataProd = $descripcionProducto;
-				// $result = array('estado'=>false,'detalle'=>$dataProd);
-				$result = false;
-				$dataDet[] = '- ' . $dataProd . ' [x' . $stockActual . ']';
-			}
 
-			$data[] = $result;
+					} else {
+						$dataProd = $descripcionProducto;
+						// $result = false;
+						$data= '- ' . $dataProd . ' [stock :' . $stockActual . ']';
+
+						array_push($mi_array,"$data");
+
+					}
+
 		}
 
+		echo json_encode($mi_array);
+		// $detalle_pedido=$query_prov->fetch_object();
+		// var_dump($detalle_pedido);
+		// while ($reg = $query_prov->fetch_object()) {
 
-		// SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
+		// 	$resultsDetalle[] = array(
+		// 		$reg->articulo,
+		// 		$reg->codigo,
+		// 		$reg->serie,
+		// 		$reg->marca,
+		// 		$reg->iddetalle_pedido,
+		// 		$reg->idpedido,
+		// 		$reg->iddetalle_ingreso,
+		// 		$reg->cantidad,
+		// 		$reg->precio_venta,
+		// 		$reg->descuento,
+		// 		$reg->total
+		// 	);
+		// }
 
-		if (in_array(false, $data)) {
-			//echo json_encode(false,$dataDet);
-			$estado = false;
-		} else {
-			//echo json_encode(true,$dataDet);
-			$estado = true;
-		}
+		// require_once "../model/Venta.php";
+		// $objDetalleIngreso = new Venta();
 
-		$results = array(
-			'estado' => $estado,
-			'detalle' => $dataDet
-		);
+		// //var_dump($resultsDetalle);
 
-		echo json_encode($results, true);
+		// foreach ($resultsDetalle as $valor) {
+
+
+			
+		// 	//exit;
+		// 	$cantidadProducto = $valor[7];
+
+		// 	// BUSCA EN TABLA DETALLE INGRESO, EL STOCK ACTUAL DE LOS PRODUCTOS
+		// 	$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[6]);
+		// 	$reg = $query_DetalleIngreso->fetch_object();
+
+
+		// 	$stockActual = $reg->stock_actual;
+
+		// 	echo json_encode($cantidadProducto);
+		// 	print_r($stockActual);
+
+		// 	$descripcionProducto = $reg->descripcion;
+
+		// 	// SI EL STOCK ACTUAL ES MENOR A LA CANTIDA A DESCONTAR, REGISTRA UN FALSE PARA INDICA QUE NO SE PUEDE REALIZAR LA ACCION
+
+		// 	// var_dump($stockActual);
+		// 	// var_dump($cantidadProducto);
+		// 	if ($stockActual >= $cantidadProducto) {
+		// 		$dataProd = "";
+		// 		$result = true;
+		// 		$dataDet = "";
+		// 	} else {
+		// 		$dataProd = $descripcionProducto;
+		// 		// $result = array('estado'=>false,'detalle'=>$dataProd);
+		// 		$result = false;
+		// 		$dataDet[] = '- ' . $dataProd . ' [x' . $stockActual . ']';
+		// 	}
+
+		// 	$data[] = $result;
+		// }
+
+
+		// // SE ANALIZA ARRAY DATA; SI SE ENCUENTRA ALGUN FALSE, DEVUELVE FALSE Y NO PROCEDE A CAMBIAR COTIZACION A VENTA
+
+		// // if (in_array(false, $data)) {
+		// // 	//echo json_encode(false,$dataDet);
+		// // 	$estado = false;
+		// // } else {
+		// // 	//echo json_encode(true,$dataDet);
+		// // 	$estado = true;
+		// // }
+
+		// // $results = array(
+		// // 	'estado' => $estado,
+		// // 	'detalle' => $dataDet
+		// // );
+
+		// // echo json_encode($results, true);
 
 		break;
 }

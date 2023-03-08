@@ -105,11 +105,12 @@ function init(){
                 detalle : detalle
             };
 
-            $.get("./ajax/VentaAjax.php?op=VerificarStockProductos",data, function(r) {
+            $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido=" + data.idPedido, function(r) {
 
+              
                 var obj = jQuery.parseJSON(r);           
 
-                if (obj.estado == true || obj.estado == 'true') {
+                if (obj.length==0) {
 
                     $.post("./ajax/VentaAjax.php?op=SaveOrUpdate", data, function(r){// llamamos la url por post. function(r). r-> llamada del callback
 
@@ -175,10 +176,11 @@ function init(){
                     });
 
                 }else{
-
-                    var  arr = obj.detalle;
-                    bootbox.alert("No se puede completar el proceso ya que existen productos sin stock:\n" + arr.join("\n")
-                    )
+                    var arr = obj;
+                    alert(
+                        "No se puede completar el proceso ya que existen productos sin stock:\n" +
+                          arr.join("\n")
+                      );
                 }
             })
 
