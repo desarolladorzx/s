@@ -125,7 +125,9 @@ class Traslados
                     codigo,
                     precio_compra,
                     precio_ventadistribuidor,
-                    precio_ventapublico   
+                    precio_ventapublico,
+                    serie,
+                    descripcion   
                 ) values (
                     $idingreso,
                     $detalle_ingreso->idarticulo,
@@ -134,7 +136,9 @@ class Traslados
                     '$detalle_ingreso->codigo',
                     '$detalle_ingreso->precio_compra',
                     '$detalle_ingreso->precio_ventadistribuidor',
-                    '$detalle_ingreso->precio_ventapublico'
+                    '$detalle_ingreso->precio_ventapublico',
+                    '$detalle_ingreso->serie',
+                    '$detalle_ingreso->descripcion'
                 )";
                 $conexion->query($sql_insert_ingreso);
 
@@ -153,14 +157,7 @@ class Traslados
                 $rpta_sql_suma_ingreso_nuevo_final = $conexion->query($suma_ingreso_nuevo_almacen_inicial)->fetch_object()->stock;
 
 
-                var_dump($rpta_sql_suma_ingreso_sucursal_inicial);
-                var_dump($cantidad_de_traslado);
-                var_dump($rpta_sql_suma_ingreso_nuevo_inicial);
-
-
-                var_dump($rpta_sql_suma_ingreso_sucursal_final);
-                var_dump($cantidad_de_traslado);
-                var_dump($rpta_sql_suma_ingreso_nuevo_final);
+              
 
                 $sqlKardex = "INSERT INTO kardex(
                     id_sucursal,

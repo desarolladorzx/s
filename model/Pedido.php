@@ -33,7 +33,7 @@ class Pedido
 
 				$array = explode(",", $detalle[$i]);
 
-				print_r($array);
+				// print_r($array);
 
 				$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo)
 											VALUES($idpedido, '" . $array[0] . "', '" . $array[3] . "', '" . $array[2] . "', '" . $array[4] . "', '" . $array[8] . "')";

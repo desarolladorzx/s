@@ -144,7 +144,6 @@ class Ingreso
 			$stock_anterior = ($rpta_sql_suma_ingreso_inicial->stock !== null)?$rpta_sql_suma_ingreso_inicial->stock:0;
 
 
-			var_dump($stock_anterior);
 
 
 			$stock_actual=$stock_anterior-$id_cantidad;
@@ -171,9 +170,7 @@ class Ingreso
 			
 			$anterior=$res_stock+$id_cantidad;
 
-			var_dump( $anterior,
-			$id_cantidad,
-		   $res_stock,);
+		
 			$sqlKardex = "INSERT INTO kardex(
 				id_sucursal,
 				fecha_emision,
