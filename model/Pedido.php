@@ -11,7 +11,7 @@ class Pedido
 		return $query;
 	}
 
-	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observaciones)
+	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observacion)
 	{
 
 		//var_dump($detalle);exit;
@@ -20,8 +20,8 @@ class Pedido
 		$sw = true;
 		try {
 			//exit;
-			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observaciones)
-						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observaciones')";
+			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion)
+						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion')";
 			//var_dump($sql);
 			$conexion->query($sql);
 			$idpedido = $conexion->insert_id;
@@ -309,6 +309,7 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
+	
 
 			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
@@ -319,7 +320,7 @@ class Pedido
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion,
 			p.estado AS estadoId
-
+			,p.observacion as observaciones,p.modo_pago
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			inner join usuario u on p.idusuario=u.idusuario
 			inner join empleado e on u.idempleado=e.idempleado
@@ -558,7 +559,7 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT * FROM venta 
-		left join empleado on empleado.idempleado = venta.idusaurio_anu
+		left join empleado on empleado.idempleado = venta.idusuario_anu
 		 WHERE venta.estado='C'	
 		  ORDER	BY  fecha_anu  DESC  LIMIT 1";
 		$query = $conexion->query($sql);

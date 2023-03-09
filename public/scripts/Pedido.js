@@ -6,16 +6,11 @@ var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
 
-
-
-
 function init() {
-
   function notificaciones() {
     let idsucursal = $("#txtIdSucursalGlobal").val();
     let tipo_usuario = $("#txtIdTipoUsuarioGlobal").val();
-  console.log(tipo_usuario,idsucursal);
-  
+
     Notification.requestPermission().then((resultado) => {
       var ultimoPedido;
       $.ajax({
@@ -24,34 +19,45 @@ function init() {
         processData: false,
         contentType: false,
         type: "GET",
-  
+
         success: function (data) {
           ultimoPedido = data;
           if (localStorage.getItem("ultimoPedido")) {
-            let local = JSON.parse(localStorage.getItem("ultimoPedido")).idpedido;
+            let local = JSON.parse(
+              localStorage.getItem("ultimoPedido")
+            ).idpedido;
             let baseD = JSON.parse(data).idpedido;
+            let nuevoPedido = JSON.parse(data);
+
             if (baseD != local) {
-              if ((Notification.permission = "grantFd")) {
-
-                if(tipo_usuario=='Empleado' && idsucursal=='1' ){
-                  console.log('hola')
+              if (tipo_usuario == "Cliente" && nuevoPedido?.idsucursal == 2) {
+                if ((Notification.permission = "grantFd")) {
+                  const notification = new Notification(
+                    "Hay una nueva cotizacion ",
+                    {
+                      icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                      body: "Nueva cotizacion -" + JSON.parse(data).numero,
+                    }
+                  );
+                  notification.onclick = function () {
+                    window.open("https://medicfit.grupopuma.pe/Pedido.php");
+                  };
+                  localStorage.setItem("ultimoPedido", ultimoPedido);
                 }
-                const notification = new Notification(
-                  "Hay una nueva cotizacion ",
-                  {
-                    icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body: "Nueva cotizacion -" + JSON.parse(data).numero,
-                  }
-                );
-                notification.onclick = function () {
-                  window.open("https://medicfit.grupopuma.pe/Pedido.php");
-                };
-                localStorage.setItem("ultimoPedido", ultimoPedido);
-
-
-
               } else {
-                localStorage.setItem("ultimoPedido", ultimoPedido);
+                if ((Notification.permission = "grantFd")) {
+                  const notification = new Notification(
+                    "Hay una nueva cotizacion ",
+                    {
+                      icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                      body: "Nueva cotizacion -" + JSON.parse(data).numero,
+                    }
+                  );
+                  notification.onclick = function () {
+                    window.open("https://medicfit.grupopuma.pe/Pedido.php");
+                  };
+                  localStorage.setItem("ultimoPedido", ultimoPedido);
+                }
               }
             }
           } else {
@@ -65,31 +71,55 @@ function init() {
           processData: false,
           contentType: false,
           type: "GET",
-  
+
           success: function (data) {
             ultimoVenta = data;
             if (localStorage.getItem("ultimoVenta")) {
-              let local = JSON.parse(localStorage.getItem("ultimoVenta")).idventa;
+              let local = JSON.parse(
+                localStorage.getItem("ultimoVenta")
+              ).idventa;
               let baseD = JSON.parse(data).idventa;
               if (baseD != local) {
-                if ((Notification.permission = "grantFd")) {
-                  const notification = new Notification(
-                    "Se ha registrado una nueva Venta ",
-                    {
-                      icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                      body:
-                        "Nueva Venta -" +
-                        JSON.parse(data).serie_comprobante +
-                        "-" +
-                        JSON.parse(data).num_comprobante,
-                    }
-                  );
-                  notification.onclick = function () {
-                    window.open("https://medicfit.grupopuma.pe/Venta.php");
-                  };
-                  localStorage.setItem("ultimoVenta", ultimoVenta);
+                if (tipo_usuario == "Cliente" && nuevoPedido?.idsucursal == 2) {
+                  if ((Notification.permission = "grantFd")) {
+                    const notification = new Notification(
+                      "Se ha registrado una nueva Venta ",
+                      {
+                        icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                        body:
+                          "Nueva Venta -" +
+                          JSON.parse(data).serie_comprobante +
+                          "-" +
+                          JSON.parse(data).num_comprobante,
+                      }
+                    );
+                    notification.onclick = function () {
+                      window.open("https://medicfit.grupopuma.pe/Venta.php");
+                    };
+                    localStorage.setItem("ultimoVenta", ultimoVenta);
+                  } else {
+                    localStorage.setItem("ultimoVenta", ultimoVenta);
+                  }
                 } else {
-                  localStorage.setItem("ultimoVenta", ultimoVenta);
+                  if ((Notification.permission = "grantFd")) {
+                    const notification = new Notification(
+                      "Se ha registrado una nueva Venta ",
+                      {
+                        icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                        body:
+                          "Nueva Venta -" +
+                          JSON.parse(data).serie_comprobante +
+                          "-" +
+                          JSON.parse(data).num_comprobante,
+                      }
+                    );
+                    notification.onclick = function () {
+                      window.open("https://medicfit.grupopuma.pe/Venta.php");
+                    };
+                    localStorage.setItem("ultimoVenta", ultimoVenta);
+                  } else {
+                    localStorage.setItem("ultimoVenta", ultimoVenta);
+                  }
                 }
               }
             } else {
@@ -103,7 +133,7 @@ function init() {
             processData: false,
             contentType: false,
             type: "GET",
-  
+
             success: function (data) {
               setTimeout(() => {
                 notificaciones();
@@ -115,34 +145,67 @@ function init() {
                   localStorage.getItem("ultimoVentaCancelada")
                 ).idpedido;
                 let baseD = JSON.parse(data).idpedido;
-  
+
                 if (baseD != local) {
-                  if ((Notification.permission = "grantFd")) {
-                    const notification = new Notification(
-                      "Se ha anulador un pedido ",
-                      {
-                        icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                        body:
-                          "Venta Anulada -" +
-                          JSON.parse(data).serie_comprobante +
-                          "-" +
-                          JSON.parse(data).num_comprobante,
-                      }
-                    );
-                    notification.onclick = function () {
-                      window.open(
-                        "https://medicfit.grupopuma.pe/AnulacionVenta.php"
+                  if (
+                    tipo_usuario == "Cliente" &&
+                    nuevoPedido?.idsucursal == 2
+                  ) {
+                    if ((Notification.permission = "grantFd")) {
+                      const notification = new Notification(
+                        "Se ha anulador un pedido ",
+                        {
+                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                          body:
+                            "Venta Anulada -" +
+                            JSON.parse(data).serie_comprobante +
+                            "-" +
+                            JSON.parse(data).num_comprobante,
+                        }
                       );
-                    };
-                    localStorage.setItem(
-                      "ultimoVentaCancelada",
-                      ultimoVentaCancelada
-                    );
+                      notification.onclick = function () {
+                        window.open(
+                          "https://medicfit.grupopuma.pe/AnulacionVenta.php"
+                        );
+                      };
+                      localStorage.setItem(
+                        "ultimoVentaCancelada",
+                        ultimoVentaCancelada
+                      );
+                    } else {
+                      localStorage.setItem(
+                        "ultimoVentaCancelada",
+                        ultimoVentaCancelada
+                      );
+                    }
                   } else {
-                    localStorage.setItem(
-                      "ultimoVentaCancelada",
-                      ultimoVentaCancelada
-                    );
+                    if ((Notification.permission = "grantFd")) {
+                      const notification = new Notification(
+                        "Se ha anulador un pedido ",
+                        {
+                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                          body:
+                            "Venta Anulada -" +
+                            JSON.parse(data).serie_comprobante +
+                            "-" +
+                            JSON.parse(data).num_comprobante,
+                        }
+                      );
+                      notification.onclick = function () {
+                        window.open(
+                          "https://medicfit.grupopuma.pe/AnulacionVenta.php"
+                        );
+                      };
+                      localStorage.setItem(
+                        "ultimoVentaCancelada",
+                        ultimoVentaCancelada
+                      );
+                    } else {
+                      localStorage.setItem(
+                        "ultimoVentaCancelada",
+                        ultimoVentaCancelada
+                      );
+                    }
                   }
                 }
               } else {
@@ -491,6 +554,10 @@ function init() {
   }
   // Limpia los campos de nueva cotizacion
   function Limpiar() {
+
+   $("#cboModPago").val("")
+     $("#textObservaciones").val("")
+
     $("#txtIdCliente").val("");
     $("#cboTipoPedido").val("Pedido");
     $("#txtNumeroPed").val("");
@@ -947,7 +1014,9 @@ function cargarDataPedido(
   empleado,
   metodo_pago,
   agencia_envio,
-  tipo_promocion
+  tipo_promocion,
+  observaciones,
+  modo_pago
 ) {
   // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
   bandera = 2;
@@ -958,25 +1027,26 @@ function cargarDataPedido(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
-  console.log(
-    idPedido,
-    tipo_pedido,
-    numero,
-    cliente,
-    total,
-    correo,
-    num_documento,
-    celular,
-    tipo_cliente,
-    destino,
-    ticket,
-    aproba_venta,
-    aproba_pedido,
-    empleado,
-    metodo_pago,
-    agencia_envio,
-    tipo_promocion
-  );
+ console.log( idPedido,
+  tipo_pedido,
+  numero,
+  cliente,
+  total,
+  correo,
+  num_documento,
+  celular,
+  tipo_cliente,
+  destino,
+  ticket,
+  aproba_venta,
+  aproba_pedido,
+  empleado,
+  metodo_pago,
+  agencia_envio,
+  tipo_promocion,
+  observaciones,
+  modo_pago
+  )
 
   $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
@@ -991,6 +1061,10 @@ function cargarDataPedido(
   $("#hdn_tipo_promocion").val(aproba_venta);
   $("#txtClientePed").val(metodo_pago);
 
+  $("#cboModPagoDetalles").val( empleado);
+  $("#textObservacionesDetalles").val(aproba_pedido);
+
+  
   //$("#hdn_agencia_envio").val(agencia_envio);
   //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
   /* $("#txtRutaImgVoucher").val(imagen);

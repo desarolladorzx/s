@@ -360,7 +360,7 @@ function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function pasarIdPedido(idPedido,total,correo,idcliente,empleado,cliente,num_documento,celular,destino,metodo_pago,agencia_envio,tipo_promocion){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
+function pasarIdPedido(idPedido,total,correo,idcliente,empleado,cliente,num_documento,celular,destino,metodo_pago,agencia_envio,tipo_promocion,OBSERVACIONES,PAGO_DETALLE){// funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
 
 		$("#VerForm").show();// mostramos el formulario
 		$("#VerListado").hide();// ocultamos el listado
@@ -401,6 +401,11 @@ function pasarIdPedido(idPedido,total,correo,idcliente,empleado,cliente,num_docu
 
         // CARGA DETALLE DE IMAGENES 
         mostrarDetalleImagenes(idPedido);
+
+
+        $("#cboModPagoDetalles").val( PAGO_DETALLE);
+        $("#textObservacionesDetalles").val(OBSERVACIONES);
+
  	}
 
 function mostrarDetalleImagenes(idPedido) {
