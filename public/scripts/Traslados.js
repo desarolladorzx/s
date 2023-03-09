@@ -333,7 +333,7 @@ function init() {
 
   function AbrirModalDeTraslados() {
     $("#modalListadoArticulosTraslados").modal("show");
-    var tabla = $("#tblArticulosPed")
+    var tabla = $("#tblArticulosPedTraslados")
       .dataTable({
         aProcessing: true,
         aServerSide: true,
