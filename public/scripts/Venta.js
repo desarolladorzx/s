@@ -1,6 +1,6 @@
 $(document).on("ready", init);// Inciamos el jquery
 var email = "";
-var clicando= false;
+/* var clicando= false; */
 function init(){
     //Ver();
 	$('#tblVentaPedido').dataTable({
@@ -13,7 +13,7 @@ function init(){
         ]
     });
 
-    
+/*     
     $("#btn-only1click").click(function() {
         // Si ha sido clicado
         if (clicando){
@@ -26,7 +26,7 @@ function init(){
           // Mostramos el mensaje de que ha sido clicado
           alert( "Handler for only1click.click() called." );
         }
-      });
+      }); */
 
 	ListadoVenta();// Ni bien carga la pagina que cargue el metodo
 
@@ -105,11 +105,12 @@ function init(){
                 detalle : detalle
             };
 
-            $.get("./ajax/VentaAjax.php?op=VerificarStockProductos",data, function(r) {
+            $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado","idPedido=" + data.idPedido, function(r) {
 
+              
                 var obj = jQuery.parseJSON(r);           
 
-                if (obj.estado == true || obj.estado == 'true') {
+                if (obj.length==0) {
 
                     $.post("./ajax/VentaAjax.php?op=SaveOrUpdate", data, function(r){// llamamos la url por post. function(r). r-> llamada del callback
 
@@ -160,13 +161,10 @@ function init(){
                                       bootbox.alert(r);
                                     }) 
                                     bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
-        
                                       $("#modalCredito").modal("show");
                                       GetIdVenta();
                                     });
-        
                                 } else {
-        
                                     bootbox.alert(r + ", Pasaremos a Registrar el Credito", function() {
                                       $("#modalCredito").modal("show");
                                       GetIdVenta();
@@ -178,25 +176,17 @@ function init(){
                     });
 
                 }else{
-
-                    var  arr = obj.detalle;
-                    bootbox.alert("No se puede completar el proceso ya que existen productos sin stock:\n"+arr.join('\n'))
-
-
+                    var arr = obj;
+                    alert(
+                        "No se puede completar el proceso ya que existen productos sin stock:\n" +
+                          arr.join("\n")
+                      );
                 }
-
             })
 
-
-
-
-
-
-            
         } else {
             bootbox.alert("Debe seleccionar un comprobante");
         }
-        
 	};
 
     function SaveCredito(e){
@@ -255,7 +245,6 @@ function init(){
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();// ocultamos el listado
 		$("#btnReporte").hide();
-
 	}
 
 	function OcultarForm(){
@@ -264,7 +253,7 @@ function init(){
 		$("#btnReporte").show();
         $("#btnNuevo").show();
         $("#VerFormVentaPed").hide();
-        $("#btnNuevoVent").show();
+        //$("#btnNuevoVent").show();
        // $("#lblTitlePed").html("Pedidos");
 	}
 
@@ -325,6 +314,7 @@ function ListadoPedidos(){
 }).DataTable();
 };
 function ListadoPedidos2(){ 
+    
 var tabla = $('#tblVentas2').dataTable(
 {   "aProcessing": true,
 "aServerSide": true,
@@ -358,8 +348,6 @@ dom: 'Bfrtip',
 "bDestroy": true
 }).DataTable();
 };
-
-
 
 function eliminarVenta(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar el Venta seleccionado?", function(result){ // confirmamos con una pregunta si queremos eliminar
@@ -413,15 +401,11 @@ function pasarIdPedido(idPedido,total,correo,idcliente,empleado,cliente,num_docu
 
         // CARGA DETALLE DE IMAGENES 
         mostrarDetalleImagenes(idPedido);
-
  	}
 
 function mostrarDetalleImagenes(idPedido) {
-
         $("#detalleImagenes").html("");
-
         $.post("./ajax/PedidoAjax.php?op=GetImagenes",{idPedido: idPedido}, function(r){
-
             if (r != "") {
                 $("#detalleImagenes").html(r);
             } else {
@@ -429,7 +413,4 @@ function mostrarDetalleImagenes(idPedido) {
             }
 
         });
-
     }
-
-

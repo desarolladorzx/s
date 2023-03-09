@@ -63,7 +63,24 @@
 		// idUsuario es el identificador por sucursal , idEmpleado es el identificador en Global
 		public function ListarCliente(){
 			global $conexion;
-			$sql = "SELECT
+			// $sql = "SELECT
+			// p.*,
+			// concat( e.nombre, ' ', e.apellidos ) AS empleado,
+			// concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
+			// (CASE
+			// 	WHEN p.genero = 1 THEN 'MUJER'
+			// 	WHEN p.genero = 2 THEN 'HOMBRE'
+			// 	WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
+			// END) AS genero_txt
+			// FROM
+			// persona p
+			// INNER JOIN empleado e ON p.idempleado = e.idempleado
+			// INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
+			// WHERE
+			// tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
+			// ORDER BY
+			// idpersona DESC";
+			$sql="SELECT
 			p.*,
 			concat( e.nombre, ' ', e.apellidos ) AS empleado,
 			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
@@ -77,9 +94,8 @@
 			INNER JOIN empleado e ON p.idempleado = e.idempleado
 			INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
 			WHERE
-			tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
-			ORDER BY
-			idpersona DESC";
+			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE'
+			ORDER BY idpersona DESC";
 
 			//var_dump($sql);exit;
 
@@ -245,7 +261,52 @@
 			return $results;
 
 		}
+		public function  clasificacion_cliente($id_cliente){
+			global $conexion;
 
+			$sql="	SELECT 
+				idpersona ,
+			
+				tipo_persona,
+				-- TIMESTAMPDIFF(month,venta.fecha,CURDATE()) AS meses_transcurridos,
+				
+			CASE 
+				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
+					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
+					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
+			   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
+
+			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+					 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+			   
+			    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+					 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+			   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+			   
+					 
+					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
+					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
+					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
+			   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
+				   
+						 WHEN venta.fecha IS NULL then 'PERDIDO'
+				   
+				   END  as clasificacion,
+			 persona.nombre
+			
+			FROM persona 
+			left join pedido on pedido.idcliente=persona.idpersona
+			left JOIN venta ON venta.idpedido=pedido.idpedido
+			 WHERE persona.idpersona=$id_cliente
+			GROUP by (idpersona)
+			  
+			";
+			$query = $conexion->query($sql);
+			return $query;
+		}
 
 		public function cambiarEstadoCliente_representante($tipo){
 
