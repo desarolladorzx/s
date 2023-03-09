@@ -559,7 +559,7 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT * FROM venta 
-		left join empleado on empleado.idempleado = venta.idusaurio_anu
+		left join empleado on empleado.idempleado = venta.idusuario_anu
 		 WHERE venta.estado='C'	
 		  ORDER	BY  fecha_anu  DESC  LIMIT 1";
 		$query = $conexion->query($sql);
