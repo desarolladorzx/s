@@ -247,6 +247,9 @@ function init() {
 
           formData.append("fileupload[]", file);
         });
+        
+
+
 
         formData.append("idUsuario", $("#txtIdUsuario").val());
         formData.append("idCliente", $("#txtIdCliente").val());
@@ -258,6 +261,9 @@ function init() {
         formData.append("tipo_promocion", $("#cboTipoPromocion").val());
 
         formData.append("numero", $("#txtNumeroPed").val());
+        formData.append("modo_pago", $("#cboModPago").val());
+        formData.append("observaciones", $("#textObservaciones").val());
+        
         for (var i = 0; i < detalle.length; i++) {
           formData.append("detalle[]", detalle[i]);
         }

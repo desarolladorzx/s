@@ -25,6 +25,10 @@ switch ($_GET["op"]) {
         $tipo_promocion = $_POST["tipo_promocion"];
 
 
+
+        $modo_pago = $_POST["modo_pago"];
+        $observaciones = $_POST["observaciones"];
+
         /*
         $tipo_promocion = $_POST["tipo_promocion"];
         $metodo_pago = $_POST["metodo_pago"];
@@ -38,7 +42,7 @@ switch ($_GET["op"]) {
 
         //if(move_uploaded_file($imagen, "../Files/Voucher/".$ruta)){
         if (empty($_POST["idPedido"])) {
-            $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion);
+            $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observaciones);
 
             //var_dump($hosp);exit;
 
