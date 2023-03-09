@@ -311,7 +311,7 @@ function init(){
 	                    {   "mDataProp": "12"},
 	                    {   "mDataProp": "13"},
 	                    {   "mDataProp": "14"},
-	                    {   "mDataProp": "15"}
+	                    // {   "mDataProp": "15"}
 
 	        	],"ajax": 
 		        	{

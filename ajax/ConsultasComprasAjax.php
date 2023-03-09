@@ -161,20 +161,20 @@
                     $data[] = array(
                          "0"=>$reg->fecha,
                          "1"=>$reg->comprobante.'-'.$reg->serie.'-'.$reg->numero,
-                         "2"=>$reg->sucursal,
-                         "3"=>$reg->empleado,
-                         "4"=>$reg->proveedor,
-                         "5"=>$reg->categoria,
-                         "6"=>$reg->articulo,
-                         "7"=>$reg->marca,
-                         "8"=>$reg->codigo,
-                         "9"=>$reg->serie_art,
-                         "10"=>$reg->stock_ingreso,
-                         "11"=>$reg->stock_vendido,
-                         "12"=>$reg->stock_actual,
-                         "13"=>$reg->precio_compra,
-                         "14"=>$reg->precio_ventapublico,
-                         "15"=>$reg->precio_ventadistribuidor
+                         // "2"=>$reg->sucursal,
+                         "2"=>$reg->empleado,
+                         "3"=>$reg->proveedor,
+                         "4"=>$reg->categoria,
+                         "5"=>$reg->articulo,
+                         "6"=>$reg->marca,
+                         "7"=>$reg->codigo,
+                         "8"=>$reg->serie_art,
+                         "9"=>$reg->stock_ingreso,
+                         "10"=>$reg->stock_vendido,
+                         "11"=>$reg->stock_actual,
+                         "12"=>$reg->precio_compra,
+                         "13"=>$reg->precio_ventapublico,
+                         "14"=>$reg->precio_ventadistribuidor
                     );
                }
 

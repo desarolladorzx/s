@@ -3,6 +3,7 @@
 	require "Conexion.php";
 	
 	class Pedido{
+		
 	
 		public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle){
 			global $conexion;
@@ -68,6 +69,7 @@
 			global $conexion;
 			$sw = true;
 			try {
+
 				
 				$sql = "UPDATE pedido set estado = 'C'
 						WHERE idpedido = $idpedido";
