@@ -133,15 +133,15 @@ switch ($_GET["op"]) {
 
         echo json_encode($reg);
         break;
-    
-    case "informarVentaCancelada":
-            require_once "../model/Pedido.php";
-            $objPedi = new Pedido();
-            $query = $objPedi->traerUltimaVentaCancelada();
-            $reg = $query->fetch_object();
 
-            echo json_encode($reg);
-            break;
+    case "informarVentaCancelada":
+        require_once "../model/Pedido.php";
+        $objPedi = new Pedido();
+        $query = $objPedi->traerUltimaVentaCancelada();
+        $reg = $query->fetch_object();
+
+        echo json_encode($reg);
+        break;
 
     case "listTipoPedidoPedido":
         require_once "../model/Pedido.php";
@@ -192,7 +192,7 @@ switch ($_GET["op"]) {
                     $botonPasarAVenta .
                     '<a href="./Reportes/exPedido.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;' .
                     $botonEliminar .
-                    $botonCambiarEstado 
+                    $botonCambiarEstado
                 // "9" => $reg->numero,
                 /*  "6"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->Cliente.'\',\''.$fetch->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
                     '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido('.$reg->idpedido.',\''.$fetch->total.'\',\''.$reg->email.'\',\''.$reg->idcliente.'\',\''.$reg->metodo_pago.'\',\''.$reg->agencia_envio.'\',\''.$reg->tipo_promocion.'\',\''.$reg->Cliente.'\',\''.$reg->email.'\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp'.
@@ -337,9 +337,19 @@ switch ($_GET["op"]) {
         $query_cli = $objPedido->ListarDetalleIngresos($_SESSION["idsucursal"]);
         $data = array();
         $i = 1;
+
         while ($reg = $query_cli->fetch_object()) {
+
+
+            if ($_SESSION["idsucursal"] == $reg->idsucursal) {
+                $disabledButton = '';
+                
+            } else {
+                $disabledButton = 'disabled';
+            }
+
             $data[] = array(
-                "0" => '<button type="button" class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
+                "0" => '<button type="button" '.$disabledButton.'  class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
                     data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
                     data-stock-actual="' . $reg->stock_actual . '" id="' . $reg->iddetalle_ingreso . '" value="' . $reg->iddetalle_ingreso . '"
                     data-toggle="tooltip" title="Agregar al carrito"
@@ -353,14 +363,15 @@ switch ($_GET["op"]) {
                         \'' . $reg->idarticulo . '\',
                         \'' . $reg->marca . '\')" >
                     <i class="fa fa-check" ></i> </button>',
-                "1" => $reg->codigo,
-                "2" => $reg->Articulo,
-                "3" => $reg->marca,
-                "4" => $reg->serie,
+                    "1" => $reg->razon_social,
+                "2" => $reg->codigo,
+                "3" => $reg->Articulo,
+                "4" => $reg->marca,
+                "5" => $reg->serie,
                 //"5"=>$reg->presentacion,
-                "5" => $reg->stock_actual,
-                "6" => $reg->precio_ventapublico,
-                "7" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+                "6" => $reg->stock_actual,
+                "7" => $reg->precio_ventapublico,
+                "8" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
         }
