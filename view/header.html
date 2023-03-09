@@ -8,7 +8,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
- 
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="public/css/font-awesome.min.css">
   <!-- Theme style -->
@@ -20,12 +20,7 @@
   <link rel="stylesheet" type="text/css" href="public/css/dataTables.bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="public/js/swat/sweet/lib/sweet-alert.css">
   <link rel="stylesheet" type="text/css" href="public/css/buttons.dataTables.min.css">
-    <!--  -->
-    <!-- <link href="https://cdn.datatables.net/searchpanes/2.1.1/css/searchPanes.bootstrap.css"/> -->
-    <link rel="stylesheet" type="text/css" href="public/css/select.css">
-    <link rel="stylesheet" type="text/css" href="public/css/searchPanel.css">
-    <!--  -->
-    <!--  -->
+
   <!-- jQuery 2.1.4 -->
   <script type="text/javascript" src="public/js/jquery.min.js"></script>
   <script type="text/javascript" src="public/js/jquery.numeric.min.js"></script>
@@ -37,13 +32,6 @@
 
   <script type="text/javascript" src="public/js/dataTables.js"></script>
 
-  <!-- dsearch panels -->
-  <script src="https://cdn.datatables.net/searchpanes/2.1.1/js/dataTables.searchPanes.min.js"></script>
-  <script src="https://cdn.datatables.net/searchpanes/2.1.1/js/searchPanes.bootstrap.min.js"></script>
-  <script src="https://cdn.datatables.net/select/1.6.1/js/dataTables.select.min.js"></script>
-
-<!--  -->
-
   <script type="text/javascript" src="public/js/swat/sweet/lib/sweet-alert.min.js"></script>
 
   <script type="text/javascript" src="public/js/dataTables.bootstrap.min.js"></script>
@@ -53,9 +41,6 @@
   <script type="text/javascript" src="public/js/vfs_fonts.js"></script>
   <script type="text/javascript" src="public/js/buttons.html5.min.js"></script>
   <script type="text/javascript" src="public/js/Chart.js"></script>
-
-
-  <script type="text/javascript" src="public/scripts/Traslados.js"></script>
 
   <script type="text/javascript" src="public/scripts/Categoria.js"></script>
   <script type="text/javascript" src="public/scripts/Marca.js"></script>
@@ -290,7 +275,6 @@
               <li id="liKardexValorizado"><a href="KardexValorizado.php"><i class="fa fa-circle-o"></i> Kardex Valorizado</a></li>
               <li id="liKardex"><a href="Kardex.php"><i class="fa fa-circle-o"></i> Kardex </a></li>
               <li id="liStockArticulos"><a href="StockArticulos.php"><i class="fa fa-circle-o"></i> Stock de Productos</a></li>
-              <li id="liTraslados"><a href="Traslados.php"><i class="fa fa-circle-o"></i> Traslados</a></li>
               <li id="liSalidaArticulos"><a href="SalidaArticulos.php"><i class="fa fa-circle-o"></i> Salidas de Productos</a></li>
             </ul>
           </li>
@@ -841,6 +825,3 @@
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJA" value="<?php echo $_SESSION[" mnu_documentacion_ja"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJL" value="<?php echo $_SESSION[" mnu_documentacion_jl"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuAdmin" value="<?php echo $_SESSION[" mnu_admin"]; ?>">
-
-            <input id="txtIdTipoUsuarioGlobal" type="hidden" value="<?php echo $_SESSION["tipo_usuario"] ?>">
-            <input id="txtIdSucursalGlobal" type="hidden" value="<?php echo $_SESSION["idsucursal"] ?>">
