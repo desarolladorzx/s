@@ -309,6 +309,7 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
+	
 
 			(CASE
 				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
@@ -319,7 +320,7 @@ class Pedido
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion,
 			p.estado AS estadoId
-
+			,p.observaciones,p.modo_pago
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			inner join usuario u on p.idusuario=u.idusuario
 			inner join empleado e on u.idempleado=e.idempleado

@@ -155,7 +155,7 @@
 
 		public function ListarTipoPedidoPedido($idsucursal){
 			global $conexion;
-			$sql = "select p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono
+			$sql = "select p.*, c.nombre as Cliente,c.apellido as APCliente, c.email, c.direccion_calle , c.num_documento, c.telefono ,c.observaciones,c.tipo_pago
 			from pedido p inner join persona c on p.idcliente = c.idpersona where p.idsucursal = $idsucursal 
 			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Vip' & 'Tipo 1' & 'Tipo 2' & 'N' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,10000";
 			$query = $conexion->query($sql);
