@@ -320,7 +320,7 @@ class Pedido
 			p.agencia_envio AS agencia_envio,
 			p.tipo_promocion AS tipo_promocion,
 			p.estado AS estadoId
-			,p.observaciones,p.modo_pago
+			,p.observacion as observaciones,p.modo_pago
 			from pedido p inner join persona c on p.idcliente = c.idpersona
 			inner join usuario u on p.idusuario=u.idusuario
 			inner join empleado e on u.idempleado=e.idempleado
