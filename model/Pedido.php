@@ -559,9 +559,11 @@ class Pedido
 		global $conexion;
 		$sql = "SELECT * FROM venta 
 		left join empleado on empleado.idempleado = venta.idusaurio_anu
-		 WHERE estado='C'	
+		 WHERE venta.estado='C'	
 		  ORDER	BY  fecha_anu  DESC  LIMIT 1";
 		$query = $conexion->query($sql);
+
+		// echo json_decode($query);
 		return $query;
 	}
 	//$sql = "SELECT vencab_id FROM tbl_vencab WHERE vencab_codigo = $rptaAleatorio";

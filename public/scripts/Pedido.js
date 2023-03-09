@@ -18,8 +18,9 @@ function notificaciones() {
       processData: false,
       contentType: false,
       type: "GET",
-
+    
       success: function (data) {
+
         ultimoPedido = data;
         if (localStorage.getItem("ultimoPedido")) {
           let local = JSON.parse(localStorage.getItem("ultimoPedido")).idpedido;
@@ -50,7 +51,9 @@ function notificaciones() {
         contentType: false,
         type: "GET",
 
+
         success: function (data) {
+
           ultimoVenta = data;
           if (localStorage.getItem("ultimoVenta")) {
             let local = JSON.parse(localStorage.getItem("ultimoVenta")).idventa;
@@ -82,6 +85,10 @@ function notificaciones() {
           type: "GET",
 
           success: function (data) {
+
+            setTimeout(() => {
+              notificaciones();
+            }, 3000);
             ultimoVentaCancelada = data;
             if (localStorage.getItem("ultimoVentaCancelada")) {
               let local = JSON.parse(
@@ -115,9 +122,7 @@ function notificaciones() {
                 ultimoVentaCancelada
               );
             }
-            setTimeout(() => {
-              notificaciones();
-            }, 3000);
+           
           },
         });
       });
