@@ -11,7 +11,7 @@ class Pedido
 		return $query;
 	}
 
-	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observaciones)
+	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observacion)
 	{
 
 		//var_dump($detalle);exit;
@@ -20,8 +20,8 @@ class Pedido
 		$sw = true;
 		try {
 			//exit;
-			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observaciones)
-						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observaciones')";
+			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion)
+						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion')";
 			//var_dump($sql);
 			$conexion->query($sql);
 			$idpedido = $conexion->insert_id;
