@@ -167,7 +167,7 @@ function init() {
     // formData.append('idUsuario', $('#txtIdUsuario').val());
 
     for (var i = 0; i < detalle.length; i++) {
-      formData.append("detalle[]", detalle[i]);
+      formData.append("detalle[]", detalle[i]);xz\z
     }
 
     if ($("#almacenFinal").val() != $("#idtxtSucursalTraslado").val()) {
@@ -191,7 +191,7 @@ function init() {
               // // OcultarForm();
               $("#VerFormPed").hide(); // Mostramos el formulario
               // $("#btnNuevoPedido").show();
-              Limpiar();
+              Limpiar();zzxx
 
               // $("#txtCliente").val("");
               ListadoTraslados();
