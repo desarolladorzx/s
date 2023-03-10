@@ -22,7 +22,7 @@
 							inner join usuario u on p.idusuario=u.idusuario
 							inner join empleado e on u.idempleado=e.idempleado
 							inner join persona pe on p.idcliente=pe.idpersona
-				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and s.idsucursal= $idsucursal and v.estado='A'
+				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.estado='A'
 				order by v.fecha desc ";
 			$query = $conexion->query($sql);
 			return $query;
