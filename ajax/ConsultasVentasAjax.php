@@ -13,21 +13,22 @@
                while ($reg = $query_Tipo->fetch_object()) {
 
                     $data[] = array(
-                         "0"=>$reg->fecha,
-                         "1"=>$reg->empleado,
-                         "2"=>$reg->nuevo_antiguo,
-                         "3"=>$reg->tipo_cliente,
-                         "4"=>$reg->cliente,
-                         "5"=>$reg->dni,
-                         "6"=>$reg->celular.' - '.$reg->telefono_2,
-                         "7"=>$reg->ticket,
-                         "8"=>$reg->departamento,
-                         "9"=>$reg->transporte,
-                         "10"=>$reg->cuenta_abonada,
+                         "0"=>$reg->sucursal,
+                         "1"=>$reg->fecha,
+                         "2"=>$reg->empleado,
+                         "3"=>$reg->nuevo_antiguo,
+                         "4"=>$reg->tipo_cliente,
+                         "5"=>$reg->cliente,
+                         "6"=>$reg->dni,
+                         "7"=>$reg->celular.' - '.$reg->telefono_2,
+                         "8"=>$reg->ticket,
+                         "9"=>$reg->departamento,
+                         "10"=>$reg->transporte,
+                         "11"=>$reg->cuenta_abonada,
 /*                          "10"=>$reg->num_ope,
                          "11"=>$reg->fecha_operacion, */
-                         "11"=>$reg->total,
-                         "12"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->cliente.'\',\''.$reg->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
+                         "12"=>$reg->total,
+                         "13"=>'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido('.$reg->idpedido.',\''.$reg->tipo_pedido.'\',\''.$reg->numero.'\',\''.$reg->cliente.'\',\''.$reg->total.'\')" ><i class="fa fa-eye"></i> </button>&nbsp'.
                     '<a href="./Reportes/exVenta.php?id='.$reg->idpedido.'" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                     );
                }
