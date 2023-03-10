@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="box-header with-border">
-      <h3 class="box-title" id="lblTitle">Registro de cotizaciones </h3>
+      <h3 class="box-title" id="lblTitle">Registro de Cotizaciones </h3>
       <div class="box-tools pull-right">
         <button class="btn btn-box-tool" data-widget="collapse">
           <i class="fa fa-minus"></i>
@@ -69,7 +69,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4 left">
-                    <label id="inputImpuesto">Impuesto</label>
+                    <label id="inputImpuesto">Impuesto:</label>
                     <div class="form-group">
                       <div class="input-group has-success">
                         <input
@@ -85,7 +85,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4 left">
-                    <label id="inputTipoPed">Tipo Pedido:</label>
+                    <label id="inputTipoPed">Tipo de Pedido:</label>
                     <div class="form-group has-success">
                       <select
                         id="cboTipoPedido"
@@ -99,7 +99,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4 left">
-                    <label id="inputNumero">Número:</label>
+                    <label id="inputNumero">Número de Cotizacion:</label>
                     <div class="form-group has-success">
                       <input
                         id="txtNumeroPed"
@@ -113,9 +113,12 @@
                   </div>
                 </div>
 
-                <div class="col-lg-3 left">
-                  <label for="inputMarca">CUENTA ABONADA/MEDIO DE PAGO</label>
-                  <div class="form-group has-success">
+              <div class="row">
+                
+
+                  <div class="col-lg-3 left">
+                    <label for="inputMarca">Cuenta Abonada / Medio de Pago:</label>
+                    <div class="form-group has-success">
                     <select
                       id="cboMetodoPago"
                       name="cboMetodoPago"
@@ -164,7 +167,7 @@
                                 </div>
                  -->
                 <div class="col-lg-2 left">
-                  <label for="inputMarca">TRANSPORTE/AGENCIA DE ENVIO</label>
+                  <label for="inputMarca">Transportes / Agencia de envio:</label>
                   <div class="form-group has-success">
                     <select
                       id="cboAgenEnvio"
@@ -199,7 +202,7 @@
                 </div>
 
                 <div class="col-lg-2 left">
-                  <label for="inputMarca">PROMOCIONES</label>
+                  <label for="inputMarca">Promociones:</label>
                   <div class="form-group has-success">
                     <input
                       id="txtIdVenta"
@@ -244,7 +247,7 @@
                 </div>
 
                 <div class="col-lg-2 left">
-                  <label for="inputMarca">Modo de Pago</label>
+                  <label for="inputMarca">Modo de Pago:</label>
                   <div class="form-group has-success">
                     <select
                       id="cboModPago"
@@ -253,8 +256,8 @@
                       required=""
                     >
                       <option value=""></option>
-                      <option value="PAGO EN ORIGEN">PAGO EN ORIGEN</option>
-                      <option value="PAGO EN DESTINO">PAGO EN DESTINO</option>
+                      <option value="PAGADO">PAGADO</option>
+                      <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
                     </select>
                   </div>
                 </div>
@@ -279,16 +282,22 @@
                     />
                   </div>
                 </div>
+
+                
+              
+            </div>
+
                 <div class="row">
                   <div class="col-lg-12 left">
                     <div class="form-group">
-                      <label>Observaciones</label>
+                      <label>Observaciones:</label>
                       <textarea
                         class="form-control"
                         rows="3"
                         name="textObservaciones"
                         id="textObservaciones"
-                        placeholder="Ingresar mensaje ..."
+                        maxlength="500"
+                        placeholder="Ingresar Observacion sobre la Cotizacion ..."
                       ></textarea>
                     </div>
                   </div>
@@ -301,7 +310,7 @@
                         id="btnBuscarDetIng"
                         class="btn btn-info"
                       >
-                        <i class="fa fa-search"></i> Buscar Articulos
+                        <i class="fa fa-search"></i> Buscar Productos
                       </button>
                     </div>
                   </div>
@@ -319,10 +328,10 @@
                   >
                     <thead>
                       <tr>
-                        <th>Articulo</th>
+                        <th>Producto</th>
                         <th>Codigo</th>
-                        <th>Serie</th>
-                        <th>marca</th>
+                        <th>F. Vencimiento</th>
+                        <th>Marca</th>
                         <th>Stock</th>
                         <th>P. Venta</th>
                         <th>Cantidad</th>
@@ -384,7 +393,7 @@
               <div class="col-lg-12 left" id="VerRegPedido">
                 <p></p>
                 <button class="btn btn-success" type="submit">
-                  <i class="fa fa-floppy-o"></i> Registrar Pedido
+                  <i class="fa fa-floppy-o"></i> Registrar Cotización
                 </button>
                 <button
                   type="button"
@@ -589,7 +598,7 @@
                 </div>
               </div>
               <div class="col-lg-2 left">
-                <label for="inputMarca">Modo de Pago</label>
+                <label for="inputMarca">MODO DE PAGO</label>
                 <div class="form-group has-success">
                   <select
                     id="cboModPagoDetalles"
@@ -599,8 +608,8 @@
                     required=""
                   >
                     <option value=""></option>
-                    <option value="PAGO EN ORIGEN">PAGO EN ORIGEN</option>
-                    <option value="PAGO EN DESTINO">PAGO EN DESTINO</option>
+                    <option value="PAGADO">PAGADO</option>
+                    <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
                   </select>
                 </div>
               </div>
@@ -769,7 +778,7 @@
         </div>
 
         <button class="btn btn-primary" id="btnNuevoPedido_nuevo">
-          <i class="fa fa-file"></i> Nuevo
+          <i class="fa fa-file"></i> Nueva Cotización
         </button>
         <br /><br />
         <div id="VerListado" class="table-responsive">
@@ -783,7 +792,7 @@
               <tr>
                 <th>#</th>
                 <th>Fecha y Hora</th>
-                <th>Numero de Cotizacion</th>
+                <th>Número de Cotización</th>
                 <th>Ejecutivo V.</th>
                 <th>Cliente</th>
                 <th>T. Pedido</th>
@@ -798,7 +807,7 @@
               <tr>
                 <th>#</th>
                 <th>Fecha y Hora</th>
-                <th>Numero de Cotizacion</th>
+                <th>Número de Cotización</th>
                 <th>Ejecutivo V.</th>
                 <th>Cliente</th>
                 <th>T. Pedido</th>
@@ -923,7 +932,7 @@
                 <th>T.Cliente</th>
                 <th>DNI</th>
                 <th>Cliente</th>
-                <th>Celular</th>
+                <th>Telefono</th>
                 <th>Direccion</th>
                 <th>Email</th>
               </tr>
@@ -936,7 +945,7 @@
                 <th>T.Cliente</th>
                 <th>DNI</th>
                 <th>Cliente</th>
-                <th>Celular</th>
+                <th>Telefono</th>
                 <th>Direccion</th>
                 <th>Email</th>
               </tr>
@@ -981,7 +990,7 @@
         >
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Lista de Productos MedicFitcen</h4>
+        <h4 class="modal-title">Lista de Productos</h4>
       </div>
       <div class="modal-body">
         <div class="table-responsive">

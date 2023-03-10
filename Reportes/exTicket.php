@@ -103,6 +103,9 @@ $reg_igv = $query_global->fetch_object();
         <td><b>MEDIO DE PAGO</b></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
     </tr>
     <tr>
+        <td><b>MODO DE PAGO : <?php echo $reg_cli->modo_pago ; ?></b></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
+    </tr>
+    <tr>
         <td><b>CUENTA ABONADA : <?php echo $reg_cli->metodo_pago ; ?></b></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
     </tr>
 </table>

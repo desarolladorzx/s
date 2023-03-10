@@ -191,7 +191,7 @@ function init() {
               // // OcultarForm();
               $("#VerFormPed").hide(); // Mostramos el formulario
               // $("#btnNuevoPedido").show();
-              Limpiar();
+              Limpiar();zzxx
 
               // $("#txtCliente").val("");
               ListadoTraslados();
