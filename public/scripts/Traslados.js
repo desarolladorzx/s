@@ -167,7 +167,7 @@ function init() {
     // formData.append('idUsuario', $('#txtIdUsuario').val());
 
     for (var i = 0; i < detalle.length; i++) {
-      formData.append("detalle[]", detalle[i]);xz\z
+      formData.append("detalle[]", detalle[i]);
     }
 
     if ($("#almacenFinal").val() != $("#idtxtSucursalTraslado").val()) {

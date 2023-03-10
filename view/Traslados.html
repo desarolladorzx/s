@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="box-header with-border">
-            <h3 class="box-title" id="lblTitle">Traslados entre almacenes</h3>
+            <h3 class="box-title" id="lblTitle">Listado de Traslados</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 
@@ -32,21 +32,21 @@
                                         <label id="cboTipoAlmacenFinal">Almacen Final:</label>
                                         <div class="form-group  has-success">
                                             <select id="almacenFinal" name="cboTipoPedido" class="form-control" required>
-                                                <option value="2">Lima Lima Lima</option>
-                                                <option value="1">Arequipa Arequipa</option>
+                                                <option value="2">Lima</option>
+                                                <option value="1">Arequipa</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Motivo de Traslado</label>
-                                    <textarea id="motivo_de_traslado" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea id="motivo_de_traslado" maxlength="500" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                                 </div>
 
                             <div class="row">
                                     <div class="col-lg-6 left">
                                         <div class="form-group">
-                                            <button type="button" id="btnBuscarDetTraslados" class="btn btn-info"><i class='fa fa-search'></i> Buscar Articulos por Almacen </button>
+                                            <button type="button" id="btnBuscarDetTraslados" class="btn btn-info"><i class='fa fa-search'></i> Buscar Productos por Almacén </button>
                                         </div>
                                     </div>
                             </div>
@@ -58,7 +58,7 @@
                                     <table class="table table-striped table-bordered table-condensed table-hover" cellpadding="0" cellspacing="0" border="1" class="display" id="tblDetallePedidoTraslado">
                                         <thead>
                                             <tr>
-                                                <th>Articulo</th>
+                                                <th>Productos</th>
                                                 <th>Codigo</th>
                                                 <th>F. Vencimiento</th>
                                                 <th>Marca</th>
@@ -95,7 +95,7 @@
                 </div>
 
 
-                <button class="btn btn-primary" id="btnNuevoPedido_nuevo"><i class="fa fa-file"></i> Crear Traslados</button>
+                <button class="btn btn-primary" id="btnNuevoPedido_nuevo"><i class="fa fa-file"></i> Nuevo Traslado</button>
                 <br><br>
                 <div id="VerListado" class="table-responsive">
                     <table id="tblTraslados" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -189,8 +189,8 @@
 
 
 <script type="text/javascript">
-    $('#liVentas').addClass("treeview active");
-    $('#liPedido').addClass("active");
+$('#liConsultaCompras').addClass("treeview active");
+$('#liTraslados').addClass("active");
 </script>
 
 

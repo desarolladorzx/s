@@ -374,7 +374,7 @@ function init() {
             $("#txtSubTotalPed").val("");
             OcultarForm();
             $("#VerFormPed").hide(); // Mostramos el formulario
-            $("#btnNuevoPedido").show();
+            $("#btnNuevoPedido_nuevo").show();
             Limpiar();
             $("#txtCliente").val("");
             ListadoVenta();
@@ -613,7 +613,7 @@ function init() {
 
   function VerFormPedido_Nuevo() {
     $("#VerFormPed").show(); // Mostramos el formulario
-    $("#btnNuevoPedido").hide(); // ocultamos el boton nuevo
+    $("#btnNuevoPedido_nuevo").hide(); // ocultamos el boton nuevo
     $("#btnGenerarVenta").hide();
     $("#VerListado").hide(); // ocultamos el listado
     $("#btnReporte").hide();
@@ -1027,25 +1027,9 @@ function cargarDataPedido(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
- console.log( idPedido,
-  tipo_pedido,
-  numero,
-  cliente,
-  total,
-  correo,
-  num_documento,
-  celular,
-  tipo_cliente,
-  destino,
-  ticket,
-  aproba_venta,
-  aproba_pedido,
-  empleado,
-  metodo_pago,
-  agencia_envio,
-  tipo_promocion,
-  observaciones,
-  modo_pago
+ console.log( 
+  tipo_pedido
+
   )
 
   $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
@@ -1064,7 +1048,9 @@ function cargarDataPedido(
   $("#cboModPagoDetalles").val( empleado);
   $("#textObservacionesDetalles").val(aproba_pedido);
 
+
   
+  $("#txtTotalVent").val(tipo_pedido);
   //$("#hdn_agencia_envio").val(agencia_envio);
   //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
   /* $("#txtRutaImgVoucher").val(imagen);
@@ -1187,7 +1173,7 @@ function cargarDataPedido(
   $("#lblDesde").hide();
   $("#lblHasta").hide();
   $("#btnNuevoPedido").hide();
-  $("#txtTotalVent").val(total);
+
 
   // CARGA DETALLE DE IMAGENES
 

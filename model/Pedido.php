@@ -24,6 +24,7 @@ class Pedido
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion')";
 			//var_dump($sql);
 			$conexion->query($sql);
+			//echo ($sql);
 			$idpedido = $conexion->insert_id;
 			$conexion->autocommit(true);
 
