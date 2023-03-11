@@ -1027,10 +1027,6 @@ function cargarDataPedido(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
- console.log( 
-  tipo_pedido
-
-  )
 
   $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;

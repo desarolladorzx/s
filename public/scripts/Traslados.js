@@ -7,6 +7,10 @@ var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
 
+
+
+
+
 function AgregarPedCarritoTraslado(
   iddet_ing,
   stock_actual,
@@ -58,9 +62,50 @@ function AgregarPedCarritoTraslado(
   }
 }
 
-function verDetallesTraslados(){
-  console.log('hola')
+function verDetallesTraslados(val){
+
+  var traslado=JSON.parse(val.replace(/\+/g,'"'))
+
+    console.log(traslado)
+
+  $("#info_traslado_inicial").val(traslado.almacen_inicial)
+  $("#info_traslado_final").val(traslado.almacen_destino)
+  $("#info_traslado_motivo").val(traslado.motivo_del_traslado)
+
+  $("#VerFormTrasladosDetalles").show();
+
+
+  CargarDetalleTraslado(traslado.idtraslado)
+
+
+
+  $('#body_Traslados'
+  ).hide()
 }
+
+function CargarDetalleTraslado(idtraslado) {
+  //$('th:nth-child(2)').hide();
+  //$('th:nth-child(3)').hide();
+  $("table#tblDetallePedidoVer th:nth-child(4)").hide();
+  $("table#tblDetallePedidoVer th:nth-child(8)").hide();
+
+  $("table#tblDetallePedidoTraslado th:nth-child(4)").hide();
+  $("table#tblDetallePedidoTraslado th:nth-child(8)").hide();
+
+  $.post(
+    "./ajax/TrasladosAjax.php?op=GetDetalleTraslados",
+    {
+      idtraslado: idtraslado,
+    },
+    function (r) {
+      $("table#tblDetallePedidoTraslado tbody").html(r);
+      $("table#tblDetallePedidoTraslado tbody").html(r);
+    }
+  );
+}
+
+
+
 function ConsultarDetallesTraslado() {
   $("table#tblDetallePedidoTraslado tbody").html("");
 
@@ -109,6 +154,9 @@ function guardarCantidadTrasladar(pos) {
 }
 
 function init() {
+
+  $("#VerFormTrasladosDetalles").hide();
+
   $("#btnBuscarDetTraslados").click(AbrirModalDeTraslados);
 
   $("form#frmTraslados").submit(GuardarTraslado);
@@ -191,7 +239,7 @@ function init() {
               // // OcultarForm();
               $("#VerFormPed").hide(); // Mostramos el formulario
               // $("#btnNuevoPedido").show();
-              Limpiar();zzxx
+              Limpiar();
 
               // $("#txtCliente").val("");
               ListadoTraslados();

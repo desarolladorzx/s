@@ -187,7 +187,7 @@ class Traslados
                     CURRENT_TIMESTAMP(),
                      'salida por traslado',
                      '$detalle_ingreso->idarticulo',
-                     '" . $kardexDetalle_ingreso . "',
+                     '" . $detalle_ingreso->iddetalle_ingreso . "',
                       '" . $rpta_sql_suma_ingreso_sucursal_inicial_not_null . "',
                     '" . $cantidad_de_traslado . "',
                     '" . $rpta_sql_suma_ingreso_nuevo_inicial_not_null . "',
@@ -310,6 +310,7 @@ class Traslados
     {
         global $conexion;
         $sql = "SELECT 
+            idtraslado,
             fecha_registro fecha,
             sucursal.razon_social almacen_inicial ,
             sucu.razon_social almacen_destino,
@@ -323,4 +324,38 @@ class Traslados
         $query = $conexion->query($sql);
         return $query;
     }
+    public function infoTraslados($idtraslado){
+        global $conexion;
+        $sql="SELECT descripcion,suc_ini.razon_social AS inicial,suc_des.razon_social AS final FROM traslados 
+        JOIN sucursal suc_ini ON suc_ini.idsucursal = traslados.sucursal_id
+        JOIN sucursal suc_des ON suc_des.idsucursal = traslados.sucursal_destino_id
+        where idtraslado=$idtraslado
+        ";
+        $query = $conexion->query($sql);
+        return $query;
+        
+    }
+
+    public function GetDetalleTraslado($idtraslado)
+	{
+		global $conexion;
+		$sql = "SELECT
+        -- COUNT(*)
+       -- * 
+       articulo.nombre Articulo, categoria.nombre marca,detalle_ingreso.codigo Codigo,detalle_ingreso.serie Serie ,inventario.cantidad Cantidad
+       FROM inventario 
+       JOIN articulo ON articulo.idarticulo=inventario.idarticulo
+       JOIN categoria ON categoria.idcategoria=articulo.idcategoria
+       JOIN kardex  ON articulo.idarticulo=kardex.id_articulo
+       JOIN detalle_ingreso ON detalle_ingreso.iddetalle_ingreso=kardex.id_detalle_ingreso
+       WHERE inventario.descripcion='traslado' AND idtraslado=$idtraslado AND kardex.tipo='salida por traslado'";
+
+		//var_dump($sql);
+		//exit;
+
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 }
+
