@@ -87,7 +87,7 @@ switch ($_GET["op"]) {
                 "3" => $reg->almacen_destino,
                 "4" => $reg->motivo_del_traslado,
                 "5" => $reg->cantidad_total_de_productos,
-                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick=verDetallesTraslados()  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>&nbsp' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' .str_replace('"',"+",json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>&nbsp' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 // "6" => $reg->estado,
                 // "6" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
                 //     $botonPasarAVenta .
@@ -112,4 +112,24 @@ switch ($_GET["op"]) {
 
 
         break;
+
+        case "GetDetalleTraslados":
+            require_once "../model/Traslados.php";
+            $objPedido = new Traslados();
+            $idtraslado = $_POST["idtraslado"];
+            $query_prov = $objPedido->GetDetalleTraslado($idtraslado);
+            $i = 1;
+            while ($reg = $query_prov->fetch_object()) {
+                echo '<tr>
+                            <td>' . $reg->Articulo . '</td>
+                            <td>' . $reg->marca . '</td>
+                            <td>' . $reg->Codigo . '</td>
+                            <td>' . $reg->Serie . '</td>
+                            <td>' . $reg->Cantidad . '</td>
+                        
+                           </tr>';
+                $i++;
+            }
+            break;
+
 }

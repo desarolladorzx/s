@@ -25,3 +25,5 @@ model/Conexion.php
 
 # Ignora la carpeta archivos
 Files/*
+
+Files/Voucher

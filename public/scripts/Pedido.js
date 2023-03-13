@@ -349,7 +349,10 @@ function init() {
 
         formData.append("numero", $("#txtNumeroPed").val());
         formData.append("modo_pago", $("#cboModPago").val());
-        formData.append("observaciones", $("#textObservaciones").val());
+
+        
+        formData.append("tipo_entrega", $("#cboModTipo_Entrega").val());
+        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
 
         for (var i = 0; i < detalle.length; i++) {
           formData.append("detalle[]", detalle[i]);
@@ -1027,10 +1030,6 @@ function cargarDataPedido(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
- console.log( 
-  tipo_pedido
-
-  )
 
   $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
@@ -1049,7 +1048,9 @@ function cargarDataPedido(
   $("#textObservacionesDetalles").val(aproba_pedido);
 
 
-  
+
+  $("#cboModTipo_EntregaDetalles").val(metodo_pago);
+
   $("#txtTotalVent").val(tipo_pedido);
   //$("#hdn_agencia_envio").val(agencia_envio);
   //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA

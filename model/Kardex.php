@@ -135,7 +135,7 @@ class Kardex
 			where kardex.id_articulo=" . $id_articulo . 
 			" 
 			and DATE(fecha_creacion)>='$fecha_desde' and  DATE(fecha_creacion)<='$fecha_hasta'
-			ORDER BY id_kardex 
+			ORDER BY fecha_creacion 
 			";
 			$query = $conexion->query($sql);
 		}

@@ -29,6 +29,9 @@ switch ($_GET["op"]) {
         $modo_pago = $_POST["modo_pago"];
         $observaciones = $_POST["observaciones"];
 
+        $tipo_entrega = $_POST["tipo_entrega"];
+
+
         /*
         $tipo_promocion = $_POST["tipo_promocion"];
         $metodo_pago = $_POST["metodo_pago"];
@@ -42,7 +45,7 @@ switch ($_GET["op"]) {
 
         //if(move_uploaded_file($imagen, "../Files/Voucher/".$ruta)){
         if (empty($_POST["idPedido"])) {
-            $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observaciones);
+            $hosp = $obj->Registrar($idCliente, $idUsuario, $idSucursal, $tipo_pedido, $numero, $_POST["detalle"], $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observaciones,$tipo_entrega);
 
             //var_dump($hosp);exit;
 
@@ -166,7 +169,7 @@ switch ($_GET["op"]) {
             $fetch = $regTotal->fetch_object();
 
             if ($reg->estadoId == "D") { // APROBADO
-                $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
+                $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
             } else {
                 $botonPasarAVenta = '';
             }
@@ -192,7 +195,7 @@ switch ($_GET["op"]) {
                 "5" => $reg->tipo_pedido,
                 "6" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 "7" => $reg->estado,
-                "8" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+                "8" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
                     $botonPasarAVenta .
                     '<a href="./Reportes/exPedido.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;' .
                     $botonEliminar .
