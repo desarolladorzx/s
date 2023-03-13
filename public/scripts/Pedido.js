@@ -307,6 +307,37 @@ function init() {
     //Ver();
   }
 
+
+
+  $('#imagenVoucher').on('change', function(e) {
+
+    const files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+  
+      reader.addEventListener('load', function() {
+        const image = new Image();
+        image.src = reader.result;
+  
+        const imagePreview = document.createElement('div');
+        // imagePreview.style.add('width:100px');
+
+        image.classList.add('my-images_preview');
+        image.style.width = '300px';
+        // image.style.minWidth = '300px';
+        // image.style.height = '300px';
+        image.style.objectFit='fixed'
+        imagePreview.appendChild(image);
+  
+        $('#image-preview-container').append(imagePreview);
+      });
+  
+      reader.readAsDataURL(files[i]);
+    }
+  });
+
+
   function GuardarPedido(e) {
     e.preventDefault();
 

@@ -436,7 +436,23 @@ switch ($_GET["op"]) {
 
         while ($reg = $query_total->fetch_object()) {
 
-            echo '<li>
+            // echo '<li>
+            //         <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
+            //         <span class="mailbox-attachment-icon has-img">
+            //         <img src="./Files/Voucher/' . $reg->imagen . '">
+            //         </span>
+            //         </a>
+            //         <div class="mailbox-attachment-info">
+            //         <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+            //          <span class="mailbox-attachment-size"> -
+            //         <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"
+            //         ><i class="fa fa-trash"></i></a>
+            //         </span> */
+            //         </div>
+            //         </li>';
+
+            
+                    echo '<li>
                     <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
                     <span class="mailbox-attachment-icon has-img">
                     <img src="./Files/Voucher/' . $reg->imagen . '">
@@ -444,11 +460,10 @@ switch ($_GET["op"]) {
                     </a>
                     <div class="mailbox-attachment-info">
                     <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                    /* <span class="mailbox-attachment-size"> -
-                    <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"><i class="fa fa-trash"></i></a>
-                    </span> */
-                    </div>
+                     
+                    
                     </li>';
+
         }
 
 
