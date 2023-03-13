@@ -97,8 +97,19 @@ class Kardex
 			 tipo
 			 AS Movimiento,
 			  CASE
-				WHEN 0!=id_detalle_pedido THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
-				WHEN 0!=id_detalle_ingreso THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
+				WHEN 0!=id_detalle_pedido AND tipo<>'salida por traslado'  THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
+				WHEN 0!=id_detalle_ingreso AND tipo<>'salida por traslado'  THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
+
+				when tipo='salida por traslado' then 
+				(	SELECT CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante )
+			FROM kardex karNew
+			LEFT  JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=karNew.id_detalle_ingreso
+			LEFT  JOIN ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+			WHERE id_detalle_ingreso > kardex.id_detalle_ingreso AND tipo='ingreso por traslado' AND id_articulo= kardex.id_articulo
+			ORDER BY id_detalle_ingreso DESC
+			LIMIT 1
+				 )
+
 				ELSE 0
 				END
 			 AS Orden,
