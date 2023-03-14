@@ -310,7 +310,7 @@ function init() {
 
 
   $('#imagenVoucher').on('change', function(e) {
-
+    $('#image-preview-container').html('')
     const files = this.files;
 
     for (let i = 0; i < files.length; i++) {
