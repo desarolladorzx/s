@@ -85,7 +85,7 @@ class Kardex
 			" 
 			and DATE(fecha_creacion)>='$fecha_desde' and  DATE(fecha_creacion)<='$fecha_hasta'
 			and id_sucursal='$sucursal'
-			ORDER BY id_kardex 
+			ORDER BY fecha_creacion 
 			";
 			$query = $conexion->query($sql);
 		}else{
@@ -147,6 +147,7 @@ class Kardex
 			" 
 			and DATE(fecha_creacion)>='$fecha_desde' and  DATE(fecha_creacion)<='$fecha_hasta'
 			ORDER BY fecha_creacion 
+			
 			";
 			$query = $conexion->query($sql);
 		}
