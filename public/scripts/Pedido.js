@@ -250,6 +250,13 @@ function init() {
   $("#btnBuscarDetIng").click(AbrirModalDetPed);
   $("#btnEnviarCorreo").click(EnviarCorreo);
   //$("#btnNuevoVent").click(VerForm);
+
+  $('#btn_todos_eliminar_imagen').hide()
+
+  $('#btn_todos_eliminar_imagen').click(function(){
+    $('#image-preview-container').html('')
+    $("input[type='file']").val('')
+  })
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
 
@@ -310,6 +317,7 @@ function init() {
 
 
   $('#imagenVoucher').on('change', function(e) {
+    $("#btn_todos_eliminar_imagen").show()
     $('#image-preview-container').html('')
     const files = this.files;
 
@@ -324,7 +332,7 @@ function init() {
         // imagePreview.style.add('width:100px');
 
         image.classList.add('my-images_preview');
-        image.style.width = '300px';
+        image.style.width = '100px';
         // image.style.minWidth = '300px';
         // image.style.height = '300px';
         image.style.objectFit='fixed'
