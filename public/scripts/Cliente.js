@@ -52,6 +52,7 @@ function init(){
 	$("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon 
 
 	function SaveOrUpdate(e){
+	
 		e.preventDefault();// para que no se recargue la pagina
 
 		console.log($(this).serialize())
@@ -88,6 +89,8 @@ function init(){
 	    $("#txtDireccion_Provincia").val("");
 	    $("#txtDireccion_Distrito").val("");
 	    $("#txtDireccion_Calle").val("");
+
+		$("#txtDireccion_Referencia").val("");
 	    $("#txtTelefono").val("");
 		$("#txtTelefono_2").val("");
 	    $("#txtEmail").val("");
@@ -187,7 +190,7 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
-function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero,genero_txt,newClasifiacion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero,genero_txt,newClasifiacion,direccion_referencia){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		//$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
@@ -217,6 +220,9 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo nombre del empleado
 		$('#txtFecha_modificado').val(fecha_modificado);//Campo fecha de modificacion empleado 
 
+
+		
+		$('#txtDireccion_Referencia').val(direccion_referencia)
 
 		console.log(newClasifiacion);
 		$("#txtClasificacion").val(newClasifiacion);
@@ -315,6 +321,9 @@ function buscarPorNumeroDocumento() {
 	$("#txtDireccion_Provincia").val("");
 	$("#txtDireccion_Distrito").val("");
 	$("#txtDireccion_Calle").val("");
+
+	$("#txtDireccion_Referencia").val("");
+
 	$("#txtTelefono").val("");
 	$("#txtTelefono_2").val("");
 	$("#txtEmail").val("");

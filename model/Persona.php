@@ -5,23 +5,23 @@
 		public function __construct(){
 		}
 		//Se aumenta la celda apellidos
-		public function Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$genero,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado_modificado){
+		public function Registrar($tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$genero,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$idempleado_modificado,$direccion_referencia){
 			global $conexion;
-			$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado) 
-					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$genero','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado',CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP())";
-			//var_dump($sql);exit;
+			$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia) 
+					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$genero','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado',CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),'$direccion_referencia')";
+			// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function Modificar($idpersona,$tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$genero,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado){
+		public function Modificar($idpersona,$tipo_persona,$nombre,$apellido,$tipo_documento,$num_documento,$genero,$direccion_departamento,$direccion_provincia,$direccion_distrito,$direccion_calle,$telefono,$telefono_2,$email,$numero_cuenta,$estado,$idempleado,$direccion_referencia){
 			global $conexion;
 			$sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
-			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP()
+			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP(),direccion_referencia='$direccion_referencia'
 						WHERE idpersona = $idpersona";
 
 			//var_dump($sql);exit;
-
+			
 			$query = $conexion->query($sql);
 			return $query;
 		}

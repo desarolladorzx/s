@@ -29,6 +29,9 @@ switch ($_GET["op"]) {
 		//$tipo_documento = $_POST["cboTipo_Documento"];
 		$num_documento = $_POST["txtNum_Documento"];
 		
+
+		$direccion_referencia = isset($_POST["txtDireccion_Referencia"]) ? $_POST["txtDireccion_Referencia"] : "";
+
 		$direccion_departamento = isset($_POST["txtDireccion_Departamento"]) ? $_POST["txtDireccion_Departamento"] : "";
 		$direccion_provincia = isset($_POST["txtDireccion_Provincia"]) ? $_POST["txtDireccion_Provincia"] : "";
 		$direccion_distrito = isset($_POST["txtDireccion_Distrito"]) ? $_POST["txtDireccion_Distrito"] : "";
@@ -44,14 +47,14 @@ switch ($_GET["op"]) {
 		//var_dump($idempleado);exit;
 
 		if (empty($_POST["txtIdPersona"])) {
-			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado)) {
+			if ($objCliente->Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado ,$direccion_referencia)) {
 				echo "Cliente registrado correctamente";
 			} else {
 				echo "El Cliente no ha podido ser registrado.";
 			}
 		} else {
 			$idpersona = $_POST["txtIdPersona"];
-			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado)) {
+			if ($objCliente->Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado,$direccion_referencia)) {
 				echo "La informacion del Cliente ha sido actualizada";
 			} else {
 				echo "La informacion del Cliente no ha podido ser actualizada.";
@@ -81,11 +84,11 @@ switch ($_GET["op"]) {
 			if ($_SESSION['rol_usuario'] == "S") {
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
 				
-				,\'' . $clasificacion . '\'
+				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
 				)"><i class="fa fa-pencil"></i> </button>';
 			}else{
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
-				,\'' . $clasificacion . '\'
+				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
 				)"><i class="fa fa-pencil"></i> </button>';
 			}
 
