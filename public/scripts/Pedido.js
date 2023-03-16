@@ -1058,10 +1058,38 @@ function cargarDataPedido(
   agencia_envio,
   tipo_promocion,
   observaciones,
-  modo_pago
+  modo_pago,
+  ultimo,
+  ultims
 ) {
+  console.log( idPedido,
+    tipo_pedido,
+    numero,
+    cliente,
+    total,
+    correo,
+    num_documento,
+    celular,
+    tipo_cliente,
+    destino,
+    ticket,
+    aproba_venta,
+    aproba_pedido,
+    empleado,
+    metodo_pago,
+    agencia_envio,
+    tipo_promocion,
+    observaciones,
+    modo_pago,
+    ultimo,
+    ultims)
   // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
   bandera = 2;
+
+
+
+
+
   $("#VerForm").show();
   //$("#btnNuevoVent").hide();
   $("#VerListado").hide();
@@ -1087,6 +1115,9 @@ function cargarDataPedido(
   $("#textObservacionesDetalles").val(aproba_pedido);
 
 
+  $('#hdn_tipo_entrega').val(observaciones)
+  $('#hdn_modo_pago').val(ultimo)
+  $('#hdn_observacion').val(modo_pago)
 
   $("#cboModTipo_EntregaDetalles").val(metodo_pago);
 
