@@ -42,25 +42,35 @@ $reg_igv = $query_global->fetch_object();
       <td align="center"></td>
     </tr>
     <tr>
-        <td>CLIENTE: <font size=3> <?php echo mb_strtoupper($reg_cli->nombre." ".$reg_cli->apellido,'UTF-8');?> </font> </td>
+        <td><b>CLIENTE: </b><font size=2> <?php echo mb_strtoupper($reg_cli->nombre." ".$reg_cli->apellido,'UTF-8');?> </font> </td>
     </tr>
     <tr>
-        <td><font size=2> <?php echo $reg_cli->documento_per." : "; ?> </font> <font size=3> <?php echo $reg_cli->num_documento; ?> </font> </td>
+        <td><b><font size=2><?php echo $reg_cli->documento_per." : "; ?> </b></font> <font size=2> <?php echo $reg_cli->num_documento; ?> </font> </td>
     </tr>
     <tr>
-        <td>CELULAR: <font size=3> <?php echo $reg_cli->telefono. " - " .$reg_cli->telefono_2; ?> </font> </td>
+        <td><b>CELULAR: </b><font size=2> <?php echo $reg_cli->telefono. " - " .$reg_cli->telefono_2; ?> </font> </td>
     </tr>
     <tr>
-        <td>DESTINO:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_distrito." - ".$reg_cli->direccion_provincia." - ".$reg_cli->direccion_departamento,'UTF-8'); ?> </font> </td>
+        <td><b>TRANSPORTE: </b></b><font size=2> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
     </tr>
     <tr>
-        <td>DIRECCION:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_calle." - ".$reg_cli->direccion_distrito,'UTF-8'); ?> </font> </td>
+        <td><b>TIPO DE ENTREGA: </b><font size=2> <?php echo mb_strtoupper($reg_cli->tipo_entrega,'UTF-8'); ?> </font> </td>
     </tr>
     <tr>
-        <td>TRANSPORTE:<font size=3> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
+        <td><b>MODO DE PAGO: </b><font size=2> <?php echo mb_strtoupper($reg_cli->modo_pago,'UTF-8'); ?> </font> </td>
     </tr>
     <tr>
-        <td align="center"><?php echo "EMPAQUETADO : ".date("Y-m-d")." Hora: ".date("H:i:s"); ?></td>    
+        <td><b>DESTINO: </b><font size=2> <?php echo mb_strtoupper($reg_cli->direccion_distrito." - ".$reg_cli->direccion_provincia." - ".$reg_cli->direccion_departamento,'UTF-8'); ?> </font> </td>
+    </tr>
+    <tr>
+        <td><b>DIRECCION: </b><font size=2> <?php echo mb_strtoupper($reg_cli->direccion_calle." - ".$reg_cli->direccion_distrito,'UTF-8'); ?> </font> </td>
+    </tr>
+    <!-- <tr>
+        <td><b>REFERENCIA: </b><font size=2> <?php echo mb_strtoupper($reg_cli->direccion_referencia,'UTF-8'); ?> </font> </td>
+    </tr> -->
+    
+    <tr>
+        <td align="center"><?php echo "<b>"."EMPAQUETADO : "."</b>".date("Y-m-d")."<b>"." Hora: "."</b>".date("H:i:s"); ?></td>
     </tr>
 </table>
 
@@ -124,10 +134,11 @@ $reg_igv = $query_global->fetch_object();
 
         while ($reg = $query_ped->fetch_object()) {
         echo "<tr>";
-        echo "<td>".$reg->articulo. " | ".$reg->marca." | ".$reg->codigo." | ".$reg->serie."</td>";
+        echo "<td>".$reg->articulo." | <b>".$reg->marca."</b> | ".$reg->codigo." | ".$reg->serie."</td>";
         echo "<td align='center'>".$reg->cantidad."</td>";
         echo "<td align='right'>". $reg_igv->simbolo_moneda." ".$precio_venta=$reg->cantidad*($reg->precio_venta-$reg->descuento)."</td>";
         echo "</tr>";
+        echo "<td>"."-----------------------------------------"."</td>";
         $cantidad+=$reg->cantidad;
         $precio_venta=$reg->cantidad*($reg->precio_venta-$reg->descuento);
         $descuentos+=$reg->descuento*$reg->cantidad;

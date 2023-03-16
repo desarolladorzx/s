@@ -66,6 +66,7 @@ switch ($_GET["op"]) {
         } else {
             echo "No se ha podido registrar el Pedido";
         }
+    // }
         break;
 
 

@@ -250,6 +250,13 @@ function init() {
   $("#btnBuscarDetIng").click(AbrirModalDetPed);
   $("#btnEnviarCorreo").click(EnviarCorreo);
   //$("#btnNuevoVent").click(VerForm);
+
+  $('#btn_todos_eliminar_imagen').hide()
+
+  $('#btn_todos_eliminar_imagen').click(function(){
+    $('#image-preview-container').html('')
+    $("input[type='file']").val('')
+  })
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
 
@@ -307,6 +314,38 @@ function init() {
     //Ver();
   }
 
+
+
+  $('#imagenVoucher').on('change', function(e) {
+    $("#btn_todos_eliminar_imagen").show()
+    $('#image-preview-container').html('')
+    const files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+  
+      reader.addEventListener('load', function() {
+        const image = new Image();
+        image.src = reader.result;
+  
+        const imagePreview = document.createElement('div');
+        // imagePreview.style.add('width:100px');
+
+        image.classList.add('my-images_preview');
+        image.style.width = '30px';
+        // image.style.minWidth = '300px';
+        // image.style.height = '300px';
+        image.style.objectFit='fixed'
+        imagePreview.appendChild(image);
+  
+        $('#image-preview-container').append(imagePreview);
+      });
+  
+      reader.readAsDataURL(files[i]);
+    }
+  });
+
+
   function GuardarPedido(e) {
     e.preventDefault();
 
@@ -352,7 +391,7 @@ function init() {
 
         
         formData.append("tipo_entrega", $("#cboModTipo_Entrega").val());
-        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
+        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"."));
 
         for (var i = 0; i < detalle.length; i++) {
           formData.append("detalle[]", detalle[i]);
@@ -1019,10 +1058,38 @@ function cargarDataPedido(
   agencia_envio,
   tipo_promocion,
   observaciones,
-  modo_pago
+  modo_pago,
+  ultimo,
+  ultims
 ) {
+  console.log( idPedido,
+    tipo_pedido,
+    numero,
+    cliente,
+    total,
+    correo,
+    num_documento,
+    celular,
+    tipo_cliente,
+    destino,
+    ticket,
+    aproba_venta,
+    aproba_pedido,
+    empleado,
+    metodo_pago,
+    agencia_envio,
+    tipo_promocion,
+    observaciones,
+    modo_pago,
+    ultimo,
+    ultims)
   // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
   bandera = 2;
+
+
+
+
+
   $("#VerForm").show();
   //$("#btnNuevoVent").hide();
   $("#VerListado").hide();
@@ -1048,6 +1115,9 @@ function cargarDataPedido(
   $("#textObservacionesDetalles").val(aproba_pedido);
 
 
+  $('#hdn_tipo_entrega').val(observaciones)
+  $('#hdn_modo_pago').val(ultimo)
+  $('#hdn_observacion').val(modo_pago)
 
   $("#cboModTipo_EntregaDetalles").val(metodo_pago);
 

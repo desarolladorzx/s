@@ -52,6 +52,7 @@ function init(){
 	$("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon 
 
 	function SaveOrUpdate(e){
+	
 		e.preventDefault();// para que no se recargue la pagina
 
 		console.log($(this).serialize())
@@ -88,6 +89,8 @@ function init(){
 	    $("#txtDireccion_Provincia").val("");
 	    $("#txtDireccion_Distrito").val("");
 	    $("#txtDireccion_Calle").val("");
+
+		$("#txtDireccion_Referencia").val("");
 	    $("#txtTelefono").val("");
 		$("#txtTelefono_2").val("");
 	    $("#txtEmail").val("");
@@ -187,9 +190,9 @@ function eliminarCliente(id){// funcion que llamamos del archivo ajax/CategoriaA
 	})
 }
 //Datos que se muestran en el ticket
-function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero,genero_txt,newClasifiacion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_documento,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,empleado,fecha_registro,empleado_modificado,fecha_modificado,genero,genero_txt,newClasifiacion,direccion_referencia){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
-		//$("#btnNuevo").hide();// ocultamos el boton nuevo
+		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();
 
 	
@@ -217,6 +220,9 @@ function cargarDataCliente(id,tipo_persona,nombre,apellido,tipo_documento,num_do
 		$('#txtEmpleado_modificado').val(empleado_modificado);//Campo nombre del empleado
 		$('#txtFecha_modificado').val(fecha_modificado);//Campo fecha de modificacion empleado 
 
+
+		
+		$('#txtDireccion_Referencia').val(direccion_referencia)
 
 		console.log(newClasifiacion);
 		$("#txtClasificacion").val(newClasifiacion);
@@ -315,6 +321,9 @@ function buscarPorNumeroDocumento() {
 	$("#txtDireccion_Provincia").val("");
 	$("#txtDireccion_Distrito").val("");
 	$("#txtDireccion_Calle").val("");
+
+	$("#txtDireccion_Referencia").val("");
+
 	$("#txtTelefono").val("");
 	$("#txtTelefono_2").val("");
 	$("#txtEmail").val("");
@@ -329,6 +338,7 @@ function buscarPorNumeroDocumento() {
 	//$("#txtFecha_creacion").val("");
 	//$("#txtFecha_modificacion").val("");
 
+	
 	if ($("#txtNum_Documento").val() != "") {
 		$.ajax({
 			url: "./ajax/ClienteAjax.php?op=buscarClienteSunat",
@@ -338,21 +348,22 @@ function buscarPorNumeroDocumento() {
 				origen: "moduloCliente",
 			},
 			success: function (rpta) {
-				//alert(rpta['estado'])
+				
 				switch (rpta["estado"]) {
 					case "encontrado":
-
-
-
 						//$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
 						
 						$("#cboTipo_Documento_edit").val(rpta["tipo_documento"]);
 
 						if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
-
+							console.log('usuario administrador')
 							$("#panel_rbg_habilitado").show(200);
 							$("#panel_rbg_desabilitado").hide(200);
-							$("input[name=optionsRadios][value=" + rpta["genero"] + "]").prop("checked", true);
+
+							console.log(rpta["genero"])
+							if(rpta["genero"]){
+								$("input[name=optionsRadios][value=" + rpta["genero"] + "]").prop("checked", true);
+							}
 
 							$('#txtNombre').prop('readonly', false);
 							$('#txtApellido').prop('readonly', false);
@@ -406,6 +417,11 @@ function buscarPorNumeroDocumento() {
 						$("#txtEmail").val(rpta["email"]);
 						$("#txtEstado").val(rpta["estado_cliente"]);
 						
+						$("#txtIdPersona").val(rpta["idCliente"]);
+
+						console.log(rpta["direccion_referencia"])
+						$("#txtDireccion_Referencia").val(rpta["direccion_referencia"]);
+						$("#txtClasificacion").val(rpta["clasificacion"]);
 						$("#txtIdPersona").val(rpta["idCliente"]);
 						//$("#txtIdEmpleado_modificado").val(rpta["idEmpleado_modificado"]);
 						
