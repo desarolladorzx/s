@@ -338,6 +338,7 @@ function buscarPorNumeroDocumento() {
 	//$("#txtFecha_creacion").val("");
 	//$("#txtFecha_modificacion").val("");
 
+	
 	if ($("#txtNum_Documento").val() != "") {
 		$.ajax({
 			url: "./ajax/ClienteAjax.php?op=buscarClienteSunat",
@@ -347,21 +348,22 @@ function buscarPorNumeroDocumento() {
 				origen: "moduloCliente",
 			},
 			success: function (rpta) {
-				//alert(rpta['estado'])
+				
 				switch (rpta["estado"]) {
 					case "encontrado":
-
-
-
 						//$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
 						
 						$("#cboTipo_Documento_edit").val(rpta["tipo_documento"]);
 
 						if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
-
+							console.log('usuario administrador')
 							$("#panel_rbg_habilitado").show(200);
 							$("#panel_rbg_desabilitado").hide(200);
-							$("input[name=optionsRadios][value=" + rpta["genero"] + "]").prop("checked", true);
+
+							console.log(rpta["genero"])
+							if(rpta["genero"]){
+								$("input[name=optionsRadios][value=" + rpta["genero"] + "]").prop("checked", true);
+							}
 
 							$('#txtNombre').prop('readonly', false);
 							$('#txtApellido').prop('readonly', false);
@@ -415,6 +417,11 @@ function buscarPorNumeroDocumento() {
 						$("#txtEmail").val(rpta["email"]);
 						$("#txtEstado").val(rpta["estado_cliente"]);
 						
+						$("#txtIdPersona").val(rpta["idCliente"]);
+
+						console.log(rpta["direccion_referencia"])
+						$("#txtDireccion_Referencia").val(rpta["direccion_referencia"]);
+						$("#txtClasificacion").val(rpta["clasificacion"]);
 						$("#txtIdPersona").val(rpta["idCliente"]);
 						//$("#txtIdEmpleado_modificado").val(rpta["idEmpleado_modificado"]);
 						

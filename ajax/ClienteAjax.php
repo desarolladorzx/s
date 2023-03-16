@@ -319,7 +319,9 @@ switch ($_GET["op"]) {
 				'estadoCuenta' => $estadoCuenta,
 				'genero' => $reg->genero,
 				'idEmpleado_modificado' => $reg->idempleado,
-				'genero_txt' => $reg->genero_txt
+				'genero_txt' => $reg->genero_txt,
+				'direccion_referencia'=>$reg->direccion_referencia,
+				'clasificacion'=>$reg->clasificacion
 				//'cuenta' => 'Antiguo'
 			);
 
