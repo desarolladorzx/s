@@ -51,16 +51,26 @@ $reg_igv = $query_global->fetch_object();
         <td>CELULAR: <font size=3> <?php echo $reg_cli->telefono. " - " .$reg_cli->telefono_2; ?> </font> </td>
     </tr>
     <tr>
+        <td>TRANSPORTE:<font size=3> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
+    </tr>
+    <tr>
+        <td>TIPO DE ENTREGA:<font size=3> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
+    </tr>
+    <tr>
+        <td>MODO DE PAGO:<font size=3> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
+    </tr>
+    <tr>
         <td>DESTINO:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_distrito." - ".$reg_cli->direccion_provincia." - ".$reg_cli->direccion_departamento,'UTF-8'); ?> </font> </td>
     </tr>
     <tr>
         <td>DIRECCION:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_calle." - ".$reg_cli->direccion_distrito,'UTF-8'); ?> </font> </td>
     </tr>
+    <!-- <tr>
+        <td>REFERENCIA:<font size=3> <?php echo mb_strtoupper($reg_cli->direccion_calle." - ".$reg_cli->direccion_distrito,'UTF-8'); ?> </font> </td>
+    </tr> -->
+    
     <tr>
-        <td>TRANSPORTE:<font size=3> <?php echo mb_strtoupper($reg_cli->agencia_envio,'UTF-8'); ?> </font> </td>
-    </tr>
-    <tr>
-        <td align="center"><?php echo "EMPAQUETADO : ".date("Y-m-d")." Hora: ".date("H:i:s"); ?></td>    
+        <td align="center"><?php echo "EMPAQUETADO : ".date("Y-m-d")." Hora: ".date("H:i:s"); ?></td>
     </tr>
 </table>
 

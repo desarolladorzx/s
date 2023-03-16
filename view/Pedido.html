@@ -126,10 +126,9 @@
                         required=""
                       >
                         <option value=""></option>
-                        <option value="EFECTIVO">CONTRAENTREGA-EFECTIVO</option>
-                        <option value="IZIPAY">CONTRAENTREGA-IZIPAY</option>
-                        <option value="BCP">BCP-TRANSFERENCIA</option>
-                        <option value="BCP-Yape">BCP-YAPE</option>
+                        <option value="CONTRAENTREGA(TODO MEDIO DE PAGO)">CONTRAENTREGA(TODO MEDIO DE PAGO)</option>
+                        <option value="BCP">BCP</option>
+                        <option value="YAPE">YAPE </option>
                         <option value="INTERBANK">INTERBANK</option>
                         <option value="BBVA">BBVA</option>
                         <option value="BANCO DE LA NACION">
@@ -137,15 +136,12 @@
                         </option>
                         <option value="MERCADO PAGO">MERCADO PAGO</option>
                         <option value="WESTERN UNION">WESTERN UNION</option>
-                        <option value="+2 MEDIOS DE PAGO">
-                          +2 MEDIOS DE PAGO
-                        </option>
                         <option value="AUSPICIO">AUSPICIO</option>
-                        <option value="CONTRAENTREGA-YAPE">
-                          CONTRAENTREGA-YAPE
-                        </option>
                         <option value="DESCUENTO FIN DE MES">
                           DESCUENTO FIN DE MES
+                        </option>
+                        <option value="MAS DE 2 PAGOS">
+                          MAS DE 2 PAGOS
                         </option>
                       </select>
                     </div>
@@ -166,44 +162,32 @@
                                     </div>
                                 </div>
                  -->
-                  <div class="col-lg-2 left">
-                    <label for="inputMarca"
-                      >Transportes / Agencia de envio:</label
+                 <div class="col-lg-2 left">
+                  <label for="inputMarca">Transportes / Agencia de envio:</label>
+                  <div class="form-group has-success">
+                    <select
+                      id="cboAgenEnvio"
+                      name="cboAgenEnvio"
+                      class="form-control"
+                      required=""
                     >
-                    <div class="form-group has-success">
-                      <select
-                        id="cboAgenEnvio"
-                        name="cboAgenEnvio"
-                        class="form-control"
-                        required=""
-                      >
-                        <option value=""></option>
-                        <option value="RECOJO">RECOJO EN OFICINA</option>
-                        <option value="DELIVERY-LIMA">DELIVERY-LIMA</option>
-                        <option value="DELIVERY-AQP">DELIVERY-AQP</option>
-                        <option value="OLVA">OLVA COURIER</option>
-                        <option value="SHALOM">SHALOM</option>
-                        <option value="SHALOM-PAGODESTINO">
-                          SHALOM-PAGO DESTINO
-                        </option>
-                        <option value="MARVISUR">MARVISUR</option>
-                        <option value="MARVISUR-PAGO-DESTINO">
-                          MARVISUR-PAGO DESTINO
-                        </option>
-                        <option value="CARGO SUR">CARGO SUR</option>
-                        <option value="FLORES">FLORES</option>
-                        <option value="GRAEL">GRAEL</option>
-                        <option value="MINIVAN">MINIVAN</option>
-                        <option value="PERU-BUS">PERU BUS</option>
-                        <option value="DHL">DHL</option>
-                        <option value="TARAPOTO-COURIER">
-                          TARAPOTO COURIER
-                        </option>
-                        <option value="MENDEVIL">MENDEVIL</option>
-                        <option value="ANGELES-TOURS">ANGELES-TOURS</option>
-                      </select>
-                    </div>
+                      <option value=""></option>
+                      <option value="RECOJO EN OFICINA-AREQUIPA">RECOJO EN OFICINA-AREQUIPA</option>
+                      <option value="DELIVERY-AREQUIPA">DELIVERY-AREQUIPA</option>
+                      <option value="DELIVERY-LIMA">DELIVERY-LIMA</option>
+                      <option value="OLVA COURIER">OLVA COURIER</option>
+                      <option value="SHALOM">SHALOM</option>
+                      <option value="MARVISUR">MARVISUR</option>
+                      <option value="MINIVAN">MINIVAN</option>
+                      <option value="CARGOSUR">CARGOSUR</option>
+                      <option value="TRANSP. FLORES">TRANSP. FLORES</option>
+                      <option value="TRANSP. GRAEL">TRANSP. GRAEL</option>
+                      <option value="PERU BUS">PERU BUS</option>
+                      <option value="TARAPOTO COURIER">TARAPOTO COURIER</option>
+                      <option value="FEDEX">FEDEX</option>
+                    </select>
                   </div>
+                </div>
                   <div class="col-lg-2 left">
                     <label for="inputMarca">Tipo de Entrega</label>
                     <div class="form-group has-success">
