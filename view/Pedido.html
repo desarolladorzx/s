@@ -303,10 +303,6 @@
                       />
                     </div>
                   </div>
-                  <div
-                    class="col-lg-2 left"
-                    style="height: 100%; display: flex; align-items: center"
-                  ></div>
 
                   <style>
                     .image-preview-container {
@@ -316,8 +312,9 @@
                     }
                     .my-images_preview {
                       /* transition: all 0.2s ease; */
-                      box-shadow: 1px 1px 1px 1px #31b0d3;
-
+                      /* box-shadow: 1px 1px 1px 1px #31b0d3; */
+                      margin: 0 10px;
+                      border: solid 1px gray;
                       border-radius: 4px;
                     }
                     .my-images_preview:active {
@@ -335,23 +332,28 @@
                     }
                   </style>
 
-                  <div class="row">
-                    <div
-                      class="col-lg-12"
+                  <div class="col-lg-10 left" >
+                    <label style="opacity: 0">Observaciones:</label>
+                    <div style="display: flex">
+
+                      <div
+                      class="col"
                       id="image-preview-container"
                       style="
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         flex-wrap: wrap;
-                      "
+                        "
                     ></div>
-                  </div>
-
-                  <div class="col-lg-2 left">
-                    <button type="button" class="btn btn-danger" id="btn_todos_eliminar_imagen">
-                      Eliminar Imagenes
-                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      id="btn_todos_eliminar_imagen"
+                    >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
                   </div>
 
                   <div class="col-lg-12 left">

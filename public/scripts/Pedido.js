@@ -332,7 +332,7 @@ function init() {
         // imagePreview.style.add('width:100px');
 
         image.classList.add('my-images_preview');
-        image.style.width = '100px';
+        image.style.width = '30px';
         // image.style.minWidth = '300px';
         // image.style.height = '300px';
         image.style.objectFit='fixed'
