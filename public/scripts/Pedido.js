@@ -391,7 +391,7 @@ function init() {
 
         
         formData.append("tipo_entrega", $("#cboModTipo_Entrega").val());
-        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,""));
+        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"."));
 
         for (var i = 0; i < detalle.length; i++) {
           formData.append("detalle[]", detalle[i]);

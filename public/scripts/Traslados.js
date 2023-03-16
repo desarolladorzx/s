@@ -210,7 +210,7 @@ function init() {
 
     formData.append("almacenFinal", $("#almacenFinal").val());
 
-    formData.append("motivoDeTraslado", $("#motivo_de_traslado").val());
+    formData.append("motivoDeTraslado", $("#motivo_de_traslado").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"."));
 
     // formData.append('idUsuario', $('#txtIdUsuario').val());
 
@@ -231,7 +231,7 @@ function init() {
             success: function (data) {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
-              // location.href="Traslados.php"
+              location.href="Traslados.php"
               //$("#tblDetallePedido tbody").html("");
               // $("#txtIgvPed").val("");
               // $("#txtTotalPed").val("");

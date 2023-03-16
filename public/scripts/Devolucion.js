@@ -132,7 +132,7 @@ function init() {
     console.log(detalle);
 
     formData.append("iddevolucion_motivo", $("#cboDevolucionMotivo").val());
-    formData.append("observacion", $("#motivo_de_devolucion").val());
+    formData.append("observacion", $("#motivo_de_devolucion").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"."));
     formData.append("fecha", $("#fecha_devolucion").val());
 
     // formData.append('idUsuario', $('#txtIdUsuario').val());
