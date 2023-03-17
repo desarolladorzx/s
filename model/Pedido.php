@@ -292,7 +292,7 @@ class Pedido
 
 		//var_dump($sql);
 		//exit;
-
+ 
 		$query = $conexion->query($sql);
 		return $query;
 	}
