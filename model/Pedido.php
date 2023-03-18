@@ -11,7 +11,7 @@ class Pedido
 		return $query;
 	}
 
-	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observacion,$tipo_entrega)
+	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion, $modo_pago, $observacion, $tipo_entrega)
 	{
 
 		//var_dump($detalle);exit;
@@ -200,12 +200,12 @@ class Pedido
 				$detale_ingreso = 0;
 
 
-				
 
-				$stock_anterior_not_null=($stock_anterior !== null) ? $stock_anterior: 0 ; 
-				$stock_actual_not_null=($stock_actual !== null) ? $stock_actual: 0 ;
-				
-				
+
+				$stock_anterior_not_null = ($stock_anterior !== null) ? $stock_anterior : 0;
+				$stock_actual_not_null = ($stock_actual !== null) ? $stock_actual : 0;
+
+
 				// var_dump($response_detalle_pedido->idarticulo);
 				// var_dump($detale_ingreso);
 				// var_dump($stock_anterior);
@@ -292,7 +292,7 @@ class Pedido
 
 		//var_dump($sql);
 		//exit;
- 
+
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -483,6 +483,31 @@ class Pedido
 		return $query;
 	}
 
+
+	public function  RegistrarDetalleImagenesAlmacen($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
+	{
+		global $conexion;
+		$sql = "INSERT INTO detalle_pedido_img(
+			idpedido,
+			idsucursal,
+			idcliente,
+			idusuario,
+			imagen,
+			estado,
+			tipo_imagen
+			)
+		VALUES(
+			$idpedido, 
+			'$idsucursal', 
+			$idcliente, 
+			$idusuario, 
+			'$imagen', 
+			1,
+			'EMPAQUETADO')";
+		echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function RegistrarDetalleImagenes($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
 	{
 
