@@ -143,13 +143,11 @@ switch ($_GET["op"]) {
 			$query_total = $objPedido->TotalPedido($reg->idpedido);
 			$reg_total = $query_total->fetch_object();
 
-			if ($_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22) {
+			if ($_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22 || $_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11) {
 				$buttonSucursal = '&nbsp<button class="btn btn-warning" data-toggle="tooltip" title="Modificar detalle de venta" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',`modificarDetalles`,' . $reg->idcliente . ')" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>&nbsp';
 			} else {
-				$buttonSucursal ='';
-				
-
+				$buttonSucursal = '';
 			}
 
 			$data[] = array(
