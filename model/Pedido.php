@@ -97,7 +97,7 @@ class Pedido
 
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
-						
+
             where p.idsucursal = $idsucursal
 			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 		$query = $conexion->query($sql);
@@ -516,8 +516,8 @@ class Pedido
 	{
 
 		global $conexion;
-		$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado)
-						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1)";
+		$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado,tipo_imagen)
+						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1,'VOUCHER')";
 		//var_dump($sql);
 		$query = $conexion->query($sql);
 
@@ -539,7 +539,8 @@ class Pedido
 					idusuario AS idusuario,
 					idsucursal AS idsucursal,
 					imagen AS imagen
-			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1";
+			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 AND tipo_imagen='VOUCHER'
+					";
 		//var_dump($sql);exit;
 		$query = $conexion->query($sql);
 		return $query;
