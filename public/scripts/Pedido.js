@@ -246,6 +246,7 @@ function init() {
 
   $("#ContainerbuttonAgregarImagenAlmacen").hide();
 
+  $('#cancelado_por_container').hide();
   // $("#btnAgregar").click(AgregarDetallePedPedido)
   // $("#cboTipoComprobante").change(VerNumSerie);
   $("#btnBuscarCliente").click(AbrirModalCliente);
@@ -1130,33 +1131,42 @@ function cargarDataPedido(
   modo_pago,
   ultimo,
   modificar_detalle,
-  idcliente
+  idcliente,
+  estado
 ) {
   console.log(
     idPedido,
-    tipo_pedido,
-    numero,
-    cliente,
-    total,
-    correo,
-    num_documento,
-    celular,
-    tipo_cliente,
-    destino,
-    ticket,
-    aproba_venta,
-    aproba_pedido,
-    empleado,
-    metodo_pago,
-    agencia_envio,
-    tipo_promocion,
-    observaciones,
-    modo_pago,
-    ultimo,
-    idcliente
+  tipo_pedido,
+  numero,
+  cliente,
+  total,
+  correo,
+  num_documento,
+  celular,
+  tipo_cliente,
+  destino,
+  ticket,
+  aproba_venta,
+  aproba_pedido,
+  empleado,
+  metodo_pago,
+  agencia_envio,
+  tipo_promocion,
+  observaciones,
+  modo_pago,
+  ultimo,
+  modificar_detalle,
+  idcliente,
+  estado
   );
 
-  console.log(idcliente);
+  
+  if(modificar_detalle==='C'){
+
+    // console.log(idcliente);
+    $('#cancelado_por_container').show();
+    $('#empleado_anulador').val(idcliente)
+  }
   // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
   bandera = 2;
   

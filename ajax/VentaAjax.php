@@ -143,13 +143,20 @@ switch ($_GET["op"]) {
 			$query_total = $objPedido->TotalPedido($reg->idpedido);
 			$reg_total = $query_total->fetch_object();
 
-			if ($_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22 || $_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11) {
-				$buttonSucursal = '&nbsp<button class="btn btn-warning" data-toggle="tooltip" title="Modificar detalle de venta" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',`modificarDetalles`,' . $reg->idcliente . ')" ><i class="glyphicon glyphicon-pencil
-				"></i> </button>&nbsp';
-			} else {
-				$buttonSucursal = '';
-			}
 
+			$buttonSucursal = '';
+
+			if ($_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11 || $_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22) {
+
+					$buttonSucursal = '&nbsp<button class="btn btn-warning" data-toggle="tooltip" title="Modificar detalle de venta" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',`modificarDetalles`,' . $reg->idcliente . ')" ><i class="glyphicon glyphicon-pencil
+					"></i> </button>&nbsp';
+	
+			} 
+
+			$butonAnular='';
+			if($_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11){
+				$butonAnular='&nbsp<button class="btn btn-danger" data-toggle="tooltip" title="Anular Venta" onclick="cancelarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+			}
 			$data[] = array(
 				"0" => $i,
 				"1" => $reg->fecha,
@@ -162,12 +169,12 @@ switch ($_GET["op"]) {
 				"7" => ($reg->estado == "A") ? '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
 
 					/* '<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTASASSS" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'. */
-					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>' . $buttonSucursal . '
+					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>' . $buttonSucursal . ''.$butonAnular.'
 					
 
 					
 					' :
-					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')" ><i class="fa fa-eye"></i> </button>&nbsp
+					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',\'' . $reg->estado . '\',\'' . $reg->empleado_anulado_txt . '\')" ><i class="fa fa-eye"></i> </button>&nbsp
 					
 					' .
 					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'

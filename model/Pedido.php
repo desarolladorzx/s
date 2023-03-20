@@ -83,7 +83,7 @@ class Pedido
 	public function Listar($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
 		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
@@ -94,6 +94,10 @@ class Pedido
 						inner join empleado ev on uv.idempleado=ev.idempleado
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
+
+						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
+						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+						
             where p.idsucursal = $idsucursal
 			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 		$query = $conexion->query($sql);
