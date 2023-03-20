@@ -5,13 +5,13 @@ switch ($_GET["op"]) {
         require_once "../model/Pedido.php";
         $obj = new Pedido();
 
-        $idpedido=$_POST["idpedido"];
-        $idSucursal=$_SESSION["idsucursal"];
-        $idCliente=$_POST["idcliente"];
-    
+        $idpedido = $_POST["idpedido"];
+        $idSucursal = $_SESSION["idsucursal"];
+        $idCliente = $_POST["idcliente"];
 
-        $idUsuario=$_SESSION["idusuario"];
-        
+
+        $idUsuario = $_SESSION["idusuario"];
+
         if (!empty($_FILES["fileupload"])) {
             $file_names = $_FILES['fileupload']['name'];
 
@@ -28,9 +28,8 @@ switch ($_GET["op"]) {
 
                 $obj->RegistrarDetalleImagenesAlmacen($idpedido, $idCliente, $idUsuario, $idSucursal, $new_file_name);
 
-                
-                move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Empaquetado/" . $new_file_name);
 
+                move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Empaquetado/" . $new_file_name);
             }
         }
         break;
@@ -457,6 +456,48 @@ switch ($_GET["op"]) {
         $reg_total = $query_total->fetch_object();
         echo json_encode($reg_total);
         break;
+    case "GetImagenesEmpaquetado":
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_total = $objPedido->GetImagenesEmpaquetado($_REQUEST["idPedido"]);
+
+        //var_dump($query_total->fetch_object());
+        //exit;
+
+        while ($reg = $query_total->fetch_object()) {
+
+            // echo '<li>
+            //         <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
+            //         <span class="mailbox-attachment-icon has-img">
+            //         <img src="./Files/Voucher/' . $reg->imagen . '">
+            //         </span>
+            //         </a>
+            //         <div class="mailbox-attachment-info">
+            //         <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+            //          <span class="mailbox-attachment-size"> -
+            //         <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"
+            //         ><i class="fa fa-trash"></i></a>
+            //         </span> */
+            //         </div>
+            //         </li>';
+
+
+            echo '<li>
+                        <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank">
+                        <span class="mailbox-attachment-icon has-img">
+                        <img src="./Files/Empaquetado/' . $reg->imagen . '">
+                        </span>
+                        </a>
+                        <div class="mailbox-attachment-info">
+                        <a href="./Files/Empaquetado/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+                         
+                        
+                        </li>';
+        }
+
+
+        break;
+
     case "GetImagenes":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();

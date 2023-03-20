@@ -504,7 +504,7 @@ class Pedido
 			'$imagen', 
 			1,
 			'EMPAQUETADO')";
-		echo $sql;
+		// echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -540,6 +540,23 @@ class Pedido
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+	public function GetImagenesEmpaquetado($idpedido)
+	{
+		global $conexion;
+		$sql = "SELECT
+					iddetalle_img AS id,
+					idpedido AS idpedido,
+					idcliente AS idcliente,
+					idusuario AS idusuario,
+					idsucursal AS idsucursal,
+					imagen AS imagen
+			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 and tipo_imagen='EMPAQUETADO'";
+		//var_dump($sql);exit;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 
 	public function DeleteImagenes($iddetalleimg)
 	{

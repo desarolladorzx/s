@@ -338,7 +338,7 @@ function init() {
       success: function (data) {
         swal("Mensaje del Sistema", data, "success");
         // delete this.elementos;
-
+        window.location.href = "Venta.php"
         //$("#tblDetallePedido tbody").html("");
         // $("#txtIgvPed").val("");
         // $("#txtTotalPed").val("");
@@ -1221,6 +1221,9 @@ function cargarDataPedido(
   if (modificar_detalle == "modificarDetalles") {
     $("#ContainerbuttonAgregarImagenAlmacen").show();
   }
+  mostrarDetalleImagenesEmpaquetado(idPedido)
+
+
   if (tipo_pedido == "Venta") {
     $.getJSON(
       "./ajax/PedidoAjax.php?op=GetVenta",
@@ -1341,6 +1344,26 @@ function mostrarDetalleImagenes(idPedido) {
     }
   );
 }
+
+function mostrarDetalleImagenesEmpaquetado(idPedido) {
+  $("#detalleImagenesEmpaquetado").html("");
+
+  $.post(
+    "./ajax/PedidoAjax.php?op=GetImagenesEmpaquetado",
+    {
+      idPedido: idPedido,
+    },
+    function (r) {
+      if (r != "") {
+        $("#detalleImagenesEmpaquetado").html(r);
+      } else {
+        $("#detalleImagenesEmpaquetado").html("Sin datos que mostrar...");
+      }
+    }
+  );
+}
+
+
 
 /*  function eliminarDetalleImagen(id,idpedido) {
 

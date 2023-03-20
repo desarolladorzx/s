@@ -464,6 +464,7 @@
                       ></textarea>
                     </div>
                   </div>
+               
                   <div id="ContainerbuttonAgregarImagenAlmacen">
                     <div class="col-lg-2 left">
                       <input class="input" id="txtIdPedido"
@@ -491,6 +492,21 @@
                         />
                       </div>
                     </div>
+                    <div class="col-lg-10" style="display: flex">
+                      <div
+                        id="image-preview-container-almacen"
+                        style="display: flex"
+                      ></div>
+  
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        id="btn_todos_eliminar_imagen"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                    
                     <div class="col-lg-12 left">
                         <div class="form-group has-success">
                             <button type="button" 
@@ -525,20 +541,7 @@
                     }
                   </style>
 
-                  <div class="col-lg-10" style="display: flex">
-                    <div
-                      id="image-preview-container-almacen"
-                      style="display: flex"
-                    ></div>
-
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      id="btn_todos_eliminar_imagen"
-                    >
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </div>
+                 
 
                   <!-- <label for="inputInscripcion">Impuesto</label> -->
 
@@ -657,6 +660,17 @@
                     ></ul>
                   </div>
                 </div>
+                <div class="col-lg-12" > 
+                  <h4 for="modal-title">
+                    Imágenes De Empaquetado
+                  </h4>
+                  <ul
+                  class="mailbox-attachments clearfix"
+                  id="detalleImagenesEmpaquetado"
+                  >
+                  </ul>    
+                </div>
+
               </div>
             </div>
           </form>
