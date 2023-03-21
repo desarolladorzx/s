@@ -71,8 +71,8 @@ class Devolucion
 	fecha_registro,
 	fecha_modificado
 	)
-	VALUES 
-	(
+	SELECT 
+	
 	$idUsuario,
 	$idsucursal,
 	'DV',
@@ -80,10 +80,11 @@ class Devolucion
 	TIME(NOW()),
 	'$iddevolucion_motivo',
 	'$observacion',
-	'DV-01-13032023',
+	CONCAT('DV','-',if(LENGTH(IF(MAX(iddevolucion) IS NULL,0,MAX(iddevolucion))+1)=1,CONCAT('0',IF(MAX(iddevolucion) IS NULL,0,MAX(iddevolucion))+1),IF(MAX(iddevolucion) IS NULL,0,MAX(iddevolucion)) +1),'-',REPLACE( DATE_FORMAT(CURRENT_DATE(), '%d-%m-%Y'),'-',''))
+	,
 	CURRENT_TIMESTAMP(),
 	CURRENT_TIMESTAMP()
-	)
+	FROM devolucion
 	";
 		$query = $conexion->query($sql);
 		$iddevolucion = $conexion->insert_id;
