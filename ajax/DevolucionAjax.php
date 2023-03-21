@@ -116,10 +116,10 @@ switch ($_GET["op"]) {
             while ($reg = $query_prov->fetch_object()) {
                 echo '<tr>
                             <td>' . $reg->producto . '</td>
+                            <td>' . $reg->marca . '</td>
+                            <td>' . $reg->lote . '</td>
+                            <td>' . $reg->fecha_vencimiento . '</td>
                             <td>' . $reg->cantidad . '</td>
-                            <td>' . $reg->serie . '</td>
-                            <td>' . $reg->codigo . '</td>
-                        
                         
                            </tr>';
                 $i++;

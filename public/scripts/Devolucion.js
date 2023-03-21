@@ -235,9 +235,14 @@ function verDetallesDevoluciones(val){
     var devolucion=JSON.parse(val.replace(/\+/g,'"'))
 
     
+    console.log(devolucion)
     $("#cboDevolucionMotivoDetalle").val(devolucion.iddevolucion_motivo);
     $("#motivo_de_devolucion_detalle").val(devolucion.observacion);
     $("#datepickerDevolucionDetalle").val(devolucion.fecha);
+
+    $("#UsuarioDetalle").val(devolucion.usuario);
+
+    $("#FechaRegistroDetalle").val(devolucion.fecha_registro);
    
 
     $('#VerListado').hide()

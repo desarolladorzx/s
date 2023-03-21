@@ -7,13 +7,13 @@ class Devolucion
 	public function GetDetalleDevolucion($iddevolucion)
 	{
 		global $conexion;
-		$sql = "SELECT articulo.nombre producto , devolucion_articulo.cantidad ,detalle_ingreso.serie,detalle_ingreso.codigo
+		$sql = "SELECT  articulo.nombre producto ,categoria.nombre marca,detalle_ingreso.codigo lote, detalle_ingreso.serie fecha_vencimiento,devolucion_articulo.cantidad cantidad  , detalle_ingreso.*
 		FROM devolucion_articulo 
 		JOIN articulo ON articulo.idarticulo=devolucion_articulo.idarticulo
+		JOIN categoria ON categoria.idcategoria=articulo.idcategoria
 		JOIN detalle_ingreso ON detalle_ingreso.iddetalle_ingreso=devolucion_articulo.iddetalle_ingreso
 		
 		WHERE iddevolucion=$iddevolucion";
-
 		//var_dump($sql);
 		//exit;
 
@@ -24,7 +24,7 @@ class Devolucion
 
 	public function TraerListaDevolucion(){
 		global $conexion;
-		$sql = "SELECT dev.iddevolucion, dev.iddevolucion_motivo, dev.fecha fecha, CONCAT(emp.nombre,' ',emp.apellidos) usuario ,filename devolucion ,dev_mot.descripcion motivo,dev.observacion FROM devolucion dev
+		$sql = "SELECT dev.*, dev.iddevolucion, dev.iddevolucion_motivo, dev.fecha fecha, CONCAT(emp.nombre,' ',emp.apellidos) usuario ,filename devolucion ,dev_mot.descripcion motivo,dev.observacion FROM devolucion dev
 		JOIN empleado emp ON  emp.idempleado=dev.idempleado
 		JOIN devolucion_motivo dev_mot ON  dev_mot.iddevolucion_motivo=dev.iddevolucion_motivo
 		where dev.idsucursal=".$_SESSION["idsucursal"]. "

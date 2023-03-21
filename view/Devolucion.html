@@ -97,13 +97,13 @@
                 <div class="row" id="">
                     <div class="col-sm-12 col-sm-offset-0 col-lg-12 col-lg-offset-0 main">
                         <div class="row">
-                            <div class="col-lg-4 left">
+                            <div class="col-lg-3 left">
                                 <label id="cboTipoAlmacenFinal">Motivo:</label>
                                 <div class="form-group  has-success">
                                     <select id="cboDevolucionMotivoDetalle" disabled name="cboDevolucionMotivo" class="cboDevolucionMotivo form-control"></select>
                                 </div>
                             </div>
-                            <div class="col-lg-4 left">
+                            <div class="col-lg-3 left">
                             <label id="cboTipoAlmacenFinal">Fecha Emision:</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
@@ -112,6 +112,20 @@
                                 <input type="date" disabled class="form-control pull-right" id="datepickerDevolucionDetalle">
                             </div>
                             </div>
+                            <div class="col-lg-3 left">
+                                <label id="cboTipoAlmacenFinal">Nombre Completo:</label>
+                                <div class="form-group ">
+                                  
+                                    <input  disabled class="form-control pull-right" id="UsuarioDetalle">
+                                </div>
+                                </div>
+                                <div class="col-lg-3 left">
+                                    <label id="cboTipoAlmacenFinal">Fecha Registro:</label>
+                                    <div class="form-group ">
+                                        
+                                        <input  disabled class="form-control pull-right" id="FechaRegistroDetalle">
+                                    </div>
+                                    </div>
                         </div>
                         
                         <div class="form-group">
@@ -129,11 +143,12 @@
                             <tr>
                                 <!-- <th>#</th> -->
                                 <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>F. Vencimiento</th>
-                                <th>Unidad</th>
                                 <th>Marca</th>
                                 <th>Lote</th>
+                                <th>F. Vencimiento</th>
+                                <th>F. Vencimiento</th>
+                                <th>Cantidad</th>
+                                <!-- <th>Unidad</th> -->
                             </tr>
                         </thead>
                         <tbody>
