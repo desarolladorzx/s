@@ -1330,7 +1330,7 @@ function cargarDataPedido(
   $("#cboFechaHastaVent").hide();
   $("#lblDesde").hide();
   $("#lblHasta").hide();
-  $("#btnNuevoPedido").hide();
+  $("#btnNuevoPedido_nuevo").hide();
 
   // CARGA DETALLE DE IMAGENES
 

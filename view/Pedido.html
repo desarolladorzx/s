@@ -13,184 +13,262 @@
       </div>
     </div>
   </div>
-    <!-- /.box-header Nota de Venta -->
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="col-sm-14" id="VerFormPed">
-            <form name="frmPedidos" id="frmPedidos" enctype="multipart/form-data">
-              <div class="row">
-                <div class="col-sm-12 col-sm-offset-0 col-lg-12 col-lg-offset-0 main">
-                  <div class="row">
-                    <div class="col-lg-12 left">
-                      <label id="inputCliente">Cliente:</label>
-                      <div class="form-group has-success">
-                        <input id="txtIdTipoUsuario" type="hidden" value="<?php echo $_SESSION[" tipo_usuario"] ?>"
-                        maxlength="50" class="form-control" name="txtIdUsuario"
-                        required="" placeholder="" autofocus="" /> <input id="txtIdUsuario" type="hidden"
-                          value="<?php echo $_SESSION[" idusuario"] ?>"
-                        maxlength="50" class="form-control" name="txtIdUsuario"
-                        required="" placeholder="" autofocus="" /> <input id="txtIdSucursal" type="hidden"
-                          value="<?php echo $_SESSION[" idsucursal"] ?>"
-                        maxlength="50" class="form-control" name="txtIdSucursal"
-                        required="" placeholder="" autofocus="" />
-                        <input id="txtIdCliente" type="hidden" class="form-control" name="txtIdCliente" required
-                          placeholder="" autofocus="" />
-                        <div class="input-group">
-                          <input id="txtCliente" type="text" class="form-control" name="txtCliente" required
-                            placeholder="Seleccione un Cliente" autofocus="" disabled />
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-success" id="btnBuscarCliente">
-                              <i class="fa fa-search"></i> Buscar Cliente
-                            </button>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 left">
-                      <label id="inputImpuesto">Impuesto:</label>
-                      <div class="form-group">
-                        <div class="input-group has-success">
-                          <input id="txtImpuestoPed" type="text" class="form-control" style="text-align: center"
-                            name="txtImpuestoPed" disabled />
-                          <div class="input-group-addon" id="Porcentaje">%</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 left">
-                      <label id="inputTipoPed">Tipo de Pedido:</label>
-                      <div class="form-group has-success">
-                        <select id="cboTipoPedido" name="cboTipoPedido" class="form-control" required>
-                          <option value="Pedido">Pedido</option>
-                          <option value="Proforma">Proforma</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 left">
-                      <label id="inputNumero">Número de Cotizacion:</label>
-                      <div class="form-group has-success">
-                        <input id="txtNumeroPed" type="text" class="form-control" style="text-align: center"
-                          name="txtNumeroPed" required />
+  <!-- /.box-header Nueva Nota de Venta -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-sm-14" id="VerFormPed">
+          <form name="frmPedidos" id="frmPedidos" enctype="multipart/form-data">
+            <div class="row">
+              <div
+                class="col-sm-12 col-sm-offset-0 col-lg-12 col-lg-offset-0 main"
+              >
+                <div class="row">
+                  <div class="col-lg-12 left">
+                    <label id="inputCliente">Cliente:</label>
+                    <div class="form-group has-success">
+                      <input id="txtIdTipoUsuario" type="hidden" value="<?php echo $_SESSION["tipo_usuario"] ?>"
+                      maxlength="50" class="form-control" name="txtIdUsuario"
+                      required="" placeholder="" autofocus="" /> <input
+                      id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>"
+                      maxlength="50" class="form-control" name="txtIdUsuario"
+                      required="" placeholder="" autofocus="" /> <input
+                      id="txtIdSucursal" type="hidden" value="<?php echo $_SESSION["idsucursal"] ?>"
+                      maxlength="50" class="form-control" name="txtIdSucursal"
+                      required="" placeholder="" autofocus="" />
+                      <input
+                        id="txtIdCliente"
+                        type="hidden"
+                        class="form-control"
+                        name="txtIdCliente"
+                        required
+                        placeholder=""
+                        autofocus=""
+                      />
+                      <div class="input-group">
+                        <input
+                          id="txtCliente"
+                          type="text"
+                          class="form-control"
+                          name="txtCliente"
+                          required
+                          placeholder="Seleccione un Cliente"
+                          autofocus=""
+                          disabled
+                        />
+                        <span class="input-group-btn">
+                          <button
+                            type="button"
+                            class="btn btn-success"
+                            id="btnBuscarCliente"
+                          >
+                            <i class="fa fa-search"></i> Buscar Cliente
+                          </button>
+                        </span>
                       </div>
                     </div>
                   </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 left">
-                      <label for="inputMarca">Cuenta Abonada / Medio de Pago:</label>
-                      <div class="form-group has-success">
-                        <select id="cboMetodoPago" name="cboMetodoPago" class="form-control" required="">
-                          <option value=""></option>
-                          <option value="CONTRAENTREGA(TODO MEDIO DE PAGO)">CONTRAENTREGA(TODO MEDIO DE PAGO)</option>
-                          <option value="BCP">BCP</option>
-                          <option value="YAPE">YAPE </option>
-                          <option value="INTERBANK">INTERBANK</option>
-                          <option value="BBVA">BBVA</option>
-                          <option value="BANCO DE LA NACION">
-                            BANCO DE LA NACION
-                          </option>
-                          <option value="MERCADO PAGO">MERCADO PAGO</option>
-                          <option value="WESTERN UNION">WESTERN UNION</option>
-                          <option value="AUSPICIO">AUSPICIO</option>
-                          <option value="DESCUENTO FIN DE MES">
-                            DESCUENTO FIN DE MES
-                          </option>
-                          <option value="MAS DE 2 PAGOS">
-                            MAS DE 2 PAGOS
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-2 left">
-                      <label for="inputMarca">Transportes / Agencia de envio:</label>
-                      <div class="form-group has-success">
-                        <select id="cboAgenEnvio" name="cboAgenEnvio" class="form-control" required="">
-                          <option value=""></option>
-                          <option value="RECOJO EN OFICINA-AREQUIPA">RECOJO EN OFICINA-AREQUIPA</option>
-                          <option value="DELIVERY-AREQUIPA">DELIVERY-AREQUIPA</option>
-                          <option value="DELIVERY-LIMA">DELIVERY-LIMA</option>
-                          <option value="OLVA COURIER">OLVA COURIER</option>
-                          <option value="SHALOM">SHALOM</option>
-                          <option value="MARVISUR">MARVISUR</option>
-                          <option value="MINIVAN">MINIVAN</option>
-                          <option value="CARGOSUR">CARGOSUR</option>
-                          <option value="TRANSP. FLORES">TRANSP. FLORES</option>
-                          <option value="TRANSP. GRAEL">TRANSP. GRAEL</option>
-                          <option value="PERU BUS">PERU BUS</option>
-                          <option value="TARAPOTO COURIER">TARAPOTO COURIER</option>
-                          <option value="FEDEX">FEDEX</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-lg-2 left">
-                      <label for="inputMarca">Tipo de Entrega</label>
-                      <div class="form-group has-success">
-                        <select id="cboModTipo_Entrega" name="cboModTipo_Entrega" class="form-control" required="">
-                          <option value=""></option>
-                          <option value="DOMICILIO">DOMICILIO</option>
-                          <option value="AGENCIA EMPRESA">AGENCIA EMPRESA</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-2 left">
-                      <label for="inputMarca">Promociones:</label>
-                      <div class="form-group has-success">
-                        <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta"
-                          required="" placeholder="" autofocus="" />
-                        <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION[" idusuario"] ?>"
-                        maxlength="50" class="form-control" name="txtIdUsuario"
-                        required="" placeholder="" autofocus="" />
-                        <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required=""
-                          placeholder="" autofocus="" />
-                        <select id="cboTipoPromocion" name="cboTipoPromocion" class="form-control" required="">
-                          <option value=""></option>
-                          <option value="Sin Promocion">Sin Promocion</option>
-                          <option value="Promocion 1">Promocion 1</option>
-                          <option value="Promocion 2">Promocion 2</option>
-                          <option value="Promocion 3">Promocion 3</option>
-                          <option value="Promocion 4">Promocion 4</option>
-                          <option value="Promocion 5">Promocion 5</option>
-                          <option value="Promocion 6">Promocion 6</option>
-                          <option value="Promocion 7">Promocion 7</option>
-                          <option value="Promocion 8">Promocion 8</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-2 left">
-                      <label for="inputMarca">Modo de Pago:</label>
-                      <div class="form-group has-success">
-                        <select id="cboModPago" name="cboModPago" class="form-control" required="">
-                          <option value=""></option>
-                          <option value="PAGADO">PAGADO</option>
-                          <option value="PENDIENTE DE PAGO">
-                            PENDIENTE DE PAGO
-                          </option>
-                        </select>
+                  <div class="col-lg-4 left">
+                    <label id="inputImpuesto">Impuesto:</label>
+                    <div class="form-group">
+                      <div class="input-group has-success">
+                        <input
+                          id="txtImpuestoPed"
+                          type="text"
+                          class="form-control"
+                          style="text-align: center"
+                          name="txtImpuestoPed"
+                          disabled
+                        />
+                        <div class="input-group-addon" id="Porcentaje">%</div>
                       </div>
                     </div>
                   </div>
+                  <div class="col-lg-4 left">
+                    <label id="inputTipoPed">Tipo de Pedido:</label>
+                    <div class="form-group has-success">
+                      <select
+                        id="cboTipoPedido"
+                        name="cboTipoPedido"
+                        class="form-control"
+                        required
+                      >
+                        <option value="Pedido">Pedido</option>
+                        <option value="Proforma">Proforma</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 left">
+                    <label id="inputNumero">Número de Cotizacion:</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="txtNumeroPed"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        name="txtNumeroPed"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
 
                 <div class="row">
-                  <div class="col-lg-2 left">
-                    <label for="inputInscripcion">Imagen:</label>
+                  <div class="col-lg-3 left">
+                    <label for="inputMarca">Cuenta Abonada / Medio de Pago:</label>
                     <div class="form-group has-success">
-                      <input id="imagenVoucher" type="file" class="form-control" name="imagenVoucher[]" autofocus=""
-                        multiple />
-                      <input id="txtRutaImgVoucher" type="text" class="form-control" name="txtRutaImgVoucher"
-                        autofocus="" />
+                      <select id="cboMetodoPago" name="cboMetodoPago" class="form-control" required="">
+                        <option value=""></option>
+                        <option value="CONTRAENTREGA(TODO MEDIO DE PAGO)">CONTRAENTREGA(TODO MEDIO DE PAGO)</option>
+                        <option value="BCP">BCP</option>
+                        <option value="YAPE">YAPE </option>
+                        <option value="INTERBANK">INTERBANK</option>
+                        <option value="BBVA">BBVA</option>
+                        <option value="BANCO DE LA NACION">
+                          BANCO DE LA NACION
+                        </option>
+                        <option value="MERCADO PAGO">MERCADO PAGO</option>
+                        <option value="WESTERN UNION">WESTERN UNION</option>
+                        <option value="AUSPICIO">AUSPICIO</option>
+                        <option value="DESCUENTO FIN DE MES">
+                          DESCUENTO FIN DE MES
+                        </option>
+                        <option value="MAS DE 2 PAGOS">
+                          MAS DE 2 PAGOS
+                        </option>
+                      </select>
                     </div>
                   </div>
-                
+
+                 <div class="col-lg-2 left">
+                  <label for="inputMarca">Transportes / Agencia de envio:</label>
+                  <div class="form-group has-success">
+                    <select id="cboAgenEnvio" name="cboAgenEnvio" class="form-control" required="">
+                      <option value=""></option>
+                      <option value="RECOJO EN OFICINA-AREQUIPA">RECOJO EN OFICINA-AREQUIPA</option>
+                      <option value="DELIVERY-AREQUIPA">DELIVERY-AREQUIPA</option>
+                      <option value="DELIVERY-LIMA">DELIVERY-LIMA</option>
+                      <option value="OLVA COURIER">OLVA COURIER</option>
+                      <option value="SHALOM">SHALOM</option>
+                      <option value="MARVISUR">MARVISUR</option>
+                      <option value="MINIVAN">MINIVAN</option>
+                      <option value="CARGOSUR">CARGOSUR</option>
+                      <option value="TRANSP. FLORES">TRANSP. FLORES</option>
+                      <option value="TRANSP. GRAEL">TRANSP. GRAEL</option>
+                      <option value="PERU BUS">PERU BUS</option>
+                      <option value="TARAPOTO COURIER">TARAPOTO COURIER</option>
+                      <option value="FEDEX">FEDEX</option>
+                    </select>
+                  </div>
+                </div>
+                  <div class="col-lg-2 left">
+                    <label for="inputMarca">Tipo de Entrega</label>
+                    <div class="form-group has-success">
+                      <select
+                        id="cboModTipo_Entrega"
+                        name="cboModTipo_Entrega"
+                        class="form-control"
+                        required=""
+                      >
+                        <option value=""></option>
+                        <option value="DOMICILIO">DOMICILIO</option>
+                        <option value="AGENCIA EMPRESA">AGENCIA EMPRESA</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 left">
+                    <label for="inputMarca">Promociones:</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="txtIdVenta"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdVenta"
+                        required=""
+                        placeholder=""
+                        autofocus=""
+                      />
+                      <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>"
+                      maxlength="50" class="form-control" name="txtIdUsuario"
+                      required="" placeholder="" autofocus="" />
+                      <input
+                        id="txtIdPedido"
+                        type="hidden"
+                        class="form-control"
+                        name="txtIdPedido"
+                        required=""
+                        placeholder=""
+                        autofocus=""
+                      />
+                      <select
+                        id="cboTipoPromocion"
+                        name="cboTipoPromocion"
+                        class="form-control"
+                        required=""
+                      >
+                        <option value=""></option>
+                        <option value="Sin Promocion">Sin Promocion</option>
+                        <option value="Promocion 1">Promocion 1</option>
+                        <option value="Promocion 2">Promocion 2</option>
+                        <option value="Promocion 3">Promocion 3</option>
+                        <option value="Promocion 4">Promocion 4</option>
+                        <option value="Promocion 5">Promocion 5</option>
+                        <option value="Promocion 6">Promocion 6</option>
+                        <option value="Promocion 7">Promocion 7</option>
+                        <option value="Promocion 8">Promocion 8</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 left">
+                    <label for="inputMarca">Modo de Pago:</label>
+                    <div class="form-group has-success">
+                      <select
+                        id="cboModPago"
+                        name="cboModPago"
+                        class="form-control"
+                        required=""
+                      >
+                        <option value=""></option>
+                        <option value="PAGADO">PAGADO</option>
+                        <option value="PENDIENTE DE PAGO">
+                          PENDIENTE DE PAGO
+                        </option>
+                      </select>
+                    </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-lg-2 left">
+                        <label for="inputInscripcion">Imagen:</label>
+                        <div class="form-group has-success">
+                          <input
+                            id="imagenVoucher"
+                            type="file"
+                            class="form-control"
+                            name="imagenVoucher[]"
+                            autofocus=""
+                            multiple
+                          />
+                          <input
+                            id="txtRutaImgVoucher"
+                            type="text"
+                            class="form-control"
+                            name="txtRutaImgVoucher"
+                            autofocus=""
+                          />
+                        </div>
+                      </div>
+
                   <style>
                     .image-preview-container {
                       /* display: flex;
-                        flex-wrap: wrap;
-                        margin: 0 2px !important; */
+              flex-wrap: wrap;
+              margin: 0 2px !important; */
                     }
-
                     .my-images_preview {
                       /* transition: all 0.2s ease; */
                       /* box-shadow: 1px 1px 1px 1px #31b0d3; */
@@ -198,7 +276,6 @@
                       border: solid 1px gray;
                       border-radius: 4px;
                     }
-
                     .my-images_preview:active {
                       /* background-color: red !important; */
                       width: 700px !important;
@@ -213,369 +290,586 @@
                       /* height: 100% !important; */
                     }
                   </style>
-                
 
-                  <div class="col-lg-10 left">
-                    <label style="opacity: 0">Observaciones:</label>
-                    <div style="display: flex">
+                    <div class="col-lg-10 left">
+                      <label style="opacity: 0">Observaciones:</label>
+                      <div style="display: flex">
+                    
+                        <div class="col" id="image-preview-container" style="
+                                                  display: flex;
+                                                  justify-content: center;
+                                                  align-items: center;
+                                                  flex-wrap: wrap;
+                                                  "></div>
+                        <button type="button" class="btn btn-danger" id="btn_todos_eliminar_imagen">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    </div>
 
-                      <div class="col" id="image-preview-container" style="
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            flex-wrap: wrap;
-                            "></div>
-                      <button type="button" class="btn btn-danger" id="btn_todos_eliminar_imagen">
-                        <i class="fa fa-trash"></i>
-                      </button>
+                  <div class="row">
+                    <div class="col-lg-12 left">
+                      <div class="form-group">
+                        <label>Observaciones:</label>
+                        <textarea class="form-control" rows="3" name="textObservaciones" id="textObservaciones" maxlength="500"
+                          placeholder="Ingresar Observacion sobre la Cotizacion ..."></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 left">
+                      <div class="form-group">
+                        <button
+                          type="button"
+                          id="btnBuscarDetIng"
+                          class="btn btn-info"
+                        >
+                          <i class="fa fa-search"></i> Buscar Productos
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-striped table-bordered table-condensed table-hover"
+                      cellpadding="0"
+                      cellspacing="0"
+                      border="1"
+                      class="display"
+                      id="tblDetallePedido"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Producto</th>
+                          <th>Codigo</th>
+                          <th>F. Vencimiento</th>
+                          <th>Marca</th>
+                          <th>Stock</th>
+                          <th>P. Venta</th>
+                          <th>Cantidad</th>
+                          <th>Descuento</th>
+                          <th>Eliminar</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  class="col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-2 main"
+                  id="VerTotalesDetPedido"
+                >
+                  <div class="row">
+                    <div class="col-lg-4 left">
+                      <div class="input-group has-error">
+                        <div id="SubTotal" class="input-group-addon"></div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="txtSubTotalPed"
+                          name="txtSubTotalPed"
+                          placeholder="Sub Total"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 left has-error">
+                      <div class="input-group">
+                        <div id="IGV" class="input-group-addon"></div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="txtIgvPed"
+                          name="txtIgvPed"
+                          placeholder="I.G.V"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 left has-error">
+                      <div class="input-group">
+                        <div id="Total" class="input-group-addon"></div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="txtTotalPed"
+                          name="txtTotalPed"
+                          placeholder="Total"
+                          readonly
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-lg-12 left">
-                    <div class="form-group">
-                      <label>Observaciones:</label>
-                      <textarea class="form-control" rows="3" name="textObservaciones" id="textObservaciones"
-                        maxlength="500" placeholder="Ingresar Observacion sobre la Cotizacion ..."></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12 left">
-                    <div class="form-group">
-                      <button type="button" id="btnBuscarDetIng" class="btn btn-info">
-                        <i class="fa fa-search"></i> Buscar Productos
-                      </button>
-                    </div>
-                  </div>
+                <div class="col-lg-12 left" id="VerRegPedido">
+                  <p></p>
+                  <button class="btn btn-success" type="submit">
+                    <i class="fa fa-floppy-o"></i> Registrar Cotización
+                  </button>
+                  <button
+                    type="button"
+                    id="btnGenerarVenta"
+                    class="btn btn-warning"
+                  >
+                    <i class="fa fa-floppy-o"></i> Generar Venta
+                  </button>
+                  <a href="Pedido.php" class="btn btn-primary"
+                    ><i class="fa fa-remove"></i> Cancelar</a
+                  >
+                  <hr />
+                  <span class="lead text-primary"></span>
                 </div>
               </div>
-              <div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
-                <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-condensed table-hover" cellpadding="0"
-                    cellspacing="0" border="1" class="display" id="tblDetallePedido">
-                    <thead>
-                      <tr>
-                        <th>Producto</th>
-                        <th>Codigo</th>
-                        <th>F. Vencimiento</th>
-                        <th>Marca</th>
-                        <th>Stock</th>
-                        <th>P. Venta</th>
-                        <th>Cantidad</th>
-                        <th>Descuento</th>
-                        <th>Eliminar</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-2 main" id="VerTotalesDetPedido">
-                <div class="row">
-                  <div class="col-lg-4 left">
-                    <div class="input-group has-error">
-                      <div id="SubTotal" class="input-group-addon"></div>
-                      <input type="text" class="form-control" id="txtSubTotalPed" name="txtSubTotalPed"
-                        placeholder="Sub Total" readonly />
-                    </div>
-                  </div>
-                  <div class="col-lg-4 left has-error">
-                    <div class="input-group">
-                      <div id="IGV" class="input-group-addon"></div>
-                      <input type="text" class="form-control" id="txtIgvPed" name="txtIgvPed" placeholder="I.G.V"
-                        readonly />
-                    </div>
-                  </div>
-                  <div class="col-lg-4 left has-error">
-                    <div class="input-group">
-                      <div id="Total" class="input-group-addon"></div>
-                      <input type="text" class="form-control" id="txtTotalPed" name="txtTotalPed" placeholder="Total"
-                        readonly />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div class="row d-flex flex-wrap"></div>
 
-              <div class="col-lg-12 left" id="VerRegPedido">
-                <p></p>
-                <button class="btn btn-success" type="submit">
-                  <i class="fa fa-floppy-o"></i> Registrar Cotización
-                </button>
-                <button type="button" id="btnGenerarVenta" class="btn btn-warning">
-                  <i class="fa fa-floppy-o"></i> Generar Venta
-                </button>
-                <a href="Pedido.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
-                <hr />
-                <span class="lead text-primary"></span>
-              </div>
-          </div>
-          <div class="row d-flex flex-wrap"></div>
-
-          <!-- <br><br> -->
+              <!-- <br><br> -->
+            </div>
+          </form>
         </div>
-        </form>
       </div>
-    </div>
 
-    <!--Contenido Generar Venta-->
-    <div class="col-sm-14" id="VerForm">
-      <form role="form" name="frmVentas" id="frmVentas">
-        <div class="row">
-          <div class="col-lg-3 left">
-            <label for="inputMarca">Tipo de Venta</label>
-            <div class="form-group has-success">
-              <input id="txtIdVenta" type="hidden" maxlength="50" class="form-control" name="txtIdVenta" required=""
-                placeholder="" autofocus="" />
-              <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION[" idusuario"] ?>"
-              maxlength="50" class="form-control" name="txtIdUsuario"
-              required="" placeholder="" autofocus="" />
-              <input id="txtIdPedido" type="hidden" class="form-control" name="txtIdPedido" required="" placeholder=""
-                autofocus="" />
-              <input id="hdn_idClientePedido" type="hidden" class="form-control" name="hdn_idClientePedido" required=""
-                placeholder="" autofocus="" />
-              <!-- <input id="hdn_metodo_pago" type="text" class="form-control" name="hdn_metodo_pago"/>
-                                        <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio"/>
-                                        <input id="hdn_tipo_promocion" type="text" class="form-control" name="hdn_tipo_promocion"/> -->
-              <select id="cboTipoVenta" name="cboTipoVenta" class="form-control">
-                <option value="Contado">Contado</option>
-                <option value="Credito">Crédito</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-lg-3 left">
-            <label for="inputMarca">T. Comprobante* (Seleccionar Ticket)</label>
-            <div class="form-group has-success">
-              <select id="cboTipoComprobante" name="cboTipoComprobante" class="form-control"></select>
-            </div>
-          </div>
-          <div class="col-lg-3 left">
-            <label for="inputMarca">Serie/Folio:</label>
-            <div class="form-group has-success">
-              <input id="txtIdTipoDoc" type="hidden" maxlength="50" class="form-control" name="txtIdTipoDoc" required=""
-                autofocus="" placeholder="" />
-              <input id="txtSerieVent" type="text" maxlength="50" class="form-control" name="txtSerieVent" required=""
-                autofocus="" placeholder="" />
-            </div>
-          </div>
-          <div class="col-lg-3 left">
-            <label for="inputInscripcion">Numero</label>
-            <div class="form-group has-success">
-              <input id="txtNumeroVent" type="text" class="form-control" name="txtNumeroVent" required=""
-                placeholder="" />
-            </div>
-          </div>
-
-          <div class="col-lg-12 left">
+        <!--Contenido Ver Detalle-->
+        <div class="col-sm-14" id="VerForm">
+          <form role="form" name="frmVentas" id="frmVentas">
             <div class="row">
               <div class="col-lg-3 left">
-                <div class="form-group has-warning">
-                  <label>Ejecutivo:</label>
-                  <input id="txtEmpleadoVent" type="text" name="txtEmpleadoVent" class="form-control"
-                    readonly="readonly" />
+                <label for="inputMarca">Tipo de Venta:</label>
+                <div class="form-group has-success">
+                  <input
+                    id="txtIdVenta"
+                    type="hidden"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtIdVenta"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+                  <input id="txtIdUsuario" type="hidden" value="<?php echo $_SESSION["idusuario"] ?>"
+                  maxlength="50" class="form-control" name="txtIdUsuario"
+                  required="" placeholder="" autofocus="" />
+                  <input
+                    id="txtIdPedido"
+                    type="hidden"
+                    class="form-control"
+                    name="txtIdPedido"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+                  <input
+                    id="hdn_idClientePedido"
+                    type="hidden"
+                    class="form-control"
+                    name="hdn_idClientePedido"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+                  <!-- <input id="hdn_metodo_pago" type="text" class="form-control" name="hdn_metodo_pago"/>
+                                        <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio"/>
+                                        <input id="hdn_tipo_promocion" type="text" class="form-control" name="hdn_tipo_promocion"/> -->
+                  <select
+                    id="cboTipoVenta"
+                    name="cboTipoVenta"
+                    class="form-control"
+                  >
+                    <option value="Contado">Contado</option>
+                    <option value="Credito">Crédito</option>
+                  </select>
                 </div>
               </div>
               <div class="col-lg-3 left">
+                <label for="inputMarca"
+                  >T. Comprobante* (Seleccionar Ticket)</label
+                >
                 <div class="form-group has-success">
-                  <label>Cliente:</label>
-                  <input id="txtClienteVent" type="text" name="txtClienteVent" class="form-control"
-                    readonly="readonly" />
+                  <select
+                    id="cboTipoComprobante"
+                    name="cboTipoComprobante"
+                    class="form-control"
+                  ></select>
                 </div>
               </div>
               <div class="col-lg-3 left">
+                <label for="inputMarca">Serie/Folio:</label>
                 <div class="form-group has-success">
-                  <label>Documento:</label>
-                  <input id="txtClienteDni" type="text" name="txtClienteDni" class="form-control" readonly="readonly" />
+                  <input
+                    id="txtIdTipoDoc"
+                    type="hidden"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtIdTipoDoc"
+                    required=""
+                    autofocus=""
+                    placeholder=""
+                  />
+                  <input
+                    id="txtSerieVent"
+                    type="text"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtSerieVent"
+                    required=""
+                    autofocus=""
+                    placeholder=""
+                  />
                 </div>
               </div>
               <div class="col-lg-3 left">
+                <label for="inputInscripcion">Numero</label>
                 <div class="form-group has-success">
-                  <label>Teléfonos:</label>
-                  <input id="txtClienteCel" type="text" name="txtClienteCel" class="form-control" readonly="readonly" />
+                  <input
+                    id="txtNumeroVent"
+                    type="text"
+                    class="form-control"
+                    name="txtNumeroVent"
+                    required=""
+                    placeholder=""
+                  />
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-2 left">
-            <label for="inputMarca">Modo de Pago:</label>
-            <div class="form-group has-success">
-              <select id="cboModPagoDetalles" name="cboModPagoDetalles" disabled class="form-control" required="">
-                <option value=""></option>
-                <option value="PAGADO">PAGADO</option>
-                <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="col-lg-2 left">
-            <label for="inputMarca">Tipo de Entrega:</label>
-            <div class="form-group has-success">
-              <select id="cboModTipo_EntregaDetalles" name="cboModTipo_EntregaDetalles" disabled class="form-control"
-                required="">
-                <option value=""></option>
-                <option value="DOMICILIO">DOMICILIO</option>
-                <option value="AGENCIA EMPRESA">AGENCIA EMPRESA</option>
-              </select>
-            </div>
-          </div>
+              <!-- <div class="col-lg-12 left">
+                                <div class="row">
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Asesor :</label>
+                                            <input id="txtEjecutivo" type="text" name="txtEjecutivo" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Fecha y Hora de registro :</label>
+                                            <input id="txtClienteFech" type="text" name="txtClienteFech" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-success">
+                                            <label>Nuevo o Antiguo :</label>
+                                            <input id="txtNuevo_Antiguo" type="text" name="txtNuevo_Antiguo" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 left">
+                                        <div class="form-group has-warning">
+                                            <label>Tipo de Cliente:</label>
+                                            <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
 
-          <!-- <div class="col-lg-3 left">
+              <div class="col-lg-12 left">
+                <div class="row">
+                  <div class="col-lg-3 left">
+                    <div class="form-group has-warning">
+                      <label>Ejecutivo:</label>
+                      <input
+                        id="txtEmpleadoVent"
+                        type="text"
+                        name="txtEmpleadoVent"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left">
+                    <div class="form-group has-success">
+                      <label>Cliente:</label>
+                      <input
+                        id="txtClienteVent"
+                        type="text"
+                        name="txtClienteVent"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left">
+                    <div class="form-group has-success">
+                      <label>Documento:</label>
+                      <input
+                        id="txtClienteDni"
+                        type="text"
+                        name="txtClienteDni"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left">
+                    <div class="form-group has-success">
+                      <label>Teléfonos:</label>
+                      <input
+                        id="txtClienteCel"
+                        type="text"
+                        name="txtClienteCel"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 left">
+                <label for="inputMarca">Modo de Pago:</label>
+                <div class="form-group has-success">
+                  <select
+                    id="cboModPagoDetalles"
+                    name="cboModPagoDetalles"
+                    disabled
+                    class="form-control"
+                    required=""
+                  >
+                    <option value=""></option>
+                    <option value="PAGADO">PAGADO</option>
+                    <option value="PENDIENTE DE PAGO">PENDIENTE DE PAGO</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-2 left">
+                <label for="inputMarca">Tipo de Entrega:</label>
+                <div class="form-group has-success">
+                  <select
+                    id="cboModTipo_EntregaDetalles"
+                    name="cboModTipo_EntregaDetalles"
+                    disabled
+                    class="form-control"
+                    required=""
+                  >
+                    <option value=""></option>
+                    <option value="DOMICILIO">DOMICILIO</option>
+                    <option value="AGENCIA EMPRESA">AGENCIA EMPRESA</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- <div class="col-lg-3 left">
                                 <div class="form-group has-success">
                                     <label>Género (*):</label>
                                     <input id="txtNombre" type="text" maxlength="40" name="txtNombre" class="form-control" autofocus="" />
                                 </div>
                             </div> -->
 
-          <div class="col-lg-12 left">
-            <div class="row">
-              <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Direccion:</label>
-                  <input id="txtClienteDir" type="text" name="txtClienteDir" class="form-control" readonly="readonly" />
+              <div class="col-lg-12 left">
+                <div class="row">
+                  <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Direccion:</label>
+                      <input
+                        id="txtClienteDir"
+                        type="text"
+                        name="txtClienteDir"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="col-lg-12 left">
+                <div class="row">
+                  <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Cuenta Abonada</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="hdn_metodo_pago"
+                        type="text"
+                        class="form-control"
+                        name="hdn_metodo_pago"
+                        placeholder=""
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Agencia de Transporte</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="hdn_agencia_envio"
+                        type="text"
+                        class="form-control"
+                        name="hdn_agencia_envio"
+                        placeholder=""
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Promocion</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="hdn_tipo_promocion"
+                        type="text"
+                        class="form-control"
+                        name="hdn_tipo_promocion"
+                        placeholder=""
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Impuesto</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="txtImpuesto"
+                        type="text"
+                        class="form-control"
+                        name="txtImpuesto"
+                        placeholder=""
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Total Venta</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="txtTotalVent"
+                        type="text"
+                        class="form-control"
+                        name="txtTotalVent"
+                        required=""
+                        placeholder=""
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 left">
+                <div class="form-group">
+                  <label>Observaciones</label>
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    disabled
+                    name="textObservacionesDetalles"
+                    id="textObservacionesDetalles"
+                    placeholder="Ingresar mensaje ..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="col-lg-12 left">
+                <button class="btn btn-success" type="submit">
+                  <i class="fa fa-floppy-o"></i>Registrar
+                </button>
+                <a href="Pedido.php" class="btn btn-primary"
+                  ><i class="fa fa-remove"></i> Cancelar</a
+                >
+                <hr />
+                <span class="lead text-primary"></span>
               </div>
             </div>
-          </div>
-          <div class="col-lg-12 left">
-            <div class="row">
-              <div class="col-lg-2 left">
-                <label for="inputInscripcion">Cuenta Abonada</label>
-                <div class="form-group has-success">
-                  <input id="hdn_metodo_pago" type="text" class="form-control" name="hdn_metodo_pago" placeholder=""
-                    readonly="readonly" />
-                </div>
-              </div>
-              <div class="col-lg-2 left">
-                <label for="inputInscripcion">Agencia de Transporte</label>
-                <div class="form-group has-success">
-                  <input id="hdn_agencia_envio" type="text" class="form-control" name="hdn_agencia_envio" placeholder=""
-                    readonly="readonly" />
-                </div>
-              </div>
-              <div class="col-lg-2 left">
-                <label for="inputInscripcion">Promocion</label>
-                <div class="form-group has-success">
-                  <input id="hdn_tipo_promocion" type="text" class="form-control" name="hdn_tipo_promocion"
-                    placeholder="" readonly="readonly" />
-                </div>
-              </div>
-              <div class="col-lg-2 left">
-                <label for="inputInscripcion">Impuesto</label>
-                <div class="form-group has-success">
-                  <input id="txtImpuesto" type="text" class="form-control" name="txtImpuesto" placeholder=""
-                    readonly="readonly" />
-                </div>
-              </div>
-              <div class="col-lg-2 left">
-                <label for="inputInscripcion">Total Venta</label>
-                <div class="form-group has-success">
-                  <input id="txtTotalVent" type="text" class="form-control" name="txtTotalVent" required=""
-                    placeholder="" readonly="readonly" />
-                </div>
-              </div>
+          </form>
+          <div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-bordered table-condensed table-hover"
+                cellpadding="0"
+                cellspacing="0"
+                border="1"
+                class="display"
+                id="tblDetallePedido"
+              >
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Codigo-Lote</th>
+                    <th>Stock</th>
+                    <th>F. Vencimiento</th>
+                    <th>Cantidad</th>
+                    <th>P. Venta</th>
+                    <th>Eliminar</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
 
-          <div class="col-lg-12 left">
-            <div class="form-group">
-              <label>Observaciones</label>
-              <textarea class="form-control" rows="3" disabled name="textObservacionesDetalles"
-                id="textObservacionesDetalles" placeholder="Ingresar mensaje ..."></textarea>
-            </div>
-          </div>
+          <br /><br />
 
-          <div class="col-lg-12 left">
-            <button class="btn btn-success" type="submit">
-              <i class="fa fa-floppy-o"></i>Registrar
-            </button>
-            <a href="Pedido.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
-            <hr />
-            <span class="lead text-primary"></span>
+          <div class="col-sm-12 col-lg-12">
+            <h4 class="modal-title">Imágenes</h4>
+            <div class="box-footer">
+              <ul
+                class="mailbox-attachments clearfix"
+                id="detalleImagenes"
+              ></ul>
+            </div>
           </div>
         </div>
-      </form>
-      <div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered table-condensed table-hover" cellpadding="0" cellspacing="0"
-            border="1" class="display" id="tblDetallePedido">
+
+        <button class="btn btn-primary" id="btnNuevoPedido_nuevo">
+          <i class="fa fa-file"></i> Nueva Cotización
+        </button>
+        <br /><br />
+        <div id="VerListado" class="table-responsive">
+          <table
+            id="tblVentapedido"
+            class="table table-striped table-bordered"
+            cellspacing="0"
+            width="100%"
+          >
             <thead>
               <tr>
-                <th>Producto</th>
-                <th>Marca</th>
-                <th>Codigo-Lote</th>
-                <th>Stock</th>
-                <th>F. Vencimiento</th>
-                <th>Cantidad</th>
-                <th>P. Venta</th>
-                <th>Eliminar</th>
-                <th>Descuento</th>
-                <th>Total</th>
+                <th>#</th>
+                <th>Fecha y Hora</th>
+                <th>Número de Cotización</th>
+                <th>Ejecutivo V.</th>
+                <th>Cliente</th>
+                <th>T. Pedido</th>
+                <th>Monto Total</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+                <!-- <th>Numero</th> -->
               </tr>
             </thead>
-            <tbody></tbody>
+
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Fecha y Hora</th>
+                <th>Número de Cotización</th>
+                <th>Ejecutivo V.</th>
+                <th>Cliente</th>
+                <th>T. Pedido</th>
+                <th>Monto Total</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+                <!-- <th>Numero</th> -->
+              </tr>
+            </tfoot>
           </table>
         </div>
-      </div>
-
-      <br /><br />
-
-      <div class="col-sm-12 col-lg-12">
-        <h4 class="modal-title">Imágenes</h4>
-        <div class="box-footer">
-          <ul class="mailbox-attachments clearfix" id="detalleImagenes"></ul>
-        </div>
+        <!--Fin-Contenido-->
       </div>
     </div>
-
-    <button class="btn btn-primary" id="btnNuevoPedido_nuevo">
-      <i class="fa fa-file"></i> Nueva Cotización
-    </button>
-    <br /><br />
-    <div id="VerListado" class="table-responsive">
-      <table id="tblVentapedido" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Fecha y Hora</th>
-            <th>Número de Cotización</th>
-            <th>Ejecutivo V.</th>
-            <th>Cliente</th>
-            <th>T. Pedido</th>
-            <th>Monto Total</th>
-            <th>Estado</th>
-            <th>Opciones</th>
-            <!-- <th>Numero</th> -->
-          </tr>
-        </thead>
-
-        <tfoot>
-          <tr>
-            <th>#</th>
-            <th>Fecha y Hora</th>
-            <th>Número de Cotización</th>
-            <th>Ejecutivo V.</th>
-            <th>Cliente</th>
-            <th>T. Pedido</th>
-            <th>Monto Total</th>
-            <th>Estado</th>
-            <th>Opciones</th>
-            <!-- <th>Numero</th> -->
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <!--Fin-Contenido-->
+    <!-- /.row -->
   </div>
-</div>
-<!-- /.row -->
-</div>
-<!-- /.box-body -->
+  <!-- /.box-body -->
 </div>
 <!-- /.box -->
 
-<div id="modalCredito" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-  aria-labelledby="myLargeModalLabel">
+<div
+  id="modalCredito"
+  class="modal fade bs-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -589,20 +883,38 @@
               <div class="col-lg-4 left">
                 <div class="form-group">
                   <label for="inputNombre">Fecha de Pago</label>
-                  <input id="txtIdCredito" type="hidden" class="form-control" name="txtIdCredito" required=""
-                    placeholder="" />
-                  <input id="txtIdVentaCred" type="hidden" class="form-control" name="txtIdVenta" required=""
-                    placeholder="" />
-                  <input id="cboFechaPago" type="date" class="form-control" name="cboFechaPago" value="<?php echo date("
-                    Y-m-d"); ?>"
+                  <input
+                    id="txtIdCredito"
+                    type="hidden"
+                    class="form-control"
+                    name="txtIdCredito"
+                    required=""
+                    placeholder=""
+                  />
+                  <input
+                    id="txtIdVentaCred"
+                    type="hidden"
+                    class="form-control"
+                    name="txtIdVenta"
+                    required=""
+                    placeholder=""
+                  />
+                  <input id="cboFechaPago" type="date" class="form-control"
+                  name="cboFechaPago" value="<?php echo date("Y-m-d"); ?>"
                   required="" placeholder="" />
                 </div>
               </div>
               <div class="col-lg-4 left">
                 <div class="form-group">
                   <label for="inputApellidos">Total de Pago</label>
-                  <input id="txtTotalPago" type="text" class="form-control" name="txtTotalPago" required=""
-                    placeholder="" />
+                  <input
+                    id="txtTotalPago"
+                    type="text"
+                    class="form-control"
+                    name="txtTotalPago"
+                    required=""
+                    placeholder=""
+                  />
                 </div>
               </div>
             </div>
@@ -619,20 +931,35 @@
   </div>
 </div>
 
-<div id="modalListadoCliente" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-  aria-labelledby="myLargeModalLabel">
+<div
+  id="modalListadoCliente"
+  class="modal fade bs-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">Listado de Clientes</h4>
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table id="tblClientees" class="table table-striped table-bordered table-condensed table-hover"
-            cellpadding="0" cellspacing="0" width="100%">
+          <table
+            id="tblClientees"
+            class="table table-striped table-bordered table-condensed table-hover"
+            cellpadding="0"
+            cellspacing="0"
+            width="100%"
+          >
             <thead>
               <tr>
                 <th>X</th>
@@ -664,7 +991,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="btnCerrarBusqueda" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-default"
+          id="btnCerrarBusqueda"
+          data-dismiss="modal"
+        >
           <i class="fa fa-remove"></i> Cerrar
         </button>
         <button type="button" id="btnAgregarCliente" class="btn btn-primary">
@@ -675,20 +1007,35 @@
   </div>
 </div>
 
-<div id="modalListadoArticulosPed" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-  aria-labelledby="myLargeModalLabel">
+<div
+  id="modalListadoArticulosPed"
+  class="modal fade bs-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+>
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">Lista de Productos</h4>
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table id="tblArticulosPed" class="table table-striped table-bordered table-condensed table-hover"
-            cellpadding="0" cellspacing="0" width="100%">
+          <table
+            id="tblArticulosPed"
+            class="table table-striped table-bordered table-condensed table-hover"
+            cellpadding="0"
+            cellspacing="0"
+            width="100%"
+          >
             <thead>
               <tr>
                 <th>Añadir</th>
@@ -730,8 +1077,13 @@
   </div>
 </div>
 
-<div id="modal-eliminar-imagen" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-  aria-labelledby="myLargeModalLabel">
+<div
+  id="modal-eliminar-imagen"
+  class="modal fade bs-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+>
   <input type="hidden" id="hdn_iddetalleimagen" />
   <input type="hidden" id="hdn_numerdetalleimagen" />
   <div class="modal-dialog">
@@ -743,7 +1095,11 @@
         <p>¿Esta seguro de eliminar esta imágen?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger pull-left" id="btn_cancelar_imagen">
+        <button
+          type="button"
+          class="btn btn-danger pull-left"
+          id="btn_cancelar_imagen"
+        >
           Cancelar
         </button>
         <button type="button" class="btn btn-primary" id="btn_eliminar_imagen">
