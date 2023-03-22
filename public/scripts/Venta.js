@@ -366,7 +366,7 @@ function pasarIdPedido(idPedido, total, correo, idcliente, empleado, cliente, nu
 
   $("#VerForm").show();// mostramos el formulario
   $("#VerListado").hide();// ocultamos el listado
-  $("#btnNuevoPedido").hide();
+  $("#btnNuevoPedido_nuevo").hide();
   $("#VerTotalesDetPedido").hide();
   $("#txtIdPedido").val(idPedido);
 
