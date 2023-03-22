@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <!-- /.box-header -->
+  <!-- /.box-header Nueva Nota de Venta -->
   <div class="box-body">
     <div class="row">
       <div class="col-md-12">
@@ -140,21 +140,6 @@
                     </div>
                   </div>
 
-                  <!--                 <div class="col-lg-3 left">
-                                    <label for="inputInscripcion">NÚMERO DE OPERACIÓN</label>
-                                    <div class="form-group has-success">
-                                        <input id="txtNumeroOpe" type="text" class="form-control" name="txtNumeroOpe" required="" placeholder=""/>
-                                    </div>
-                                </div>
-                
-                                <div class="col-lg-4 left">
-                                    <div class="form-group has-success" id="labelFecha">
-                                        <label for="inputMarca">FECHA Y HORA DEL COMPROBANTE </label>
-                                        <input id="cboFechaDesdeDetProv" class="form-control" type="datetime-local"  value="<?php echo date('Y-m-d H:i:s'); ?>"  maxlength="50" class="form-control" name="cboFechaDesdeDetProv" required="" />
-                                        <input id="txtHoraOpe"  type="datetime-local" class="form-control" name="txtHoraOpe" value="<?php echo date("Y-m-d H:i:s"); ?>" required="" placeholder="" />
-                                    </div>
-                                </div>
-                 -->
                  <div class="col-lg-2 left">
                   <label for="inputMarca">Transportes / Agencia de envio:</label>
                   <div class="form-group has-success">
@@ -253,28 +238,30 @@
                         </option>
                       </select>
                     </div>
-                  </div>
-
-                  <div class="col-lg-2 left">
-                    <label for="inputInscripcion">Imagen:</label>
-                    <div class="form-group has-success">
-                      <input
-                        id="imagenVoucher"
-                        type="file"
-                        class="form-control"
-                        name="imagenVoucher[]"
-                        autofocus=""
-                        multiple
-                      />
-                      <input
-                        id="txtRutaImgVoucher"
-                        type="text"
-                        class="form-control"
-                        name="txtRutaImgVoucher"
-                        autofocus=""
-                      />
                     </div>
                   </div>
+
+                  <div class="row">
+                      <div class="col-lg-2 left">
+                        <label for="inputInscripcion">Imagen:</label>
+                        <div class="form-group has-success">
+                          <input
+                            id="imagenVoucher"
+                            type="file"
+                            class="form-control"
+                            name="imagenVoucher[]"
+                            autofocus=""
+                            multiple
+                          />
+                          <input
+                            id="txtRutaImgVoucher"
+                            type="text"
+                            class="form-control"
+                            name="txtRutaImgVoucher"
+                            autofocus=""
+                          />
+                        </div>
+                      </div>
 
                   <style>
                     .image-preview-container {
@@ -304,45 +291,35 @@
                     }
                   </style>
 
-                  <div class="col-lg-10 left" >
-                    <label style="opacity: 0">Observaciones:</label>
-                    <div style="display: flex">
+                    <div class="col-lg-10 left">
+                      <label style="opacity: 0">Observaciones:</label>
+                      <div style="display: flex">
+                    
+                        <div class="col" id="image-preview-container" style="
+                                                  display: flex;
+                                                  justify-content: center;
+                                                  align-items: center;
+                                                  flex-wrap: wrap;
+                                                  "></div>
+                        <button type="button" class="btn btn-danger" id="btn_todos_eliminar_imagen">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    </div>
 
-                      <div
-                      class="col"
-                      id="image-preview-container"
-                      style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        "
-                    ></div>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      id="btn_todos_eliminar_imagen"
-                    >
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </div>
-                  </div>
-
-                  <div class="col-lg-12 left">
-                    <div class="form-group">
-                      <label>Observaciones:</label>
-                      <textarea
-                        class="form-control"
-                        rows="3"
-                        name="textObservaciones"
-                        id="textObservaciones"
-                        maxlength="500"
-                        placeholder="Ingresar Observacion sobre la Cotizacion ..."
-                      ></textarea>
+                  <div class="row">
+                    <div class="col-lg-12 left">
+                      <div class="form-group">
+                        <label>Observaciones:</label>
+                        <textarea class="form-control" rows="3" name="textObservaciones" id="textObservaciones" maxlength="500"
+                          placeholder="Ingresar Observacion sobre la Cotizacion ..."></textarea>
+                      </div>
                     </div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-6 left">
+                    <div class="col-lg-12 left">
                       <div class="form-group">
                         <button
                           type="button"
@@ -454,13 +431,14 @@
             </div>
           </form>
         </div>
+      </div>
 
-        <!--Contenido-->
+        <!--Contenido Ver Detalle-->
         <div class="col-sm-14" id="VerForm">
           <form role="form" name="frmVentas" id="frmVentas">
             <div class="row">
               <div class="col-lg-3 left">
-                <label for="inputMarca">Tipo de Venta</label>
+                <label for="inputMarca">Tipo de Venta:</label>
                 <div class="form-group has-success">
                   <input
                     id="txtIdVenta"
@@ -639,7 +617,7 @@
                 </div>
               </div>
               <div class="col-lg-2 left">
-                <label for="inputMarca">MODO DE PAGO</label>
+                <label for="inputMarca">Modo de Pago:</label>
                 <div class="form-group has-success">
                   <select
                     id="cboModPagoDetalles"
@@ -656,7 +634,7 @@
               </div>
 
               <div class="col-lg-2 left">
-                <label for="inputMarca">Tipo de Entrega</label>
+                <label for="inputMarca">Tipo de Entrega:</label>
                 <div class="form-group has-success">
                   <select
                     id="cboModTipo_EntregaDetalles"
