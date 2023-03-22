@@ -135,11 +135,28 @@ switch ($_GET["op"]) {
 		if (!isset($_SESSION['idsucursal'])) {
 			$_SESSION['idsucursal'] = 1;
 		}
+
+
 		$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"]);
 		$i = 1;
 		while ($reg = $query_Pedido->fetch_object()) {
 			$query_total = $objPedido->TotalPedido($reg->idpedido);
 			$reg_total = $query_total->fetch_object();
+
+
+			$buttonSucursal = '';
+
+			if ($_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11 || $_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22) {
+
+					$buttonSucursal = '&nbsp<button class="btn btn-warning" data-toggle="tooltip" title="Modificar detalle de venta" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',`modificarDetalles`,' . $reg->idcliente . ')" ><i class="glyphicon glyphicon-pencil
+					"></i> </button>&nbsp';
+	
+			} 
+
+			$butonAnular='';
+			if($_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11){
+				$butonAnular='&nbsp<button class="btn btn-danger" data-toggle="tooltip" title="Anular Venta" onclick="cancelarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+			}
 			$data[] = array(
 				"0" => $i,
 				"1" => $reg->fecha,
@@ -152,8 +169,14 @@ switch ($_GET["op"]) {
 				"7" => ($reg->estado == "A") ? '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
 
 					/* '<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTASASSS" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'. */
-					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>' :
-					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>' . $buttonSucursal . ''.$butonAnular.'
+					
+
+					
+					' :
+					'<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',\'' . $reg->estado . '\',\'' . $reg->empleado_anulado_txt . '\')" ><i class="fa fa-eye"></i> </button>&nbsp
+					
+					' .
 					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
 			);
 			$i++;
@@ -334,9 +357,9 @@ switch ($_GET["op"]) {
 
 		$i = 1;
 
-		
 
-		
+
+
 		// echo json_encode ();
 
 
@@ -347,23 +370,20 @@ switch ($_GET["op"]) {
 			$objDetalleIngreso = new Venta();
 			$query_DetalleIngreso = $objDetalleIngreso->buscarDetalleIngreso($valor[6]);
 			$detalle_ingreso = $query_DetalleIngreso->fetch_object();
-			
+
 
 			$descripcionProducto = $valor[0];
 			$cantidadProducto = $valor[7];
 			$stockActual = $detalle_ingreso->stock_actual;
 
 			if ($stockActual >= $cantidadProducto) {
+			} else {
+				$dataProd = $descripcionProducto;
+				// $result = false;
+				$data = '- ' . $dataProd . ' [stock :' . $stockActual . ']';
 
-					} else {
-						$dataProd = $descripcionProducto;
-						// $result = false;
-						$data= '- ' . $dataProd . ' [stock :' . $stockActual . ']';
-
-						array_push($mi_array,"$data");
-
-					}
-
+				array_push($mi_array, "$data");
+			}
 		}
 
 		echo json_encode($mi_array);
@@ -394,7 +414,7 @@ switch ($_GET["op"]) {
 		// foreach ($resultsDetalle as $valor) {
 
 
-			
+
 		// 	//exit;
 		// 	$cantidadProducto = $valor[7];
 

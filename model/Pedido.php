@@ -11,7 +11,7 @@ class Pedido
 		return $query;
 	}
 
-	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion,$modo_pago,$observacion,$tipo_entrega)
+	public function Registrar($idcliente, $idusuario, $idsucursal, $tipo_pedido, $numero, $detalle, $metodo_pago, $agencia_envio, $tipo_promocion, $modo_pago, $observacion, $tipo_entrega)
 	{
 
 		//var_dump($detalle);exit;
@@ -83,7 +83,8 @@ class Pedido
 	public function Listar($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',c.direccion_referencia) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
+		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
@@ -93,6 +94,10 @@ class Pedido
 						inner join empleado ev on uv.idempleado=ev.idempleado
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
+
+						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
+						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+
             where p.idsucursal = $idsucursal
 			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
 		$query = $conexion->query($sql);
@@ -199,12 +204,12 @@ class Pedido
 				$detale_ingreso = 0;
 
 
-				
 
-				$stock_anterior_not_null=($stock_anterior !== null) ? $stock_anterior: 0 ; 
-				$stock_actual_not_null=($stock_actual !== null) ? $stock_actual: 0 ;
-				
-				
+
+				$stock_anterior_not_null = ($stock_anterior !== null) ? $stock_anterior : 0;
+				$stock_actual_not_null = ($stock_actual !== null) ? $stock_actual : 0;
+
+
 				// var_dump($response_detalle_pedido->idarticulo);
 				// var_dump($detale_ingreso);
 				// var_dump($stock_anterior);
@@ -309,7 +314,7 @@ class Pedido
 	public function ListarTipoPedidoPedido($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',c.direccion_referencia) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
+		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 	
 
 			(CASE
@@ -482,12 +487,37 @@ class Pedido
 		return $query;
 	}
 
+
+	public function  RegistrarDetalleImagenesAlmacen($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
+	{
+		global $conexion;
+		$sql = "INSERT INTO detalle_pedido_img(
+			idpedido,
+			idsucursal,
+			idcliente,
+			idusuario,
+			imagen,
+			estado,
+			tipo_imagen
+			)
+		VALUES(
+			$idpedido, 
+			'$idsucursal', 
+			$idcliente, 
+			$idusuario, 
+			'$imagen', 
+			1,
+			'EMPAQUETADO')";
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function RegistrarDetalleImagenes($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
 	{
 
 		global $conexion;
-		$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado)
-						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1)";
+		$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado,tipo_imagen)
+						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1,'VOUCHER')";
 		//var_dump($sql);
 		$query = $conexion->query($sql);
 
@@ -509,11 +539,29 @@ class Pedido
 					idusuario AS idusuario,
 					idsucursal AS idsucursal,
 					imagen AS imagen
-			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1";
+			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 AND tipo_imagen='VOUCHER'
+					";
 		//var_dump($sql);exit;
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+	public function GetImagenesEmpaquetado($idpedido)
+	{
+		global $conexion;
+		$sql = "SELECT
+					iddetalle_img AS id,
+					idpedido AS idpedido,
+					idcliente AS idcliente,
+					idusuario AS idusuario,
+					idsucursal AS idsucursal,
+					imagen AS imagen
+			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 and tipo_imagen='EMPAQUETADO'";
+		//var_dump($sql);exit;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 
 	public function DeleteImagenes($iddetalleimg)
 	{

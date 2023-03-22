@@ -244,6 +244,9 @@ function init() {
   $("#VerForm").hide();
   $("#VerFormVentaPed").hide();
 
+  $("#ContainerbuttonAgregarImagenAlmacen").hide();
+
+  $('#cancelado_por_container').hide();
   // $("#btnAgregar").click(AgregarDetallePedPedido)
   // $("#cboTipoComprobante").change(VerNumSerie);
   $("#btnBuscarCliente").click(AbrirModalCliente);
@@ -251,12 +254,13 @@ function init() {
   $("#btnEnviarCorreo").click(EnviarCorreo);
   //$("#btnNuevoVent").click(VerForm);
 
-  $('#btn_todos_eliminar_imagen').hide()
+  $("#btn_todos_eliminar_imagen").hide();
 
-  $('#btn_todos_eliminar_imagen').click(function(){
-    $('#image-preview-container').html('')
-    $("input[type='file']").val('')
-  })
+  $("#btn_todos_eliminar_imagen").click(function () {
+    $("#image-preview-container").html("");
+    $("#image-preview-container-almacen").html("");
+    $("input[type='file']").val("");
+  });
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
 
@@ -313,38 +317,101 @@ function init() {
     $("#lblTitlePed").html("Venta");
     //Ver();
   }
+  $("#save-guardar-almacen").click(function () {
+
+    var formData = new FormData();
+
+    formData.append('idpedido', $("#txtIdPedido").val());
+    formData.append('idcliente',$("#txtIdCliente").val());
 
 
+    $.each($("#inputFileAlmacen")[0].files, function (i, file) {
+      formData.append("fileupload[]", file);
+    });
 
-  $('#imagenVoucher').on('change', function(e) {
-    $("#btn_todos_eliminar_imagen").show()
-    $('#image-preview-container').html('')
+    $.ajax({
+      url: "./ajax/PedidoAjax.php?op=SaveImagesEmpaquetado",
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: "POST",
+
+      success: function (data) {
+        swal("Mensaje del Sistema", data, "success");
+        // delete this.elementos;
+        window.location.href = "Venta.php"
+        //$("#tblDetallePedido tbody").html("");
+        // $("#txtIgvPed").val("");
+        // $("#txtTotalPed").val("");
+        // $("#txtSubTotalPed").val("");
+        // OcultarForm();
+        // $("#VerFormPed").hide(); // Mostramos el formulario
+        // $("#btnNuevoPedido_nuevo").show();
+        // Limpiar();
+        // $("#txtCliente").val("");
+        // ListadoVenta();
+        // GetPrimerCliente();
+      },
+    });
+  });
+  $("#inputFileAlmacen").change(function () {
+    $("#btn_todos_eliminar_imagen").show();
+    $("#image-preview-container-almacen").html("");
     const files = this.files;
 
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
-  
-      reader.addEventListener('load', function() {
+
+      reader.addEventListener("load", function () {
         const image = new Image();
         image.src = reader.result;
-  
-        const imagePreview = document.createElement('div');
+
+        const imagePreview = document.createElement("div");
         // imagePreview.style.add('width:100px');
 
-        image.classList.add('my-images_preview');
-        image.style.width = '30px';
+        image.classList.add("my-images_preview");
+        image.style.width = "30px";
         // image.style.minWidth = '300px';
         // image.style.height = '300px';
-        image.style.objectFit='fixed'
+        image.style.objectFit = "fixed";
         imagePreview.appendChild(image);
-  
-        $('#image-preview-container').append(imagePreview);
+
+        $("#image-preview-container-almacen").append(imagePreview);
       });
-  
+
       reader.readAsDataURL(files[i]);
     }
   });
 
+
+  $("#imagenVoucher").on("change", function (e) {
+    $("#btn_todos_eliminar_imagen").show();
+    $("#image-preview-container").html("");
+    const files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        const image = new Image();
+        image.src = reader.result;
+
+        const imagePreview = document.createElement("div");
+        // imagePreview.style.add('width:100px');
+
+        image.classList.add("my-images_preview");
+        image.style.width = "30px";
+        // image.style.minWidth = '300px';
+        // image.style.height = '300px';
+        image.style.objectFit = "fixed";
+        imagePreview.appendChild(image);
+
+        $("#image-preview-container").append(imagePreview);
+      });
+
+      reader.readAsDataURL(files[i]);
+    }
+  });
 
   function GuardarPedido(e) {
     e.preventDefault();
@@ -389,9 +456,13 @@ function init() {
         formData.append("numero", $("#txtNumeroPed").val());
         formData.append("modo_pago", $("#cboModPago").val());
 
-        
         formData.append("tipo_entrega", $("#cboModTipo_Entrega").val());
-        formData.append("observaciones", $("#textObservaciones").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"."));
+        formData.append(
+          "observaciones",
+          $("#textObservaciones")
+            .val()
+            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
+        );
 
         for (var i = 0; i < detalle.length; i++) {
           formData.append("detalle[]", detalle[i]);
@@ -596,9 +667,8 @@ function init() {
   }
   // Limpia los campos de nueva cotizacion
   function Limpiar() {
-
-   $("#cboModPago").val("")
-     $("#textObservaciones").val("")
+    $("#cboModPago").val("");
+    $("#textObservaciones").val("");
 
     $("#txtIdCliente").val("");
     $("#cboTipoPedido").val("Pedido");
@@ -1060,43 +1130,53 @@ function cargarDataPedido(
   observaciones,
   modo_pago,
   ultimo,
-  ultims
+  modificar_detalle,
+  idcliente,
+  estado
 ) {
-  console.log( idPedido,
-    tipo_pedido,
-    numero,
-    cliente,
-    total,
-    correo,
-    num_documento,
-    celular,
-    tipo_cliente,
-    destino,
-    ticket,
-    aproba_venta,
-    aproba_pedido,
-    empleado,
-    metodo_pago,
-    agencia_envio,
-    tipo_promocion,
-    observaciones,
-    modo_pago,
-    ultimo,
-    ultims)
+  console.log(
+    idPedido,
+  tipo_pedido,
+  numero,
+  cliente,
+  total,
+  correo,
+  num_documento,
+  celular,
+  tipo_cliente,
+  destino,
+  ticket,
+  aproba_venta,
+  aproba_pedido,
+  empleado,
+  metodo_pago,
+  agencia_envio,
+  tipo_promocion,
+  observaciones,
+  modo_pago,
+  ultimo,
+  modificar_detalle,
+  idcliente,
+  estado
+  );
+
+  
+  if(modificar_detalle==='C'){
+
+    // console.log(idcliente);
+    $('#cancelado_por_container').show();
+    $('#empleado_anulador').val(idcliente)
+  }
   // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
   bandera = 2;
-
-
-
-
-
+  
+  $("#txtIdCliente").val(idcliente)
   $("#VerForm").show();
   //$("#btnNuevoVent").hide();
   $("#VerListado").hide();
   $("#txtIdPedido").val(idPedido);
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
-
 
   $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
@@ -1111,17 +1191,18 @@ function cargarDataPedido(
   $("#hdn_tipo_promocion").val(aproba_venta);
   $("#txtClientePed").val(metodo_pago);
 
-  $("#cboModPagoDetalles").val( empleado);
+  $("#cboModPagoDetalles").val(empleado);
   $("#textObservacionesDetalles").val(aproba_pedido);
 
-
-  $('#hdn_tipo_entrega').val(observaciones)
-  $('#hdn_modo_pago').val(ultimo)
-  $('#hdn_observacion').val(modo_pago)
+  $("#hdn_tipo_entrega").val(observaciones);
+  $("#hdn_modo_pago").val(ultimo);
+  $("#hdn_observacion").val(modo_pago);
 
   $("#cboModTipo_EntregaDetalles").val(metodo_pago);
 
   $("#txtTotalVent").val(tipo_pedido);
+
+ 
   //$("#hdn_agencia_envio").val(agencia_envio);
   //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
   /* $("#txtRutaImgVoucher").val(imagen);
@@ -1146,6 +1227,12 @@ function cargarDataPedido(
   $("#txtSubTotalPed").val(Math.round(subTotalPed * 100) / 100);
 
   $("#txtTotalPed").val(Math.round(total * 100) / 100);
+
+  if (modificar_detalle == "modificarDetalles") {
+    $("#ContainerbuttonAgregarImagenAlmacen").show();
+  }
+  mostrarDetalleImagenesEmpaquetado(idPedido)
+
 
   if (tipo_pedido == "Venta") {
     $.getJSON(
@@ -1245,7 +1332,6 @@ function cargarDataPedido(
   $("#lblHasta").hide();
   $("#btnNuevoPedido").hide();
 
-
   // CARGA DETALLE DE IMAGENES
 
   mostrarDetalleImagenes(idPedido);
@@ -1268,6 +1354,26 @@ function mostrarDetalleImagenes(idPedido) {
     }
   );
 }
+
+function mostrarDetalleImagenesEmpaquetado(idPedido) {
+  $("#detalleImagenesEmpaquetado").html("");
+
+  $.post(
+    "./ajax/PedidoAjax.php?op=GetImagenesEmpaquetado",
+    {
+      idPedido: idPedido,
+    },
+    function (r) {
+      if (r != "") {
+        $("#detalleImagenesEmpaquetado").html(r);
+      } else {
+        $("#detalleImagenesEmpaquetado").html("Sin datos que mostrar...");
+      }
+    }
+  );
+}
+
+
 
 /*  function eliminarDetalleImagen(id,idpedido) {
 
