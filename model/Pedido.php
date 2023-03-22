@@ -173,7 +173,8 @@ class Pedido
 
 				$suma_anterior = "SELECT sum(stock_actual) stock from detalle_ingreso  
 				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
+				 where idarticulo=$response_detalle_pedido->idarticulo and ingreso.estado='A'
+                    and detalle_ingreso.estado_detalle_ingreso='INGRESO'  and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 				$stock_anterior = $rpta_sql_suma_anterior->stock;
@@ -191,7 +192,8 @@ class Pedido
 				$suma_ingreso = "SELECT sum(stock_actual) stock
 				from detalle_ingreso  
 				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
+				 where idarticulo=$response_detalle_pedido->idarticulo and ingreso.estado='A'
+                    and detalle_ingreso.estado_detalle_ingreso='INGRESO' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 
 

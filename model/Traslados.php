@@ -6,6 +6,104 @@ require "Conexion.php";
 class Traslados
 {
 
+    public function ModificarEstadoTraslado($idtraslado, $estado, $arrayDatos, $descripcion_recepcion, $sucursal_destino_id)
+    {
+        global $conexion;
+
+        $array = json_decode(json_decode($arrayDatos, true));
+
+
+        print_r($estado);
+        if ($estado != 'INGRESO') {
+            $sql = "UPDATE traslados  SET  estado='$estado',fecha_modificado=CURRENT_TIMESTAMP()
+            WHERE idtraslado=$idtraslado";
+            $conexion->query($sql);
+
+            foreach ($array as $clave => $valor) {
+                $sql = "UPDATE detalle_ingreso  SET  estado_detalle_ingreso='$estado' WHERE iddetalle_ingreso=$valor->iddetalle_ingreso";
+                $conexion->query($sql);
+            }
+        } else {
+            $sql = "UPDATE traslados  
+            SET  estado='$estado',
+                descripcion_recepcion ='$descripcion_recepcion',
+            fecha_modificado=CURRENT_TIMESTAMP(),id_empleado_recepcion=" . $_SESSION["idusuario"] . "
+            WHERE idtraslado=$idtraslado";
+            $conexion->query($sql);
+
+            foreach ($array as $clave => $valor) {
+
+
+                $sql_stock_anterior = "SELECT SUM(stock_actual) stock from detalle_ingreso
+                join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+                where idarticulo=$valor->idarticulo and idsucursal=$sucursal_destino_id
+                and ingreso.estado='A' 
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+                ";
+
+                // echo $sql_stock_anterior;
+
+                $stock_anterior = $conexion->query($sql_stock_anterior)->fetch_object()->stock;
+
+
+
+                $stock_anterior_not_null = ($stock_anterior !== null) ? $stock_anterior : 0;
+
+
+                $sql = "UPDATE detalle_ingreso  SET stock_ingreso='$valor->cantidadRecibida' ,
+                stock_actual='$valor->cantidadRecibida' ,
+                estado_detalle_ingreso='$estado' WHERE iddetalle_ingreso=$valor->iddetalle_ingreso";
+                $conexion->query($sql);
+
+
+                $sql_stock_actual = "SELECT SUM(stock_actual) stock from detalle_ingreso
+                join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+                where idarticulo=$valor->idarticulo and idsucursal=$sucursal_destino_id 
+                and ingreso.estado='A'
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+                ";
+
+                $stock_actual = $conexion->query($sql_stock_actual)->fetch_object()->stock;
+
+                $stock_actual_not_null = ($stock_actual !== null) ? $stock_actual : 0;
+
+
+                // SE ACTUALIZA EL KARDEX 
+
+                $detallePedido = 0;
+
+                print_r($valor);
+                $sqlKardex = "INSERT INTO kardex(
+                    id_sucursal,
+                    fecha_emision,
+                    tipo,
+                    id_articulo,
+                    id_detalle_ingreso,
+                    stock_anterior,
+                    cantidad,
+                    stock_actual,
+                    fecha_creacion,
+                    fecha_modificacion,
+                    id_detalle_pedido
+                         )
+                VALUES(
+                    '$sucursal_destino_id ',
+                    CURRENT_TIMESTAMP(),
+                     'ingreso por traslado',
+                     '$valor->idarticulo',
+                     '$valor->iddetalle_ingreso',
+                      '$stock_anterior_not_null',
+                    '$valor->cantidadRecibida',
+                    '$stock_actual_not_null',
+                    CURRENT_TIMESTAMP(),
+                    CURRENT_TIMESTAMP(),
+                    '$detallePedido'
+                    )";
+                $conexion->query($sqlKardex);
+            }
+        }
+    }
+
     public function ListarDetalleIngresos($sucursal)
     {
         global $conexion;
@@ -26,13 +124,12 @@ class Traslados
         global $conexion;
         $sw = true;
         try {
-
-
             $idproveedor = 7048;
             $impuesto = 18;
-
             $total = 0;
             $totalTraslado = 0;
+
+            
             for ($i = 0; $i < count($detalle); $i++) {
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
@@ -72,6 +169,8 @@ class Traslados
                 $impuesto,
                 $total
         )";
+
+
             $conexion->query($sql);
             $idingreso = $conexion->insert_id;
 
@@ -94,11 +193,16 @@ class Traslados
                 // echo  "<br>" ;
                 $suma_ingreso_anterior_sucursal_final = "SELECT SUM(stock_actual) stock from detalle_ingreso
                 join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-                where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenFinal and estado='A'";
+                where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenFinal and ingreso.estado='A'
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+                ";
 
                 $suma_ingreso_anterior_sucursal_inicial = "SELECT SUM(stock_actual) stock from detalle_ingreso
                     join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-                    where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenInicial and estado='A'";
+                    where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenInicial 
+                    and ingreso.estado='A'
+                    and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+                    ";
 
 
                 $rpta_sql_suma_ingreso_sucursal_final = $conexion->query($suma_ingreso_anterior_sucursal_final)->fetch_object()->stock;
@@ -129,7 +233,8 @@ class Traslados
                     precio_ventadistribuidor,
                     precio_ventapublico,
                     serie,
-                    descripcion   
+                    descripcion,
+                    estado_detalle_ingreso
                 ) values (
                     $idingreso,
                     $detalle_ingreso->idarticulo,
@@ -140,7 +245,8 @@ class Traslados
                     '$detalle_ingreso->precio_ventadistribuidor',
                     '$detalle_ingreso->precio_ventapublico',
                     '$detalle_ingreso->serie',
-                    '$detalle_ingreso->descripcion'
+                    '$detalle_ingreso->descripcion',
+                    'SALIDA'
                 )";
                 $conexion->query($sql_insert_ingreso);
 
@@ -148,13 +254,18 @@ class Traslados
 
                 $suma_ingreso_nuevo_almacen_final = "SELECT SUM(stock_actual) stock from detalle_ingreso
                 join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-                where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenInicial and estado='A'";
+                where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenInicial 
+                and ingreso.estado='A'
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+                ";
 
                 $rpta_sql_suma_ingreso_nuevo_inicial = $conexion->query($suma_ingreso_nuevo_almacen_final)->fetch_object()->stock;
 
                 $suma_ingreso_nuevo_almacen_inicial = "SELECT SUM(stock_actual) stock from detalle_ingreso
             join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-            where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenFinal and estado='A'";
+            where idarticulo=$detalle_ingreso->idarticulo and idsucursal=$almacenFinal and ingreso.estado='A'
+            and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+            ";
 
                 $rpta_sql_suma_ingreso_nuevo_final = $conexion->query($suma_ingreso_nuevo_almacen_inicial)->fetch_object()->stock;
 
@@ -199,33 +310,35 @@ class Traslados
 
 
                 $siaca = ($rpta_sql_suma_ingreso_sucursal_final !== null) ? $rpta_sql_suma_ingreso_sucursal_final : 0;
-                $sqlKardex = "INSERT INTO kardex(
-                    id_sucursal,
-                    fecha_emision,
-                    tipo,
-                    id_articulo,
-                    id_detalle_ingreso,
-                    stock_anterior,
-                    cantidad,
-                    stock_actual,
-                    fecha_creacion,
-                    fecha_modificacion,
-                    id_detalle_pedido
-                         )
-                VALUES(
-                    '$almacenFinal',
-                    CURRENT_TIMESTAMP(),
-                     'ingreso por traslado',
-                     '$detalle_ingreso->idarticulo',
-                     '" . $id_nuevo_detalle_ingreso . "',
-                      '" . $siaca . "',
-                    '" . $cantidad_de_traslado . "',
-                    '" . $rpta_sql_suma_ingreso_nuevo_final_not_null . "',
-                    CURRENT_TIMESTAMP(),
-                    CURRENT_TIMESTAMP(),
-                    '" . $detallePedido . "'
-                    )";
-                $conexion->query($sqlKardex) or $sw = false;
+
+                // $sqlKardex = "INSERT INTO kardex(
+                //     id_sucursal,
+                //     fecha_emision,
+                //     tipo,
+                //     id_articulo,
+                //     id_detalle_ingreso,
+                //     stock_anterior,
+                //     cantidad,
+                //     stock_actual,
+                //     fecha_creacion,
+                //     fecha_modificacion,
+                //     id_detalle_pedido
+                //          )
+                // VALUES(
+                //     '$almacenFinal',
+                //     CURRENT_TIMESTAMP(),
+                //      'ingreso por traslado',
+                //      '$detalle_ingreso->idarticulo',
+                //      '" . $id_nuevo_detalle_ingreso . "',
+                //       '" . $siaca . "',
+                //     '" . $cantidad_de_traslado . "',
+                //     '" . $rpta_sql_suma_ingreso_nuevo_final_not_null . "',
+                //     CURRENT_TIMESTAMP(),
+                //     CURRENT_TIMESTAMP(),
+                //     '" . $detallePedido . "'
+                //     )";
+
+                // $conexion->query($sqlKardex) or $sw = false;
 
 
 
@@ -240,7 +353,9 @@ class Traslados
             cantidad,
             fecha_registro,
             fecha_modificado,
-            id_empleado
+            id_empleado,
+            estado,
+            idingreso
             )
             VALUES (
             '$motivoDeTraslado',
@@ -249,20 +364,24 @@ class Traslados
             $totalTraslado,
             CURRENT_TIMESTAMP(),
             CURRENT_TIMESTAMP(),
-            $idUsuario
+            $idUsuario,
+            'SALIDA',
+            '$idingreso'
             )";
             $conexion->query($sql);
             $traslado_id = $conexion->insert_id;
-            $conexion->autocommit(true); 
+            $conexion->autocommit(true);
 
+
+           
             for ($i = 0; $i < count($detalle); $i++) {
-         
+
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
                 $cantidad_tras = $array[6];
                 // var_dump($array);
 
-                $sql_detall_ingreso="select * from detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso";
+                $sql_detall_ingreso = "select * from detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso";
                 $detalle_ingreso = $conexion->query($sql_detall_ingreso)->fetch_object();
 
                 // var_dump($array);
@@ -290,9 +409,8 @@ class Traslados
                 )
                 ";
                 // var_dump($sql_inventario);
-                 $conexion->query($sql_inventario);
-                 $conexion->autocommit(true);
-
+                $conexion->query($sql_inventario);
+                $conexion->autocommit(true);
             }
             // if ($hosp[0]) {
             //     echo "Pedido Registrado";
@@ -309,14 +427,16 @@ class Traslados
     public function TableTraslado()
     {
         global $conexion;
-        $sql = "SELECT 
+        $sql = "SELECT
+           
             idtraslado,
             fecha_registro fecha,
             sucursal.razon_social almacen_inicial ,
             sucu.razon_social almacen_destino,
             descripcion motivo_del_traslado,
             cantidad cantidad_total_de_productos,
-            cantidad cantidad_total_de_productos
+            cantidad cantidad_total_de_productos,
+            traslados.*
              from traslados
             left join sucursal on sucursal.idsucursal=traslados.sucursal_id 
             left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id";
@@ -324,38 +444,37 @@ class Traslados
         $query = $conexion->query($sql);
         return $query;
     }
-    public function infoTraslados($idtraslado){
+    public function infoTraslados($idtraslado)
+    {
         global $conexion;
-        $sql="SELECT descripcion,suc_ini.razon_social AS inicial,suc_des.razon_social AS final FROM traslados 
+        $sql = "SELECT descripcion,suc_ini.razon_social AS inicial,suc_des.razon_social AS final FROM traslados 
         JOIN sucursal suc_ini ON suc_ini.idsucursal = traslados.sucursal_id
         JOIN sucursal suc_des ON suc_des.idsucursal = traslados.sucursal_destino_id
         where idtraslado=$idtraslado
         ";
         $query = $conexion->query($sql);
         return $query;
-        
     }
 
     public function GetDetalleTraslado($idtraslado)
-	{
-		global $conexion;
-		$sql = "SELECT
-        -- COUNT(*)
-       -- * 
-       articulo.nombre Articulo, categoria.nombre marca,detalle_ingreso.codigo Codigo,detalle_ingreso.serie Serie ,inventario.cantidad Cantidad
-       FROM inventario 
-       JOIN articulo ON articulo.idarticulo=inventario.idarticulo
-       JOIN categoria ON categoria.idcategoria=articulo.idcategoria
-       JOIN kardex  ON articulo.idarticulo=kardex.id_articulo
-       JOIN detalle_ingreso ON detalle_ingreso.iddetalle_ingreso=kardex.id_detalle_ingreso
-       WHERE inventario.descripcion='traslado' AND idtraslado=$idtraslado AND kardex.tipo='salida por traslado'";
+    {
+        global $conexion;
 
-		//var_dump($sql);
-		//exit;
+        $sql = "SELECT detalle_ingreso.iddetalle_ingreso, detalle_ingreso.stock_ingreso,detalle_ingreso.estado_detalle_ingreso,detalle_ingreso.idarticulo,
+        articulo.nombre Articulo, categoria.nombre marca,detalle_ingreso.codigo Codigo,detalle_ingreso.serie Serie ,inventario.cantidad Cantidad 
+         FROM inventario  
+        JOIN traslados ON traslados.idtraslado=inventario.idtraslado
+        JOIN detalle_ingreso ON detalle_ingreso.idarticulo =inventario.idarticulo and detalle_ingreso.idingreso=traslados.idingreso
+        
+        JOIN articulo ON articulo.idarticulo=detalle_ingreso.idarticulo 
+        JOIN categoria ON categoria.idcategoria=articulo.idcategoria
+        WHERE inventario.idtraslado=$idtraslado
+        GROUP BY detalle_ingreso.iddetalle_ingreso";
 
-		$query = $conexion->query($sql);
-		return $query;
-	}
 
+        //exit;
+
+        $query = $conexion->query($sql);
+        return $query;
+    }
 }
-
