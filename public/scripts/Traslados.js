@@ -83,6 +83,10 @@ function verDetallesTraslados(val) {
   $("#info_fecha_registro").val(traslado.fecha_registro)
   $("#info_fecha_modificado").val(traslado.fecha_modificado)
 
+  $("#info_usuario_registro").val(traslado.empleado_ingreso)
+  $("#info_usuario_recepcion").val(traslado.empleado_recepcion)
+
+
   $("#estadoTraslado").append(htmlEstado);
   $("#estadoTraslado").val(traslado.estado);
 
@@ -97,8 +101,13 @@ function modificarTraslados(val) {
   var traslado = JSON.parse(val.replace(/\+/g, '"'));
   
   dataTraslados=traslado
+
+  
   $("#info_fecha_registro").val(traslado.fecha_registro)
   $("#info_fecha_modificado").val(traslado.fecha_modificado)
+
+  $("#info_usuario_registro").val(traslado.empleado_ingreso)
+  $("#info_usuario_recepcion").val(traslado.empleado_recepcion)
 
   console.log(traslado.sucursal_destino_id);
   var htmlEstado = "";

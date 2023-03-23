@@ -429,17 +429,25 @@ class Traslados
         global $conexion;
         $sql = "SELECT
            
-            idtraslado,
-            fecha_registro fecha,
-            sucursal.razon_social almacen_inicial ,
-            sucu.razon_social almacen_destino,
-            descripcion motivo_del_traslado,
-            cantidad cantidad_total_de_productos,
-            cantidad cantidad_total_de_productos,
-            traslados.*
-             from traslados
-            left join sucursal on sucursal.idsucursal=traslados.sucursal_id 
-            left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id";
+        idtraslado,
+        CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_ingreso,
+        CONCAT(emp2.nombre ,' ',emp2.apellidos) empleado_recepcion,
+        
+        traslados.fecha_registro fecha,
+        sucursal.razon_social almacen_inicial ,
+        sucu.razon_social almacen_destino,
+        descripcion motivo_del_traslado,
+        cantidad cantidad_total_de_productos,
+        cantidad cantidad_total_de_productos,
+        traslados.*
+         from traslados
+        left join sucursal on sucursal.idsucursal=traslados.sucursal_id 
+        left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id
+            LEFT JOIN usuario ON usuario.idusuario =traslados.id_empleado
+            LEFT JOIN empleado ON empleado.idempleado=usuario.idempleado
+            
+            left JOIN usuario usu2 ON usu2.idusuario =traslados.id_empleado_recepcion
+             left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado";
 
         $query = $conexion->query($sql);
         return $query;
