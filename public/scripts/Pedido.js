@@ -1160,6 +1160,8 @@ function cargarDataPedido(
   estado
   );
 
+
+  $('#ventasFechasOcultar').hide()
   
   if(modificar_detalle==='C'){
 
