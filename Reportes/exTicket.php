@@ -92,6 +92,12 @@ $reg_igv = $query_global->fetch_object();
     <tr>
       <td align="center"><strong><font size="4"><?php echo $reg_cli->serie_comprobante."-".$reg_cli->num_comprobante;?> <?php echo($reg_cli->estado=='A')?'':'- ANULADO'; ?></strong></td>
     </tr>
+    <?php echo($reg_cli->estado=='A')?'':'<tr>
+      <td align="center">ANULADO POR :<b> '.$reg_cli->empleado_anulado.'</b></td>
+    </tr>'; ?>
+
+    
+
     <tr>
       <td align="center">FECHA EMISIÓN : <?php echo $reg_cli->fecha; ?></td>
     </tr>
