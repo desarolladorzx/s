@@ -1161,7 +1161,7 @@ function cargarDataPedido(
   );
 
 
-  $('#ventasFechasOcultar').hide()
+  $('.ventasFechasOcultar').hide()
   
   if(modificar_detalle==='C'){
 
@@ -1217,6 +1217,7 @@ function cargarDataPedido(
   //celular = celular;
   //fecha = date;
   //hora_operacion = hora_operacion;
+  
   var igvPed =
     (total * parseInt($("#txtImpuesto").val())) /
     (100 + parseInt($("#txtImpuesto").val()));

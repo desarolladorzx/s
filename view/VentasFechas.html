@@ -250,6 +250,15 @@
                           multiple
                           style="display: none"
                         />
+                        <input
+                      id="txtImpuesto"
+                      type="hidden"
+                      class="form-control"
+                      style="text-align: center"
+                      name="txtImpuestoPed"
+                      disabled
+                    />
+                    
                       </div>
                     </div>
                     <div class="col-lg-10" style="display: flex">
@@ -564,7 +573,7 @@
                 </div>
               </div>
               <?php } ?>
-              <div class="col-lg-6 left">
+              <div class="col-lg-6 left ventasFechasOcultar">
                 <div class="form-group has-success">
                   <label for="inputMarca">Desde :</label>
                   <input id="txtIdSucursal" type="hidden" value="<?php echo $_SESSION["idsucursal"] ?>"
@@ -583,7 +592,7 @@
                   name="cboFechaHastaVent" required="" />
                 </div>
               </div>
-              <div class="col-lg-12 left"   >
+              <div class="col-lg-12 left ventasFechasOcultar" id="ventasFechasOcultar"  >
                 <div class="row">
                   <div class="col-lg-4 left">
                     <label for="inputMarca">Ejecutivo Comercial:</label>
