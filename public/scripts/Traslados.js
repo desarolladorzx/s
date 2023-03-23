@@ -453,6 +453,7 @@ function init() {
       formData.append("detalle[]", detalle[i]);
     }
 
+    console.log($("#idtxtSucursalTraslado").val())
     if ($("#almacenFinal").val() != $("#idtxtSucursalTraslado").val()) {
       if (elementos.length > 0) {
         if ($("#motivo_de_traslado").val() != "") {

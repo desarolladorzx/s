@@ -31,10 +31,12 @@
                   <div class="col-lg-4 left">
                     <label id="inputTipoPed">Almacen Inicial:</label>
                     <div class="form-group has-success">
-                      <input id="idtxtSucursalTraslado" type="hidden"
+                      <!-- <input id="idtxtSucursalTraslado" type="hidden" class="form-control" name="txtSucursal" required="" disabled value="<?php echo $_SESSION[" idsucursal"] ?>" placeholder="Seleccione una Sucursal" autofocus=""  /> -->
+                      <input id="idtxtSucursalTraslado"   type="hidden" value="<?php echo $_SESSION["idsucursal"]?>"
                       class="form-control" name="txtSucursal" required=""
                       placeholder="Seleccione una Sucursal" autofocus=""
-                      disabled value="<?php echo $_SESSION[" idsucursal"] ?>" />
+                      disabled/>
+
                       <input id="txtSucursalTraslado" type="text" value="<?php echo $_SESSION["sucursal"]?>"
                       class="form-control" name="txtSucursal" required=""
                       placeholder="Seleccione una Sucursal" autofocus=""

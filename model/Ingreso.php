@@ -102,7 +102,7 @@ class Ingreso
 						CURRENT_TIMESTAMP(),
 						'" . $detallePedido . "'
 						)";
-						echo $sqlKardex;
+						 
 				$conexion->query($sqlKardex) or $sw = false;
 			}
 			if ($conexion != null) {
