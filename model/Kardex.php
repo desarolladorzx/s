@@ -134,7 +134,16 @@ class Kardex
 				END
 			 AS Cliente,
 			stock_anterior,
-			kardex.cantidad,
+			CASE
+				WHEN 	kardex.stock_anterior<kardex.stock_actual THEN concat('+ ',kardex.cantidad)
+				ELSE '-'
+				END
+			 AS ingreso,
+			 CASE
+				WHEN kardex.stock_anterior>kardex.stock_actual THEN concat('- ',kardex.cantidad) 
+				ELSE '-'
+				END
+			 AS salida,
 			kardex.stock_actual,
 			 sucursal.razon_social sucursal
 			  from kardex

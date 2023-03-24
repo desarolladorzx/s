@@ -6,6 +6,25 @@ require_once "../model/Persona.php";
 $objVenta = new Venta();
 $objCliente = new Persona();
 switch ($_GET["op"]) {
+
+
+	case 'GetDetallePedidoSolo':
+		require_once "../model/Pedido.php";
+		// $data = array();
+		$objPedido = new Pedido();
+
+		$idPedido = $_GET["idPedido"];
+
+		$query_prov = $objPedido->GetDetallePedidoSolo($idPedido);
+		$nuevo = $query_prov->fetch_all();
+		
+		// $nuevo = array();
+        // while ($reg = $query_prov->fetch_object()) {
+        //     $nuevo[] = $reg;
+		// }
+
+		echo json_encode($nuevo);
+		break;
 	case 'SaveOrUpdate':
 
 		$idCliente = $_POST["idCliente"];

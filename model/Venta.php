@@ -42,6 +42,7 @@ class Venta
 			$conexion->query($sql_ped);
 
 			$conexion->autocommit(true);
+			// print_r($detalle);
 			foreach ($detalle as $indice => $valor) {
 
 				//1 VERSION
@@ -81,9 +82,13 @@ class Venta
 
 				global $conexion;
 				$sql = "SELECT * from detalle_ingreso where iddetalle_ingreso =" . $valor[0] . " ";
-				$query = $conexion->query($sql)->fetch_object()->idarticulo;			
-				$sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." and iddetalle_ingreso=$valor[0] ";
-				$detalle_pedido = $conexion->query($sql)->fetch_object()->iddetalle_pedido;
+				$query = $conexion->query($sql)->fetch_object()->idarticulo;	
+				
+				
+				// $sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." and iddetalle_ingreso=$valor[0] limit 1";
+
+				// print_r($valor);
+				// $detalle_pedido = $conexion->query($sql)->fetch_object()->iddetalle_pedido;
 
 
 				$suma_ingreso="SELECT sum(stock_actual) as stock
@@ -125,7 +130,7 @@ class Venta
 						'venta',
 						'" . $query. "',
 						'" . $detale_ingreso . "',
-						'" . $detalle_pedido . "', 
+						'" . $valor[3] . "', 
 						'" . $valor[2] . "',
 						CURRENT_TIMESTAMP(),
 						CURRENT_TIMESTAMP(),

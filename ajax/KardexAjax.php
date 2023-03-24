@@ -69,9 +69,10 @@ switch ($_GET["op"]) {
                 "5" => $reg->Proveedor,
                 // "6" => $reg->id_kardex,
                 "6" => $reg->stock_anterior,
-                "7" => $reg->cantidad,
-                "8" => $reg->stock_actual,
-                "9" => $reg->sucursal
+                "7" => $reg->ingreso,
+                "8" => $reg->salida,
+                "9" => $reg->stock_actual,
+                "10" => $reg->sucursal
             );
             //$reg->estado,
             // "8"=>($reg->estado=="A")?'<span class="badge bg-green">ACEPTADO</span>':'<span class="badge bg-red">CANCELADO</span>',

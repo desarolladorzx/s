@@ -286,6 +286,12 @@ class Pedido
 		return $query;
 	}
 
+	public function GetDetallePedidoSolo($idpedido){
+		global $conexion;
+		$sql = "			SELECT detalle_ingreso.iddetalle_ingreso,stock_actual,cantidad,iddetalle_pedido FROM detalle_pedido JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=detalle_pedido.iddetalle_ingreso where idpedido = $idpedido";
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function GetDetallePedido($idpedido)
 	{
 		global $conexion;

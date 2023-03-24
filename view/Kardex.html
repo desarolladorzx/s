@@ -76,6 +76,50 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
+        <div class="table-responsive">
+          <table
+            id="tblKardex"
+            class="table table-striped table-bordered table-condensed table-hover"
+            cellspacing="0"
+            width="100%"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fecha y hora transacción</th>
+                <th>Tipo transacción</th>
+                <th>Número</th>
+                <th>Cliente(Nombre/Apellido)</th>
+                <th>Proveedor</th>
+                <th>Stock anterior</th>
+                <th>Ingreso</th>
+                <th>Salida</th>
+                <th>Stock Actual</th>
+                <th>Sucursal</th>
+              </tr>
+            </thead>
+
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Fecha y hora transacción</th>
+                <th>Tipo transacción</th>
+                <th>Número</th>
+                <th>Cliente(Nombre/Apellido)</th>
+                <th>Proveedor</th>
+                <th>Stock anterior</th>
+                <th>Ingreso</th>
+                <th>Salida</th>
+                <th>Stock Actual</th>
+                <th>Sucursal</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
     <!-- /.row -->
   </div>
   <!-- /.box-body -->
@@ -153,46 +197,6 @@
 
 <!-- <table id="tblVentaPedido" class="table table-striped table-bordered" cellspacing="0" width="100%"> -->
 
-<div class="col-sm-9 col-lg-12 main" id="VerDetallePedido">
-  <div class="table-responsive">
-    <table
-      id="tblKardex"
-      class="table table-striped table-bordered table-condensed table-hover"
-      cellspacing="0"
-      width="100%"
-    >
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Fecha y hora transacción</th>
-          <th>Tipo transacción</th>
-          <th>Número</th>
-          <th>Cliente(Nombre/Apellido)</th>
-          <th>Proveedor</th>
-          <th>Stock anterior</th>
-          <th>Cantidad</th>
-          <th>Stock Actual</th>
-          <th>Sucursal</th>
-        </tr>
-      </thead>
-
-      <tfoot>
-        <tr>
-          <th>#</th>
-          <th>Fecha y hora transacción</th>
-          <th>Tipo transacción</th>
-          <th>Número</th>
-          <th>Cliente(Nombre/Apellido)</th>
-          <th>Proveedor</th>
-          <th>Stock anterior</th>
-          <th>Cantidad</th>
-          <th>Stock Actual</th>
-          <th>Sucursal</th>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-</div>
 <link
   href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
   rel="stylesheet"
@@ -238,15 +242,22 @@
           },
           {
             mDataProp: "6",
+            sClass: "text-center",
           },
           {
             mDataProp: "7",
+            sClass: "text-center",
           },
           {
             mDataProp: "8",
+            sClass: "text-center",
           },
           {
             mDataProp: "9",
+            sClass: "text-center",
+          },
+          {
+            mDataProp: "10",
           },
         ],
         ajax: {
@@ -264,6 +275,24 @@
           },
         },
         bDestroy: true,
+        createdRow: function (row, data, index) {
+          $(row).find("td:eq(6)").addClass('bg-info');
+          $(row).find("td:eq(9)").addClass('bg-info');
+
+          if($(row).find("td:eq(8)").html()!=='-'){
+            $(row).find("td:eq(8)").addClass('bg-danger');
+
+          }else{
+            
+            $(row).find("td:eq(8)").addClass('bg-warning');
+          }
+          if($(row).find("td:eq(7)").html()!=='-'){
+            $(row).find("td:eq(7)").addClass('bg-success');
+          }else{
+
+            $(row).find("td:eq(7)").addClass('bg-warning');
+          }
+        },
       })
       .DataTable();
 
