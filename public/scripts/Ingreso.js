@@ -783,6 +783,16 @@ function AgregarDetalleCarrito(
 }
 
 function Agregar(id, art) {
-  //alert(id)
-  AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0");
+  
+ let error 
+  elementos.map(e=>{
+    if(e[0]==id){ 
+      error=true
+    }
+  })
+  if(!error){
+    AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0");
+  }else{
+    alert("El producto elegido ya se encuentra ingresado en la lista...");
+  }
 }
