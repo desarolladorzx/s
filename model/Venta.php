@@ -2,22 +2,30 @@
 require "Conexion.php";
 
 class Venta
-{
-
+{	
+	
 	public function __construct()
 	{
 	}
-
+	
 	/* public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle){
-			global $conexion;
-			$sw = true;
-			try {
-				
-				$sql = "INSERT INTO venta(idpedido,idusuario,tipo_venta,tipo_comprobante,serie_comprobante,num_comprobante, fecha ,impuesto,total,estado)
-						VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante', curdate(),'$impuesto','$total','$estado')";
-				//var_dump($sql);
-				$conexion->query($sql);	 */
+		global $conexion;
+		$sw = true;
+		try {
+			
+			$sql = "INSERT INTO venta(idpedido,idusuario,tipo_venta,tipo_comprobante,serie_comprobante,num_comprobante, fecha ,impuesto,total,estado)
+			VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante', curdate(),'$impuesto','$total','$estado')";
+			//var_dump($sql);
+			$conexion->query($sql);	 */
+			
+	public function SaveImprimir($idventa){
+		global $conexion;
+		$sql="INSERT INTO impresion(idventa, idusuario,fecha_registro) VALUES ($idventa,".$_SESSION["idusuario"].",CURRENT_TIMESTAMP())";
 
+		$query = $conexion->query($sql);
+		return $query;
+
+	}
 	public function Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_documento_sucursal, $detalle, $tipo_promocion, $metodo_pago, $agencia_envio)
 	{
 		global $conexion;
