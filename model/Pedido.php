@@ -397,16 +397,25 @@ class Pedido
 	public function ListarDetalleIngresos($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT distinct di.iddetalle_ingreso,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
-		i.idsucursal,razon_social  
-					from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
-					inner join articulo a on di.idarticulo = a.idarticulo
-					inner join categoria c on a.idcategoria = c.idcategoria
-					inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
-					inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
-					where i.estado = 'A' 
-					-- and i.idsucursal =$idsucursal 
-					and di.stock_actual > 0 order by fecha asc";
+		$sql = "SELECT distinct di.iddetalle_ingreso,
+		case 
+		WHEN  di.estado_detalle_ingreso='SALIDA' THEN 'En transito'
+		WHEN  di.estado_detalle_ingreso='EN TRANSITO' THEN 'En transito'
+		WHEN  di.estado_detalle_ingreso='ALMACEN OPERADOR' THEN 'Almacen Transportista'
+		WHEN  di.estado_detalle_ingreso='INGRESO' THEN 'Disponible'		
+	END	
+		AS estado_n
+		
+	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
+			i.idsucursal,razon_social  
+						from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
+						inner join articulo a on di.idarticulo = a.idarticulo
+						inner join categoria c on a.idcategoria = c.idcategoria
+						inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
+						inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
+						where i.estado = 'A' 
+						-- and i.idsucursal =$idsucursal 
+						and di.stock_actual > 0 order by fecha asc;";
 		$query = $conexion->query($sql);
 		return $query;
 	}

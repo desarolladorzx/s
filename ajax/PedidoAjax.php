@@ -400,7 +400,7 @@ switch ($_GET["op"]) {
                         \'' . $reg->idarticulo . '\',
                         \'' . $reg->marca . '\')" >
                     <i class="fa fa-check" ></i> </button>',
-                "1" => $reg->estado_detalle_ingreso,
+                "1" => $reg->estado_n,
                 "2" => $reg->razon_social,
                 "3" => $reg->codigo,
                 "4" => $reg->Articulo,

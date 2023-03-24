@@ -99,7 +99,7 @@ switch ($_GET["op"]) {
                 //"5"=>$reg->presentacion,
                 "5" => $reg->stock_actual,
                 "6" => $reg->precio_ventapublico,
-                "7" => $reg->estado_detalle_ingreso,
+                "7" => $reg->estado_n,
                 "8" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
