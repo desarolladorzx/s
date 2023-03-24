@@ -379,7 +379,7 @@ switch ($_GET["op"]) {
         while ($reg = $query_cli->fetch_object()) {
 
 
-            if ($_SESSION["idsucursal"] == $reg->idsucursal) {
+            if ($_SESSION["idsucursal"] == $reg->idsucursal && $reg->estado_detalle_ingreso=='INGRESO') {
                 $disabledButton = '';
             } else {
                 $disabledButton = 'disabled';
@@ -400,15 +400,17 @@ switch ($_GET["op"]) {
                         \'' . $reg->idarticulo . '\',
                         \'' . $reg->marca . '\')" >
                     <i class="fa fa-check" ></i> </button>',
-                "1" => $reg->razon_social,
-                "2" => $reg->codigo,
-                "3" => $reg->Articulo,
-                "4" => $reg->marca,
-                "5" => $reg->serie,
+                "1" => $reg->estado_detalle_ingreso,
+                "2" => $reg->razon_social,
+                "3" => $reg->codigo,
+                "4" => $reg->Articulo,
+                "5" => $reg->marca,
+                "6" => $reg->serie,
                 //"5"=>$reg->presentacion,
-                "6" => $reg->stock_actual,
-                "7" => $reg->precio_ventapublico,
-                "8" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+                "7" => $reg->stock_actual,
+                "8" => $reg->precio_ventapublico,
+                
+                "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
         }

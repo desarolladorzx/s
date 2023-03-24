@@ -886,6 +886,9 @@ function init() {
           {
             mDataProp: "8",
           },
+          {
+            mDataProp: "9",
+          }
         ],
         ajax: {
           url: "./ajax/PedidoAjax.php?op=listDetIng",

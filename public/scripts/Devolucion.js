@@ -105,6 +105,9 @@ function init() {
           {
             mDataProp: "7",
           },
+          {
+            mDataProp: "8",
+          }
         ],
         ajax: {
           url: "./ajax/DevolucionAjax.php?op=listDetIng",

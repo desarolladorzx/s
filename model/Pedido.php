@@ -397,7 +397,7 @@ class Pedido
 	public function ListarDetalleIngresos($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
+		$sql = "SELECT distinct di.iddetalle_ingreso,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
 		i.idsucursal,razon_social  
 					from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 					inner join articulo a on di.idarticulo = a.idarticulo
