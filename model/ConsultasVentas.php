@@ -59,9 +59,6 @@
 				WHEN LENGTH('$antiguedad_cliente')>0 THEN  pe.numero_cuenta='$antiguedad_cliente'
 				else v.idventa
 				end
-
-
-
 				order by v.fecha desc ";
 				// echo $sql;
 			$query = $conexion->query($sql);

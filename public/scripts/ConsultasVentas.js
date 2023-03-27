@@ -108,17 +108,27 @@ function ListadoVentasFechas() {
       fecha_hasta = $("#cboFechaHastaVent").val(),
       idsucursal = $("#txtIdSucursal").val();
 
-	  var ejecutivo_comercial = $("#cboEjecutivoComercial").val();
-	  var antiguedad_cliente = $("#cboAntiguedadCliente").val();
-	  var tipo_cliente = $("#cboTipo_Cliente").val();
-		console.log(ejecutivo_comercial)
+    var ejecutivo_comercial = $("#cboEjecutivoComercial").val();
+    var antiguedad_cliente = $("#cboAntiguedadCliente").val();
+    var tipo_cliente = $("#cboTipo_Cliente").val();
+
+    
+  
     var tabla = $("#tblVentaFechas")
       .dataTable({
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["copyHtml5",
+        {
+          extend: "excelHtml5",
+          text: "Excel",
+          exportOptions: {
+                 columns: [1,2,3,4,5,6,7,8,9,10,11,12]
+          }
+          }
+          
+        , "csvHtml5", "pdfHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -135,6 +145,7 @@ function ListadoVentasFechas() {
           { mDataProp: "12" },
           { mDataProp: "13" },
         ],
+        
         ajax: {
           url: "./ajax/ConsultasVentasAjax.php?op=listVentasFechas",
           type: "get",
@@ -143,10 +154,11 @@ function ListadoVentasFechas() {
             fecha_desde: fecha_desde,
             fecha_hasta: fecha_hasta,
             idsucursal: idsucursal,
-			ejecutivo_comercial:ejecutivo_comercial,
-			antiguedad_cliente:antiguedad_cliente,
-			tipo_cliente:tipo_cliente
+            ejecutivo_comercial: ejecutivo_comercial,
+            antiguedad_cliente: antiguedad_cliente,
+            tipo_cliente: tipo_cliente,
           },
+
 
           error: function (e) {
             console.log(e.responseText);
@@ -227,8 +239,6 @@ function ListadoVentasAnuladas() {
       fecha_hasta = $("#cboFechaHastaAnuVent").val(),
       idsucursal = $("#txtIdSucursal").val();
 
-
-
     var tabla = $("#tblVentaAnuladas")
       .dataTable({
         aProcessing: true,
@@ -259,7 +269,6 @@ function ListadoVentasAnuladas() {
             fecha_desde: fecha_desde,
             fecha_hasta: fecha_hasta,
             idsucursal: idsucursal,
-            
           },
 
           error: function (e) {
