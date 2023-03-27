@@ -468,7 +468,7 @@ class Pedido
 	public function GetVenta($idpedido)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado,concat(emp_anu.apellidos,' ',emp_anu.nombre) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, v.metodo_pago, v.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
+		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado,concat(emp_anu.apellidos,' ',emp_anu.nombre) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
 		from persona p inner join pedido ped on ped.idcliente = p.idpersona
 		inner join detalle_pedido dp on dp.idpedido = ped.idpedido
 		inner join sucursal s on ped.idsucursal = s.idsucursal
