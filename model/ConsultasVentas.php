@@ -1,11 +1,30 @@
 <?php
 	require "Conexion.php";
 	class ConsultasVentas{
+
+
+
 		public function __construct(){
 		}
-		public function ListarVentasFechas($idsucursal, $fecha_desde, $fecha_hasta){
+
+		public function listaDeRoles(){
 			global $conexion;
-			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,pe.tipo_persona as tipo_cliente,pe.numero_cuenta as nuevo_antiguo,
+			$sql="SELECT idempleado , CONCAT(apellidos,' ',nombre) nombre FROM empleado WHERE idrol=1";
+			$query=$conexion->query($sql);
+			return $query;
+		}
+		public function ListarVentasFechas($idsucursal, $fecha_desde, $fecha_hasta,$ejecutivo_comercial ,$antiguedad_cliente ,$tipo_cliente){
+			global $conexion;
+
+			$sql = "select 
+			pe.*,
+			concat(pe.direccion_departamento,' - ',pe.direccion_provincia,' - ',pe.direccion_distrito,'  |  ',pe.direccion_calle, '|',IFNULL(pe.direccion_referencia,'')) as destino,
+
+			concat(e.nombre,' ',e.apellidos,' |  ',v.fecha) as aproba_venta,
+
+			concat(e.nombre,' ',e.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido ,
+
+			p.*, p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,pe.tipo_persona as tipo_cliente,pe.numero_cuenta as nuevo_antiguo,
 							concat(e.apellidos,' ',e.nombre) as empleado,
 							concat(pe.nombre,' ',pe.apellido) as cliente,
 							pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
@@ -23,7 +42,28 @@
 							inner join empleado e on u.idempleado=e.idempleado
 							inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.estado='A'
+				AND 
+				CASE
+				WHEN LENGTH('$ejecutivo_comercial')>0 THEN  e.idempleado='$ejecutivo_comercial'
+				else v.idventa
+				end
+
+				AND 
+				CASE
+				WHEN LENGTH('$tipo_cliente')>0 THEN  pe.tipo_persona='$tipo_cliente'
+				else v.idventa
+				end
+
+				AND 
+				CASE
+				WHEN LENGTH('$antiguedad_cliente')>0 THEN  pe.numero_cuenta='$antiguedad_cliente'
+				else v.idventa
+				end
+
+
+
 				order by v.fecha desc ";
+				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}

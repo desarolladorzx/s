@@ -1,6 +1,22 @@
 <?php
 session_start();
 switch ($_GET["op"]) {
+
+    case 'modificarEstadoTraslado':
+        require_once "../model/Traslados.php";
+
+        $objTraslados = new Traslados();
+        $estado = $_POST["estado"];
+        $arrayDatos = $_POST["arrayDatos"];
+
+        $idtraslado = $_POST['idtraslado'];
+        $sucursal_destino_id=$_POST['sucursal_destino_id'];
+        $descripcion_recepcion = $_POST['descripcion_recepcion'];
+
+
+        $query_cli = $objTraslados->ModificarEstadoTraslado($idtraslado, $estado, json_encode($arrayDatos), $descripcion_recepcion,$sucursal_destino_id);
+
+        break;
     case "listDetIng":
         require_once "../model/Traslados.php";
         $sucursal = $_SESSION["idsucursal"];
@@ -9,8 +25,17 @@ switch ($_GET["op"]) {
         $data = array();
         $i = 1;
         while ($reg = $query_cli->fetch_object()) {
+
+
+            
+            if ($reg->estado_detalle_ingreso=='INGRESO') {
+                $disabledButton = '';
+            } else {
+                $disabledButton = 'disabled';
+            }
+
             $data[] = array(
-                "0" => '<button type="button" class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
+                "0" => '<button type="button" ' . $disabledButton . '  class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
                     data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
                     data-stock-actual="' . $reg->stock_actual . '" id="' . $reg->iddetalle_ingreso . '" value="' . $reg->iddetalle_ingreso . '"
                     data-toggle="tooltip" title="Agregar al carrito"
@@ -31,7 +56,8 @@ switch ($_GET["op"]) {
                 //"5"=>$reg->presentacion,
                 "5" => $reg->stock_actual,
                 "6" => $reg->precio_ventapublico,
-                "7" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+                "7" => $reg->estado_n,
+                "8" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
         }
@@ -46,7 +72,7 @@ switch ($_GET["op"]) {
         break;
 
     case "Save":
-        
+
         require_once "../model/Traslados.php";
         $almacenInicial =  $_SESSION["idsucursal"];
         $idUsuario = $_SESSION["idusuario"];
@@ -66,21 +92,32 @@ switch ($_GET["op"]) {
         } else {
             echo "No se ha podido registrar el Pedido";
         }
-    // }
+        // }
         break;
 
 
     case "ListTipoTraslados":
-
+        
         require_once "../model/Traslados.php";
         $objTraslados = new Traslados();
         $query_Tipo = $objTraslados->TableTraslado();
+        
+        
         $data = array();
         $i = 1;
 
         while ($reg = $query_Tipo->fetch_object()) {
             // $regTotal = $objTraslados->GetTotal($reg->idpedido);
             // $fetch = $regTotal->fetch_object();
+
+            $htmlModificarDetalles='';
+
+            if($reg->estado!='INGRESO'){
+                $htmlModificarDetalles='&nbsp
+
+                <button class="btn btn-warning" data-toggle="tooltip" onclick="modificarTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-adjust
+                "></i> </button>';
+            }
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->fecha,
@@ -88,7 +125,9 @@ switch ($_GET["op"]) {
                 "3" => $reg->almacen_destino,
                 "4" => $reg->motivo_del_traslado,
                 "5" => $reg->cantidad_total_de_productos,
-                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' .str_replace('"',"+",json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>&nbsp' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
+                    '.$htmlModificarDetalles.'
+                ' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 // "6" => $reg->estado,
                 // "6" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
                 //     $botonPasarAVenta .
@@ -101,7 +140,7 @@ switch ($_GET["op"]) {
                '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido('.$reg->idpedido.')" ><i class="fa fa-trash"></i> </button>&nbsp'.
                '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido('.$reg->idpedido.')" ><i class="fa fa-refresh"></i> </button>&nbsp'  */
             );
-             $i++;
+            $i++;
         }
         $results = array(
             "sEcho" => 1,
@@ -114,23 +153,28 @@ switch ($_GET["op"]) {
 
         break;
 
-        case "GetDetalleTraslados":
-            require_once "../model/Traslados.php";
-            $objPedido = new Traslados();
-            $idtraslado = $_POST["idtraslado"];
-            $query_prov = $objPedido->GetDetalleTraslado($idtraslado);
-            $i = 1;
-            while ($reg = $query_prov->fetch_object()) {
-                echo '<tr>
-                            <td>' . $reg->Articulo . '</td>
-                            <td>' . $reg->marca . '</td>
-                            <td>' . $reg->Codigo . '</td>
-                            <td>' . $reg->Serie . '</td>
-                            <td>' . $reg->Cantidad . '</td>
-                        
-                           </tr>';
-                $i++;
-            }
-            break;
+    case "GetDetalleTraslados":
+        require_once "../model/Traslados.php";
+        $objPedido = new Traslados();
+        $idtraslado = $_POST["idtraslado"];
+        $query_prov = $objPedido->GetDetalleTraslado($idtraslado);
+        $i = 1;
 
+        // print_r($query_prov);
+
+        $nuevo = array();
+        while ($reg = $query_prov->fetch_object()) {
+            $nuevo[] = $reg;
+            //     echo '<tr>
+            //                 <td>' . $reg->Articulo . '</td>
+            //                 <td>' . $reg->marca . '</td>
+            //                 <td>' . $reg->Codigo . '</td>
+            //                 <td>' . $reg->Serie . '</td>
+            //                 <td>' . $reg->Cantidad . '</td>
+
+            //                </tr>';
+            //     $i++;
+        }
+        echo  json_encode($nuevo);
+        break;
 }

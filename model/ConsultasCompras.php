@@ -25,7 +25,9 @@
 				inner join categoria c on a.idcategoria=c.idcategoria
 				inner join unidad_medida u on a.idunidad_medida=u.idunidad_medida
 				where /* di.stock_actual>'0' and  */ s.idsucursal='$idsucursal'  and i.estado='A'
+				and di.estado_detalle_ingreso='INGRESO'
 				group by a.nombre,a.imagen,c.nombre,u.nombre
+
 				order by a.nombre asc";
 			$query = $conexion->query($sql);  
 			return $query;

@@ -69,8 +69,16 @@ switch ($_GET["op"]) {
         $data = array();
         $i = 1;
         while ($reg = $query_cli->fetch_object()) {
+
+            if ($reg->estado_detalle_ingreso=='INGRESO') {
+                $disabledButton = '';
+            } else {
+                $disabledButton = 'disabled';
+            }
+
+
             $data[] = array(
-                "0" => '<button type="button" class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
+                "0" => '<button type="button" ' . $disabledButton . ' class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
                     data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
                     data-stock-actual="' . $reg->stock_actual . '" id="' . $reg->iddetalle_ingreso . '" value="' . $reg->iddetalle_ingreso . '"
                     data-toggle="tooltip" title="Agregar al carrito"
@@ -91,7 +99,8 @@ switch ($_GET["op"]) {
                 //"5"=>$reg->presentacion,
                 "5" => $reg->stock_actual,
                 "6" => $reg->precio_ventapublico,
-                "7" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+                "7" => $reg->estado_n,
+                "8" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
         }

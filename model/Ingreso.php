@@ -32,21 +32,24 @@ class Ingreso
 
 
 
-				$sql_detalle = "INSERT INTO detalle_ingreso(idingreso, idarticulo, codigo, serie, descripcion, stock_ingreso, stock_actual, precio_compra, precio_ventadistribuidor, precio_ventapublico)
-                                            VALUES($idingreso, " . $valor[0] . ", '" . $valor[1] . "', '" . $valor[2] . "', '" . $valor[3] . "', " . $valor[4] . ", " . $valor[4] . ", " . $valor[6] . ", " . $valor[7] . ", " . $valor[8] . ")";
+				$sql_detalle = "INSERT INTO detalle_ingreso(
+					idingreso, idarticulo, codigo, serie, descripcion, stock_ingreso, stock_actual, precio_compra, precio_ventadistribuidor, precio_ventapublico,
+					estado_detalle_ingreso
+					)
+                                            VALUES($idingreso, " . $valor[0] . ", '" . $valor[1] . "', '" . $valor[2] . "', '" . $valor[3] . "', " . $valor[4] . ", " . $valor[4] . ", " . $valor[6] . ", " . $valor[7] . ", " . $valor[8] . ",'INGRESO')";
 				$conexion->query($sql_detalle) or $sw = false;
 
 
-				$sql_stock_producto = "SELECT
-				i.fecha,di.stock_actual AS stockActual,di.idarticulo,di.iddetalle_ingreso AS iddetalle_ingreso
-				FROM detalle_ingreso di
-				INNER JOIN ingreso i ON i.idingreso = di.idingreso
-				WHERE di.idarticulo = " . $valor[0] . " AND estado = 'A'
-				ORDER BY i.fecha DESC LIMIT 1,1";
+				// $sql_stock_producto = "SELECT
+				// i.fecha,di.stock_actual AS stockActual,di.idarticulo,di.iddetalle_ingreso AS iddetalle_ingreso
+				// FROM detalle_ingreso di
+				// INNER JOIN ingreso i ON i.idingreso = di.idingreso
+				// WHERE di.idarticulo = " . $valor[0] . " AND ingreso.estado = 'A'
+				// ORDER BY i.fecha DESC LIMIT 1,1";
 
-				$rpta_sql_stock_producto = $conexion->query($sql_stock_producto);
+				// $rpta_sql_stock_producto = $conexion->query($sql_stock_producto);
 
-				$regStockAnterior = $rpta_sql_stock_producto->fetch_object();
+				// $regStockAnterior = $rpta_sql_stock_producto->fetch_object();
 
 
 
@@ -57,7 +60,8 @@ class Ingreso
                 
                 $suma_ingreso="SELECT SUM(stock_actual) stock from detalle_ingreso
                     join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-                    where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";
+                    where idarticulo=$valor[0] and idsucursal=" . $_SESSION['idsucursal'] . " AND ingreso.estado='A'
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'";
 
 				$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 
@@ -98,6 +102,7 @@ class Ingreso
 						CURRENT_TIMESTAMP(),
 						'" . $detallePedido . "'
 						)";
+						 
 				$conexion->query($sqlKardex) or $sw = false;
 			}
 			if ($conexion != null) {
@@ -136,7 +141,10 @@ class Ingreso
 
 			$suma_ingreso_inicial="SELECT SUM(stock_actual) stock from detalle_ingreso
 			join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";			
+			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND ingreso.estado = 'A'
+		
+                and detalle_ingreso.estado_detalle_ingreso='INGRESO'
+			";			
 			
 			$rpta_sql_suma_ingreso_inicial = $conexion->query($suma_ingreso_inicial)->fetch_object();
 
@@ -161,7 +169,9 @@ class Ingreso
 
 			$suma_ingreso_final="SELECT SUM(stock_actual) stock from detalle_ingreso
 			join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND estado = 'A'";			
+			where idarticulo=$id_articulo and idsucursal=" . $_SESSION['idsucursal'] . " AND ingreso.estado = 'A'
+		
+		and detalle_ingreso.estado_detalle_ingreso='INGRESO'";			
 			$rpta_sql_suma_ingreso_final = $conexion->query($suma_ingreso_final)->fetch_object()->stock;
 
 			$res_stock=($rpta_sql_suma_ingreso_final !== null)?$rpta_sql_suma_ingreso_final:0;

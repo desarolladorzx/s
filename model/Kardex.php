@@ -13,11 +13,11 @@ class Kardex
 
 		$sql = "SELECT 
 		idarticulo AS id, 
-		CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre)AS texto 
+		CONCAT(articulo.nombre,' ',categoria.nombre)AS texto 
 		FROM articulo 
 		left join categoria on categoria.idcategoria=articulo.idcategoria
 		
-		WHERE CONCAT(articulo.nombre,' ',descripcion,' ',categoria.nombre) like '%$q%'";
+		WHERE CONCAT(articulo.nombre,' ',categoria.nombre) like '%$q%'";
 		$query = $conexion->query($sql);
 
 
@@ -45,12 +45,30 @@ class Kardex
 			
 			 tipo
 			 AS Movimiento,
-			  CASE
-				WHEN 0!=id_detalle_pedido THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
-				WHEN 0!=id_detalle_ingreso THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
-				ELSE 0
-				END
-			 AS Orden,
+			 CASE
+			
+
+			when tipo='salida por traslado' then 
+			(	SELECT CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante )
+		FROM kardex karNew
+		LEFT  JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=karNew.id_detalle_ingreso
+		LEFT  JOIN ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+		WHERE id_detalle_ingreso > kardex.id_detalle_ingreso AND tipo='ingreso por traslado' AND id_articulo= kardex.id_articulo
+		ORDER BY id_detalle_ingreso DESC
+		LIMIT 1
+			 )
+			 WHEN tipo='salida por devolucion' THEN (
+				SELECT devolucion.filename FROM devolucion_articulo 
+				  JOIN devolucion ON  devolucion.iddevolucion =devolucion_articulo.iddevolucion
+				  WHERE devolucion_articulo.iddetalle_ingreso=kardex.id_detalle_ingreso LIMIT 1
+				)
+
+			WHEN 0!=id_detalle_pedido AND tipo NOT IN ('salida por traslado', 'salida por devolucion')  THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
+			WHEN 0!=id_detalle_ingreso AND tipo NOT IN ('salida por traslado', 'salida por devolucion')  THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
+			
+			ELSE 0
+			END
+		 AS Orden,
 			
 			--  
 			 CASE
@@ -64,7 +82,16 @@ class Kardex
 				END
 			 AS Cliente,
 			stock_anterior,
-			kardex.cantidad,
+			CASE
+				WHEN 	kardex.stock_anterior<kardex.stock_actual THEN concat('+ ',kardex.cantidad)
+				ELSE '-'
+				END
+			 AS ingreso,
+			 CASE
+				WHEN kardex.stock_anterior>kardex.stock_actual THEN concat('- ',kardex.cantidad) 
+				ELSE '-'
+				END
+			 AS salida,
 			kardex.stock_actual,
 			 sucursal.razon_social sucursal
 			  from kardex
@@ -84,9 +111,10 @@ class Kardex
 			where kardex.id_articulo=" . $id_articulo . 
 			" 
 			and DATE(fecha_creacion)>='$fecha_desde' and  DATE(fecha_creacion)<='$fecha_hasta'
-			and id_sucursal='$sucursal'
+			and kardex.id_sucursal=$sucursal
 			ORDER BY fecha_creacion 
 			";
+			
 			$query = $conexion->query($sql);
 		}else{
 			$sql = "SELECT 
@@ -96,23 +124,30 @@ class Kardex
 			
 			 tipo
 			 AS Movimiento,
-			  CASE
-				WHEN 0!=id_detalle_pedido AND tipo<>'salida por traslado'  THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
-				WHEN 0!=id_detalle_ingreso AND tipo<>'salida por traslado'  THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
+			 CASE
+			
 
-				when tipo='salida por traslado' then 
-				(	SELECT CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante )
-			FROM kardex karNew
-			LEFT  JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=karNew.id_detalle_ingreso
-			LEFT  JOIN ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-			WHERE id_detalle_ingreso > kardex.id_detalle_ingreso AND tipo='ingreso por traslado' AND id_articulo= kardex.id_articulo
-			ORDER BY id_detalle_ingreso DESC
-			LIMIT 1
-				 )
+			when tipo='salida por traslado' then 
+			(	SELECT CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante )
+		FROM kardex karNew
+		LEFT  JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=karNew.id_detalle_ingreso
+		LEFT  JOIN ingreso on ingreso.idingreso=detalle_ingreso.idingreso
+		WHERE id_detalle_ingreso > kardex.id_detalle_ingreso AND tipo='ingreso por traslado' AND id_articulo= kardex.id_articulo
+		ORDER BY id_detalle_ingreso DESC
+		LIMIT 1
+			 )
+			 WHEN tipo='salida por devolucion' THEN (
+				SELECT devolucion.filename FROM devolucion_articulo 
+				  JOIN devolucion ON  devolucion.iddevolucion =devolucion_articulo.iddevolucion
+				  WHERE devolucion_articulo.iddetalle_ingreso=kardex.id_detalle_ingreso LIMIT 1
+				)
 
-				ELSE 0
-				END
-			 AS Orden,
+			WHEN 0!=id_detalle_pedido AND tipo NOT IN ('salida por traslado', 'salida por devolucion')  THEN CONCAT( venta.tipo_comprobante ,' ', venta.serie_comprobante , '-', venta.num_comprobante) 
+			WHEN 0!=id_detalle_ingreso AND tipo NOT IN ('salida por traslado', 'salida por devolucion')  THEN CONCAT(ingreso.tipo_comprobante ,' ', ingreso.serie_comprobante , '-', ingreso.num_comprobante ) 
+			
+			ELSE 0
+			END
+		 AS Orden,
 			
 			--  
 			 CASE
@@ -126,7 +161,16 @@ class Kardex
 				END
 			 AS Cliente,
 			stock_anterior,
-			kardex.cantidad,
+			CASE
+				WHEN 	kardex.stock_anterior<kardex.stock_actual THEN concat('+ ',kardex.cantidad)
+				ELSE '-'
+				END
+			 AS ingreso,
+			 CASE
+				WHEN kardex.stock_anterior>kardex.stock_actual THEN concat('- ',kardex.cantidad) 
+				ELSE '-'
+				END
+			 AS salida,
 			kardex.stock_actual,
 			 sucursal.razon_social sucursal
 			  from kardex
@@ -149,6 +193,8 @@ class Kardex
 			ORDER BY fecha_creacion 
 			
 			";
+			// echo $sql;
+
 			$query = $conexion->query($sql);
 		}
 		

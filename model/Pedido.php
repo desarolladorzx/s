@@ -173,7 +173,8 @@ class Pedido
 
 				$suma_anterior = "SELECT sum(stock_actual) stock from detalle_ingreso  
 				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
+				 where idarticulo=$response_detalle_pedido->idarticulo and ingreso.estado='A'
+                    and detalle_ingreso.estado_detalle_ingreso='INGRESO'  and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 				$stock_anterior = $rpta_sql_suma_anterior->stock;
@@ -191,7 +192,8 @@ class Pedido
 				$suma_ingreso = "SELECT sum(stock_actual) stock
 				from detalle_ingreso  
 				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
-				 where idarticulo=$response_detalle_pedido->idarticulo and estado ='A' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
+				 where idarticulo=$response_detalle_pedido->idarticulo and ingreso.estado='A'
+                    and detalle_ingreso.estado_detalle_ingreso='INGRESO' and stock_actual>'0' and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 
 
@@ -284,6 +286,12 @@ class Pedido
 		return $query;
 	}
 
+	public function GetDetallePedidoSolo($idpedido){
+		global $conexion;
+		$sql = "			SELECT detalle_ingreso.iddetalle_ingreso,stock_actual,cantidad,iddetalle_pedido FROM detalle_pedido JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=detalle_pedido.iddetalle_ingreso where idpedido = $idpedido";
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function GetDetallePedido($idpedido)
 	{
 		global $conexion;
@@ -389,16 +397,25 @@ class Pedido
 	public function ListarDetalleIngresos($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT distinct di.iddetalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
-		i.idsucursal,razon_social  
-					from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
-					inner join articulo a on di.idarticulo = a.idarticulo
-					inner join categoria c on a.idcategoria = c.idcategoria
-					inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
-					inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
-					where i.estado = 'A' 
-					-- and i.idsucursal =$idsucursal 
-					and di.stock_actual > 0 order by fecha asc";
+		$sql = "SELECT distinct di.iddetalle_ingreso,
+		case 
+		WHEN  di.estado_detalle_ingreso='SALIDA' THEN 'En transito'
+		WHEN  di.estado_detalle_ingreso='EN TRANSITO' THEN 'En transito'
+		WHEN  di.estado_detalle_ingreso='ALMACEN OPERADOR' THEN 'Almacen Transportista'
+		WHEN  di.estado_detalle_ingreso='INGRESO' THEN 'Disponible'		
+	END	
+		AS estado_n
+		
+	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
+			i.idsucursal,razon_social  
+						from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
+						inner join articulo a on di.idarticulo = a.idarticulo
+						inner join categoria c on a.idcategoria = c.idcategoria
+						inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
+						inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
+						where i.estado = 'A' 
+						-- and i.idsucursal =$idsucursal 
+						and di.stock_actual > 0 order by fecha asc;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -451,14 +468,16 @@ class Pedido
 	public function GetVenta($idpedido)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante, v.serie_comprobante, v.metodo_pago, v.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
-			from persona p inner join pedido ped on ped.idcliente = p.idpersona
-			inner join detalle_pedido dp on dp.idpedido = ped.idpedido
-			inner join sucursal s on ped.idsucursal = s.idsucursal
-			inner join venta v on v.idpedido = ped.idpedido
-			inner join usuario u on ped.idusuario=u.idusuario
-			inner join empleado e on u.idempleado=e.idempleado
-			where ped.idpedido = $idpedido";
+		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado,concat(emp_anu.apellidos,' ',emp_anu.nombre) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, v.metodo_pago, v.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
+		from persona p inner join pedido ped on ped.idcliente = p.idpersona
+		inner join detalle_pedido dp on dp.idpedido = ped.idpedido
+		inner join sucursal s on ped.idsucursal = s.idsucursal
+		inner join venta v on v.idpedido = ped.idpedido
+		inner join usuario u on ped.idusuario=u.idusuario
+		inner join empleado e on u.idempleado=e.idempleado
+		left JOIN  usuario usu_anu on usu_anu.idusuario= v.idusuario_anu
+		LEFT  JOIN  empleado emp_anu on emp_anu.idempleado=usu_anu.idempleado
+		where ped.idpedido =$idpedido";
 		$query = $conexion->query($sql);
 		return $query;
 	}
