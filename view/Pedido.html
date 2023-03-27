@@ -811,8 +811,22 @@
             </div>
           </div>
         </div>
+        
+        <button class="btn btn-primary"
 
-        <button class="btn btn-primary" id="btnNuevoPedido_nuevo">
+
+        <?php 
+       if($_SESSION["idempleado"]==14 ||$_SESSION["idempleado"]==15 ||$_SESSION["idempleado"]==16 ||$_SESSION["idempleado"]==18||$_SESSION["idempleado"]==19||$_SESSION["idempleado"]==20||$_SESSION["idempleado"]==17||$_SESSION["idempleado"]==6 )
+         {
+          
+      } else {
+        echo 'disabled';
+      }
+        ?>
+       
+
+        
+        id="btnNuevoPedido_nuevo">
           <i class="fa fa-file"></i> Nueva Cotización
         </button>
         <br /><br />
