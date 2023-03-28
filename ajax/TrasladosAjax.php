@@ -112,7 +112,9 @@ switch ($_GET["op"]) {
 
             $htmlModificarDetalles='';
 
+            // print_r(json_encode($reg));
             if($reg->estado!='INGRESO'){
+           
                 $htmlModificarDetalles='&nbsp
 
                 <button class="btn btn-warning" data-toggle="tooltip" onclick="modificarTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-adjust

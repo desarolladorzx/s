@@ -44,7 +44,7 @@ function init() {
   $("#verdetallesDevoluciones").hide()
   $("#btnBuscarDetDevolucion").click(AbrirModalDetDevolucion);
   function Traer_devolucion_motivo() {
-    console.log("devoluciones");
+ 
 
     $.ajax({
       url: "./ajax/DevolucionAjax.php?op=Traer_devolucion_motivo",

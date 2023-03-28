@@ -479,16 +479,41 @@ class Traslados
     {
         global $conexion;
 
-        $sql = "SELECT detalle_ingreso.iddetalle_ingreso, detalle_ingreso.stock_ingreso,detalle_ingreso.estado_detalle_ingreso,detalle_ingreso.idarticulo,
-        articulo.nombre Articulo, categoria.nombre marca,detalle_ingreso.codigo Codigo,detalle_ingreso.serie Serie ,inventario.cantidad Cantidad 
-         FROM inventario  
-        JOIN traslados ON traslados.idtraslado=inventario.idtraslado
-        JOIN detalle_ingreso ON detalle_ingreso.idarticulo =inventario.idarticulo and detalle_ingreso.idingreso=traslados.idingreso
+        // $sql = "SELECT detalle_ingreso.iddetalle_ingreso, detalle_ingreso.stock_ingreso,detalle_ingreso.estado_detalle_ingreso,detalle_ingreso.idarticulo,
+        // articulo.nombre Articulo, categoria.nombre marca,detalle_ingreso.codigo Codigo,detalle_ingreso.serie Serie ,inventario.cantidad Cantidad 
+        //  FROM inventario  
+        // JOIN traslados ON traslados.idtraslado=inventario.idtraslado
+        // JOIN detalle_ingreso ON detalle_ingreso.idarticulo =inventario.idarticulo and detalle_ingreso.idingreso=traslados.idingreso
         
-        JOIN articulo ON articulo.idarticulo=detalle_ingreso.idarticulo 
-        JOIN categoria ON categoria.idcategoria=articulo.idcategoria
-        WHERE inventario.idtraslado=$idtraslado
-        GROUP BY detalle_ingreso.iddetalle_ingreso";
+        // JOIN articulo ON articulo.idarticulo=detalle_ingreso.idarticulo 
+        // JOIN categoria ON categoria.idcategoria=articulo.idcategoria
+        // WHERE inventario.idtraslado=$idtraslado
+        // GROUP BY detalle_ingreso.iddetalle_ingreso";
+
+        // nuevo traslao modificado
+        
+        $sql = "SELECT 
+
+        t2.iddetalle_ingreso, t2.stock_ingreso,t2.estado_detalle_ingreso,t2.idarticulo,
+                articulo.nombre Articulo, categoria.nombre marca,t2.codigo Codigo,t2.serie Serie ,t1.cantidad Cantidad 
+                
+       
+       FROM (SELECT inventario.idtraslado,inventario.cantidad , ROW_NUMBER() OVER (ORDER BY idinventario) AS fila FROM inventario WHERE inventario.idtraslado=$idtraslado) AS t1
+       
+       JOIN traslados ON  traslados.idtraslado=t1.idtraslado 
+       
+       JOIN (
+       SELECT stock_ingreso,iddetalle_ingreso,estado_detalle_ingreso ,idarticulo ,codigo,serie , ROW_NUMBER() OVER (ORDER BY iddetalle_ingreso) AS fila FROM detalle_ingreso  s
+       JOIN traslados ON traslados.idingreso=s.idingreso 
+       WHERE traslados.idtraslado=$idtraslado
+       ) AS t2
+       
+       JOIN articulo ON articulo.idarticulo=t2.idarticulo 
+       JOIN categoria ON categoria.idcategoria=articulo.idcategoria
+       
+       ON t1.fila = t2.fila;
+       ";
+
 
 
         //exit;

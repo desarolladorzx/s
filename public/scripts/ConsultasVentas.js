@@ -79,7 +79,7 @@ function TraerRoles() {
     dataType: "json",
 
     success: function (s) {
-      console.log(s);
+
       var lista = s;
 
       var html = `<option value=""></option>`;
@@ -95,7 +95,7 @@ function TraerRoles() {
       //      Ver();
     },
     error: function (e) {
-      console.log(e.responseText);
+      
     },
   });
 }
@@ -230,7 +230,7 @@ function ListadoVentasDetalladas() {
 }
 
 function ListadoVentasAnuladas() {
-  console.log("hola");
+
   if (
     $("#cboFechaDesdeAnuVent").val() != "" &&
     $("#cboFechaHastaAnuVent").val() != ""

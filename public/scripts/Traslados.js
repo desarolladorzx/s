@@ -59,6 +59,8 @@ function AgregarPedCarritoTraslado(
 }
 
 function verDetallesTraslados(val) {
+  console.log(val)
+
   var traslado = JSON.parse(val.replace(/\+/g, '"'));
 
   $("#info_traslado_inicial").val(traslado.almacen_inicial);
@@ -97,6 +99,7 @@ function verDetallesTraslados(val) {
  let dataTraslados
 function modificarTraslados(val) {
 
+  
   $("#containerGuardarCambiarEstado").show()
   var traslado = JSON.parse(val.replace(/\+/g, '"'));
   
@@ -175,6 +178,9 @@ var idtrasladojs;
 function CargarDetalleTraslado(idtraslado) {
   //$('th:nth-child(2)').hide();
   //$('th:nth-child(3)').hide();
+
+  console.log(idtraslado)
+
 
   idtrasladojs = idtraslado;
 
@@ -305,7 +311,7 @@ function init() {
 
     var formData = new FormData();
 
-    var descripcion_recepcion=$("#info_descripcion_recepcion").val()
+    var descripcion_recepcion=$("#info_descripcion_recepcion").val().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
     formData.append("idtraslado", idtrasladojs);
 
     formData.append("estado", estado);
@@ -454,6 +460,7 @@ function init() {
       $("#motivo_de_traslado")
         .val()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
+       
     );
 
     // formData.append('idUsuario', $('#txtIdUsuario').val());
