@@ -29,8 +29,8 @@
 							concat(pe.nombre,' ',pe.apellido) as cliente,
 							pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
 							concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
-							v.metodo_pago as cuenta_abonada,
-							v.tipo_comprobante as comprobante,v.agencia_envio as transporte,
+							p.metodo_pago as cuenta_abonada,
+							v.tipo_comprobante as comprobante,p.agencia_envio as transporte,
 							v.serie_comprobante as serie,v.num_comprobante as numero,
 							v.impuesto,
 							format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,
@@ -80,7 +80,7 @@
 				di.precio_compra as costo,
 				(dp.cantidad*di.precio_compra) as costo_total,
 				((dp.cantidad*(dp.precio_venta-dp.descuento))-(di.precio_compra*dp.cantidad)) as ganancia,
-				v.tipo_promocion as promocion, pe.direccion_departamento as departamento,pe.direccion_distrito as distrito,v.metodo_pago as banco_abono
+				p.tipo_promocion as promocion, pe.direccion_departamento as departamento,pe.direccion_distrito as distrito,p.metodo_pago as banco_abono
 				from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso=di.iddetalle_ingreso
 				inner join articulo a on di.idarticulo=a.idarticulo
 				inner join categoria c on a.idcategoria=c.idcategoria
@@ -106,8 +106,8 @@
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				pe.num_documento as dni,pe.telefono as celular, pe.direccion_departamento as departamento,
 				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
-				v.metodo_pago as cuenta_abonada,
-				v.tipo_comprobante as comprobante,v.agencia_envio as transporte,
+				p.metodo_pago as cuenta_abonada,
+				v.tipo_comprobante as comprobante,p.agencia_envio as transporte,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
 				v.impuesto,
 				format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,
