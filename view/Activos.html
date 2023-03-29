@@ -1,15 +1,14 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="box-header with-border">
-      <h3 class="box-title">Catálogo de Productos</h3>
-      <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse">
-          <i class="fa fa-minus"></i>
-        </button>
-        <button class="btn btn-box-tool" data-widget="remove">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Activos</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+
+      <button class="btn btn-box-tool" data-widget="remove">
+        <i class="fa fa-times"></i>
+      </button>
     </div>
   </div>
   <!-- /.box-header -->
@@ -17,190 +16,541 @@
     <div class="row">
       <div class="col-md-12">
         <!--Contenido-->
+
         <div class="col-sm-14" id="VerForm">
           <form
             role="form"
-            name="frmArticulos"
-            id="frmArticulos"
+            name="frmActivo"
+            id="frmActivo"
             enctype="multipart/form-data"
           >
             <div class="row">
-              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Los campos con (*) son obligatorios</label>
+              <div class="col-lg-12 left">
+                <div class="row">
+                  <div class="col-lg-3 col-lg-3 col-sm-3 col-xs-12">
+                    <div class="form-group has-success">
+                      <input
+                        id="txtIdEmpleado"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdEmpleado"
+                        placeholder=""
+                        autofocus=""
+                      />
+
+                      <input
+                        id="act_idgestion_activo"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="act_idgestion_activo"
+                        placeholder=""
+                        autofocus=""
+                      />
+
+                      <input
+                        id="act_idactivo"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="act_idactivo"
+                        placeholder=""
+                        autofocus=""
+                      />
+
+                      <!-- <input
+                        id="act_idempleado"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdEmpleado"
+                        placeholder=""
+                        autofocus=""
+                      /> -->
+
+                      <!-- <label>Nombres (*):</label>
+                      <input
+                        id="txtApellidos"
+                        disabled
+                        type="text"
+                        maxlength="40"
+                        name="txtApellidos"
+                        class="form-control"
+                        placeholder="Apellidos"
+                        autofocus=""
+                      /> -->
+                    </div>
+                  </div>
+                  <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Nombre (*):</label>
+                      <input
+                        id="txtNombre"
+                        disabled
+                        type="text"
+                        maxlength="20"
+                        name="txtNombre"
+                        class="form-control"
+                        placeholder="Nombre"
+                        autofocus=""
+                      />
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label> Documento (*):</label>
+                      <input
+                        id="cboTipo_Documento"
+                        disabled
+                        name="cboTipo_Documento"
+                        class="form-control"
+                      />
+                    </div>
+                  </div> -->
+                </div>
               </div>
 
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
+              <div class="col-lg-12 left" id="container_insertar_articulo">
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>codigo (*):</label>
+                      <input
+                        id="act_codigo"
+                        type="text"
+                        maxlength="20"
+                        name="act_codigo"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>fecha_ingreso (*):</label>
+                      <input
+                        id="act_fecha_ingreso"
+                        type="date"
+                        maxlength="20"
+                        name="txtNum_Documento"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>familia_activo (*):</label>
+                      <input
+                        id="act_familia_activo"
+                        type="text"
+                        maxlength="20"
+                        name="act_familia_activo"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>tipo_equipo (*):</label>
+                      <input
+                        id="act_tipo_equipo"
+                        type="text"
+                        maxlength="20"
+                        name="act_tipo_equipo"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>unidad (*):</label>
+                      <input
+                        id="act_unidad"
+                        type="text"
+                        maxlength="20"
+                        name="act_unidad"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>cantidad (*):</label>
+                      <input
+                        id="act_cantidad"
+                        type="number"
+                        maxlength="20"
+                        name="act_cantidad"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>marca (*):</label>
+                      <input
+                        id="act_marca"
+                        type="text"
+                        maxlength="20"
+                        name="act_marca"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>modelo (*):</label>
+                      <input
+                        id="act_modelo"
+                        type="text"
+                        maxlength="20"
+                        name="act_modelo"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>serie (*):</label>
+                      <input
+                        id="act_serie"
+                        type="text"
+                        maxlength="20"
+                        name="act_serie"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>color (*):</label>
+                      <input
+                        id="act_color"
+                        type="text"
+                        maxlength="20"
+                        name="act_color"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>estado (*):</label>
+                      <select
+                        class="form-control"
+                        name="act_estado"
+                        id="act_estado"
+                      >
+                      <option value=""></option>
+                        <option value="BUENO">BUENO</option>
+                        <option value="MALO">MALO</option>
+                        <option value="REGULAR">REGULAR</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>tipo_activo (*):</label>
+                      <input
+                        id="act_tipo_activo"
+                        type="text"
+                        maxlength="20"
+                        name="act_tipo_activo"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>caracteristica (*):</label>
+
+                      <textarea
+                        class="form-control"
+                        name="act_caracteristica"
+                        id="act_caracteristica"
+                        cols="30"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>t_documento (*):</label>
+                      <input
+                        id="act_t_documento"
+                        type="text"
+                        maxlength="20"
+                        name="act_t_documento"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>precio_compra (*):</label>
+                      <input
+                        id="act_precio_compra"
+                        type="number"
+                        maxlength="20"
+                        name="act_precio_compra"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>proveedor (*):</label>
+                      <input
+                        id="act_proveedor"
+                        type="text"
+                        maxlength="20"
+                        name="act_proveedor"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>fecha_finvida (*):</label>
+                      <input
+                        id="act_fecha_finvida"
+                        type="date"
+                        maxlength="20"
+                        name="act_fecha_finvida"
+                        required=""
+                        class="form-control"
+                        placeholder="Número de documento"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                 
+                  <div class="col-lg-12 col-md-12">
+                    <button
+                      id="actualizar_nuevo_articulo_submit"
+                      class="btn btn-success"
+                      type="submit"
+                    >
+                      <i class="fa fa-floppy-o"></i> Actualizar Articulo
+                    </button>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12"
+                  
+                  style="margin-top: 20px   "
+                  >
+                    <div class="row">
+                      <div
+                        class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                        style="padding-bottom: 10px"
+                      >
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Asignacion de Activos</h3>
+
+                          <button
+                            type="button"
+                            id="btn_asignar_a_empleado"
+                            style="margin: 0 10px"
+                            class="btn btn-primary"
+                          >
+                            Asignar Articulo a empleado
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                          <label>idempleado_uso (*): </label>
+                          <select
+                            required
+                            class="form-control gestion_activo empleadosList"
+                            name="act_idempleado_uso"
+                            id="act_idempleado_uso"
+                          ></select>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                          <label>area (*):</label>
+                          <input
+                            id="act_area"
+                            type="text"
+                            maxlength="20"
+                            name="act_area"
+                            required=""
+                            class="form-control gestion_activo"
+                            placeholder="Número de documento"
+                            autofocus=""
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                          <label>idempleado (*):</label>
+                          <select
+                            required
+                            class="form-control gestion_activo empleadosList"
+                            name="act_idempleado"
+                            id="act_idempleado"
+                          ></select>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group">
+                          <label>fecha_asignacion (*):</label>
+                          <input
+                            id="act_fecha_asignacion"
+                            type="date"
+                            maxlength="20"
+                            name="act_fecha_asignacion"
+                            required=""
+                            class="form-control gestion_activo"
+                            placeholder="Número de documento"
+                            autofocus=""
+                          />
+                        </div>
+
+                      </div>
+
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                        <div class="form-group ">
+                          <label>ubicacion (*):</label>
+                          <select
+                            class="form-control gestion_activo"
+                            name="act_ubicacion"
+                            id="act_ubicacion"
+                          >
+                            <option value=""></option>
+                            <option value="2">LIMA</option>
+                            <option value="1">AREQUIPA</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                          <button
+                            id="actualizar_boton_asigacion_empleado"
+                            class="btn btn-success"
+                            type="button"
+                            
+                          >
+                            <i class="fa fa-floppy-o"></i> Asignar a nuevo  empleado
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <button
+                      id="registrar_nuevo_articulo_submit"
+                      class="btn btn-success"
+                      type="submit"
+                    >
+                      <i class="fa fa-floppy-o"></i> Registrar Nuevo Activo
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
+
+              <!-- <div class="col-lg-12 left">
+                <div
+                  id="VertblActivosPorEmpleado"
+                  style="margin-top: 10px"
+                  class="table-responsive"
+                >
+                  <table
+                    id="tblActivosPorEmpleado"
+                    class="table table-striped table-bordered table-condensed table-hover"
+                    cellspacing="0"
+                    cellpadding="0"
+                    width="100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Fecha De Ingreso</th>
+                        <th>Fin De Vida</th>
+                        <th>Precio De Compra</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Tipo De Equipo</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </thead>
+
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Fecha De Ingreso</th>
+                        <th>Fin De Vida</th>
+                        <th>Precio De Compra</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Tipo De Equipo</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </tfoot>
+
+                    <tbody id="empleado"></tbody>
+                  </table>
                 </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 left">
-                <label>Nombre (*):</label>
-                <div class="form-group has-success">
-                  <input
-                    id="txtNombre"
-                    type="text"
-                    maxlength="300"
-                    class="form-control"
-                    name="txtNombre"
-                    required=""
-                    placeholder="Ingrese el nombre del Articulo"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
-                <label for="inputInscripcion">Descripción:</label>
-                <div class="form-group has-success">
-                  <textarea
-                    id="txtDescripcion"
-                    class="form-control"
-                    name="txtDescripcion"
-                    placeholder=""
-                  ></textarea>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <label for="inputInscripcion">Imagen:</label>
-                <div class="form-group has-success">
-                  <input
-                    id="imagenArt"
-                    type="file"
-                    class="form-control"
-                    name="imagenArt"
-                    autofocus=""
-                  />
-                  <input
-                    id="txtRutaImgArt"
-                    type="text"
-                    class="form-control"
-                    name="txtRutaImgArt"
-                    autofocus=""
-                  />
-                </div>
-              </div>
+              </div> -->
+            </div>
+            <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
                 <h5></h5>
-                <button class="btn btn-success" type="submit">
-                  <i class="fa fa-floppy-o"></i> Registrar
-                </button>
-                <a href="Articulo.php" class="btn btn-primary"
+
+                <a href="activos.php" class="btn btn-primary"
                   ><i class="fa fa-remove"></i> Cancelar</a
                 >
                 <hr />
@@ -209,14 +559,14 @@
             </div>
           </form>
         </div>
-
         <button class="btn btn-primary" id="btnNuevo">
           <i class="fa fa-file"></i> Nuevo
         </button>
+
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table
-            id="tblArticulos"
+            id="tblActivos"
             class="table table-striped table-bordered table-condensed table-hover"
             cellspacing="0"
             cellpadding="0"
@@ -225,28 +575,32 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Categoria</th>
-                <th>Marca</th>
-                <th>U. Medida</th>
-                <th>Articulo</th>
-                <th>Descripcion</th>
-                <th>Imagen</th>
+                <th>Tipo de activo</th>
+                <th>Usado por</th>
+                <th>Departamento</th>
+                <th>Gestionado por</th>
+                <th>Estado</th>
+                <th>Etiqueta del activo</th>
+                <th>Fecha de fin de vida</th>
                 <th>Opciones</th>
               </tr>
             </thead>
+
             <tfoot>
               <tr>
                 <th>#</th>
-                <th>Categoria</th>
-                <th>Marca</th>
-                <th>U. Medida</th>
-                <th>Articulo</th>
-                <th>Descripcion</th>
-                <th>Imagen</th>
+                <th>Tipo de activo</th>
+                <th>Usado por</th>
+                <th>Departamento</th>
+                <th>Gestionado por</th>
+                <th>Estado</th>
+                <th>Etiqueta del activo</th>
+                <th>Fecha de fin de vida</th>
                 <th>Opciones</th>
               </tr>
             </tfoot>
-            <tbody id="articulo"></tbody>
+
+            <tbody id="empleado"></tbody>
           </table>
         </div>
         <!--Fin-Contenido-->
@@ -257,7 +611,8 @@
   <!-- /.box-body -->
 </div>
 <!-- /.box -->
+
 <script type="text/javascript">
-  $("#liAlmacen").addClass("treeview active");
-  $("#liArticulos").addClass("active");
+  $("#liMantenimiento").addClass("treeview active");
+  $("#liEmpleados").addClass("active");
 </script>

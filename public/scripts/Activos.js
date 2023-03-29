@@ -1,7 +1,396 @@
 $(document).on("ready", init);
 
-function init(){
+function init() {
+  ListadoActivo();
+  $("#actualizar_nuevo_articulo_submit").hide();
+  optionEmpleados();
 
-    console.log('hola activ')
+  $("#btn_asignar_a_empleado").hide();
 
+  $('#actualizar_boton_asigacion_empleado').click(function(){
+    
+
+
+   
+    let error=false;
+    
+    var idValueObj = {};
+
+
+    var formData = new FormData();
+  
+
+
+    var gestion= document.querySelectorAll(".gestion_activo");
+
+
+    gestion.forEach(function (textarea) {
+      
+      if(textarea.value.length==0){
+        error=true
+
+      }else{
+        idValueObj[textarea.id] = textarea.value;
+   
+      }
+    });
+
+    // $(".gestion_activo").each(function () {
+      
+
+
+
+      
+      
+   
+    // });
+
+
+ 
+    for (var key in idValueObj) {
+      formData.append(key, idValueObj[key]);
+    }
+
+
+    formData.append('idactivo', $('#act_idactivo').val());
+
+
+    if(!error){
+     $.ajax({
+        url: "./ajax/ActivosAjax.php?op=TrasferirActivo",
+        type: "POST",
+        data: formData,
+        contentType: "application/json",
+        contentType: false,
+        processData: false,
+        success: function (datos) {
+          swal("Mensaje del Sistema", datos, "success");
+        },
+      });
+
+
+
+    }else{
+      alert('faltan llenar unos datos');
+    }
+
+
+  })
+  $("#actualizar_boton_asigacion_empleado").hide();
+
+  $("#btn_asignar_a_empleado").click(function () {
+    $('#actualizar_nuevo_articulo_submit').hide()
+
+    $(".gestion_activo").each(function () {
+      $(this).attr("disabled", false);
+      $(this).val("");
+    });
+
+    $("#actualizar_boton_asigacion_empleado").show();
+
+    $('input[id^="act_"]').each(function () {
+      if (this.className.includes("gestion_activo")) {
+      } else {
+        $(this).attr("disabled", true);
+      }
+    });
+    $("select, textarea").each(function () {
+      if (this.className.includes("gestion_activo")) {
+      } else {
+        $(this).attr("disabled", true);
+      }
+    });
+  });
+
+  $("#abrir_contanier_insertar_articulo").click(function () {
+    // console.log('hola')
+    $("#container_insertar_articulo").show();
+    $('input[id^="act_"]').each(function () {
+      $(this).val("");
+    });
+    $("select, textarea").each(function () {
+      $(this).val("");
+    });
+
+    $("#registrar_nuevo_articulo_submit").show();
+
+    $("#actualizar_nuevo_articulo_submit").hide();
+  });
+  function optionEmpleados() {
+    var option_text = '   <option value=""></option>';
+    $.ajax({
+      url: "./ajax/ActivosAjax.php?op=optionEmpleados",
+      type: "get",
+      dataType: "json",
+      success: function (datos) {
+        console.log(datos);
+
+        datos.map((e) => {
+          console.log(e);
+          option_text += `
+          <option value="${e.idempleado}">${e.nombre} ${e.apellidos}</option>
+
+          `;
+
+          $(".empleadosList").html(option_text);
+        });
+      },
+    });
+  }
+  $("#frmActivo").submit(function (e) {
+    e.preventDefault();
+
+    var values = [];
+
+    var inputs = document.querySelectorAll("#frmActivo input");
+    var textareas = document.querySelectorAll("#frmActivo textarea");
+    var select = document.querySelectorAll("#frmActivo select");
+
+    var idValueObj = {};
+
+    inputs.forEach(function (input) {
+      idValueObj[input.id] = input.value;
+    });
+    textareas.forEach(function (textarea) {
+      idValueObj[textarea.id] = textarea.value;
+    });
+    select.forEach(function (textarea) {
+      idValueObj[textarea.id] = textarea.value;
+    });
+
+    var formData = new FormData();
+
+    
+    for (var key in idValueObj) {
+      formData.append(key, idValueObj[key]);
+    }
+
+    if (idValueObj.act_idactivo) {
+      console.log("se esta actualizando un articulo");
+      $.ajax({
+        url: "./ajax/ActivosAjax.php?op=guardarActivo",
+        type: "POST",
+        data: formData,
+        contentType: "application/json",
+        contentType: false,
+        processData: false,
+        success: function (datos) {
+          swal("Mensaje del Sistema", datos, "success");
+        },
+      });
+    } else {
+      console.log("se esta creando un nuevo activo");
+
+      $.ajax({
+        url: "./ajax/ActivosAjax.php?op=guardarActivo",
+        type: "POST",
+        data: formData,
+        contentType: "application/json",
+        contentType: false,
+        processData: false,
+        success: function (datos) {
+          swal("Mensaje del Sistema", datos, "success");
+        },
+      });
+    }
+  });
+
+  function ListadoActivo() {
+    var tabla = $("#tblActivos")
+      .dataTable({
+        aProcessing: true,
+        aServerSide: true,
+        dom: "Bfrtip",
+        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        aoColumns: [
+          { mDataProp: "0" },
+          { mDataProp: "1" },
+          { mDataProp: "2" },
+          { mDataProp: "3" },
+          { mDataProp: "4" },
+          { mDataProp: "5" },
+          { mDataProp: "6" },
+          { mDataProp: "7" },
+          { mDataProp: "8" },
+        ],
+        ajax: {
+          url: "./ajax/ActivosAjax.php?op=list",
+          type: "get",
+          dataType: "json",
+          error: function (e) {
+            console.log(e.responseText);
+          },
+        },
+        bDestroy: true,
+      })
+      .DataTable();
+  }
+}
+
+function cargarDataEmpleadoActivos(
+  id,
+  apellidos,
+  nombre,
+  tipo_documento,
+  num_documento,
+  direccion,
+  telefono,
+  email,
+  fecha_nacimiento,
+  foto,
+  login,
+  clave,
+  estado
+) {
+  var tabla = $("#tblActivosPorEmpleado")
+    .dataTable({
+      aProcessing: true,
+      aServerSide: true,
+      dom: "Bfrtip",
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      aoColumns: [
+        { mDataProp: "0" },
+        { mDataProp: "1" },
+        { mDataProp: "2" },
+        { mDataProp: "3" },
+        { mDataProp: "4" },
+        { mDataProp: "5" },
+        { mDataProp: "6" },
+        { mDataProp: "7" },
+        { mDataProp: "8" },
+      ],
+      ajax: {
+        url: "./ajax/ActivosAjax.php?op=listPorEmpelado",
+        type: "get",
+        dataType: "json",
+        data: function (d) {
+          d.id = id;
+        },
+        error: function (e) {
+          console.log(e.responseText);
+        },
+      },
+      bDestroy: true,
+    })
+    .DataTable();
+
+  // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+  $("#VerForm").show(); // mostramos el formulario
+  $("#btnNuevo").hide();
+  $("#VerListado").hide(); // ocultamos el listado
+
+  $("#txtIdEmpleado").val(id); // recibimos la variable id a la caja de texto txtIdMarca
+
+  $("#act_idempleado").val(id);
+
+  $("#txtApellidos").val(`${apellidos}  ${nombre}`);
+  $("#txtNombre").val(nombre);
+  $("#cboTipo_Documento").val(tipo_documento + " - " + num_documento);
+  $("#txtNum_Documento").val(num_documento);
+  $("#txtDireccion").val(direccion);
+  $("#txtTelefono").val(telefono);
+  $("#txtEmail").val(email);
+  $("#txtFecha_Nacimiento").val(fecha_nacimiento);
+  //$("#txtLogo").val(logo);
+  $("#txtRutaImgEmp").val(foto);
+  $("#txtLogin").val(login);
+  //$("#txtClave").val(clave);
+  $("#txtRutaImgEmp").show();
+  $("#txtEstado").val(estado);
+  $("#txtClaveOtro").val(clave);
+  //$("#txtClaveOtro").show();
+}
+function verDetallesActivoUnidad(id) {
+
+  $('#btnNuevo').hide()
+
+  $('input[id^="act_"]').each(function () {
+    $(this).val("");
+  });
+  $("select, textarea").each(function () {
+    $(this).val("");
+  });
+
+  $("#VerForm").show();
+  $("#VerListado").hide();
+
+  $.ajax({
+    url: "./ajax/ActivosAjax.php?op=verDetallesActivoUnidad",
+    type: "get",
+    dataType: "json",
+    data: {
+      id,
+    },
+
+    success: function (datos) {
+      console.log(datos);
+      $('input[id^="act_"]').each(function () {
+        $(this).attr("disabled", true);
+      });
+      $("select, textarea").each(function () {
+        $(this).attr("disabled", true);
+      });
+
+      $("#container_insertar_articulo").show();
+
+      $.each(datos, function (key, value) {
+        $("#act_" + key).val(value);
+      });
+
+      $("#actualizar_nuevo_articulo_submit").hide();
+
+      $("#registrar_nuevo_articulo_submit").hide();
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+}
+
+function ModificarDetallesActivosView(id) {
+  $('#btnNuevo').hide()
+  
+  $('input[id^="act_"]').each(function () {
+    $(this).val("");
+  });
+  $("select, textarea").each(function () {
+    $(this).val("");
+  });
+  $("#VerForm").show();
+  $("#VerListado").hide();
+
+  $("#btn_asignar_a_empleado").show();
+
+  $.ajax({
+    url: "./ajax/ActivosAjax.php?op=verDetallesActivoUnidad",
+    type: "get",
+    dataType: "json",
+
+    data: {
+      id,
+    },
+
+    success: function (datos) {
+      $("#container_insertar_articulo").show();
+      $('input[id^="act_"]').each(function () {
+        $(this).attr("disabled", false);
+      });
+      $("select, textarea").each(function () {
+        $(this).attr("disabled", false);
+      });
+
+      $(".gestion_activo").each(function () {
+        $(this).attr("disabled", true);
+      });
+
+      $("#act_cantidad").attr("disabled", true);
+
+      $("#registrar_nuevo_articulo_submit").hide();
+
+      $("#actualizar_nuevo_articulo_submit").show();
+      $.each(datos, function (key, value) {
+        $("#act_" + key).val(value);
+      });
+    },
+  });
 }
