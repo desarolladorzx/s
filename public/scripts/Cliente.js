@@ -352,6 +352,8 @@ function buscarPorNumeroDocumento() {
 
 				$('.loading_window').hide()
 				$('#button_registrar_nuevo_cliente').attr('disabled',false)
+
+				console.log(rpta)
 				switch (rpta["estado"]) {
 					case "encontrado":
 						//$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
@@ -436,12 +438,15 @@ function buscarPorNumeroDocumento() {
 										$("#modalBuscarClientes").modal("hide");
 										$("#btnEditarCliente").show(200);
 										*/
-						alert("El cliente ya se encuentra registrado, solo está permitido editar los campos habilitados...");
+						// alert(rpta["response_text"]);
 
-									
+						swal("Mensaje del Sistema", rpta["response_text"], "success");
 						break;
 					case "error":
 						alert("Ocurrio un error al registrar cliente...");
+
+
+						// swal("Mensaje del Sistema", 'error del sistema', "error");
 						break;
 					case "no_encontrado":
 						$("#cboTipo_Persona").val("");

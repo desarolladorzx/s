@@ -179,6 +179,7 @@ switch ($_GET["op"]) {
 					//exit;
 					
 					$datos = array(
+						'response_text'=>'El cliente no se encuentra en el sistema , los datos extraidos son de internet , por favor rellene los datos faltante',
 						'estado' => 'encontrado',
 						'idCliente' => "",
 						'tipo_persona' => "FINAL",
@@ -300,6 +301,7 @@ switch ($_GET["op"]) {
 			}
 
 			$datos = array(
+				'response_text'=>'El cliente ya se encuentra registrado en el sistema, solo está permitido editar los campos habilitados...',
 				'estado' => 'encontrado',
 				'idCliente' => $reg->idpersona,
 				'tipo_persona' => $reg->tipo_persona,

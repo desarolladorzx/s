@@ -286,7 +286,8 @@ class Pedido
 		return $query;
 	}
 
-	public function GetDetallePedidoSolo($idpedido){
+	public function GetDetallePedidoSolo($idpedido)
+	{
 		global $conexion;
 		$sql = "			SELECT detalle_ingreso.iddetalle_ingreso,stock_actual,cantidad,iddetalle_pedido FROM detalle_pedido JOIN detalle_ingreso on detalle_ingreso.iddetalle_ingreso=detalle_pedido.iddetalle_ingreso where idpedido = $idpedido";
 		$query = $conexion->query($sql);
@@ -389,6 +390,15 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
+
+		// se modifico el sql para que los iddocumentos no se repita
+		$sql = "SELECT * from persona 
+
+	INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
+			 	 
+where   tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' 
+GROUP BY persona.num_documento
+order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
