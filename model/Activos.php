@@ -8,7 +8,38 @@ class Activos
 	{
 	}
 
-	public function transferirActivo($valor) {
+	public function verArchivosActivos($idgestion_activo){
+		global $conexion;
+		
+		$sql=" SELECT * FROM gestion_activo_archivo where idgestion_activo=$idgestion_activo";
+
+		$query = $conexion->query($sql);
+		return  $query ;
+	}
+
+	public function  RegistrarImagenActivo(
+		$idgestion_activo,
+		$new_file_name
+	) {
+		global $conexion;
+		$sql = "INSERT INTO gestion_activo_archivo(
+			idgestion_activo,
+			ruta,
+			fecha,
+			estado
+			)
+		VALUES(
+			$idgestion_activo, 
+			'$new_file_name', 
+			CURRENT_TIMESTAMP(), 
+			'A'			
+			)";
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+	public function transferirActivo($valor)
+	{
 
 		global $conexion;
 
@@ -102,7 +133,7 @@ class Activos
 	public function Listar()
 	{
 		global $conexion;
-		$sql = "SELECT gestion_activo.idgestion_activos, activo.tipo_activo,CONCAT(emp_uso.nombre,' ',emp_uso.apellidos) usado_por , CONCAT(emp_jes.nombre,' ',emp_jes.apellidos) gestionado_por,activo.estado,activo.codigo etiqueta,activo.fecha_finvida,  activo.* 
+		$sql = "SELECT area,gestion_activo.idgestion_activos, activo.tipo_activo,CONCAT(emp_uso.nombre,' ',emp_uso.apellidos) usado_por , CONCAT(emp_jes.nombre,' ',emp_jes.apellidos) gestionado_por,activo.estado,activo.codigo etiqueta,activo.fecha_finvida,  activo.* 
 		,CAST(fecha_finvida  AS DATE) fecha_finvida
 		FROM activo
 		left join gestion_activo on gestion_activo.idactivo = activo.idactivo
@@ -111,7 +142,7 @@ class Activos
 		
 		
 			LEFT JOIN empleado emp_jes ON emp_jes.idempleado=gestion_activo.idempleado_registro
-			
+		where estado_activo='A'
 		 order by activo.idactivo desc";
 		$query = $conexion->query($sql);
 		return $query;
@@ -128,7 +159,7 @@ class Activos
 
 		$data = (object) $data;
 
-		$numero = $data->cantidad;
+
 
 
 		if ($data->idactivo) {
@@ -151,13 +182,13 @@ class Activos
 			 fecha_finvida =  '$data->fecha_finvida'
 		 
 		 WHERE idactivo = $data->idactivo;";
-			echo $sql;
+
 			global $conexion;
 			$conexion->query($sql);
 		} else {
 			$i = 1;
-			while ($i <= $numero) {
-				$sql = "INSERT INTO activo (
+
+			$sql = "INSERT INTO activo (
 				codigo,
 				fecha_ingreso,
 				familia_activo,
@@ -195,14 +226,14 @@ class Activos
 			
 			  );";
 
-				global $conexion;
-				$conexion->query($sql);
+			global $conexion;
+			$conexion->query($sql);
 
-				$idActivo = $conexion->insert_id;
+			$idActivo = $conexion->insert_id;
 
 
 
-				$sql = "INSERT INTO gestion_activo (
+			$sql = "INSERT INTO gestion_activo (
 			idactivo,
 			idempleado,
 			area,
@@ -227,14 +258,13 @@ class Activos
 			'A',
 			'$data->ubicacion'
 		)";
-				echo $sql;
 
 
-				global $conexion;
-				$conexion->query($sql);
+			global $conexion;
+			$conexion->query($sql);
 
-				$i++;
-			}
+			$idgestion_activo = $conexion->insert_id;			
+			return  $idgestion_activo;
 		}
 
 

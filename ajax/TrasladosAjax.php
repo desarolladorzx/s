@@ -127,7 +127,7 @@ switch ($_GET["op"]) {
                 "3" => $reg->almacen_destino,
                 "4" => $reg->motivo_del_traslado,
                 "5" => $reg->cantidad_total_de_productos,
-                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
+                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fav fa-eye"></i> </button>
                     '.$htmlModificarDetalles.'
                 ' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 // "6" => $reg->estado,

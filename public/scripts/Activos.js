@@ -1,62 +1,59 @@
 $(document).on("ready", init);
 
 function init() {
+  $("#act_fecha_ingreso ").change(function () {
+    var fecha1 = new Date($("#act_fecha_finvida").val());
+    var fecha2 = new Date($("#act_fecha_ingreso").val());
+
+    var diferencia = fecha1.getTime() - fecha2.getTime();
+    var dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+    $("#act_dias_restantes").val(dias);
+  });
+
+  $("#act_fecha_finvida ").change(function () {
+    var fecha1 = new Date($("#act_fecha_finvida").val());
+    var fecha2 = new Date($("#act_fecha_ingreso").val());
+
+    var diferencia = fecha1.getTime() - fecha2.getTime();
+    var dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    $("#act_dias_restantes").val(dias);
+  });
   ListadoActivo();
   $("#actualizar_nuevo_articulo_submit").hide();
   optionEmpleados();
 
   $("#btn_asignar_a_empleado").hide();
 
-  $('#actualizar_boton_asigacion_empleado').click(function(){
-    
+  $("#actualizar_boton_asigacion_empleado").click(function () {
+    let error = false;
 
-
-   
-    let error=false;
-    
     var idValueObj = {};
 
-
     var formData = new FormData();
-  
 
-
-    var gestion= document.querySelectorAll(".gestion_activo");
-
+    var gestion = document.querySelectorAll(".gestion_activo");
 
     gestion.forEach(function (textarea) {
-      
-      if(textarea.value.length==0){
-        error=true
-
-      }else{
+      if (textarea.value.length == 0) {
+        error = true;
+      } else {
         idValueObj[textarea.id] = textarea.value;
-   
       }
     });
 
     // $(".gestion_activo").each(function () {
-      
 
-
-
-      
-      
-   
     // });
 
-
- 
     for (var key in idValueObj) {
       formData.append(key, idValueObj[key]);
     }
 
+    formData.append("idactivo", $("#act_idactivo").val());
 
-    formData.append('idactivo', $('#act_idactivo').val());
-
-
-    if(!error){
-     $.ajax({
+    if (!error) {
+      $.ajax({
         url: "./ajax/ActivosAjax.php?op=TrasferirActivo",
         type: "POST",
         data: formData,
@@ -67,19 +64,14 @@ function init() {
           swal("Mensaje del Sistema", datos, "success");
         },
       });
-
-
-
-    }else{
-      alert('faltan llenar unos datos');
+    } else {
+      alert("faltan llenar unos datos");
     }
-
-
-  })
+  });
   $("#actualizar_boton_asigacion_empleado").hide();
 
   $("#btn_asignar_a_empleado").click(function () {
-    $('#actualizar_nuevo_articulo_submit').hide()
+    $("#actualizar_nuevo_articulo_submit").hide();
 
     $(".gestion_activo").each(function () {
       $(this).attr("disabled", false);
@@ -160,7 +152,10 @@ function init() {
 
     var formData = new FormData();
 
-    
+    $.each($("#act_activo_archivo")[0].files, function (i, file) {
+      formData.append("fileupload[]", file);
+    });
+
     for (var key in idValueObj) {
       formData.append(key, idValueObj[key]);
     }
@@ -176,6 +171,12 @@ function init() {
         processData: false,
         success: function (datos) {
           swal("Mensaje del Sistema", datos, "success");
+
+          $("#VerForm").hide(); // mostramos el formulario
+          $("#btnNuevo").show();
+          $("#VerListado").show();
+
+          ListadoActivo();
         },
       });
     } else {
@@ -189,6 +190,10 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+          $("#VerForm").hide(); // mostramos el formulario
+          $("#btnNuevo").show();
+          $("#VerListado").show();
+          ListadoActivo();
           swal("Mensaje del Sistema", datos, "success");
         },
       });
@@ -212,6 +217,7 @@ function init() {
           { mDataProp: "6" },
           { mDataProp: "7" },
           { mDataProp: "8" },
+          { mDataProp: "9" },
         ],
         ajax: {
           url: "./ajax/ActivosAjax.php?op=list",
@@ -258,6 +264,7 @@ function cargarDataEmpleadoActivos(
         { mDataProp: "6" },
         { mDataProp: "7" },
         { mDataProp: "8" },
+        { mDataProp: "9" },
       ],
       ajax: {
         url: "./ajax/ActivosAjax.php?op=listPorEmpelado",
@@ -301,8 +308,7 @@ function cargarDataEmpleadoActivos(
   //$("#txtClaveOtro").show();
 }
 function verDetallesActivoUnidad(id) {
-
-  $('#btnNuevo').hide()
+  $("#btnNuevo").hide();
 
   $('input[id^="act_"]').each(function () {
     $(this).val("");
@@ -323,7 +329,44 @@ function verDetallesActivoUnidad(id) {
     },
 
     success: function (datos) {
-      console.log(datos);
+
+
+      var htmldetalleArchivos;
+      $.ajax({
+        url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
+        type: "get",
+        dataType: "json",
+        data: {
+          id: datos.idgestion_activos,
+        },
+        success: function (dataArchivos) {
+   
+          var htmldetalleArchivos=''
+          dataArchivos.map(function (dataArchivo) {
+
+            
+
+            htmldetalleArchivos+=`<li>
+            <a href="./Files/Activos/${dataArchivo.ruta}" target="_blank">
+            <span class="mailbox-attachment-icon has-img">
+            <img src="https://img.freepik.com/vector-premium/simbolo-carpeta-icono-carpeta-documentos-ilustracion-vector-plano-aislado-sobre-fondo-blanco_97843-2848.jpg?w=2000">
+            </span>
+            </a>
+            <div class="mailbox-attachment-info">
+            <a href="./Files/Activos/${dataArchivo.ruta}" class="mailbox-attachment-name" target="_blank">${dataArchivo.ruta}</a>
+            </li>`
+
+
+
+          })
+
+          $("#detalleArchivoActivo").html(htmldetalleArchivos)
+        },
+        error: function (erro){
+          console.log(erro);
+        }
+      });
+
       $('input[id^="act_"]').each(function () {
         $(this).attr("disabled", true);
       });
@@ -348,8 +391,8 @@ function verDetallesActivoUnidad(id) {
 }
 
 function ModificarDetallesActivosView(id) {
-  $('#btnNuevo').hide()
-  
+  $("#btnNuevo").hide();
+
   $('input[id^="act_"]').each(function () {
     $(this).val("");
   });

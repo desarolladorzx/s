@@ -87,13 +87,14 @@ switch ($_GET["op"]) {
 			$data[] = array(
 				"0" => $i,
 				"1" => $reg->tipo_activo,
-				"2" => $reg->usado_por,
-				"3" => $reg->tipo_activo,
-				"4" => $reg->gestionado_por,
-				"5" => $reg->estado,
-				"6" => $reg->etiqueta,
-				"7" => $reg->fecha_finvida,
-				"8" => '<button class="btn btn-success" data-toggle="tooltip" 
+				"2" => $reg->tipo_activo,
+				"3" => $reg->usado_por,
+				"4" => $reg->area,
+				"5" => $reg->gestionado_por,
+				"6" => $reg->estado,
+				"7" => $reg->etiqueta,
+				"8" => $reg->fecha_finvida,
+				"9" => '<button class="btn btn-success" data-toggle="tooltip" 
 				type="button" 
 				onclick="verDetallesActivoUnidad(`' .$reg->idactivo. '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
 				&nbsp
@@ -114,11 +115,50 @@ switch ($_GET["op"]) {
 		echo json_encode($results);
 		break;
 
+
+	case "verArchivosActivos":
+		$id = $_GET["id"];
+		$query_Tipo = $objActivos->verArchivosActivos($id);
+		$nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+
+        break;
 	case "guardarActivo":
 		// print_r(json_encode($_POST));
-		$query_Tipo = $objActivos->GuardarActivo($_POST);
+		$hosp  = $objActivos->GuardarActivo($_POST);
 
-		echo $query_Tipo;
+
+		$idgestion_activo = $hosp;
+		// $idgestion_activo = 23;
+
+		if (!empty($_FILES["fileupload"])) {
+            $file_names = $_FILES['fileupload']['name'];
+
+            for ($i = 0; $i < count($file_names); $i++) {
+                $file_name = $file_names[$i];
+
+                $parte = explode(".", $file_name);
+                // echo $parte[0]; // nombre del archivo
+                // echo $parte[1]; // extension del archivo
+
+                $codigoInterno = strtotime(date('Y-m-d H:i:s'));
+                $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
+
+
+                $objActivos->RegistrarImagenActivo($idgestion_activo, $new_file_name);
+
+                move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Activos/" . $new_file_name);
+            }
+        }
+
+
+
+
+
+		echo $hosp;
 
 		break;
 
