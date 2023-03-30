@@ -317,7 +317,7 @@ switch ($_GET["op"]) {
 			}
 
 			$datos = array(
-				'response_text'=>'El cliente ya se encuentra registrado en el sistema, solo está permitido editar los campos habilitados...',
+				'response_text'=>'El cliente con el Numero de Documento '.$reg->num_documento.' se encuentra registrado en el sistema, solo está permitido editar los campos habilitados...',
 				'estado' => 'encontrado',
 				'idCliente' => $reg->idpersona,
 				'tipo_persona' => $reg->tipo_persona,
