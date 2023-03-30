@@ -14,7 +14,7 @@ function init(){
 
 	$("#btnNuevo").show();
 
-
+	$('.loading_window').hide()
 
 	if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
@@ -340,6 +340,7 @@ function buscarPorNumeroDocumento() {
 
 	
 	if ($("#txtNum_Documento").val() != "") {
+		$('.loading_window').show()
 		$.ajax({
 			url: "./ajax/ClienteAjax.php?op=buscarClienteSunat",
 			dataType: "json",
@@ -348,7 +349,9 @@ function buscarPorNumeroDocumento() {
 				origen: "moduloCliente",
 			},
 			success: function (rpta) {
-				
+
+				$('.loading_window').hide()
+				$('#button_registrar_nuevo_cliente').attr('disabled',false)
 				switch (rpta["estado"]) {
 					case "encontrado":
 						//$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
@@ -462,6 +465,7 @@ function buscarPorNumeroDocumento() {
 			},
 			error: function (e) {
 				console.log(e.responseText);
+				$('.loading_window').hide()
 			},
 		});
 	} else {

@@ -90,6 +90,9 @@ class Persona
 		// tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
 		// ORDER BY
 		// idpersona DESC";
+
+
+		// antiguo sql solo un num_documento
 		$sql = "SELECT
 			p.*,
 			concat( e.nombre, ' ', e.apellidos ) AS empleado,
@@ -107,6 +110,32 @@ class Persona
 			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE'
 			ORDER BY idpersona DESC";
 
+		// nuevo sql solo un num_documento
+		$sql="SELECT
+			p.idpersona,
+			p.num_documento,
+			COUNT(p.num_documento),
+			concat( e.nombre, ' ', e.apellidos ) AS empleado,
+			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
+			(CASE
+				WHEN p.genero = 1 THEN 'MUJER'
+				WHEN p.genero = 2 THEN 'HOMBRE'
+				WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
+			END) AS genero_txt
+			,p.*
+			FROM
+			persona p
+			INNER JOIN empleado e ON p.idempleado = e.idempleado
+			INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
+			INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
+			t2 ON t2.num_documento = p.num_documento AND p.idpersona = t2.max_fecha
+			WHERE 
+			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' 
+			GROUP BY p.num_documento
+			ORDER BY p.idpersona DESC
+;
+		
+		";
 		//var_dump($sql);exit;
 
 		$query = $conexion->query($sql);
@@ -116,44 +145,97 @@ class Persona
 	public function BuscarClientePorNroDoc($numeroDocumento)
 	{
 		global $conexion;
-		$query = $conexion->query("SELECT *,
-			(
-				CASE 
-				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
-					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
-			   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-			    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-					 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
-			   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
-				   
-					WHEN venta.fecha IS NULL then 'PERDIDO'
-				   
-			END  
+		$sql="SELECT *,
+		(
+			CASE 
+			  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
+				 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
+		   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
 
-			)as clasificacion ,
-			(CASE
-				WHEN genero = 1 THEN 'MUJER'
-				WHEN genero = 2 THEN 'HOMBRE'
-				WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
-			END) AS genero_txt
-			FROM persona 
-			left join pedido on pedido.idcliente=persona.idpersona
-			left JOIN venta ON venta.idpedido=pedido.idpedido
-			WHERE num_documento = " . $numeroDocumento);
+		   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+				 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+			WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+				 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+				 
+				 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
+				 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
+		   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
+			   
+				WHEN venta.fecha IS NULL then 'PERDIDO'
+			   
+		END  
+
+		)as clasificacion ,
+		(CASE
+			WHEN genero = 1 THEN 'MUJER'
+			WHEN genero = 2 THEN 'HOMBRE'
+			WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
+		END) AS genero_txt
+		FROM persona 
+		left join pedido on pedido.idcliente=persona.idpersona
+		left JOIN venta ON venta.idpedido=pedido.idpedido
+		WHERE num_documento = $numeroDocumento";
+		// nuevo sql que solo trae el dato el dato mas reciente
+		$sql="SELECT *,
+		(
+			CASE 
+			  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
+				 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
+		   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
+
+		   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+				 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+			WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+				 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+				 
+				 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
+				 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
+				 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
+		   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
+			   
+				WHEN venta.fecha IS NULL then 'PERDIDO'
+			   
+		END  
+
+		)as clasificacion ,
+		(CASE
+			WHEN genero = 1 THEN 'MUJER'
+			WHEN genero = 2 THEN 'HOMBRE'
+			WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
+		END) AS genero_txt
+		FROM persona 
+		left join pedido on pedido.idcliente=persona.idpersona
+		left JOIN venta ON venta.idpedido=pedido.idpedido
+		
+		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
+		t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
+		 
+
+		
+		WHERE persona.num_documento ='$numeroDocumento'
+			GROUP BY persona.num_documento
+		ORDER BY persona.idpersona DESC;";
+
+
+
+
+		$query = $conexion->query($sql);
 		return $query;
 	}
 
