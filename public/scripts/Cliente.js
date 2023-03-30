@@ -15,7 +15,7 @@ function init(){
 	$("#btnNuevo").show();
 
 	$('.loading_window').hide()
-
+	$('#button_registrar_nuevo_cliente').hide()
 	if ($("#hdn_rol_usuario").val() == 'S') { // SUPERADMIN
 		$('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
 		$('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", false);
@@ -351,7 +351,7 @@ function buscarPorNumeroDocumento() {
 			success: function (rpta) {
 
 				$('.loading_window').hide()
-				$('#button_registrar_nuevo_cliente').attr('disabled',false)
+				$('#button_registrar_nuevo_cliente').show()
 
 				console.log(rpta)
 				switch (rpta["estado"]) {
