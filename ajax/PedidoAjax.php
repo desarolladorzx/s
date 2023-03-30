@@ -232,7 +232,7 @@ switch ($_GET["op"]) {
             $botonCambiarEstado = '';
             if ($reg->estadoId !== "D") {
                 // if (true) { 
-                if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 16) {
+                if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
                     // if (true) { 
 
                     $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido(' . $reg->idpedido . ')" ><i class="fa fa-refresh"></i> </button>&nbsp';
