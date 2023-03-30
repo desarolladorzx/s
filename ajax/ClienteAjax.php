@@ -141,13 +141,10 @@ switch ($_GET["op"]) {
 		//var_dump($origen);exit;
 
 		// SI ES NULL NO SE ENCUENTRA EN BASE DE DATOS - SE BUSCA EN API
-
+		$datos=array();
 		if ($reg == NULL || is_null($reg)) {  // $reg->idpersona
-
 			$estadoCuenta = "NUEVO";
-
 			if (strlen($numerodoc) == 8) {
-
 				$headers = get_headers("https://api.apis.net.pe/v1/dni?numero=" . $numerodoc);
 				$raptaURL = substr($headers[0], 9, 3);
 
@@ -179,7 +176,7 @@ switch ($_GET["op"]) {
 					//exit;
 					
 					$datos = array(
-						'response_text'=>'El cliente no se encuentra en el sistema , los datos extraidos son de internet , por favor rellene los datos faltante',
+						'response_text'=>'El cliente con el Numero de Documento '.$num_documento.' fue extraído correctamente de SUNAT',
 						'estado' => 'encontrado',
 						'idCliente' => "",
 						'tipo_persona' => "FINAL",
@@ -217,19 +214,29 @@ switch ($_GET["op"]) {
 			} else if (strlen($numerodoc) == 11) {
 				$headers = get_headers("https://api.apis.net.pe/v1/dni?numero=" . $numerodoc);
 				$raptaURL = substr($headers[0], 9, 3);
+
 				if ($raptaURL != '404') {
 					$data = file_get_contents("https://api.apis.net.pe/v1/ruc?numero=" . $numerodoc);
 					$info = json_decode($data, true);
 	
+
+					
 					$tipo_persona = 'Distribuidor';
-					$nombre = $info['nombre'];
+					//$nombre = $info['nombre'];
+					$nombre = isset($info['nombre']) ? $info['nombre']: "";
 					$apellido = '';
 					$tipo_documento = 'RUC';
-					$num_documento = $info['numeroDocumento'];
-					$direccion_departamento = $info['departamento'];
-					$direccion_provincia = $info['provincia'];
-					$direccion_distrito = $info['distrito'];
-					$direccion_calle = $info['direccion'];
+					//$num_documento = $info['numeroDocumento'];
+					$num_documento = isset($info['numeroDocumento']) ? $info['numeroDocumento']: "";
+					//$direccion_departamento = $info['departamento'];
+					$direccion_departamento = isset($info['departamento']) ? $info['departamento']: "";
+					//$direccion_provincia = $info['provincia'];
+					$direccion_provincia = isset($info['provincia']) ? $info['provincia']: "";
+
+					// $direccion_distrito = $info['distrito'];
+					$direccion_distrito = isset($info['distrito']) ? $info['distrito']: "";
+					//$direccion_calle = $info['direccion'];
+					$direccion_calle = isset($info['direccion']) ? $info['direccion']: "";
 					$telefono = '';
 					$telefono_2 = 0;
 					$email = '';
@@ -268,6 +275,15 @@ switch ($_GET["op"]) {
 						'estadoCuenta' => $estadoCuenta
 					);
 				}
+			}else{
+				$datos = array(
+					'estado' => 'no_encontrado',
+					'idCliente' => "",
+					'nombre' => "",
+					'apellido' => "",
+					'numeroDocumento' => $numerodoc,
+					'estadoCuenta' => $estadoCuenta
+				);
 			}
 
 			//var_dump($info);exit;

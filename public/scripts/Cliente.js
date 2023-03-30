@@ -446,7 +446,7 @@ function buscarPorNumeroDocumento() {
 						alert("Ocurrio un error al registrar cliente...");
 
 
-						// swal("Mensaje del Sistema", 'error del sistema', "error");
+						swal("Mensaje del Sistema", 'error del sistema', "error");
 						break;
 					case "no_encontrado":
 						$("#cboTipo_Persona").val("");
@@ -465,7 +465,12 @@ function buscarPorNumeroDocumento() {
 						$("#txtEmail").val();
 						$("#txtEstado").val();
 						$("#txtIdPersona").val();
+						
+						
+						swal("Mensaje del Sistema", `	No se encontraron resultados con el numero de documento ${rpta['numeroDocumento']}. `, "error");
+					
 						break;
+
 				}
 			},
 			error: function (e) {
