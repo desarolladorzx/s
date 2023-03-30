@@ -445,7 +445,7 @@ function buscarPorNumeroDocumento() {
 					case "error":
 						alert("Ocurrio un error al registrar cliente...");
 
-
+						$('#txtTelefono_2').val(0)
 						swal("Mensaje del Sistema", 'error del sistema', "error");
 						break;
 					case "no_encontrado":
@@ -466,7 +466,7 @@ function buscarPorNumeroDocumento() {
 						$("#txtEstado").val();
 						$("#txtIdPersona").val();
 						
-						
+						$('#txtTelefono_2').val(0)
 						swal("Mensaje del Sistema", `	No se encontraron resultados con el numero de documento ${rpta['numeroDocumento']}. `, "error");
 					
 						break;
