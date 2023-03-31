@@ -522,8 +522,6 @@ order by idpersona DESC ;";
 		global $conexion;
 		$sql = "INSERT INTO detalle_pedido_img(
 			idpedido,
-			idsucursal,
-			idcliente,
 			idusuario,
 			imagen,
 			estado,
@@ -531,8 +529,6 @@ order by idpersona DESC ;";
 			)
 		VALUES(
 			$idpedido, 
-			'$idsucursal', 
-			$idcliente, 
 			$idusuario, 
 			'$imagen', 
 			1,
@@ -545,9 +541,10 @@ order by idpersona DESC ;";
 	{
 
 		global $conexion;
-		$sql = "INSERT INTO detalle_pedido_img(idpedido, idcliente, idusuario, idsucursal, imagen, estado,tipo_imagen)
-						VALUES($idpedido, $idcliente, $idusuario, '$idsucursal', '$imagen', 1,'VOUCHER')";
-		//var_dump($sql);
+		$sql = "INSERT INTO detalle_pedido_img(idpedido, idusuario, imagen, estado,tipo_imagen)
+		VALUES($idpedido, $idusuario, '$imagen', 1,'VOUCHER')";
+		
+		
 		$query = $conexion->query($sql);
 
 		/*
@@ -570,6 +567,17 @@ order by idpersona DESC ;";
 					imagen AS imagen
 			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 AND tipo_imagen='VOUCHER'
 					";
+
+		$sql = "SELECT
+		iddetalle_img AS id,
+		pedido.idpedido AS idpedido,
+		pedido.idcliente AS idcliente,
+		detalle_pedido_img.idusuario AS idusuario,
+		pedido.idsucursal AS idsucursal,
+		imagen AS imagen
+		from detalle_pedido_img 
+		JOIN pedido ON pedido.idpedido=detalle_pedido_img.idpedido
+		where detalle_pedido_img.idpedido = $idpedido and  detalle_pedido_img.estado = 1 AND tipo_imagen='VOUCHER'";
 		//var_dump($sql);exit;
 		$query = $conexion->query($sql);
 		return $query;
@@ -578,15 +586,27 @@ order by idpersona DESC ;";
 	public function GetImagenesEmpaquetado($idpedido)
 	{
 		global $conexion;
+		// $sql = "SELECT
+		// 			iddetalle_img AS id,
+		// 			idpedido AS idpedido,
+		// 			idcliente AS idcliente,
+		// 			idusuario AS idusuario,
+		// 			idsucursal AS idsucursal,
+		// 			imagen AS imagen
+		// 	 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 and tipo_imagen='EMPAQUETADO'";
+
+
 		$sql = "SELECT
-					iddetalle_img AS id,
-					idpedido AS idpedido,
-					idcliente AS idcliente,
-					idusuario AS idusuario,
-					idsucursal AS idsucursal,
-					imagen AS imagen
-			 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 and tipo_imagen='EMPAQUETADO'";
-		//var_dump($sql);exit;
+		iddetalle_img AS id,
+		pedido.idpedido AS idpedido,
+		pedido.idcliente AS idcliente,
+		detalle_pedido_img.idusuario AS idusuario,
+		pedido.idsucursal AS idsucursal,
+		imagen AS imagen
+		from detalle_pedido_img 
+		JOIN pedido ON pedido.idpedido=detalle_pedido_img.idpedido
+		where detalle_pedido_img.idpedido = $idpedido AND detalle_pedido_img.estado = 1 and tipo_imagen='EMPAQUETADO'
+		";
 		$query = $conexion->query($sql);
 		return $query;
 	}
