@@ -1,6 +1,8 @@
 $(document).on("ready", init);
 
 function init() {
+
+  $('#')
   $("#act_fecha_ingreso ").change(function () {
     var fecha1 = new Date($("#act_fecha_finvida").val());
     var fecha2 = new Date($("#act_fecha_ingreso").val());
@@ -310,6 +312,15 @@ function cargarDataEmpleadoActivos(
 function verDetallesActivoUnidad(id) {
   $("#btnNuevo").hide();
 
+
+
+
+  // ocultamos el contendedor asignar_activos para insertar una  tabla
+  $('#container_asignar_activos').hide()
+  
+
+
+  //
   $('input[id^="act_"]').each(function () {
     $(this).val("");
   });
@@ -389,6 +400,7 @@ function verDetallesActivoUnidad(id) {
     },
   });
 }
+
 
 function ModificarDetallesActivosView(id) {
   $("#btnNuevo").hide();

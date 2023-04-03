@@ -129,7 +129,7 @@
                       />
                     </div>
                   </div>
-                 
+
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
                       <label>familia de activo (*):</label>
@@ -283,7 +283,6 @@
                       />
                     </div>
                   </div>
-                 
 
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
@@ -355,7 +354,7 @@
                         maxlength="20"
                         name="act_fecha_finvida"
                         required=""
-                        class="form-control text-center" 
+                        class="form-control text-center"
                         placeholder="fin de vida"
                         autofocus=""
                       />
@@ -420,95 +419,96 @@
                           </button>
                         </div>
                       </div>
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>empleado (*):</label>
-                          <select
-                            required
-                            class="form-control gestion_activo empleadosList"
-                            name="act_idempleado"
-                            id="act_idempleado"
-                            placeholder="'empleado"
-                          ></select>
+                      <div class="row" id="container_asignar_activos">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>empleado (*):</label>
+                            <select
+                              required
+                              class="form-control gestion_activo empleadosList"
+                              name="act_idempleado"
+                              id="act_idempleado"
+                              placeholder="'empleado"
+                            ></select>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>empleado en uso (*): </label>
+                            <select
+                              required
+                              class="form-control gestion_activo empleadosList"
+                              name="act_idempleado_uso"
+                              id="act_idempleado_uso"
+                              placeholder="empleado en uso"
+                            ></select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>area (*):</label>
+                            <input
+                              id="act_area"
+                              type="text"
+                              maxlength="20"
+                              name="act_area"
+                              required=""
+                              class="form-control gestion_activo"
+                              placeholder="area"
+                              autofocus=""
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>fecha_asignacion (*):</label>
+                            <input
+                              id="act_fecha_asignacion"
+                              type="date"
+                              maxlength="20"
+                              name="act_fecha_asignacion"
+                              required=""
+                              class="form-control gestion_activo"
+                              placeholder="Número de documento"
+                              autofocus=""
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>ubicacion (*):</label>
+                            <select
+                              class="form-control gestion_activo"
+                              name="act_ubicacion"
+                              id="act_ubicacion"
+                            >
+                              <option value=""></option>
+                              <option value="2">LIMA</option>
+                              <option value="1">AREQUIPA</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <div class="form-group">
+                            <label>Subir Archivos (*):</label>
+                            <input
+                              id="act_activo_archivo"
+                              type="file"
+                              name="act_activo_archivo"
+                              required=""
+                              multiple
+                              class="form-control gestion_activo"
+                              placeholder="Número de documento"
+                              autofocus=""
+                            />
+                          </div>
                         </div>
                       </div>
+                      <div class="table_activos_anteriores">
 
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>empleado en uso (*): </label>
-                          <select
-                            required
-                            class="form-control gestion_activo empleadosList"
-                            name="act_idempleado_uso"
-                            id="act_idempleado_uso"
-                            placeholder="empleado en uso"
-                          ></select>
-                        </div>
                       </div>
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>area (*):</label>
-                          <input
-                            id="act_area"
-                            type="text"
-                            maxlength="20"
-                            name="act_area"
-                            required=""
-                            class="form-control gestion_activo"
-                            placeholder="area"
-                            autofocus=""
-                          />
-                        </div>
-                      </div>
-
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>fecha_asignacion (*):</label>
-                          <input
-                            id="act_fecha_asignacion"
-                            type="date"
-                            maxlength="20"
-                            name="act_fecha_asignacion"
-                            required=""
-                            class="form-control gestion_activo"
-                            placeholder="Número de documento"
-                            autofocus=""
-                          />
-                        </div>
-                      </div>
-
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>ubicacion (*):</label>
-                          <select
-                            class="form-control gestion_activo"
-                            name="act_ubicacion"
-                            id="act_ubicacion"
-                          >
-                            <option value=""></option>
-                            <option value="2">LIMA</option>
-                            <option value="1">AREQUIPA</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                        <div class="form-group">
-                          <label>Subir Archivos (*):</label>
-                          <input
-                            id="act_activo_archivo"
-                            type="file"
-                            name="act_activo_archivo"
-                            required=""
-                            multiple
-                            class="form-control gestion_activo"
-                            placeholder="Número de documento"
-                            autofocus=""
-                          />
-                        </div>
-                      </div>
-
-
-
                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <button
@@ -541,7 +541,6 @@
                       ></ul>
                     </div>
                   </div>
-
                 </div>
               </div>
 

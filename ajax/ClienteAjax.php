@@ -11,7 +11,7 @@ switch ($_GET["op"]) {
 		if ($_POST["optionsRadios_edit"] != "") {
 			$genero = $_POST["optionsRadios_id_edit"];
 		} else {
-			$genero = $_POST["optionsRadios"];
+			$genero =  isset($_POST["optionsRadios"]) ? $_POST["optionsRadios"] : "";
 		}
 
 		//var_dump($genero);exit;
