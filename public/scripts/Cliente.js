@@ -1,6 +1,43 @@
 $(document).on("ready", init); // Inciamos el jquery
 
+function demostrarTelefono(value) {
+  if (value) {
+    $.post("./ajax/ClienteAjax.php?op=comprobar_telefono", value, function (r) {
+      let response = JSON.parse(r);
+
+      let textoListaTelefonoCoincidencias = "";
+      if (response.length > 0) {
+        $("#container_alerta_telefono").show(1000);
+        setTimeout(
+          function(){
+
+            $("#container_alerta_telefono").hide(1000)
+          }
+          ,5000)
+
+        response.map((e) => {
+          console.log(e);
+          textoListaTelefonoCoincidencias += `
+            <li>
+            ${e.num_documento} -
+            ${e.nombre} 
+          </li>
+
+            `;
+        });
+
+        $("#containerListaTelefonoCoincidencias").html(
+          textoListaTelefonoCoincidencias
+        );
+      }
+    });
+  }
+}
+
 function handleClick(checkbox) {
+
+
+
   if (checkbox.checked) {
     console.log((checkbox.value = "True"));
 
@@ -9,7 +46,7 @@ function handleClick(checkbox) {
     $("#txt_ubicacion_envio").val($("#txt_ubicacion_nuevo").val());
 
     $("#id_ubicacion_envio_array").val($("#id_ubicacion_array").val());
-    
+
     $("#txt_direccion_referencia_envio").val(
       $("#txtDireccion_Referencia").val()
     );
@@ -22,7 +59,12 @@ function handleClick(checkbox) {
   }
 }
 
+function ubicacionAntiguo() {
+  console.log();
+}
 function init() {
+  $("#container_alerta_telefono").hide();
+
   /* 	$('#tblCliente').dataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -32,6 +74,14 @@ function init() {
             'pdfHtml5'
         ]
     }); */
+  $("#txtTelefono_2").change(function () {
+    demostrarTelefono($("#txtTelefono_2").val());
+  });
+  $("#txtTelefono").change(function () {
+    demostrarTelefono($("#txtTelefono").val());
+  });
+
+  $("#container_ubicacion_antigua").hide();
 
   $("#txt_ubicacion_nuevo").change(function (e) {
     if ($("#idIgualAdirecionEnvio").val() == "True") {
@@ -353,8 +403,23 @@ function cargarDataCliente(
   idubicacion_factura,
   idubicacion,
   direccion_referencia_factura,
-  direccion_calle_factura
+  direccion_calle_factura,
+  direccion_antigua
 ) {
+  console.log(direccion_antigua);
+  // si tiene la direccion antigua es true , se muestra la direccion antigua
+  if (direccion_antigua.length > 0) {
+    $("#container_ubicacion_antigua").show();
+
+    if (direccion_antigua == "  ") {
+      $("#ubicacion_antigua").html("sin ubicacion");
+    } else {
+      $("#ubicacion_antigua").html(direccion_antigua);
+    }
+  }
+
+  //
+
   $("#btnExtraerClientes").hide();
   $("#button_registrar_nuevo_cliente").show();
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
@@ -539,6 +604,16 @@ function buscarPorNumeroDocumento() {
         switch (rpta["estado"]) {
           case "encontrado":
             //$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+
+            if (rpta["direccion_antigua"].length > 0) {
+              $("#container_ubicacion_antigua").show();
+
+              if (rpta["direccion_antigua"] == "  ") {
+                $("#ubicacion_antigua").html("sin ubicacion");
+              } else {
+                $("#ubicacion_antigua").html(rpta["direccion_antigua"]);
+              }
+            }
 
             $("#cboTipo_Documento_edit").val(rpta["tipo_documento"]);
 

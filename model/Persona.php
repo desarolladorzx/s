@@ -111,6 +111,7 @@ class Persona
 			idprovincia_factura='$idprovincia_factura',
 			iddistrito_factura='$iddistrito_factura'
 
+
 						WHERE idpersona = $idpersona";
 
 $sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
@@ -122,9 +123,10 @@ direccion_referencia_factura='$direccion_referencia_factura',
 idprovincia_factura='$idprovincia_factura',
 iddistrito_factura='$iddistrito_factura'
 
-			WHERE num_documento ='$num_documento'";
+			WHERE num_documento ='$num_documento' and 
+			idpersona=$idpersona";
 			
-		//var_dump($sql);exit;
+		echo($sql);
 
 		$query = $conexion->query($sql);
 		return $query;
@@ -137,6 +139,16 @@ iddistrito_factura='$iddistrito_factura'
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+	public function comprobar_telefono($telefono)
+	{
+		global $conexion;
+		$sql = "SELECT *  FROM persona WHERE telefono=$telefono AND estado ='A'";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 
 	public function Listar()
 	{
@@ -223,11 +235,14 @@ iddistrito_factura='$iddistrito_factura'
 			WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
 		END) AS genero_txt
 		,p.*
-		
-		, 
-		CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
-		,
-		CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion_factura
+		,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
+		,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+		,CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura
+		,  CONCAT(dep_n.descripcion,' - ',pro_n.descripcion, ' - ',dis_n.descripcion) ubicacion_factura
+		,if(p.direccion_distrito>0 AND p.direccion_provincia>0,'',CONCAT(p.direccion_departamento ,' ', p.direccion_distrito,' ',p.direccion_provincia)) direccion_antigua
+
+
+	
 
 
 		FROM
@@ -241,7 +256,7 @@ iddistrito_factura='$iddistrito_factura'
 			
 		LEFT JOIN distrito ON distrito.iddistrito=p.direccion_distrito
 		left JOIN provincia ON provincia.idprovincia=p.direccion_provincia
-		left JOIN departamento ON departamento.iddepartamento=p.direccion_departamento
+		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
 		
 		LEFT JOIN distrito dis_n ON dis_n.iddistrito=p.iddistrito_factura
 		left JOIN provincia pro_n ON pro_n.idprovincia=p.idprovincia_factura
@@ -343,6 +358,7 @@ iddistrito_factura='$iddistrito_factura'
 
 		, CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura,  CONCAT(dep_n.descripcion,' - ',pro_n.descripcion, ' - ',dis_n.descripcion) ubicacion_factura
 		
+		,if(persona.direccion_distrito>0 AND persona.direccion_provincia>0,'',CONCAT(persona.direccion_departamento ,' ', persona.direccion_distrito,' ',persona.direccion_provincia)) direccion_antigua
 
 		FROM persona 
 
@@ -354,7 +370,7 @@ iddistrito_factura='$iddistrito_factura'
 		 
 		LEFT JOIN distrito ON distrito.iddistrito=persona.direccion_distrito
 		left JOIN provincia ON provincia.idprovincia=persona.direccion_provincia
-		left JOIN departamento ON departamento.iddepartamento=persona.direccion_departamento
+		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
 	
 		
 			

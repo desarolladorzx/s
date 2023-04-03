@@ -11,6 +11,31 @@
   name="hdn_rol_usuario"
   value="<?php echo $_SESSION['rol_usuario'];?>"
 />
+
+<div
+  class=""
+  id="container_alerta_telefono"
+  style="position: fixed; z-index: 100000000; top: 10px; left: 0; width: 100%"
+>
+  <div class="alert alert-info alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      ×
+    </button>
+    <h6>
+      <i class="icon fa fa-info"></i> Se encontraron coincidencias con las
+      siguientes personas:
+    </h6>
+
+    <ul id="containerListaTelefonoCoincidencias">
+      <li>
+        pepe 
+      </li>
+      <li>
+        matias
+      </li>
+    </ul>
+  </div>
+</div>
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">Clientes</h3>
@@ -18,6 +43,7 @@
       <button class="btn btn-box-tool" data-widget="collapse">
         <i class="fa fa-minus"></i>
       </button>
+
       <button class="btn btn-box-tool" data-widget="remove">
         <i class="fa fa-times"></i>
       </button>
@@ -385,7 +411,17 @@
                     />
 
                     <div class="form-group has-success">
-                      <label>Ubicacion (*):</label>
+                      <label
+                        >Ubicacion (*):
+
+                        <span
+                          style="color: black !important"
+                          id="container_ubicacion_antigua"
+                        >
+                          ubicacion antigua :
+                          <b id="ubicacion_antigua"> 'arequipa arequipa ' </b>
+                        </span>
+                      </label>
 
                       <input
                         type="text"
@@ -531,7 +567,7 @@
                                 type="text"
                                 name="txt_direccion_referencia_envio"
                                 class="form-control"
-                                required
+                                
                                 placeholder="Direccion de Referencia de Envio"
                                 style="text-transform: uppercase"
                               />
@@ -543,6 +579,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="col-lg-12 left">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
