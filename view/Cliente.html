@@ -231,10 +231,13 @@
                       ></select>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div
+                    id="container_button_maximizar"
+                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                  >
                     <div class="form-group has-warning">
                       <label>Número (RUC, DNI, Etc) (*):</label>
-                      <div class="input-group">
+                      <div class="input-group" style="width: 100%">
                         <input
                           id="txtNum_Documento"
                           type="number"
@@ -314,7 +317,7 @@
 
               <div class="col-lg-12 left">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Departamento (*):</label>
                       <input
@@ -367,7 +370,42 @@
                         onkeyup="javascript:this.value=this.value.toUpperCase();"
                       />
                     </div>
+                  </div> -->
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      required
+                      placeholder="Ubicacion de Envio"
+                      list="ubicacions"
+                      id="id_ubicacion_array"
+                      name="id_ubicacion_array"
+                      style="text-transform: uppercase"
+                    />
+
+                    <div class="form-group has-success">
+                      <label>Ubicacion (*):</label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Envio"
+                        list="ubicacions"
+                        id="txt_ubicacion_nuevo"
+                        name="txt_ubicacion_nuevo"
+                        style="text-transform: uppercase"
+                      />
+                      <datalist
+                        id="ubicacions"
+                        class="ubicacion_containe_options"
+                      >
+                      </datalist>
+                    </div>
                   </div>
+
+                  <div></div>
                 </div>
               </div>
               <div class="col-lg-12 left">
@@ -399,6 +437,108 @@
                         class="form-control"
                         autofocus=""
                       />
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- <div class="box "> -->
+                    <div class="box collapsed-box">
+                      <div class="box-header display:flex">
+                        <h5 style="font-weight: bold; color: #858585">
+                          FACTURACION A
+                        </h5>
+                        <div class="display:flex">
+                          <input
+                            style="margin: 0 5px"
+                            type="checkbox"
+                            checked
+                            id="idIgualAdirecionEnvio"
+                            name="idIgualAdirecionEnvio"
+                            value="True"
+                            onclick="handleClick(this)"
+                          />
+
+                          <label style="font-weight: bold">
+                            Igual a la direccion de envio
+                          </label>
+                        </div>
+
+                        <div class="box-tools pull-right">
+                          <button
+                            class="btn btn-box-tool"
+                            type="button"
+                            data-widget="collapse"
+                            id="btn_minimizar_container_localizacion_recepcion"
+                          >
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="box-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                required
+                                placeholder="Ubicacion de Envio"
+                                list="ubicacions"
+                                id="id_ubicacion_envio_array"
+                                name="id_ubicacion_envio_array"
+                                style="text-transform: uppercase"
+                              />
+
+                              <label>Ubicacion de Envio (*):</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                required
+                                placeholder="Ubicacion de Envio"
+                                list="ubicacion"
+                                id="txt_ubicacion_envio"
+                                name="txt_ubicacion_envio"
+                                style="text-transform: uppercase"
+                              />
+                              <datalist
+                                id="ubicacion"
+                                class="ubicacion_containe_options"
+                              >
+                              </datalist>
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>Direccion de Envio (*):</label>
+                              <input
+                                id="txt_direccion_envio"
+                                type="text"
+                                name="txt_direccion_envio"
+                                class="form-control"
+                                required
+                                placeholder="Direccion de Envio "
+                                style="text-transform: uppercase"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <label
+                                >Direccion de Referencia de Envio (*):</label
+                              >
+                              <input
+                                id="txt_direccion_referencia_envio"
+                                type="text"
+                                name="txt_direccion_referencia_envio"
+                                class="form-control"
+                                required
+                                placeholder="Direccion de Referencia de Envio"
+                                style="text-transform: uppercase"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -565,7 +705,6 @@
                   class="btn btn-success"
                   id="button_registrar_nuevo_cliente"
                   type="submit"
-                  
                 >
                   <i class="fa fa-floppy-o"></i> Registrar
                 </button>
