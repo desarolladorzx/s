@@ -2,7 +2,7 @@ $(document).on("ready", init); // Inciamos el jquery
 
 function demostrarTelefono(value) {
   if (value) {
-    $.post("./ajax/ClienteAjax.php?op=comprobar_telefono", value, function (r) {
+    $.post("./ajax/ClienteAjax.php?op=comprobar_telefono", {telefono:value}, function (r) {
       let response = JSON.parse(r);
 
       let textoListaTelefonoCoincidencias = "";

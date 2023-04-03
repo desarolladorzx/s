@@ -4,7 +4,8 @@ require_once "../model/Persona.php";
 $objCliente = new Persona();
 switch ($_GET["op"]) {
 	case 'comprobar_telefono':
-		$telefono=916426421;
+		
+		$telefono=$_POST["telefono"];
 		$query_Tipo = $objCliente->comprobar_telefono($telefono);
 		
 		
