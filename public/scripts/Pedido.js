@@ -1,3 +1,5 @@
+
+
 $(document).on("ready", init);
 var objinit = new init();
 var bandera = 1;
@@ -5,6 +7,7 @@ var detalleIngresos = new Array();
 var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
+
 
 function init() {
   function notificaciones() {
@@ -830,7 +833,16 @@ function init() {
     */
 
   function AbrirModalCliente() {
-    $("#modalListadoCliente").modal("show");
+    
+
+    
+    // $("#modalListadoCliente").modal("show");
+
+    $('#modalListadoCliente').modal({
+      backdrop: 'static'
+    });
+
+    
     $.post("./ajax/PedidoAjax.php?op=listClientes", function (r) {
       $("#Cliente").html(r);
       $("#tblClientees").dataTable({
