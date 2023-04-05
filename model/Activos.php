@@ -8,13 +8,14 @@ class Activos
 	{
 	}
 
-	public function verArchivosActivos($idgestion_activo){
+	public function verArchivosActivos($idgestion_activo)
+	{
 		global $conexion;
-		
-		$sql=" SELECT * FROM gestion_activo_archivo where idgestion_activo=$idgestion_activo";
+
+		$sql = " SELECT * FROM gestion_activo_archivo where idgestion_activo=$idgestion_activo";
 
 		$query = $conexion->query($sql);
-		return  $query ;
+		return  $query;
 	}
 
 	public function  RegistrarImagenActivo(
@@ -111,6 +112,21 @@ class Activos
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function listaDeEmpleadosPorActivos($id)
+	{
+		global $conexion;
+		$sql = "SELECT *,CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_asignado, CONCAT(emp_uso.nombre ,' ',emp_uso.apellidos) empleado_uso FROM gestion_activo
+
+		JOIN empleado ON empleado.idempleado=gestion_activo.idempleado
+		JOIN empleado emp_uso ON emp_uso.idempleado=gestion_activo.idempleado
+		
+		 WHERE idactivo=$id 
+		 order by idgestion_activos desc
+		 ";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 	public function ListarActivosPorEmpleados($id)
 	{
 
@@ -263,7 +279,7 @@ class Activos
 			global $conexion;
 			$conexion->query($sql);
 
-			$idgestion_activo = $conexion->insert_id;			
+			$idgestion_activo = $conexion->insert_id;
 			return  $idgestion_activo;
 		}
 

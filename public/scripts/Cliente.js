@@ -1,43 +1,45 @@
 $(document).on("ready", init); // Inciamos el jquery
 
 function demostrarTelefono(value) {
+  $("#container_alerta_telefono").hide(1000);
+  $("#container_respuesta_inputs_coincidencia_de_telefonos").hide(1000);
   if (value) {
-    $.post("./ajax/ClienteAjax.php?op=comprobar_telefono", {telefono:value}, function (r) {
-      let response = JSON.parse(r);
+    $.post(
+      "./ajax/ClienteAjax.php?op=comprobar_telefono",
+      { telefono: value },
+      function (r) {
+        let response = JSON.parse(r);
 
-      let textoListaTelefonoCoincidencias = "";
-      if (response.length > 0) {
-        $("#container_alerta_telefono").show(1000);
-        setTimeout(
-          function(){
+        let textoListaTelefonoCoincidencias = "";
+        if (response.length > 0) {
+          $("#container_alerta_telefono").show("slow");
 
-            $("#container_alerta_telefono").hide(1000)
-          }
-          ,5000)
-
-        response.map((e) => {
-          console.log(e);
-          textoListaTelefonoCoincidencias += `
+          response.map((e) => {
+            console.log(e);
+            textoListaTelefonoCoincidencias += `
             <li>
             ${e.num_documento} -
             ${e.nombre} 
-          </li>
-
+            </li>
             `;
-        });
+          });
 
-        $("#containerListaTelefonoCoincidencias").html(
-          textoListaTelefonoCoincidencias
-        );
+          $("#containerListaTelefonoCoincidencias").html(
+            textoListaTelefonoCoincidencias
+          );
+          $("#containerListaTelefonoCoincidenciasText").html(
+            textoListaTelefonoCoincidencias
+          );
+          $("#container_respuesta_inputs_coincidencia_de_telefonos").show(
+            "slow"
+          );
+        }
       }
-    });
+    );
   }
 }
 
 function handleClick(checkbox) {
-
-
-
   if (checkbox.checked) {
     console.log((checkbox.value = "True"));
 
@@ -63,6 +65,60 @@ function ubicacionAntiguo() {
   console.log();
 }
 function init() {
+  $("#insertarClientesACartera").click(function () {
+    // $('.close').click()
+    $(".loading_window").show();
+
+    if ($("#select_personal_vendedor").val()) {
+      $.ajax({
+        url: "./ajax/ClienteAjax.php?op=asignarCarteraVendedor",
+        dataType: "json",
+        data: {
+          lista: listadeClientesAsignados,
+          idempleado: $("#select_personal_vendedor").val(),
+        },
+        type: "post",
+        success: function (rpta) {
+          console.log(rpta);
+          swal(
+            "Mensaje del Sistema",
+            "clientes asignados correctamente",
+            "success"
+          );
+
+          $("#asignarUsuario").modal("hide");
+        },
+        error: function (e) {
+          swal("Mensaje del Sistema", e.responseText, "error");
+        },
+      });
+    } else {
+      alert("es necesario selecionar un vendedor");
+    }
+  });
+
+  traerPersonalVendedor();
+  function traerPersonalVendedor() {
+    $.ajax({
+      url: "./ajax/ClienteAjax.php?op=traerPersonalVendedor",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        console.log(rpta);
+        var ubicacion_containe_options_html = '<option value=""></option>';
+
+        rpta.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
+        });
+        console.log(ubicacion_containe_options_html);
+
+        $("#select_personal_vendedor").html(ubicacion_containe_options_html);
+      },
+      error: function (e) {},
+    });
+  }
+
+  $("#container_respuesta_inputs_coincidencia_de_telefonos").hide();
   $("#container_alerta_telefono").hide();
 
   /* 	$('#tblCliente').dataTable({
@@ -294,9 +350,13 @@ function init() {
   }
 
   function VerForm() {
+    btnNuevo
     $("#VerForm").show(); // Mostramos el formulario
     //$("#btnNuevo").hide();// ocultamos el boton nuevo
     $("#VerListado").hide();
+    
+    $("#btn_asignar_vendedor").hide();// ocultamos el boton nuevo
+
 
     $("#optionsRadios1").prop("checked", false);
     $("#optionsRadios2").prop("checked", false);
@@ -312,46 +372,131 @@ function init() {
     $("#VerForm").hide(); // Mostramos el formulario
     //$("#btnNuevo").show();// ocultamos el boton nuevo
     $("#VerListado").show();
+    // $("#btn_asignar_vendedor").hide();
+
   }
 }
+var tabla;
+var listadeClientesAsignados = [];
+function guardarSelects() {
+  var selectedRows = $("#tblCliente")
+    .DataTable()
+    .rows({ selected: true })
+    .data()
+    .toArray();
+  console.log(selectedRows);
+  listadeClientesAsignados = selectedRows;
 
+  if (selectedRows.length > 0) {
+    $("#asignarUsuario").modal("show");
+    var textli = "";
+    selectedRows.map((e) => {
+      textli += ` <li>
+           ${e[3]} ${e[2]}   
+      </li>`;
+    });
+
+    $("#numero_clientes_asignados").html(
+      `${selectedRows.length} cliente(s) por asignar`
+    );
+
+    $("#lista_clientes_por_asignar").html(textli);
+  } else {
+    alert(
+      "Necesita selecionar uno o mas clientes para poder asignar a un vendedor"
+    );
+  }
+}
 function ListadoCliente() {
-  var tabla = $("#tblCliente")
-    .dataTable({
-      aProcessing: true,
-      aServerSide: true,
-      dom: "Bfrtip",
-      buttons: [
-        //'copyHtml5',
-        //'excelHtml5',
-        //'csvHtml5',
-        //'pdfHtml5'
-      ],
-      aoColumns: [
-        { mDataProp: "id" },
-        { mDataProp: "1" },
-        { mDataProp: "2" },
-        { mDataProp: "3" },
-        { mDataProp: "4" },
-        { mDataProp: "5" },
-        { mDataProp: "6" },
-        { mDataProp: "7" },
-        { mDataProp: "8" },
-        { mDataProp: "9" },
-        { mDataProp: "10" },
-        { mDataProp: "11" },
-      ],
-      ajax: {
-        url: "./ajax/ClienteAjax.php?op=list",
-        type: "get",
-        dataType: "json",
-        error: function (e) {
-          console.log(e.responseText);
+
+
+  console.log($('#txtIdEmpleado').val())
+  tabla = $("#tblCliente").DataTable({
+    pagingType: "full_numbers",
+    lengthMenu: [
+      [25, 50, 100, 150, 300 ],
+      [25, 50, 100, 150, 300],
+    ],
+    aProcessing: true,
+    // aServerSide: true,
+    // dom: "Bfrtip",
+    buttons: [
+      //'copyHtml5',
+      //'excelHtml5',
+      //'csvHtml5',
+      //'pdfHtml5'
+    ],
+
+    aoColumns: [
+      {
+        orderable: false,
+        className: "select-checkbox", // Agregar la opción
+        mDataProp: "0",
+        targets: 0,
+        visible:[6,17].includes(Number($('#txtIdEmpleado').val()))? true:false,
+        checkboxes: {
+          selectAll: true,
         },
       },
-      bDestroy: true,
-    })
-    .DataTable();
+      { mDataProp: "id" },
+      { mDataProp: "1" },
+      { mDataProp: "2" },
+      { mDataProp: "3" },
+      { mDataProp: "4" },
+      { mDataProp: "5" },
+      { mDataProp: "6" },
+      { mDataProp: "7" },
+      { mDataProp: "8" },
+      { mDataProp: "9" },
+      { mDataProp: "10" },
+      { mDataProp: "vendedor_asignado" },
+      { mDataProp: "11" },
+      { mDataProp: "12", visible: false },
+    ],
+
+    select: {
+      style: "os",
+      selector: ".select-checkbox",
+    },
+    order: [[1, "asc"]],
+
+    ajax: {
+      url: "./ajax/ClienteAjax.php?op=list",
+      type: "get",
+      dataType: "json",
+      error: function (e) {
+        console.log(e.responseText);
+      },
+    },
+    bDestroy: true,
+  });
+
+  tabla.on("click", "th.select-checkbox", function () {
+    var nodes = tabla.rows({ search: "applied" }).nodes();
+    if ($("th.select-checkbox").hasClass("selected")) {
+      tabla.rows().deselect();
+      $("th.select-checkbox").removeClass("selected");
+    } else {
+      tabla.rows({ search: "applied" }).select();
+      $(nodes).addClass("selected");
+      $("th.select-checkbox").addClass("selected");
+    }
+  });
+
+  tabla.on("select deselect", function () {
+    var nodes = tabla.rows({ search: "applied" }).nodes();
+    if (
+      tabla.rows({ selected: true, search: "applied" }).count() !== nodes.length
+    ) {
+      $("th.select-checkbox").removeClass("selected");
+    } else {
+      $("th.select-checkbox").addClass("selected");
+    }
+  });
+  tabla.on("search.dt", function () {
+    tabla.rows().deselect();
+    $("th.select-checkbox").removeClass("selected");
+  });
 }
 
 function eliminarCliente(id) {
@@ -404,9 +549,16 @@ function cargarDataCliente(
   idubicacion,
   direccion_referencia_factura,
   direccion_calle_factura,
-  direccion_antigua
+  direccion_antigua,
+
+  idempleado_asignado,
+  empleado_asignado
 ) {
   console.log(direccion_antigua);
+  $("#btn_asignar_vendedor").hide();
+  $("#txt_empleado_asignado").val(idempleado_asignado);
+  $("#txt_idempleado_asignado").val(empleado_asignado);
+
   // si tiene la direccion antigua es true , se muestra la direccion antigua
   if (direccion_antigua.length > 0) {
     $("#container_ubicacion_antigua").show();
@@ -425,6 +577,7 @@ function cargarDataCliente(
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
   $("#VerForm").show(); // mostramos el formulario
   $("#btnNuevo").hide(); // ocultamos el boton nuevo
+  $("#btn_asignar_vendedor").hide(); // ocultamos el boton nuevo
   $("#VerListado").hide();
 
   $("#txtIdPersona").val(id); // recibimos la variable id a la caja de texto
@@ -600,18 +753,19 @@ function buscarPorNumeroDocumento() {
         $(".loading_window").hide();
         $("#button_registrar_nuevo_cliente").show();
 
-        console.log(rpta);
         switch (rpta["estado"]) {
           case "encontrado":
             //$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
 
-            if (rpta["direccion_antigua"].length > 0) {
-              $("#container_ubicacion_antigua").show();
+            if (rpta["direccion_antigua"]) {
+              if (rpta["direccion_antigua"].length > 0) {
+                $("#container_ubicacion_antigua").show();
 
-              if (rpta["direccion_antigua"] == "  ") {
-                $("#ubicacion_antigua").html("sin ubicacion");
-              } else {
-                $("#ubicacion_antigua").html(rpta["direccion_antigua"]);
+                if (rpta["direccion_antigua"] == "  ") {
+                  $("#ubicacion_antigua").html("sin ubicacion");
+                } else {
+                  $("#ubicacion_antigua").html(rpta["direccion_antigua"]);
+                }
               }
             }
 
@@ -619,7 +773,7 @@ function buscarPorNumeroDocumento() {
 
             if ($("#hdn_rol_usuario").val() == "S") {
               // SUPERADMIN
-              console.log("usuario administrador");
+
               $("#panel_rbg_habilitado").show(200);
               $("#panel_rbg_desabilitado").hide(200);
 
@@ -702,7 +856,36 @@ function buscarPorNumeroDocumento() {
 
             $("#txt_ubicacion_envio").val(rpta["ubicacion_factura"]);
 
+            $("#txt_empleado_asignado").val(rpta["empleado_asignado"]);
+
+            $("#txt_idempleado_asignado").val(rpta["idempleado_asignado"]);
+
+            if ($("#txtIdEmpleado").val() == rpta["idempleado_asignado"]) {
+            } else {
+              console.log(
+                $("#txtIdEmpleado").val(),
+                rpta["idempleado_asignado"]
+              );
+              if (
+                $("#txtIdEmpleado").val() == 6 ||
+                $("#txtIdEmpleado").val() == 17
+              ) {
+              } else {
+                if (
+                  !rpta["response_text"].includes(
+                    "encuentra registrado en el sistema"
+                  )
+                ) {
+                  $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
+                } else {
+                  $("input").prop("disabled", true);
+                  $("#button_registrar_nuevo_cliente").hide();
+                }
+              }
+            }
+
             $("#txt_direccion_envio").val(rpta["direccion_calle_factura"]);
+
             $("#txt_direccion_referencia_envio").val(
               rpta["direccion_referencia_factura"]
             );
@@ -749,12 +932,15 @@ function buscarPorNumeroDocumento() {
             break;
           case "error":
             alert("Ocurrio un error al registrar cliente...");
-
+            
             $("#txtTelefono_2").val(0);
             swal("Mensaje del Sistema", "error del sistema", "error");
             break;
           case "no_encontrado":
-            $("#cboTipo_Persona").val("");
+
+          $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
+          
+          $("#cboTipo_Persona").val("");
             $("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
             $("#txtNombre").val("");
             $("#txtApellido").val("");

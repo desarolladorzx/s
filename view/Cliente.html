@@ -13,11 +13,20 @@
 />
 
 <div
-  class=""
+  class="row"
   id="container_alerta_telefono"
-  style="position: fixed; z-index: 100000000; top: 10px; left: 0; width: 100%"
+  style="
+    position: fixed;
+    z-index: 100000000;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
 >
-  <div class="alert alert-info alert-dismissible">
+  <div class="alert col-md-4 alert-info alert-dismissible">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
       ×
     </button>
@@ -26,14 +35,7 @@
       siguientes personas:
     </h6>
 
-    <ul id="containerListaTelefonoCoincidencias">
-      <li>
-        pepe 
-      </li>
-      <li>
-        matias
-      </li>
-    </ul>
+    <ul id="containerListaTelefonoCoincidencias"></ul>
   </div>
 </div>
 <div class="box">
@@ -86,6 +88,19 @@
                       placeholder=""
                       autofocus=""
                     />
+
+                    <input
+                    id="txtEmpleadoNuevo"
+                    type="hidden"
+                    value="<?php echo $_SESSION['empleado'] ?>"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtEmpleadoNuevo"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+
                     <input
                       id="txtIdEmpleado_modificado"
                       type="hidden"
@@ -167,7 +182,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Tipo de Cliente:</label>
                       <select
@@ -185,6 +200,27 @@
                       </select>
                     </div>
                   </div>
+
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Vendedor Asignado:</label>
+                      <input 
+                      class="form-control" 
+                      type="text"
+                      disabled
+                      id="txt_empleado_asignado"
+                      >
+
+                      <input 
+                      class="form-control" 
+                      type="hidden"
+                      disabled
+                      id="txt_idempleado_asignado"
+                      >
+
+                    </div>
+                  </div>
+
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Nuevo o Antiguo :</label>
@@ -567,7 +603,6 @@
                                 type="text"
                                 name="txt_direccion_referencia_envio"
                                 class="form-control"
-                                
                                 placeholder="Direccion de Referencia de Envio"
                                 style="text-transform: uppercase"
                               />
@@ -653,6 +688,27 @@
                     </div>
                   </div>
                 </div>
+                <div
+                  class="row"
+                  id="container_respuesta_inputs_coincidencia_de_telefonos"
+                >
+                  <div
+                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                    style="font-weight: bold !important; display: flex"
+                  >
+                    <h6
+                      class="text-warning"
+                      style="font-weight: bold !important"
+                    >
+                      Se encontraron coincidencias con las siguientes personas:
+                    </h6>
+
+                    <ul
+                      class="text-warning"
+                      id="containerListaTelefonoCoincidenciasText"
+                    ></ul>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -666,7 +722,7 @@
                 background: black;
                 top: 0;
                 left: 0;
-                z-index: 100000000000000;
+                z-index: 214748364152435234523452345234523423;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -757,6 +813,79 @@
         <button class="btn btn-primary" id="btnNuevo">
           <i class="fa fa-file"></i> Nuevo
         </button>
+
+        <div
+          id="asignarUsuario"
+          class="modal fade bs-example-modal-lg"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+        >
+          <div class="modal-dialog modal-center modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Asignar Vendedor</h4>
+              </div>
+              <div class="modal-body">
+                <h6 id="numero_clientes_asignados" class="h4"></h6>
+                <div class="box">
+                  <div class="box-header with-border">
+                    <div class="box-tools pull-right">
+                      <button class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <ol
+                      id="lista_clientes_por_asignar"
+                      style="max-height: 500px; overflow-y: auto"
+                    ></ol>
+                  </div>
+                  <div class="form-group has-success">
+                    <label>Cambiar el usuario responsable a :</label>
+                    <select
+                      id="select_personal_vendedor"
+                      class="form-control"
+                    ></select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  id="insertarClientesACartera"
+                >
+                  Asignar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+          
+          echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
+            Asignar Vendedor
+          </button> ';
+			
+        }else{
+        
+        }
+        ?>
+       
+
+        
         <a
           style="display: none"
           href="ClienteClasificacion.php"
@@ -775,6 +904,7 @@
           >
             <thead>
               <tr>
+                <th></th>
                 <th>#</th>
                 <th>Tipo de Cliente</th>
                 <th>Nombre</th>
@@ -786,12 +916,16 @@
                 <th>Fecha de creación</th>
                 <th>Modificado por</th>
                 <th>Fecha de modificación</th>
+                <th>asignado A</th>
+                <th>Opciones</th>
                 <th>Opciones</th>
               </tr>
             </thead>
 
             <tfoot>
               <tr>
+                <th></th>
+
                 <th>#</th>
                 <th>Tipo de Cliente</th>
                 <th>Nombre</th>
@@ -803,6 +937,8 @@
                 <th>Fecha de creación</th>
                 <th>Modificado por</th>
                 <th>Fecha de modificación</th>
+                <th>asignado A</th>
+                <th>Opciones</th>
                 <th>Opciones</th>
               </tr>
             </tfoot>

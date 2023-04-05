@@ -4,18 +4,31 @@ require_once "../model/Persona.php";
 $objCliente = new Persona();
 switch ($_GET["op"]) {
 	case 'comprobar_telefono':
-		
-		$telefono=$_POST["telefono"];
+
+		$telefono = $_POST["telefono"];
 		$query_Tipo = $objCliente->comprobar_telefono($telefono);
-		
-		
+
+
 		$nuevo = array();
 		while ($reg = $query_Tipo->fetch_object()) {
 			$nuevo[] = $reg;
 		}
-		echo  json_encode($nuevo);
+
 
 		break;
+
+	case 'asignarCarteraVendedor':
+		
+
+		$query_Tipo = $objCliente->asignarCarteraVendedor($_POST['lista'],$_POST['idempleado']);
+
+
+		// echo "Cliente registrado correctamente";
+
+		
+		echo  json_encode($query_Tipo);
+		break;
+
 	case 'SaveOrUpdate':
 
 
@@ -169,6 +182,20 @@ switch ($_GET["op"]) {
 		}
 		break;
 
+	case 'traerPersonalVendedor':
+
+		require_once "../model/Persona.php";
+		$objPersona = new Persona();
+
+		$query_Tipo = $objPersona->traerPersonalVendedor();
+
+		$nuevo = array();
+		while ($reg = $query_Tipo->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo  json_encode($nuevo);
+
+		break;
 	case "delete":
 		$id = $_POST["id"]; // Llamamos a la variable id del js que mandamos por $.post (Categoria.js (Linea 62))
 		$result = $objCliente->Eliminar($id);
@@ -187,7 +214,7 @@ switch ($_GET["op"]) {
 
 			$clasificacion = $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->clasificacion;
 
-		
+
 			if ($_SESSION['rol_usuario'] == "S") {
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
 				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
@@ -198,7 +225,12 @@ switch ($_GET["op"]) {
 				,\'' . $reg->idubicacion . '\'
 				,\'' . $reg->direccion_referencia_factura . '\'
 				,\'' . $reg->direccion_calle_factura . '\'
-				,\'' . $reg->direccion_antigua. '\'
+				,\'' . $reg->direccion_antigua . '\'
+
+				,\'' . $reg->idempleado_asignado . '\'
+				,\'' . $reg->empleado_asignado . '\'
+
+
 				)"><i class="fa fa-pencil"></i> </button>';
 			} else {
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
@@ -210,7 +242,10 @@ switch ($_GET["op"]) {
 				,\'' . $reg->idubicacion . '\'
 				,\'' . $reg->direccion_referencia_factura . '\'
 				,\'' . $reg->direccion_calle_factura . '\'
-				,\'' . $reg->direccion_antigua. '\'
+				,\'' . $reg->direccion_antigua . '\'
+
+				,\'' . $reg->idempleado_asignado . '\'
+				,\'' . $reg->empleado_asignado . '\'
 
 				)"><i class="fa fa-pencil"></i> </button>';
 			}
@@ -219,16 +254,21 @@ switch ($_GET["op"]) {
 
 			$data[] = array(
 				"id" => $i,
+				"0" => '',
+				'vendedor_asignado'=>$reg->empleado_asignado,
+				'12'=>$reg->idpersona,
 				"1" => $reg->tipo_persona . ' - ' . $reg->numero_cuenta,
 				"2" => $reg->nombre . '&nbsp;' . $reg->apellido,
 				"3" => $reg->tipo_documento . ': ' . $reg->num_documento,
 				"4" => $reg->telefono . ' - ' . $reg->telefono_2,
-				"5" => $reg->direccion_calle . ': ' . $reg->ubicacion ,
+				"5" => $reg->direccion_calle . ': ' . $reg->ubicacion,
 				"6" => $reg->email,
 				"7" => $reg->empleado,
 				"8" => $reg->fecha_registro,
 				"9" => $reg->empleado_modificado,
 				"10" => $reg->fecha_modificado,
+
+
 				"11" => $boton_editar . ' ' . $boton_eliminar
 			);
 			$i++;
@@ -438,10 +478,11 @@ switch ($_GET["op"]) {
 			$datos = array(
 				'response_text' => 'El cliente con el Numero de Documento ' . $reg->num_documento . ' se encuentra registrado en el sistema, solo está permitido editar los campos habilitados...',
 				'estado' => 'encontrado',
-
-				'direccion_antigua'=>$reg->direccion_antigua,
+				'idempleado_asignado'=>$reg->idempleado_asignado,
+				'empleado_asignado'=>$reg->empleado_asignado,
+				'direccion_antigua' => $reg->direccion_antigua,
 				'ubicacion_completa' => "$reg->direccion_departamento - $reg->direccion_provincia - $reg->direccion_distrito",
-				
+
 				'idCliente' => $reg->idpersona,
 				'iddistrito_factura' => $reg->iddistrito_factura,
 				'idprovincia_factura' => $reg->idprovincia_factura,

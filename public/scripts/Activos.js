@@ -1,8 +1,8 @@
 $(document).on("ready", init);
 
 function init() {
-
-  $('#')
+  $('#boton_actualizar_ultimo_empleado').hide()
+  $("#table_activos_anteriores").hide();
   $("#act_fecha_ingreso ").change(function () {
     var fecha1 = new Date($("#act_fecha_finvida").val());
     var fecha2 = new Date($("#act_fecha_ingreso").val());
@@ -309,16 +309,58 @@ function cargarDataEmpleadoActivos(
   $("#txtClaveOtro").val(clave);
   //$("#txtClaveOtro").show();
 }
+function modicarUltimoUsuarioAsignado(id)
+{
+  console.log(id) 
+$('#act_idempleado').prop("disabled",false)  
+$('#act_idempleado_uso').prop("disabled",false)  
+$('#act_area').prop("disabled",false)  
+$('#act_fecha_asignacion').prop("disabled",false)  
+$('#act_idempleado').prop("disabled",false)  
+$('#boton_actualizar_ultimo_empleado').show()
+}
 function verDetallesActivoUnidad(id) {
   $("#btnNuevo").hide();
 
-
-
-
   // ocultamos el contendedor asignar_activos para insertar una  tabla
-  $('#container_asignar_activos').hide()
-  
+  $("#container_asignar_activos").hide();
 
+  $("#table_activos_anteriores").show();
+
+  var tabla = $("#table_activos_anteriores")
+    .dataTable({
+      aProcessing: true,
+      aServerSide: true,
+      dom: "Bfrtip",
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      aoColumns: [
+        { mDataProp: "0" },
+        { mDataProp: "1" },
+        { mDataProp: "2" },
+        { mDataProp: "3" },
+        { mDataProp: "4" },
+        { mDataProp: "5" },
+      ],
+      ajax: {
+        url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+        type: "get",
+        dataType: "json",
+        data: function (d) {
+          d.id = id;
+        },
+        error: function (e) {
+          console.log(e.responseText);
+        },
+      },
+      bDestroy: true,
+      createdRow: function (row, data, index) {     
+          if($(row).find("td:eq(4)").html()=='A')
+          {
+            $(row).find("td").addClass('bg-success');
+          }
+      },
+    })
+    .DataTable();
 
   //
   $('input[id^="act_"]').each(function () {
@@ -340,8 +382,6 @@ function verDetallesActivoUnidad(id) {
     },
 
     success: function (datos) {
-
-
       var htmldetalleArchivos;
       $.ajax({
         url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
@@ -351,13 +391,9 @@ function verDetallesActivoUnidad(id) {
           id: datos.idgestion_activos,
         },
         success: function (dataArchivos) {
-   
-          var htmldetalleArchivos=''
+          var htmldetalleArchivos = "";
           dataArchivos.map(function (dataArchivo) {
-
-            
-
-            htmldetalleArchivos+=`<li>
+            htmldetalleArchivos += `<li>
             <a href="./Files/Activos/${dataArchivo.ruta}" target="_blank">
             <span class="mailbox-attachment-icon has-img">
             <img src="https://img.freepik.com/vector-premium/simbolo-carpeta-icono-carpeta-documentos-ilustracion-vector-plano-aislado-sobre-fondo-blanco_97843-2848.jpg?w=2000">
@@ -365,17 +401,14 @@ function verDetallesActivoUnidad(id) {
             </a>
             <div class="mailbox-attachment-info">
             <a href="./Files/Activos/${dataArchivo.ruta}" class="mailbox-attachment-name" target="_blank">${dataArchivo.ruta}</a>
-            </li>`
+            </li>`;
+          });
 
-
-
-          })
-
-          $("#detalleArchivoActivo").html(htmldetalleArchivos)
+          $("#detalleArchivoActivo").html(htmldetalleArchivos);
         },
-        error: function (erro){
+        error: function (erro) {
           console.log(erro);
-        }
+        },
       });
 
       $('input[id^="act_"]').each(function () {
@@ -401,9 +434,9 @@ function verDetallesActivoUnidad(id) {
   });
 }
 
-
 function ModificarDetallesActivosView(id) {
   $("#btnNuevo").hide();
+  $('#table_activos_anteriores').show()
 
   $('input[id^="act_"]').each(function () {
     $(this).val("");
@@ -413,6 +446,44 @@ function ModificarDetallesActivosView(id) {
   });
   $("#VerForm").show();
   $("#VerListado").hide();
+ // insertammos  la  tabla  modificar  detalles 
+  
+  var tabla = $("#table_activos_anteriores")
+    .dataTable({
+      aProcessing: true,
+      aServerSide: true,
+      dom: "Bfrtip",
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      aoColumns: [
+        { mDataProp: "0" },
+        { mDataProp: "1" },
+        { mDataProp: "2" },
+        { mDataProp: "3" },
+        { mDataProp: "4" },
+        { mDataProp: "5" },
+      ],
+      ajax: {
+        url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+        type: "get",
+        dataType: "json",
+        data: function (d) {
+          d.id = id;
+        },
+        error: function (e) {
+          console.log(e.responseText);
+        },
+      },
+      bDestroy: true,
+      createdRow: function (row, data, index) {     
+          if($(row).find("td:eq(4)").html()=='A')
+          {
+            $(row).find("td").addClass('bg-success');
+          }
+      },
+    })
+    .DataTable();
+
+  //
 
   $("#btn_asignar_a_empleado").show();
 

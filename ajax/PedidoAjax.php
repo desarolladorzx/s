@@ -226,7 +226,7 @@ switch ($_GET["op"]) {
             }
             // if ($_SESSION["idempleado"]==17 ||$_SESSION["idempleado"]==6) { // APROBADO
             //     $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
-            // } else {
+            // } else {ig
             //     $botonEliminar = '';
             // }
             $botonCambiarEstado = '';
