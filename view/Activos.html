@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">Activos</h3>
+    <h3 class="box-title">Inventario - Todos los Activos</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse">
         <i class="fa fa-minus"></i>
@@ -20,7 +20,14 @@
         <div class="col-sm-14" id="VerForm">
           <form role="form" name="frmActivo" id="frmActivo" enctype="multipart/form-data">
             <div class="row">
-              <div class="col-lg-12 left">
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Añadir Nuevo Activo</h3>
+                </div>
+              </div>
+
+              <div class="col-lg-12 left"> 
                 <div class="row">
                   <div class="col-lg-3 col-lg-3 col-sm-3 col-xs-12">
                     <div class="form-group has-success">
@@ -90,7 +97,7 @@
                 <div class="row">
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>codigo (*):</label>
+                      <label>Codigo (*):</label>
                       <input id="act_codigo" type="text" maxlength="20" name="act_codigo" required=""
                         class="form-control" placeholder="codigo" autofocus="" />
                     </div>
@@ -98,21 +105,21 @@
 
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>familia de activo (*):</label>
+                      <label>Familia de Activo (*):</label>
                       <input id="act_familia_activo" type="text" maxlength="20" name="act_familia_activo" required=""
                         class="form-control" placeholder="familia de activo" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>tipo de equipo (*):</label>
+                      <label>Tipo de Equipo (*):</label>
                       <input id="act_tipo_equipo" type="text" maxlength="20" name="act_tipo_equipo" required=""
                         class="form-control" placeholder="tipo de equipo" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>unidad (*):</label>
+                      <label>Unidad (*):</label>
                       <input id="act_unidad" type="text" maxlength="20" name="act_unidad" required=""
                         class="form-control" placeholder="unidad " autofocus="" />
                     </div>
@@ -135,28 +142,28 @@
                   </div> -->
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>marca (*):</label>
+                      <label>Marca (*):</label>
                       <input id="act_marca" type="text" maxlength="20" name="act_marca" required="" class="form-control"
                         placeholder="marca" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>modelo (*):</label>
+                      <label>Modelo (*):</label>
                       <input id="act_modelo" type="text" maxlength="20" name="act_modelo" required=""
                         class="form-control" placeholder="modelo " autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>serie (*):</label>
+                      <label>Serie (*):</label>
                       <input id="act_serie" type="text" maxlength="20" name="act_serie" required="" class="form-control"
                         placeholder="serie " autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>color (*):</label>
+                      <label>Color (*):</label>
                       <input id="act_color" type="text" maxlength="20" name="act_color" required="" class="form-control"
                         placeholder="color" autofocus="" />
                     </div>
@@ -164,7 +171,7 @@
 
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>estado (*):</label>
+                      <label>Estado (*):</label>
                       <select class="form-control" name="act_estado" id="act_estado" placeholder="estado">
                         <option value=""></option>
                         <option value="BUENO">BUENO</option>
@@ -175,7 +182,7 @@
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>tipo de activo (*):</label>
+                      <label>Tipo de Activo (*):</label>
                       <input id="act_tipo_activo" type="text" maxlength="20" name="act_tipo_activo" required=""
                         class="form-control" placeholder="tipo de activo" autofocus="" />
                     </div>
@@ -183,28 +190,28 @@
 
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>tipo de documento (*):</label>
+                      <label>Tipo de Documento (*):</label>
                       <input id="act_t_documento" type="text" maxlength="20" name="act_t_documento" required=""
                         class="form-control" placeholder="tipo de documento" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>precio de compra (*):</label>
+                      <label>Precio de Compra (*):</label>
                       <input id="act_precio_compra" type="number" maxlength="20" name="act_precio_compra" required=""
                         class="form-control" placeholder="precio de compra" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>proveedor (*):</label>
+                      <label>Proveedor (*):</label>
                       <input id="act_proveedor" type="text" maxlength="20" name="act_proveedor" required=""
                         class="form-control" placeholder="proveedor" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>fecha de ingreso (*):</label>
+                      <label>Fecha de Ingreso (*):</label>
                       <input id="act_fecha_ingreso" type="date" maxlength="20" name="txtNum_Documento" required=""
                         class="form-control" placeholder="fecha de ingreso" autofocus="" />
                     </div>
@@ -212,14 +219,14 @@
 
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-success">
-                      <label>fin de vida (*):</label>
+                      <label>Fin de Vida (*):</label>
                       <input id="act_fecha_finvida" type="date" maxlength="20" name="act_fecha_finvida" required=""
                         class="form-control text-center" placeholder="fin de vida" autofocus="" />
                     </div>
                   </div>
                   <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                     <div class="form-group has-warning">
-                      <label>dias restantes:</label>
+                      <label>Dias Restantes:</label>
                       <input id="act_dias_restantes" type="number" name="act_dias_restantes" disabled
                         class="form-control" placeholder="dias Restantes " autofocus="" />
                     </div>
@@ -227,7 +234,7 @@
 
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-group has-success">
-                      <label>caracteristica (*):</label>
+                      <label>Caracteristicas (*):</label>
 
                       <textarea class="form-control" name="act_caracteristica" id="act_caracteristica" cols="30"
                         required placeholder="caracteristica"></textarea>
@@ -236,7 +243,7 @@
 
                   <div class="col-lg-12 col-md-12">
                     <button id="actualizar_nuevo_articulo_submit" class="btn btn-success" type="submit">
-                      <i class="fa fa-floppy-o"></i> Actualizar Articulo
+                      <i class="fa fa-floppy-o"></i> Actualizar Activo
                     </button>
                   </div>
 
@@ -248,7 +255,7 @@
 
                           <button type="button" id="btn_asignar_a_empleado" style="margin: 0 10px"
                             class="btn btn-primary">
-                            Asignar Articulo a empleado
+                            Asignar Activo a Empleado
                           </button>
                         </div>
                       </div>
@@ -256,7 +263,7 @@
                         <div class="row" id="container_asignar_activos">
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>empleado (*):</label>
+                              <label>Empleado (*):</label>
                               <select required class="form-control gestion_activo empleadosList" name="act_idempleado"
                                 id="act_idempleado" placeholder="'empleado"></select>
                             </div>
@@ -264,7 +271,7 @@
 
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>empleado en uso (*): </label>
+                              <label>Empleado en Uso (*): </label>
                               <select required class="form-control gestion_activo empleadosList"
                                 name="act_idempleado_uso" id="act_idempleado_uso"
                                 placeholder="empleado en uso"></select>
@@ -272,14 +279,14 @@
                           </div>
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>area (*):</label>
+                              <label>Area / Departamento (*):</label>
                               <input id="act_area" type="text" maxlength="20" name="act_area" required=""
                                 class="form-control gestion_activo" placeholder="area" autofocus="" />
                             </div>
                           </div>
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>fecha_asignacion (*):</label>
+                              <label>Fecha Asignacion (*):</label>
                               <input id="act_fecha_asignacion" type="date" maxlength="20" name="act_fecha_asignacion"
                                 required="" class="form-control gestion_activo" placeholder="Número de documento"
                                 autofocus="" />
@@ -288,7 +295,7 @@
 
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>ubicacion (*):</label>
+                              <label>Ubicación (*):</label>
                               <select class="form-control gestion_activo" name="act_ubicacion" id="act_ubicacion">
                                 <option value=""></option>
                                 <option value="2">LIMA</option>
@@ -298,7 +305,7 @@
                           </div>
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Subir Archivos (*):</label>
+                              <label>Adjuntar un Archivo (*):</label>
                               <input id="act_activo_archivo" type="file" name="act_activo_archivo" required="" multiple
                                 class="form-control gestion_activo" placeholder="Número de documento" autofocus="" />
                             </div>
@@ -312,15 +319,15 @@
 
 
                             <i class="fa fa-floppy-o"></i>
-                            actualizar ultimo empleado
+                            Actualizar Ultimo Empleado
                           </button>
                         </div>
                       </div>
                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <button id="actualizar_boton_asigacion_empleado" class="btn btn-success" type="button">
-                            <i class="fa fa-floppy-o"></i> Asignar a nuevo
-                          empleado
+                            <i class="fa fa-floppy-o"></i> Asignar a Nuevo
+                          Empleado
                           </button>
                         </div>
                       </div>
@@ -332,11 +339,11 @@
                             <thead>
                               <tr>
                                 <th>#</th>
-                                <th>empleado asignado</th>
-                                <th>empleado en uso</th>
-                                <th>fecha de asignacion</th>
-                                <th>estado de asignacion</th>
-                                <th>opciones</th>
+                                <th>Empleado Asignado</th>
+                                <th>Empleado en Uso</th>
+                                <th>Fecha de Asignacion</th>
+                                <th>Estado de Asignacion</th>
+                                <th>Opciones</th>
                               </tr>
                             </thead>
 
@@ -349,7 +356,7 @@
                                 <th>Usado por</th>
                                 <th>Departamento</th>
 
-                                <th>opciones</th>
+                                <th>Opciones</th>
                               </tr>
                             </tfoot>
 
@@ -366,7 +373,7 @@
                     </button>
                   </div>
                   <div class="col-sm-12 col-lg-12">
-                    <h4 class="modal-title">Archivos</h4>
+                    <h4 class="modal-title">Archivos Adjuntos </h4>
                     <div class="box-footer">
                       <ul class="mailbox-attachments clearfix" id="detalleArchivoActivo"></ul>
                     </div>
@@ -443,25 +450,22 @@
               <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Fecha de ingreso </th>
+                <th>Fecha de Ingreso</th>
                 <th>Familia de Activo</th>
                 <th>Tipo de Equipo</th>
                 <th>Unidad</th>
                 <th>Cantidad</th>
-               
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Nro de Serie</th>
                 <th>Color</th>
-                <th>caracteristica</th>
-                <th>estado</th>
-                <th>Nro de documento</th>
+                <th>Caracteristicas</th>
+                <th>Estado</th>
+                <th>Tipo/Nro. de Documento</th>
                 <th>Precio de Compra</th>
                 <th>Proveedor</th>
                 <th>Area</th>
                 <th>Usuario</th>
-
-                
                 <th>Opciones</th>
               </tr>
             </thead>
@@ -470,7 +474,7 @@
               <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Fecha de ingreso </th>
+                <th>Fecha de Ingreso</th>
                 <th>Familia de Activo</th>
                 <th>Tipo de Equipo</th>
                 <th>Unidad</th>
@@ -479,9 +483,9 @@
                 <th>Modelo</th>
                 <th>Nro de Serie</th>
                 <th>Color</th>
-                <th>caracteristica</th>
-                <th>estado</th>
-                <th>Nro de documento</th>
+                <th>Caracteristicas</th>
+                <th>Estado</th>
+                <th>Tipo/Nro. de Documento</th>
                 <th>Precio de Compra</th>
                 <th>Proveedor</th>
                 <th>Area</th>
@@ -503,6 +507,6 @@
 <!-- /.box -->
 
 <script type="text/javascript">
-  $("#liMantenimiento").addClass("treeview active");
-  $("#liEmpleados").addClass("active");
+  $("#liConsultaCompras").addClass("treeview active");
+  $("#liGestionActivos").addClass("active");
 </script>
