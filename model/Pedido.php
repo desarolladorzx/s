@@ -389,14 +389,41 @@ class Pedido
 	public function ListarClientes()
 	{
 		global $conexion;
-		$sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
+
+		$exepcion = "";
+		$join = "
+		left JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
+		left 
+		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+		";
+
+		if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+		} else {
+			$exepcion = "AND cartera_cliente.idempleado=" . $_SESSION["idempleado"] .  " 
+	
+			";
+
+			$join = " JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona
+			AND cartera_cliente.estado='A'
+
+			JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado";
+		}
+
+
+		// $sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
 
 		// se modifico el sql para que los iddocumentos no se repita
 		$sql = "SELECT * from persona 
 
 	INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
-			 	 
-where   tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' 
+	$join
+where   
+ persona.estado = 'A'  
+
+ AND (
+		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
+		$exepcion
+
 GROUP BY persona.num_documento
 order by idpersona DESC ;";
 		$query = $conexion->query($sql);
@@ -424,8 +451,12 @@ order by idpersona DESC ;";
 						inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
 						inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
 						where i.estado = 'A' 
+
+					
 						-- and i.idsucursal =$idsucursal 
 						and di.stock_actual > 0 order by fecha asc;";
+
+		
 		$query = $conexion->query($sql);
 		return $query;
 	}

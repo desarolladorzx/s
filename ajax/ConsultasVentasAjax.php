@@ -14,8 +14,6 @@ switch ($_GET["op"]) {
           echo  json_encode($nuevo);
           break;
      case "listVentasFechas":
-  
-
           $ejecutivo_comercial = $_REQUEST["ejecutivo_comercial"];
           $antiguedad_cliente = $_REQUEST["antiguedad_cliente"];
           $tipo_cliente = $_REQUEST["tipo_cliente"];
