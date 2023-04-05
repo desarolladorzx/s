@@ -9,9 +9,14 @@ function pulsar(e) {
 }
 
 
-function demostrarTelefono(value) {
+function demostrarTelefono(value,text) {
   $("#container_alerta_telefono").hide(1000);
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide(1000);
+
+
+  $(`#${text}`).html(
+    ''
+  );
 
   console.log(value)
   if (value) {
@@ -25,27 +30,28 @@ function demostrarTelefono(value) {
 
         let textoListaTelefonoCoincidencias = "";
         if (response.length > 0) {
-          $("#container_alerta_telefono").show("slow");
+          // $("#container_alerta_telefono").show("slow");
 
           response.map((e) => {
             console.log(e);
             textoListaTelefonoCoincidencias += `
-            <li>
+            <p>
+            usado por -
             ${e.num_documento} -
             ${e.nombre} 
-            </li>
+            </p>
             `;
           });
 
-          $("#containerListaTelefonoCoincidencias").html(
+          // $("#containerListaTelefonoCoincidencias").html(
+          //   textoListaTelefonoCoincidencias
+          // );
+          $(`#${text}`).html(
             textoListaTelefonoCoincidencias
           );
-          $("#containerListaTelefonoCoincidenciasText").html(
-            textoListaTelefonoCoincidencias
-          );
-          $("#container_respuesta_inputs_coincidencia_de_telefonos").show(
-            "slow"
-          );
+          // $("#container_respuesta_inputs_coincidencia_de_telefonos").show(
+          //   "slow"
+          // );
         }
       }
     );
@@ -144,10 +150,10 @@ function init() {
         ]
     }); */
   $("#txtTelefono_2").change(function () {
-    demostrarTelefono($("#txtTelefono_2").val());
+    demostrarTelefono($("#txtTelefono_2").val(),'txtTelefono_2_span');
   });
   $("#txtTelefono").change(function () {
-    demostrarTelefono($("#txtTelefono").val());
+    demostrarTelefono($("#txtTelefono").val(),'txtTelefono_span');
   });
 
   $("#container_ubicacion_antigua").hide();

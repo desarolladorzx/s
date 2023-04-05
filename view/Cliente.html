@@ -619,7 +619,13 @@
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
-                      <label>Teléfono (*):</label>
+            
+                      
+                      <label class="control-label" for="inputWarning">
+
+                        Teléfono (*):
+                      </label>
+
                       <input
                         id="txtTelefono"
                         type="number"
@@ -630,6 +636,12 @@
                         placeholder="Ingrese el teléfono"
                         autofocus=""
                       />
+                      <span
+                      
+                      class="help-block containerListaTelefonoCoincidenciasText"
+                        id="txtTelefono_span"
+                      ></span>
+
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -644,7 +656,14 @@
                         required=""
                         placeholder="Ingrese el 2do teléfono - o colocar O"
                         autofocus=""
+                      
+                      
                       />
+                      <span
+                      class="help-block containerListaTelefonoCoincidenciasText"
+                        id="txtTelefono_2_span"
+                      ></span>
+
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -688,27 +707,7 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="row"
-                  id="container_respuesta_inputs_coincidencia_de_telefonos"
-                >
-                  <div
-                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
-                    style="font-weight: bold !important; display: flex"
-                  >
-                    <h6
-                      class="text-warning"
-                      style="font-weight: bold !important"
-                    >
-                      Se encontraron coincidencias con las siguientes personas:
-                    </h6>
-
-                    <ul
-                      class="text-warning"
-                      id="containerListaTelefonoCoincidenciasText"
-                    ></ul>
-                  </div>
-                </div>
+                
               </div>
             </div>
 
