@@ -1,7 +1,7 @@
 $(document).on("ready", init);
-
+var idgestionActivo = "";
 function init() {
-  $('#boton_actualizar_ultimo_empleado').hide()
+  $("#boton_actualizar_ultimo_empleado").hide();
   $("#table_activos_anteriores").hide();
   $("#act_fecha_ingreso ").change(function () {
     var fecha1 = new Date($("#act_fecha_finvida").val());
@@ -64,16 +64,55 @@ function init() {
         processData: false,
         success: function (datos) {
           swal("Mensaje del Sistema", datos, "success");
+
+          var tabla = $("#table_activos_anteriores")
+          .dataTable({
+            aProcessing: true,
+            aServerSide: true,
+            dom: "Bfrtip",
+            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            aoColumns: [
+              { mDataProp: "0" },
+              { mDataProp: "1" },
+              { mDataProp: "2" },
+              { mDataProp: "3" },
+              { mDataProp: "4" },
+              { mDataProp: "5" },
+            ],
+            ajax: {
+              url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+              type: "get",
+              dataType: "json",
+              data: function (d) {
+                d.id = idActivo;
+              },
+              error: function (e) {
+                console.log(e.responseText);
+              },
+            },
+            bDestroy: true,
+            createdRow: function (row, data, index) {
+              if ($(row).find("td:eq(4)").html() == "A") {
+                $(row).find("td").addClass("bg-success");
+              }
+            },
+          })
+          .DataTable();
+
+
         },
       });
     } else {
       alert("faltan llenar unos datos");
     }
   });
+
   $("#actualizar_boton_asigacion_empleado").hide();
 
   $("#btn_asignar_a_empleado").click(function () {
     $("#actualizar_nuevo_articulo_submit").hide();
+
+    $('#boton_actualizar_ultimo_empleado').hide()
 
     $(".gestion_activo").each(function () {
       $(this).attr("disabled", false);
@@ -205,10 +244,17 @@ function init() {
   function ListadoActivo() {
     var tabla = $("#tblActivos")
       .dataTable({
+       
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["copyHtml5", {
+          extend: "excelHtml5",
+          text: "Excel",
+          exportOptions: {
+                 columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+          }
+          }, "csvHtml5", "pdfHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -220,6 +266,15 @@ function init() {
           { mDataProp: "7" },
           { mDataProp: "8" },
           { mDataProp: "9" },
+          { mDataProp: "10" },
+          { mDataProp: "11" },
+          { mDataProp: "12" },
+          { mDataProp: "13" },
+          { mDataProp: "14" },
+          { mDataProp: "15" },
+          { mDataProp: "16" },
+          { mDataProp: "17" },
+          { mDataProp: "30" },
         ],
         ajax: {
           url: "./ajax/ActivosAjax.php?op=list",
@@ -233,6 +288,102 @@ function init() {
       })
       .DataTable();
   }
+
+  $("#submit_boton_actualizar_ultimo_empleado").click(function (e) {
+    var objet = {
+      idempleado: $("#act_idempleado").val(),
+      idempleado_uso: $("#act_idempleado_uso").val(),
+      area: $("#act_area").val(),
+      fecha_asignacion: $("#act_fecha_asignacion").val(),
+      idempleado: $("#act_idempleado").val(),
+      idubicacion: $("#act_ubicacion").val(),
+      idgestionActivo: idgestionActivo,
+    };
+
+    $.ajax({
+      url: "./ajax/ActivosAjax.php?op=actualizar_ultimo_empleado",
+      type: "post",
+      dataType: "json",
+      data: objet,
+      success: function (datos) {
+
+
+        swal("Mensaje del Sistema", 'actulizado correctamente', "success");
+        var tabla = $("#table_activos_anteriores")
+        .dataTable({
+          aProcessing: true,
+          aServerSide: true,
+          dom: "Bfrtip",
+          buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+          aoColumns: [
+            { mDataProp: "0" },
+            { mDataProp: "1" },
+            { mDataProp: "2" },
+            { mDataProp: "3" },
+            { mDataProp: "4" },
+            { mDataProp: "5" },
+          ],
+          ajax: {
+            url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+            type: "get",
+            dataType: "json",
+            data: function (d) {
+              d.id = idActivo;
+            },
+            error: function (e) {
+              console.log(e.responseText);
+            },
+          },
+          bDestroy: true,
+          createdRow: function (row, data, index) {
+            if ($(row).find("td:eq(4)").html() == "A") {
+              $(row).find("td").addClass("bg-success");
+            }
+          },
+        })
+        .DataTable();
+      },
+      error: function (error) {
+        console.log(error);
+        swal("Mensaje del Sistema", 'actulizado correctamente', "success");
+
+
+        var tabla = $("#table_activos_anteriores")
+          .dataTable({
+            aProcessing: true,
+            aServerSide: true,
+            dom: "Bfrtip",
+            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            aoColumns: [
+              { mDataProp: "0" },
+              { mDataProp: "1" },
+              { mDataProp: "2" },
+              { mDataProp: "3" },
+              { mDataProp: "4" },
+              { mDataProp: "5" },
+            ],
+            ajax: {
+              url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+              type: "get",
+              dataType: "json",
+              data: function (d) {
+                d.id = idActivo;
+              },
+              error: function (e) {
+                console.log(e.responseText);
+              },
+            },
+            bDestroy: true,
+            createdRow: function (row, data, index) {
+              if ($(row).find("td:eq(4)").html() == "A") {
+                $(row).find("td").addClass("bg-success");
+              }
+            },
+          })
+          .DataTable();
+      },
+    });
+  });
 }
 
 function cargarDataEmpleadoActivos(
@@ -309,18 +460,28 @@ function cargarDataEmpleadoActivos(
   $("#txtClaveOtro").val(clave);
   //$("#txtClaveOtro").show();
 }
-function modicarUltimoUsuarioAsignado(id)
-{
-  console.log(id) 
-$('#act_idempleado').prop("disabled",false)  
-$('#act_idempleado_uso').prop("disabled",false)  
-$('#act_area').prop("disabled",false)  
-$('#act_fecha_asignacion').prop("disabled",false)  
-$('#act_idempleado').prop("disabled",false)  
-$('#boton_actualizar_ultimo_empleado').show()
+function modicarUltimoUsuarioAsignado(id) {
+
+
+  $('#actualizar_boton_asigacion_empleado').hide()
+
+
+  $("#act_idempleado").prop("disabled", false);
+  $("#act_idempleado_uso").prop("disabled", false);
+  $("#act_area").prop("disabled", false);
+  $("#act_fecha_asignacion").prop("disabled", false);
+  $("#act_ubicacion").prop("disabled", false);
+
+  idgestionActivo = id;
+  console.log(id);
+  $("#boton_actualizar_ultimo_empleado").show();
 }
+
 function verDetallesActivoUnidad(id) {
   $("#btnNuevo").hide();
+
+
+  idActivo=id
 
   // ocultamos el contendedor asignar_activos para insertar una  tabla
   $("#container_asignar_activos").hide();
@@ -339,7 +500,7 @@ function verDetallesActivoUnidad(id) {
         { mDataProp: "2" },
         { mDataProp: "3" },
         { mDataProp: "4" },
-        { mDataProp: "5" },
+        { mDataProp: "5" ,visible:false},
       ],
       ajax: {
         url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
@@ -353,16 +514,17 @@ function verDetallesActivoUnidad(id) {
         },
       },
       bDestroy: true,
-      createdRow: function (row, data, index) {     
-          if($(row).find("td:eq(4)").html()=='A')
-          {
-            $(row).find("td").addClass('bg-success');
-          }
+      createdRow: function (row, data, index) {
+        if ($(row).find("td:eq(4)").html() == "A") {
+          $(row).find("td").addClass("bg-success");
+        }
       },
     })
     .DataTable();
 
   //
+
+
   $('input[id^="act_"]').each(function () {
     $(this).val("");
   });
@@ -433,10 +595,14 @@ function verDetallesActivoUnidad(id) {
     },
   });
 }
-
+var idActivo=''
 function ModificarDetallesActivosView(id) {
+
+  idActivo=id
+
+  
   $("#btnNuevo").hide();
-  $('#table_activos_anteriores').show()
+  $("#table_activos_anteriores").show();
 
   $('input[id^="act_"]').each(function () {
     $(this).val("");
@@ -446,8 +612,8 @@ function ModificarDetallesActivosView(id) {
   });
   $("#VerForm").show();
   $("#VerListado").hide();
- // insertammos  la  tabla  modificar  detalles 
-  
+  // insertammos  la  tabla  modificar  detalles
+
   var tabla = $("#table_activos_anteriores")
     .dataTable({
       aProcessing: true,
@@ -474,11 +640,10 @@ function ModificarDetallesActivosView(id) {
         },
       },
       bDestroy: true,
-      createdRow: function (row, data, index) {     
-          if($(row).find("td:eq(4)").html()=='A')
-          {
-            $(row).find("td").addClass('bg-success');
-          }
+      createdRow: function (row, data, index) {
+        if ($(row).find("td:eq(4)").html() == "A") {
+          $(row).find("td").addClass("bg-success");
+        }
       },
     })
     .DataTable();
@@ -497,6 +662,7 @@ function ModificarDetallesActivosView(id) {
     },
 
     success: function (datos) {
+      console.log(datos);
       $("#container_insertar_articulo").show();
       $('input[id^="act_"]').each(function () {
         $(this).attr("disabled", false);

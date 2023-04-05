@@ -575,8 +575,8 @@ function cargarDataCliente(
 ) {
   console.log(direccion_antigua);
   $("#btn_asignar_vendedor").hide();
-  $("#txt_empleado_asignado").val(idempleado_asignado);
-  $("#txt_idempleado_asignado").val(empleado_asignado);
+  $("#txt_empleado_asignado").val(empleado_asignado);
+  $("#txt_idempleado_asignado").val(idempleado_asignado);
 
   // si tiene la direccion antigua es true , se muestra la direccion antigua
   if (direccion_antigua.length > 0) {

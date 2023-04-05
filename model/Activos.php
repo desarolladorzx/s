@@ -8,6 +8,27 @@ class Activos
 	{
 	}
 
+	public function actualizar_ultimo_empleado($valor){
+		global $conexion;
+		$data = (object) $valor;
+
+		$sql="UPDATE gestion_activo
+				 SET 
+				 
+				 area = '$data->area',
+				  fecha_asignacion =  '$data->fecha_asignacion',
+				   idempleado = '$data->idempleado',
+				    idempleado_uso =  '$data->idempleado_uso',
+				     ubicacion = '$data->idubicacion'
+				 
+				 WHERE idgestion_activos='$data->idgestionActivo'
+		";
+	
+		$query = $conexion->query($sql);
+		return  $query;
+		
+
+	}
 	public function verArchivosActivos($idgestion_activo)
 	{
 		global $conexion;
@@ -95,7 +116,7 @@ class Activos
 
 
 		global $conexion;
-		$sql = "		 SELECT 
+		$sql = " SELECT 
 			
 		gestion_activo.* 
 		,activo.*
@@ -105,7 +126,7 @@ class Activos
 		 
 		 left join gestion_activo on gestion_activo.idactivo = activo.idactivo
 		  where activo.idactivo=$id
-
+		  AND gestion_activo.estado_activo='A'
 			 ";
 
 
@@ -117,8 +138,8 @@ class Activos
 		global $conexion;
 		$sql = "SELECT *,CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_asignado, CONCAT(emp_uso.nombre ,' ',emp_uso.apellidos) empleado_uso FROM gestion_activo
 
-		JOIN empleado ON empleado.idempleado=gestion_activo.idempleado
-		JOIN empleado emp_uso ON emp_uso.idempleado=gestion_activo.idempleado
+		left JOIN empleado ON empleado.idempleado=gestion_activo.idempleado
+		left JOIN empleado emp_uso ON emp_uso.idempleado=gestion_activo.idempleado_uso
 		
 		 WHERE idactivo=$id 
 		 order by idgestion_activos desc

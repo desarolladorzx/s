@@ -9,7 +9,13 @@ $objActivos = new Activos();
 switch ($_GET["op"]) {
 
 
+  case 'actualizar_ultimo_empleado':
 
+    
+    $query_Tipo = $objActivos->actualizar_ultimo_empleado($_POST);
+
+    return 'se ha modificado exitosamente';
+    break;
   case 'listaDeEmpleadosPorActivos':
     $id = $_GET["id"];
     $query_Tipo = $objActivos->listaDeEmpleadosPorActivos($id);
@@ -19,7 +25,9 @@ switch ($_GET["op"]) {
       $button = '';
       if ($reg->estado_activo == 'A') {
         $button =
-          '<button class="btn btn-warning" data-toggle="tooltip" 
+          '<button class="btn btn-warning button_modicar_ultimo_usuario" data-toggle="tooltip" 
+
+          
 type="button"
 				onclick="modicarUltimoUsuarioAsignado(`' . $reg->idgestion_activos . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>';
@@ -122,15 +130,28 @@ type="button"
 
       $data[] = array(
         "0" => $i,
-        "1" => $reg->tipo_activo,
-        "2" => $reg->tipo_activo,
-        "3" => $reg->usado_por,
-        "4" => $reg->area,
-        "5" => $reg->gestionado_por,
-        "6" => $reg->estado,
-        "7" => $reg->etiqueta,
-        "8" => $reg->fecha_finvida,
-        "9" => '<button class="btn btn-success" data-toggle="tooltip" 
+        "1" => $reg->codigo,
+        "2" => $reg->fecha_ingreso,
+        "3" => $reg->familia_activo,
+        "4" => $reg->tipo_equipo,
+        "5" => $reg->unidad,
+        "6" => '1',
+        "7" => $reg->marca,
+        "8" => $reg->modelo,
+        "9" => $reg->serie,
+        "10" => $reg->color,
+        "11" => $reg->caracteristica,
+        "12" => $reg->estado,
+        "13" => $reg->t_documento,
+        "14" => $reg->precio_compra,
+        "15" => $reg->proveedor,
+        "16" => $reg->area,
+        "17" => $reg->gestionado_por,
+
+        // "18" => $reg->area,
+
+        
+        "30" => '<button class="btn btn-success" data-toggle="tooltip" 
 				type="button" 
 				onclick="verDetallesActivoUnidad(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
 				&nbsp
