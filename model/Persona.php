@@ -208,8 +208,10 @@ iddistrito_factura='$iddistrito_factura'
 	public function comprobar_telefono($telefono)
 	{
 		global $conexion;
-		$sql = "SELECT *  FROM persona WHERE telefono=$telefono ";
+		$sql = "SELECT *  FROM persona WHERE telefono='$telefono' ";
 		$query = $conexion->query($sql);
+
+
 		return $query;
 	}
 

@@ -14,7 +14,7 @@ switch ($_GET["op"]) {
 			$nuevo[] = $reg;
 		}
 
-
+		echo  json_encode($nuevo);
 		break;
 
 	case 'asignarCarteraVendedor':

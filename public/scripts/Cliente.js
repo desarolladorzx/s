@@ -3,12 +3,16 @@ $(document).on("ready", init); // Inciamos el jquery
 function demostrarTelefono(value) {
   $("#container_alerta_telefono").hide(1000);
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide(1000);
+
+  console.log(value)
   if (value) {
     $.post(
       "./ajax/ClienteAjax.php?op=comprobar_telefono",
       { telefono: value },
       function (r) {
+        console.log(r)
         let response = JSON.parse(r);
+
 
         let textoListaTelefonoCoincidencias = "";
         if (response.length > 0) {
