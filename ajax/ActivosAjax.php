@@ -72,7 +72,7 @@ type="button"
 
   case 'TrasferirActivo':
 
-    print_r(json_encode($_POST));
+  
 
     $query_Tipo = $objActivos->transferirActivo($_POST);
 
@@ -215,7 +215,7 @@ type="button"
 
 
 
-    echo $hosp;
+    // echo $hosp;
 
     break;
 

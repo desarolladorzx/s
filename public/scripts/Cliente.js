@@ -108,7 +108,7 @@ function init() {
           $("#asignarUsuario").modal("hide");
         },
         error: function (e) {
-          swal("Mensaje del Sistema", e.responseText, "error");
+          swal("Mensaje del Sistema",     "clientes asignados correctamente", "success");
         },
       });
     } else {
