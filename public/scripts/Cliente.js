@@ -1,5 +1,14 @@
 $(document).on("ready", init); // Inciamos el jquery
 
+function pulsar(e) {
+  if (e.which === 13 && !e.shiftKey) {
+    e.preventDefault();
+    console.log('prevented');
+    return false;
+  }
+}
+
+
 function demostrarTelefono(value) {
   $("#container_alerta_telefono").hide(1000);
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide(1000);

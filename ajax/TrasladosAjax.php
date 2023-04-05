@@ -114,11 +114,15 @@ switch ($_GET["op"]) {
 
             // print_r(json_encode($reg));
             if($reg->estado!='INGRESO'){
-           
+                if ($_SESSION["idempleado"] == 7 || $_SESSION["idempleado"] == 21 || $_SESSION["idempleado"] == 22|| $_SESSION["idempleado"] == 6) {
+                    
+               
                 $htmlModificarDetalles='&nbsp
 
-                <button class="btn btn-warning" data-toggle="tooltip" onclick="modificarTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-adjust
+                <button class="btn btn-warning"  data-toggle="tooltip" onclick="modificarTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-adjust
                 "></i> </button>';
+            }
+
             }
             $data[] = array(
                 "0" => $i,
