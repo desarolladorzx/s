@@ -59,12 +59,13 @@ function AgregarPedCarritoTraslado(
 }
 
 function verDetallesTraslados(val) {
+  console.log(val);
+
   var traslado = JSON.parse(val.replace(/\+/g, '"'));
 
   $("#info_traslado_inicial").val(traslado.almacen_inicial);
   $("#info_traslado_final").val(traslado.almacen_destino);
   $("#info_traslado_motivo").val(traslado.motivo_del_traslado);
-
 
   $("#container_descripcion_recepcion").show();
   $("#info_descripcion_recepcion").val(traslado.descripcion_recepcion);
@@ -79,13 +80,11 @@ function verDetallesTraslados(val) {
   <option value="ALMACEN OPERADOR" >EN ALMACEN OPERADOR</option>
   <option value="INGRESO" >ENTREGADO</option>`;
 
+  $("#info_fecha_registro").val(traslado.fecha_registro);
+  $("#info_fecha_modificado").val(traslado.fecha_modificado);
 
-  $("#info_fecha_registro").val(traslado.fecha_registro)
-  $("#info_fecha_modificado").val(traslado.fecha_modificado)
-
-  $("#info_usuario_registro").val(traslado.empleado_ingreso)
-  $("#info_usuario_recepcion").val(traslado.empleado_recepcion)
-
+  $("#info_usuario_registro").val(traslado.empleado_ingreso);
+  $("#info_usuario_recepcion").val(traslado.empleado_recepcion);
 
   $("#estadoTraslado").append(htmlEstado);
   $("#estadoTraslado").val(traslado.estado);
@@ -94,20 +93,18 @@ function verDetallesTraslados(val) {
   $("#body_Traslados").hide();
 }
 
- let dataTraslados
+let dataTraslados;
 function modificarTraslados(val) {
-
-  $("#containerGuardarCambiarEstado").show()
+  $("#containerGuardarCambiarEstado").show();
   var traslado = JSON.parse(val.replace(/\+/g, '"'));
-  
-  dataTraslados=traslado
 
-  
-  $("#info_fecha_registro").val(traslado.fecha_registro)
-  $("#info_fecha_modificado").val(traslado.fecha_modificado)
+  dataTraslados = traslado;
 
-  $("#info_usuario_registro").val(traslado.empleado_ingreso)
-  $("#info_usuario_recepcion").val(traslado.empleado_recepcion)
+  $("#info_fecha_registro").val(traslado.fecha_registro);
+  $("#info_fecha_modificado").val(traslado.fecha_modificado);
+
+  $("#info_usuario_registro").val(traslado.empleado_ingreso);
+  $("#info_usuario_recepcion").val(traslado.empleado_recepcion);
 
   console.log(traslado.sucursal_destino_id);
   var htmlEstado = "";
@@ -121,8 +118,6 @@ function modificarTraslados(val) {
                     `;
       break;
     case "EN TRANSITO":
-
-
       htmlEstado = `<option value="SALIDA" disabled>EN ESPERA</option>
                     <option value="EN TRANSITO">EN TRANSITO</option>
                     <option value="ALMACEN OPERADOR">EN ALMACEN OPERADOR</option>
@@ -139,7 +134,6 @@ function modificarTraslados(val) {
     case "INGRESO":
       $("#container_descripcion_recepcion").show();
       $("#info_descripcion_recepcion").val(traslado.descripcion_recepcion);
-
 
       htmlEstado = `<option value="SALIDA"  disabled>EN ESPERA</option>
                         <option value="EN TRANSITO" disabled>EN TRANSITO</option>
@@ -176,8 +170,9 @@ function CargarDetalleTraslado(idtraslado) {
   //$('th:nth-child(2)').hide();
   //$('th:nth-child(3)').hide();
 
-  idtrasladojs = idtraslado;
+  console.log(idtraslado);
 
+  idtrasladojs = idtraslado;
 
   $("table#tblDetallePedidoVer th:nth-child(4)").hide();
   $("table#tblDetallePedidoVer th:nth-child(8)").hide();
@@ -197,7 +192,6 @@ function CargarDetalleTraslado(idtraslado) {
       for (var pos in arrayDatosRecibidos) {
         arrayDatosRecibidos[pos].cantidadRecibida = null;
 
-    
         var cantidad;
         if (arrayDatosRecibidos[pos].estado_detalle_ingreso == "INGRESO") {
           cantidad = arrayDatosRecibidos[pos].stock_ingreso;
@@ -282,9 +276,8 @@ function guardarCantidadTrasladar(pos) {
 }
 
 function init() {
-
-  $("#containerGuardarCambiarEstado").hide()
-  $('#container_descripcion_recepcion').hide();
+  $("#containerGuardarCambiarEstado").hide();
+  $("#container_descripcion_recepcion").hide();
   $("#estadoTraslado").change(function (e) {
     var valorEstado = e.target.value;
 
@@ -295,8 +288,7 @@ function init() {
       cantidadRecibida.forEach((element) => {
         element.disabled = false;
       });
-      $("#container_descripcion_recepcion").show()
-
+      $("#container_descripcion_recepcion").show();
     }
   });
 
@@ -305,30 +297,37 @@ function init() {
 
     var formData = new FormData();
 
-    var descripcion_recepcion=$("#info_descripcion_recepcion").val()
+    var descripcion_recepcion = $("#info_descripcion_recepcion")
+      .val()
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
+      .replace(/\n/g, " ")
+      .replace(/(\r\n|\n|\r)/gm, ". - ");
     formData.append("idtraslado", idtrasladojs);
 
     formData.append("estado", estado);
     formData.append("arrayDatos", JSON.stringify(arrayDatosRecibidos));
-    
 
     formData.append("descripcion_recepcion", descripcion_recepcion);
-    
-    dataTraslados.sucursal_destino_id? formData.append('sucursal_destino_id',dataTraslados.sucursal_destino_id):formData.append('sucursal_destino_id',"")
 
-    console.log(descripcion_recepcion)
+    dataTraslados.sucursal_destino_id
+      ? formData.append(
+          "sucursal_destino_id",
+          dataTraslados.sucursal_destino_id
+        )
+      : formData.append("sucursal_destino_id", "");
+
+    console.log(descripcion_recepcion);
     if (estado == "INGRESO") {
       let errores = false;
 
-      if(!descripcion_recepcion){
+      if (!descripcion_recepcion) {
         bootbox.alert(
           `Es necesario la descripcion de la entrega para guardar el cambio`
         );
 
-        errores=true;
-      }else{
-        console.log(descripcion_recepcion)
-
+        errores = true;
+      } else {
+        console.log(descripcion_recepcion);
       }
       arrayDatosRecibidos.map((dato) => {
         if (!dato.cantidadRecibida) {
@@ -344,8 +343,6 @@ function init() {
             errores = true;
           }
         }
-
-    
       });
       if (errores == false) {
         $.ajax({
@@ -358,7 +355,7 @@ function init() {
           success: function (data) {
             console.log(data);
             swal("Mensaje del Sistema", data, "success");
-            location.href="Traslados.php"
+            location.href = "Traslados.php";
           },
         });
       }
@@ -375,7 +372,7 @@ function init() {
             console.log(data);
             swal("Mensaje del Sistema", data, "success");
             // delete this.elementos;
-            location.href="Traslados.php"
+            location.href = "Traslados.php";
             //$("#tblDetallePedido tbody").html("");
             // $("#txtIgvPed").val("");
             // $("#txtTotalPed").val("");
@@ -449,11 +446,21 @@ function init() {
 
     formData.append("almacenFinal", $("#almacenFinal").val());
 
+    console.log(
+      $("#motivo_de_traslado")
+        .val()
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
+        .replace(/\n/g, " ")
+        .replace(/(\r\n|\n|\r)/gm, ".- ")
+    );
+
     formData.append(
       "motivoDeTraslado",
       $("#motivo_de_traslado")
         .val()
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ".")
+        .replace(/\n/g, " ")
+        .replace(/(\r\n|\n|\r)/gm, " ")
     );
 
     // formData.append('idUsuario', $('#txtIdUsuario').val());
@@ -462,7 +469,7 @@ function init() {
       formData.append("detalle[]", detalle[i]);
     }
 
-    console.log($("#idtxtSucursalTraslado").val())
+    console.log($("#idtxtSucursalTraslado").val());
     if ($("#almacenFinal").val() != $("#idtxtSucursalTraslado").val()) {
       if (elementos.length > 0) {
         if ($("#motivo_de_traslado").val() != "") {
@@ -476,7 +483,7 @@ function init() {
             success: function (data) {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
-              location.href="Traslados.php"
+              location.href = "Traslados.php";
               //$("#tblDetallePedido tbody").html("");
               // $("#txtIgvPed").val("");
               // $("#txtTotalPed").val("");

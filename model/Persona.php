@@ -1,30 +1,197 @@
 <?php
 require "Conexion.php";
+
+ini_set('max_input_vars', 2000);
+
 class Persona
 {
 
+
+	public function  asignarCarteraVendedor($lista, $idempleado)
+	{
+		global $conexion;
+
+		foreach ($lista as &$valor) {
+
+			$idpersona = $valor['12'];
+
+
+			echo $idpersona;
+			echo '-';
+			
+			$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';
+
+		";
+			$query = $conexion->query($sql);
+
+			$sql = "INSERT  INTO cartera_cliente
+			(
+			idempleado,
+			idcliente,
+			fecha_registro,
+			fecha_modificado,
+			estado
+			) VALUES (
+			$idempleado,
+			$idpersona,
+			CURRENT_TIMESTAMP(),
+			CURRENT_TIMESTAMP(),
+			'A'
+			);";
+			$query = $conexion->query($sql);
+		}
+
+		return $query;
+		// print_r($lista);
+		// return $lista;
+
+	}
+	public function traerPersonalVendedor()
+	{
+		global $conexion;
+
+		$sql = "SELECT  *  FROM empleado where idrol=1
+		";
+
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function __construct()
 	{
 	}
-	//Se aumenta la celda apellidos
-	public function Registrar($tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $idempleado_modificado, $direccion_referencia)
+
+	public function ConsultarDni($dni)
 	{
 		global $conexion;
-		$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia) 
-					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$genero','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado',CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),'$direccion_referencia')";
-		// echo $sql;
+
+		$sql = "SELECT * FROM persona WHERE persona.num_documento ='$dni' 
+		";
+
 		$query = $conexion->query($sql);
 		return $query;
 	}
 
-	public function Modificar($idpersona, $tipo_persona, $nombre, $apellido, $tipo_documento, $num_documento, $genero, $direccion_departamento, $direccion_provincia, $direccion_distrito, $direccion_calle, $telefono, $telefono_2, $email, $numero_cuenta, $estado, $idempleado, $direccion_referencia)
-	{
+	//Se aumenta la celda apellidos
+	public function Registrar(
+		$tipo_persona,
+		$nombre,
+		$apellido,
+		$tipo_documento,
+		$num_documento,
+		$genero,
+		$direccion_departamento,
+		$direccion_provincia,
+		$direccion_distrito,
+		$direccion_calle,
+		$telefono,
+		$telefono_2,
+		$email,
+		$numero_cuenta,
+		$estado,
+		$idempleado,
+		$idempleado_modificado,
+		$direccion_referencia,
+
+		$direccion_calle_factura,
+		$direccion_referencia_factura,
+		$idprovincia_factura,
+		$iddistrito_factura
+
+
+	) {
+		global $conexion;
+		$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia
+		,direccion_calle_factura
+		,direccion_referencia_factura
+		,idprovincia_factura
+		,iddistrito_factura
+		) 
+					VALUES('$tipo_persona','$nombre','$apellido','$tipo_documento','$num_documento','$genero','$direccion_departamento','$direccion_provincia','$direccion_distrito','$direccion_calle','$telefono','$telefono_2','$email','$numero_cuenta','$estado','$idempleado','$idempleado_modificado',CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP(),'$direccion_referencia'
+					
+				,'$direccion_calle_factura',
+				'$direccion_referencia_factura',
+				'$idprovincia_factura',
+				'$iddistrito_factura'
+	
+					)";
+
+		$query = $conexion->query($sql);
+
+		$idpersona= $conexion->insert_id;
+
+
+		$sql="INSERT  INTO cartera_cliente
+		(
+		idempleado,
+		idcliente,
+		fecha_registro,
+		fecha_modificado,
+		estado
+		) VALUES (
+		$idempleado,
+		$idpersona,
+		CURRENT_TIMESTAMP(),
+		CURRENT_TIMESTAMP(),
+		'A'
+		);";
+		$query = $conexion->query($sql);
+		
+		return $query;
+	}
+
+	public function Modificar(
+		$idpersona,
+		$tipo_persona,
+		$nombre,
+		$apellido,
+		$tipo_documento,
+		$num_documento,
+		$genero,
+		$direccion_departamento,
+		$direccion_provincia,
+		$direccion_distrito,
+		$direccion_calle,
+		$telefono,
+		$telefono_2,
+		$email,
+		$numero_cuenta,
+		$estado,
+		$idempleado,
+		$direccion_referencia,
+
+
+		$direccion_calle_factura,
+		$direccion_referencia_factura,
+		$idprovincia_factura,
+		$iddistrito_factura
+
+	) {
 		global $conexion;
 		$sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
-			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP(),direccion_referencia='$direccion_referencia'
+			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP(),direccion_referencia='$direccion_referencia',
+
+
+			direccion_calle_factura='$direccion_calle_factura',
+			direccion_referencia_factura='$direccion_referencia_factura',
+			idprovincia_factura='$idprovincia_factura',
+			iddistrito_factura='$iddistrito_factura'
+
+
 						WHERE idpersona = $idpersona";
 
-		//var_dump($sql);exit;
+		$sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
+direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP(),direccion_referencia='$direccion_referencia',
+
+
+direccion_calle_factura='$direccion_calle_factura',
+direccion_referencia_factura='$direccion_referencia_factura',
+idprovincia_factura='$idprovincia_factura',
+iddistrito_factura='$iddistrito_factura'
+
+			WHERE num_documento ='$num_documento' and 
+			idpersona=$idpersona";
+
+		echo ($sql);
 
 		$query = $conexion->query($sql);
 		return $query;
@@ -37,6 +204,18 @@ class Persona
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+	public function comprobar_telefono($telefono)
+	{
+		global $conexion;
+		$sql = "SELECT *  FROM persona WHERE telefono='$telefono' ";
+		$query = $conexion->query($sql);
+
+
+		return $query;
+	}
+
+
 
 	public function Listar()
 	{
@@ -73,40 +252,85 @@ class Persona
 	public function ListarCliente()
 	{
 		global $conexion;
-		// $sql = "SELECT
-		// p.*,
-		// concat( e.nombre, ' ', e.apellidos ) AS empleado,
-		// concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
-		// (CASE
-		// 	WHEN p.genero = 1 THEN 'MUJER'
-		// 	WHEN p.genero = 2 THEN 'HOMBRE'
-		// 	WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
-		// END) AS genero_txt
-		// FROM
-		// persona p
-		// INNER JOIN empleado e ON p.idempleado = e.idempleado
-		// INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
-		// WHERE
-		// tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor ' & 'Representante'
-		// ORDER BY
-		// idpersona DESC";
-		$sql = "SELECT
-			p.*,
-			concat( e.nombre, ' ', e.apellidos ) AS empleado,
-			concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
-			(CASE
-				WHEN p.genero = 1 THEN 'MUJER'
-				WHEN p.genero = 2 THEN 'HOMBRE'
-				WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
-			END) AS genero_txt
-			FROM
-			persona p
-			INNER JOIN empleado e ON p.idempleado = e.idempleado
-			INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
-			WHERE
-			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE'
-			ORDER BY idpersona DESC";
 
+		$exepcion = "";
+		$join = "
+		left JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona AND cartera_cliente.estado='A'
+		left 
+		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+		";
+
+		if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+		} else {
+			$exepcion = "AND cartera_cliente.idempleado=" . $_SESSION["idempleado"] .  " 
+	
+			";
+
+			$join = " JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona
+			AND cartera_cliente.estado='A'
+
+			JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado";
+		}
+		$sql = "SELECT
+		p.idpersona,
+		p.num_documento,
+		COUNT(p.num_documento),
+		concat( e.nombre, ' ', e.apellidos ) AS empleado,
+		concat( e2.nombre, ' ', e2.apellidos ) AS empleado_modificado,
+		(CASE
+			WHEN p.genero = 1 THEN 'MUJER'
+			WHEN p.genero = 2 THEN 'HOMBRE'
+			WHEN p.genero = 3 THEN 'PREFIERO NO DECIRLO'
+		END) AS genero_txt
+		,p.*
+		,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
+		,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+		,CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura
+		,  CONCAT(dep_n.descripcion,' - ',pro_n.descripcion, ' - ',dis_n.descripcion) ubicacion_factura
+		,if(p.direccion_distrito>0 AND p.direccion_provincia>0,'',CONCAT(p.direccion_departamento ,' ', p.direccion_distrito,' ',p.direccion_provincia)) direccion_antigua
+
+		
+		,	CONCAT( e3.nombre, ' ', e3.apellidos ) AS  empleado_asignado
+		,e3.idempleado idempleado_asignado
+
+
+		FROM
+		persona p
+		INNER JOIN empleado e ON p.idempleado = e.idempleado
+		INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
+		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
+		t2 ON t2.num_documento = p.num_documento AND p.idpersona = t2.max_fecha
+		
+		
+
+			
+		LEFT JOIN distrito ON distrito.iddistrito=p.direccion_distrito
+		left JOIN provincia ON provincia.idprovincia=p.direccion_provincia
+		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+		
+		LEFT JOIN distrito dis_n ON dis_n.iddistrito=p.iddistrito_factura
+		left JOIN provincia pro_n ON pro_n.idprovincia=p.idprovincia_factura
+		left JOIN departamento dep_n ON dep_n.iddepartamento=pro_n.iddepartamento
+		
+
+		$join
+		
+
+		WHERE 
+
+		p.estado='A'
+
+		$exepcion
+
+		 AND (
+		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
+		GROUP BY p.num_documento
+		ORDER BY p.idpersona DESC
+		
+;
+		";
+
+		// echo $sql;
 		//var_dump($sql);exit;
 
 		$query = $conexion->query($sql);
@@ -116,32 +340,72 @@ class Persona
 	public function BuscarClientePorNroDoc($numeroDocumento)
 	{
 		global $conexion;
-		$query = $conexion->query("SELECT *,
+
+		// $sql = "SELECT *,
+		// (
+		// 	CASE 
+		// 	  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
+		// 		 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
+		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
+		//    WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
+
+		//    WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+		// 		 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		//    WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+		// 	WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+		// 		 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+		//    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+		   
+				 
+		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
+		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
+		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
+		//    WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
+			   
+		// 		WHEN venta.fecha IS NULL then 'PERDIDO'
+			   
+		// END  
+
+		// )as clasificacion ,
+		// (CASE
+		// 	WHEN genero = 1 THEN 'MUJER'
+		// 	WHEN genero = 2 THEN 'HOMBRE'
+		// 	WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
+		// END) AS genero_txt
+		// FROM persona 
+		// left join pedido on pedido.idcliente=persona.idpersona
+		// left JOIN venta ON venta.idpedido=pedido.idpedido
+		// WHERE num_documento = $numeroDocumento";
+		// nuevo sql que solo trae el dato el dato mas reciente
+			$sql = "SELECT persona.*,
 			(
 				CASE 
-				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
-					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
-			   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
+				WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
+					WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
+					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
+			WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-			    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-					 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
-			   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
-				   
+			WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+					WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+			WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+			
+				WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
+					WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
+					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
+			WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
+			
+					
+					WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
+					WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
+					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
+			WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
+				
 					WHEN venta.fecha IS NULL then 'PERDIDO'
-				   
+				
 			END  
 
 			)as clasificacion ,
@@ -150,10 +414,51 @@ class Persona
 				WHEN genero = 2 THEN 'HOMBRE'
 				WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
 			END) AS genero_txt
+			, CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+			
+
+			, CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura,  CONCAT(dep_n.descripcion,' - ',pro_n.descripcion, ' - ',dis_n.descripcion) ubicacion_factura
+			
+			,if(persona.direccion_distrito>0 AND persona.direccion_provincia>0,'',CONCAT(persona.direccion_departamento ,' ', persona.direccion_distrito,' ',persona.direccion_provincia)) direccion_antigua
+			
+
+			,	CONCAT( e3.nombre, ' ', e3.apellidos ) AS  empleado_asignado
+			,e3.idempleado idempleado_asignado
+
 			FROM persona 
+
 			left join pedido on pedido.idcliente=persona.idpersona
 			left JOIN venta ON venta.idpedido=pedido.idpedido
-			WHERE num_documento = " . $numeroDocumento);
+			
+			INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
+			t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
+			
+			LEFT JOIN distrito ON distrito.iddistrito=persona.direccion_distrito
+			left JOIN provincia ON provincia.idprovincia=persona.direccion_provincia
+			left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+		
+			left JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
+
+			left JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+			
+
+				
+			LEFT JOIN distrito dis_n ON dis_n.iddistrito=persona.iddistrito_factura
+			left JOIN provincia pro_n ON pro_n.idprovincia=persona.idprovincia_factura
+			left JOIN departamento dep_n ON dep_n.iddepartamento=pro_n.iddepartamento
+
+			
+			WHERE persona.num_documento ='$numeroDocumento'
+
+		
+
+				GROUP BY persona.num_documento
+			ORDER BY persona.idpersona DESC;";
+
+
+
+
+		$query = $conexion->query($sql);
 		return $query;
 	}
 
@@ -344,7 +649,25 @@ class Persona
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function traerUbicacion()
+	{
+		global $conexion;
+		$sql = "SELECT CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion FROM distrito
 
+
+		JOIN provincia ON provincia.idprovincia=distrito.idprovincia
+		
+		JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+		
+		
+		-- WHERE CONCAT(departamento.descripcion,' ',provincia.descripcion, ' ',distrito.descripcion) LIKE '%aNCASH%'
+		";
+
+
+		$query = $conexion->query($sql);
+
+		return $query;
+	}
 	public function cambiarEstadoCliente_representante($tipo)
 	{
 

@@ -11,6 +11,33 @@
   name="hdn_rol_usuario"
   value="<?php echo $_SESSION['rol_usuario'];?>"
 />
+
+<div
+  class="row"
+  id="container_alerta_telefono"
+  style="
+    position: fixed;
+    z-index: 100000000;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <div class="alert col-md-4 alert-info alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      ×
+    </button>
+    <h6>
+      <i class="icon fa fa-info"></i> Se encontraron coincidencias con las
+      siguientes personas:
+    </h6>
+
+    <ul id="containerListaTelefonoCoincidencias"></ul>
+  </div>
+</div>
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">Clientes</h3>
@@ -18,6 +45,7 @@
       <button class="btn btn-box-tool" data-widget="collapse">
         <i class="fa fa-minus"></i>
       </button>
+
       <button class="btn btn-box-tool" data-widget="remove">
         <i class="fa fa-times"></i>
       </button>
@@ -60,6 +88,19 @@
                       placeholder=""
                       autofocus=""
                     />
+
+                    <input
+                    id="txtEmpleadoNuevo"
+                    type="hidden"
+                    value="<?php echo $_SESSION['empleado'] ?>"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtEmpleadoNuevo"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+
                     <input
                       id="txtIdEmpleado_modificado"
                       type="hidden"
@@ -141,7 +182,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Tipo de Cliente:</label>
                       <select
@@ -159,6 +200,27 @@
                       </select>
                     </div>
                   </div>
+
+                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Vendedor Asignado:</label>
+                      <input 
+                      class="form-control" 
+                      type="text"
+                      disabled
+                      id="txt_empleado_asignado"
+                      >
+
+                      <input 
+                      class="form-control" 
+                      type="hidden"
+                      disabled
+                      id="txt_idempleado_asignado"
+                      >
+
+                    </div>
+                  </div>
+
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Nuevo o Antiguo :</label>
@@ -231,10 +293,13 @@
                       ></select>
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div
+                    id="container_button_maximizar"
+                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                  >
                     <div class="form-group has-warning">
                       <label>Número (RUC, DNI, Etc) (*):</label>
-                      <div class="input-group">
+                      <div class="input-group" style="width: 100%">
                         <input
                           id="txtNum_Documento"
                           type="number"
@@ -314,7 +379,7 @@
 
               <div class="col-lg-12 left">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>Departamento (*):</label>
                       <input
@@ -367,7 +432,52 @@
                         onkeyup="javascript:this.value=this.value.toUpperCase();"
                       />
                     </div>
+                  </div> -->
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      required
+                      placeholder="Ubicacion de Envio"
+                      list="ubicacions"
+                      id="id_ubicacion_array"
+                      name="id_ubicacion_array"
+                      style="text-transform: uppercase"
+                    />
+
+                    <div class="form-group has-success">
+                      <label
+                        >Ubicacion (*):
+
+                        <span
+                          style="color: black !important"
+                          id="container_ubicacion_antigua"
+                        >
+                          ubicacion antigua :
+                          <b id="ubicacion_antigua"> 'arequipa arequipa ' </b>
+                        </span>
+                      </label>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Envio"
+                        list="ubicacions"
+                        id="txt_ubicacion_nuevo"
+                        name="txt_ubicacion_nuevo"
+                        style="text-transform: uppercase"
+                      />
+                      <datalist
+                        id="ubicacions"
+                        class="ubicacion_containe_options"
+                      >
+                      </datalist>
+                    </div>
                   </div>
+
+                  <div></div>
                 </div>
               </div>
               <div class="col-lg-12 left">
@@ -395,23 +505,127 @@
                         type="text"
                         maxlength="500"
                         name="txtDireccion_Referencia"
-                
                         placeholder="Direccion de Referencia"
                         class="form-control"
                         autofocus=""
                       />
                     </div>
                   </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <!-- <div class="box "> -->
+                    <div class="box collapsed-box">
+                      <div class="box-header display:flex">
+                        <h5 style="font-weight: bold; color: #858585">
+                          FACTURACION A
+                        </h5>
+                        <div class="display:flex">
+                          <input
+                            style="margin: 0 5px"
+                            type="checkbox"
+                            checked
+                            id="idIgualAdirecionEnvio"
+                            name="idIgualAdirecionEnvio"
+                            value="True"
+                            onclick="handleClick(this)"
+                          />
 
+                          <label style="font-weight: bold">
+                            Igual a la direccion de envio
+                          </label>
+                        </div>
+
+                        <div class="box-tools pull-right">
+                          <button
+                            class="btn btn-box-tool"
+                            type="button"
+                            data-widget="collapse"
+                            id="btn_minimizar_container_localizacion_recepcion"
+                          >
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="box-body">
+                        <div class="row">
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                required
+                                placeholder="Ubicacion de Envio"
+                                list="ubicacions"
+                                id="id_ubicacion_envio_array"
+                                name="id_ubicacion_envio_array"
+                                style="text-transform: uppercase"
+                              />
+
+                              <label>Ubicacion de Envio (*):</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                required
+                                placeholder="Ubicacion de Envio"
+                                list="ubicacion"
+                                id="txt_ubicacion_envio"
+                                name="txt_ubicacion_envio"
+                                style="text-transform: uppercase"
+                              />
+                              <datalist
+                                id="ubicacion"
+                                class="ubicacion_containe_options"
+                              >
+                              </datalist>
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>Direccion de Envio (*):</label>
+                              <input
+                                id="txt_direccion_envio"
+                                type="text"
+                                name="txt_direccion_envio"
+                                class="form-control"
+                                required
+                                placeholder="Direccion de Envio "
+                                style="text-transform: uppercase"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group has-success">
+                              <label
+                                >Direccion de Referencia de Envio (*):</label
+                              >
+                              <input
+                                id="txt_direccion_referencia_envio"
+                                type="text"
+                                name="txt_direccion_referencia_envio"
+                                class="form-control"
+                                placeholder="Direccion de Referencia de Envio"
+                                style="text-transform: uppercase"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <div class="col-lg-12 left">
                 <div class="row">
-
-
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
-                      <label>Teléfono (*):</label>
+            
+                      
+                      <label class="control-label" for="inputWarning">
+
+                        Teléfono (*):
+                      </label>
+
                       <input
                         id="txtTelefono"
                         type="number"
@@ -422,6 +636,12 @@
                         placeholder="Ingrese el teléfono"
                         autofocus=""
                       />
+                      <span
+                      
+                      class="help-block containerListaTelefonoCoincidenciasText"
+                        id="txtTelefono_span"
+                      ></span>
+
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -436,7 +656,14 @@
                         required=""
                         placeholder="Ingrese el 2do teléfono - o colocar O"
                         autofocus=""
+                      
+                      
                       />
+                      <span
+                      class="help-block containerListaTelefonoCoincidenciasText"
+                        id="txtTelefono_2_span"
+                      ></span>
+
                     </div>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -479,14 +706,98 @@
                       />
                     </div>
                   </div>
-                  
                 </div>
+                
               </div>
             </div>
+
+            <div
+              class="loading_window"
+              style="
+                opacity: 0.5;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                background: black;
+                top: 0;
+                left: 0;
+                z-index: 214748364152435234523452345234523423;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+            >
+              <div class="loader" id="loader-3">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <style>
+              .loader {
+                width: 100px;
+                height: 100px;
+                border-radius: 100%;
+                position: relative;
+                margin: 0 auto;
+              }
+
+              #loader-3:before,
+              #loader-3:after {
+                content: "";
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 0;
+                left: calc(50% - 10px);
+                background-color: #3498db;
+                animation: squaremove 1s ease-in-out infinite;
+              }
+
+              #loader-3:after {
+                bottom: 0;
+                animation-delay: 0.5s;
+              }
+
+              @keyframes squaremove {
+                0%,
+                100% {
+                  -webkit-transform: translate(0, 0) rotate(0);
+                  -ms-transform: translate(0, 0) rotate(0);
+                  -o-transform: translate(0, 0) rotate(0);
+                  transform: translate(0, 0) rotate(0);
+                }
+
+                25% {
+                  -webkit-transform: translate(40px, 40px) rotate(45deg);
+                  -ms-transform: translate(40px, 40px) rotate(45deg);
+                  -o-transform: translate(40px, 40px) rotate(45deg);
+                  transform: translate(40px, 40px) rotate(45deg);
+                }
+
+                50% {
+                  -webkit-transform: translate(0px, 80px) rotate(0deg);
+                  -ms-transform: translate(0px, 80px) rotate(0deg);
+                  -o-transform: translate(0px, 80px) rotate(0deg);
+                  transform: translate(0px, 80px) rotate(0deg);
+                }
+
+                75% {
+                  -webkit-transform: translate(-40px, 40px) rotate(45deg);
+                  -ms-transform: translate(-40px, 40px) rotate(45deg);
+                  -o-transform: translate(-40px, 40px) rotate(45deg);
+                  transform: translate(-40px, 40px) rotate(45deg);
+                }
+              }
+            </style>
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
                 <h5></h5>
-                <button class="btn btn-success" type="submit">
+                <button
+                  class="btn btn-success"
+                  id="button_registrar_nuevo_cliente"
+                  type="submit"
+                >
                   <i class="fa fa-floppy-o"></i> Registrar
                 </button>
                 <a href="Cliente.php" class="btn btn-primary"
@@ -498,10 +809,87 @@
             </div>
           </form>
         </div>
-        <button  class="btn btn-primary" id="btnNuevo">
+        <button class="btn btn-primary" id="btnNuevo">
           <i class="fa fa-file"></i> Nuevo
         </button>
-        <a style="display: none" href="ClienteClasificacion.php" class="btn btn-primary" id=""
+
+        <div
+          id="asignarUsuario"
+          class="modal fade bs-example-modal-lg"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+        >
+          <div class="modal-dialog modal-center modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Asignar Vendedor</h4>
+              </div>
+              <div class="modal-body">
+                <h6 id="numero_clientes_asignados" class="h4"></h6>
+                <div class="box">
+                  <div class="box-header with-border">
+                    <div class="box-tools pull-right">
+                      <button class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <ol
+                      id="lista_clientes_por_asignar"
+                      style="max-height: 500px; overflow-y: auto"
+                    ></ol>
+                  </div>
+                  <div class="form-group has-success">
+                    <label>Cambiar el usuario responsable a :</label>
+                    <select
+                      id="select_personal_vendedor"
+                      class="form-control"
+                    ></select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  id="insertarClientesACartera"
+                >
+                  Asignar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+          
+          echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
+            Asignar Vendedor
+          </button> ';
+			
+        }else{
+        
+        }
+        ?>
+       
+
+        
+        <a
+          style="display: none"
+          href="ClienteClasificacion.php"
+          class="btn btn-primary"
+          id=""
           ><i class="fa fa-file"></i> Clasificación</a
         >
         <br /><br />
@@ -515,6 +903,7 @@
           >
             <thead>
               <tr>
+                <th></th>
                 <th>#</th>
                 <th>Tipo de Cliente</th>
                 <th>Nombre</th>
@@ -526,12 +915,16 @@
                 <th>Fecha de creación</th>
                 <th>Modificado por</th>
                 <th>Fecha de modificación</th>
+                <th>asignado A</th>
+                <th>Opciones</th>
                 <th>Opciones</th>
               </tr>
             </thead>
 
             <tfoot>
               <tr>
+                <th></th>
+
                 <th>#</th>
                 <th>Tipo de Cliente</th>
                 <th>Nombre</th>
@@ -543,6 +936,8 @@
                 <th>Fecha de creación</th>
                 <th>Modificado por</th>
                 <th>Fecha de modificación</th>
+                <th>asignado A</th>
+                <th>Opciones</th>
                 <th>Opciones</th>
               </tr>
             </tfoot>
@@ -562,5 +957,4 @@
 <script type="text/javascript">
   $("#liVentas").addClass("treeview active");
   $("#liClientes").addClass("active");
-  
 </script>

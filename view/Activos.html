@@ -1,0 +1,512 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Inventario - Todos los Activos</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+
+      <button class="btn btn-box-tool" data-widget="remove">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!--Contenido-->
+
+        <div class="col-sm-14" id="VerForm">
+          <form role="form" name="frmActivo" id="frmActivo" enctype="multipart/form-data">
+            <div class="row">
+
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Añadir Nuevo Activo</h3>
+                </div>
+              </div>
+
+              <div class="col-lg-12 left"> 
+                <div class="row">
+                  <div class="col-lg-3 col-lg-3 col-sm-3 col-xs-12">
+                    <div class="form-group has-success">
+                      <input id="txtIdEmpleado" type="hidden" maxlength="50" class="form-control" name="txtIdEmpleado"
+                        placeholder="" autofocus="" />
+
+                      <input id="act_idgestion_activo" type="hidden" maxlength="50" class="form-control"
+                        name="act_idgestion_activo" placeholder="" autofocus="" />
+
+                      <input id="act_idactivo" type="hidden" maxlength="50" class="form-control" name="act_idactivo"
+                        placeholder="" autofocus="" />
+
+                      <!-- <input
+                        id="act_idempleado"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdEmpleado"
+                        placeholder=""
+                        autofocus=""
+                      /> -->
+
+                      <!-- <label>Nombres (*):</label>
+                      <input
+                        id="txtApellidos"
+                        disabled
+                        type="text"
+                        maxlength="40"
+                        name="txtApellidos"
+                        class="form-control"
+                        placeholder="Apellidos"
+                        autofocus=""
+                      /> -->
+                    </div>
+                  </div>
+                  <!--<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Nombre (*):</label>
+                      <input
+                        id="txtNombre"
+                        disabled
+                        type="text"
+                        maxlength="20"
+                        name="txtNombre"
+                        class="form-control"
+                        placeholder="Nombre"
+                        autofocus=""
+                      />
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label> Documento (*):</label>
+                      <input
+                        id="cboTipo_Documento"
+                        disabled
+                        name="cboTipo_Documento"
+                        class="form-control"
+                      />
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="col-lg-12 left" id="container_insertar_articulo">
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Codigo (*):</label>
+                      <input id="act_codigo" type="text" maxlength="20" name="act_codigo" required=""
+                        class="form-control" placeholder="codigo" autofocus="" />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Familia de Activo (*):</label>
+                      <input id="act_familia_activo" type="text" maxlength="20" name="act_familia_activo" required=""
+                        class="form-control" placeholder="familia de activo" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Tipo de Equipo (*):</label>
+                      <input id="act_tipo_equipo" type="text" maxlength="20" name="act_tipo_equipo" required=""
+                        class="form-control" placeholder="tipo de equipo" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Unidad (*):</label>
+                      <input id="act_unidad" type="text" maxlength="20" name="act_unidad" required=""
+                        class="form-control" placeholder="unidad " autofocus="" />
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>cantidad (*):</label>
+                      <input
+                        id="act_cantidad"
+                        type="number"
+                        maxlength="20"
+                        name="act_cantidad"
+                        required=""
+                        class="form-control"
+                        placeholder="cantidad"
+                        autofocus=""
+                      />
+                    </div>
+                  </div> -->
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Marca (*):</label>
+                      <input id="act_marca" type="text" maxlength="20" name="act_marca" required="" class="form-control"
+                        placeholder="marca" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Modelo (*):</label>
+                      <input id="act_modelo" type="text" maxlength="20" name="act_modelo" required=""
+                        class="form-control" placeholder="modelo " autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Serie (*):</label>
+                      <input id="act_serie" type="text" maxlength="20" name="act_serie" required="" class="form-control"
+                        placeholder="serie " autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Color (*):</label>
+                      <input id="act_color" type="text" maxlength="20" name="act_color" required="" class="form-control"
+                        placeholder="color" autofocus="" />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Estado (*):</label>
+                      <select class="form-control" name="act_estado" id="act_estado" placeholder="estado">
+                        <option value=""></option>
+                        <option value="BUENO">BUENO</option>
+                        <option value="MALO">MALO</option>
+                        <option value="REGULAR">REGULAR</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Tipo de Activo (*):</label>
+                      <input id="act_tipo_activo" type="text" maxlength="20" name="act_tipo_activo" required=""
+                        class="form-control" placeholder="tipo de activo" autofocus="" />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Tipo de Documento (*):</label>
+                      <input id="act_t_documento" type="text" maxlength="20" name="act_t_documento" required=""
+                        class="form-control" placeholder="tipo de documento" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Precio de Compra (*):</label>
+                      <input id="act_precio_compra" type="number" maxlength="20" name="act_precio_compra" required=""
+                        class="form-control" placeholder="precio de compra" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Proveedor (*):</label>
+                      <input id="act_proveedor" type="text" maxlength="20" name="act_proveedor" required=""
+                        class="form-control" placeholder="proveedor" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Fecha de Ingreso (*):</label>
+                      <input id="act_fecha_ingreso" type="date" maxlength="20" name="txtNum_Documento" required=""
+                        class="form-control" placeholder="fecha de ingreso" autofocus="" />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Fin de Vida (*):</label>
+                      <input id="act_fecha_finvida" type="date" maxlength="20" name="act_fecha_finvida" required=""
+                        class="form-control text-center" placeholder="fin de vida" autofocus="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                    <div class="form-group has-warning">
+                      <label>Dias Restantes:</label>
+                      <input id="act_dias_restantes" type="number" name="act_dias_restantes" disabled
+                        class="form-control" placeholder="dias Restantes " autofocus="" />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Caracteristicas (*):</label>
+
+                      <textarea class="form-control" name="act_caracteristica" id="act_caracteristica" cols="30"
+                        required placeholder="caracteristica"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12">
+                    <button id="actualizar_nuevo_articulo_submit" class="btn btn-success" type="submit">
+                      <i class="fa fa-floppy-o"></i> Actualizar Activo
+                    </button>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12" style="margin-top: 20px">
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Asignacion de Activos</h3>
+
+                          <button type="button" id="btn_asignar_a_empleado" style="margin: 0 10px"
+                            class="btn btn-primary">
+                            Asignar Activo a Empleado
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row" id="container_asignar_activos">
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Empleado (*):</label>
+                              <select required class="form-control gestion_activo empleadosList" name="act_idempleado"
+                                id="act_idempleado" placeholder="'empleado"></select>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Empleado en Uso (*): </label>
+                              <select required class="form-control gestion_activo empleadosList"
+                                name="act_idempleado_uso" id="act_idempleado_uso"
+                                placeholder="empleado en uso"></select>
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Area / Departamento (*):</label>
+                              <input id="act_area" type="text" maxlength="20" name="act_area" required=""
+                                class="form-control gestion_activo" placeholder="area" autofocus="" />
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Fecha Asignacion (*):</label>
+                              <input id="act_fecha_asignacion" type="date" maxlength="20" name="act_fecha_asignacion"
+                                required="" class="form-control gestion_activo" placeholder="Número de documento"
+                                autofocus="" />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Ubicación (*):</label>
+                              <select class="form-control gestion_activo" name="act_ubicacion" id="act_ubicacion">
+                                <option value=""></option>
+                                <option value="2">LIMA</option>
+                                <option value="1">AREQUIPA</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <div class="form-group">
+                              <label>Adjuntar un Archivo (*):</label>
+                              <input id="act_activo_archivo" type="file" name="act_activo_archivo" required="" multiple
+                                class="form-control gestion_activo" placeholder="Número de documento" autofocus="" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id='boton_actualizar_ultimo_empleado'>
+                        <div class="form-group">
+                          <button type="button" class="btn btn-success" id="submit_boton_actualizar_ultimo_empleado"> 
+
+
+                            <i class="fa fa-floppy-o"></i>
+                            Actualizar Ultimo Empleado
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                          <button id="actualizar_boton_asigacion_empleado" class="btn btn-success" type="button">
+                            <i class="fa fa-floppy-o"></i> Asignar a Nuevo
+                          Empleado
+                          </button>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="container_table_activos_anteriores">
+                          <table id="table_activos_anteriores"
+                            class="table table-striped table-bordered table-condensed table-hover" cellspacing="0"
+                            cellpadding="0" width="100%">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Empleado Asignado</th>
+                                <th>Empleado en Uso</th>
+                                <th>Fecha de Asignacion</th>
+                                <th>Estado de Asignacion</th>
+                                <th>Opciones</th>
+                              </tr>
+                            </thead>
+
+                            <tfoot>
+                              <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+
+                                <th>Tipo de activo</th>
+                                <th>Usado por</th>
+                                <th>Departamento</th>
+
+                                <th>Opciones</th>
+                              </tr>
+                            </tfoot>
+
+                            <tbody id="empleado"></tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12">
+                    <button id="registrar_nuevo_articulo_submit" class="btn btn-success" type="submit">
+                      <i class="fa fa-floppy-o"></i> Registrar Nuevo Activo
+                    </button>
+                  </div>
+                  <div class="col-sm-12 col-lg-12">
+                    <h4 class="modal-title">Archivos Adjuntos </h4>
+                    <div class="box-footer">
+                      <ul class="mailbox-attachments clearfix" id="detalleArchivoActivo"></ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-lg-12 left">
+                <div
+                  id="VertblActivosPorEmpleado"
+                  style="margin-top: 10px"
+                  class="table-responsive"
+                >
+                  <table
+                    id="tblActivosPorEmpleado"
+                    class="table table-striped table-bordered table-condensed table-hover"
+                    cellspacing="0"
+                    cellpadding="0"
+                    width="100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Fecha De Ingreso</th>
+                        <th>Fin De Vida</th>
+                        <th>Precio De Compra</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Tipo De Equipo</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </thead>
+
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Fecha De Ingreso</th>
+                        <th>Fin De Vida</th>
+                        <th>Precio De Compra</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Tipo De Equipo</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </tfoot>
+
+                    <tbody id="empleado"></tbody>
+                  </table>
+                </div>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                <h5></h5>
+
+                <a href="activos.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
+                <hr />
+                <span class="lead text-primary"></span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <button class="btn btn-primary" id="btnNuevo">
+          <i class="fa fa-file"></i> Nuevo
+        </button>
+
+        <br /><br />
+        <div id="VerListado" class="table-responsive">
+          <table id="tblActivos" class="table table-striped table-bordered table-condensed table-hover" cellspacing="0"
+            cellpadding="0" width="100%">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Codigo</th>
+                <th>Fecha de Ingreso</th>
+                <th>Familia de Activo</th>
+                <th>Tipo de Equipo</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Nro de Serie</th>
+                <th>Color</th>
+                <th>Caracteristicas</th>
+                <th>Estado</th>
+                <th>Tipo/Nro. de Documento</th>
+                <th>Precio de Compra</th>
+                <th>Proveedor</th>
+                <th>Area</th>
+                <th>Usuario</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Codigo</th>
+                <th>Fecha de Ingreso</th>
+                <th>Familia de Activo</th>
+                <th>Tipo de Equipo</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Nro de Serie</th>
+                <th>Color</th>
+                <th>Caracteristicas</th>
+                <th>Estado</th>
+                <th>Tipo/Nro. de Documento</th>
+                <th>Precio de Compra</th>
+                <th>Proveedor</th>
+                <th>Area</th>
+                <th>Usuario</th>
+                <th>Opciones</th>
+              </tr>
+            </tfoot>
+
+            <tbody id="empleado"></tbody>
+          </table>
+        </div>
+        <!--Fin-Contenido-->
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+<script type="text/javascript">
+  $("#liConsultaCompras").addClass("treeview active");
+  $("#liGestionActivos").addClass("active");
+</script>

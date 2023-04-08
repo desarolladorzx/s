@@ -198,23 +198,51 @@ switch ($_GET["op"]) {
         while ($reg = $query_Tipo->fetch_object()) {
             $regTotal = $objPed->GetTotal($reg->idpedido);
             $fetch = $regTotal->fetch_object();
+            $botonPasarAVenta = '';
+            
+            if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) {
 
-            if ($reg->estadoId == "D") { // APROBADO
-                $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
-            } else {
-                $botonPasarAVenta = '';
+                if ($reg->estadoId == "D") { // APROBADO
+                    $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
+                } else {
+                    $botonPasarAVenta = '';
+                }
+            }
+            $botonEliminar = '';
+
+            if ($reg->estadoId == "D") {
+                if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) { 
+                    // if (true) {
+                    $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+                }
+            }
+            // if (true) {
+            if($reg->estadoId == "A"){
+                if ($_SESSION["idempleado"]==17 ||$_SESSION["idempleado"]==6) { // APROBADO
+                // if (true) {
+
+                    $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+                }
+            }
+            // if ($_SESSION["idempleado"]==17 ||$_SESSION["idempleado"]==6) { // APROBADO
+            //     $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
+            // } else {ig
+            //     $botonEliminar = '';
+            // }
+            $botonCambiarEstado = '';
+            if ($reg->estadoId !== "D") {
+                // if (true) { 
+                if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+                    // if (true) { 
+
+                    $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido(' . $reg->idpedido . ')" ><i class="fa fa-refresh"></i> </button>&nbsp';
+                } else {
+                    $botonCambiarEstado = '';
+                }
             }
 
-            if ($res_usuario->estado == "S") { // APROBADO
-                $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
-            } else {
-                $botonEliminar = '';
-            }
-            if ($reg->estadoId !== "D") { // APROBADO
-                $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido(' . $reg->idpedido . ')" ><i class="fa fa-refresh"></i> </button>&nbsp';
-            } else {
-                $botonCambiarEstado = '';
-            }
+
+
 
 
             $data[] = array(
@@ -379,11 +407,13 @@ switch ($_GET["op"]) {
         while ($reg = $query_cli->fetch_object()) {
 
 
-            if ($_SESSION["idsucursal"] == $reg->idsucursal && $reg->estado_detalle_ingreso=='INGRESO') {
+            if ($_SESSION["idsucursal"] == $reg->idsucursal && $reg->estado_detalle_ingreso == 'INGRESO') {
                 $disabledButton = '';
             } else {
                 $disabledButton = 'disabled';
             }
+
+
 
             $data[] = array(
                 "0" => '<button type="button" ' . $disabledButton . '  class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
@@ -400,8 +430,8 @@ switch ($_GET["op"]) {
                         \'' . $reg->idarticulo . '\',
                         \'' . $reg->marca . '\')" >
                     <i class="fa fa-check" ></i> </button>',
-                    "1" => $reg->razon_social,
-                    "2" => $reg->estado_n,
+                "1" => $reg->razon_social,
+                "2" => $reg->estado_n,
                 "3" => $reg->codigo,
                 "4" => $reg->Articulo,
                 "5" => $reg->marca,
@@ -409,7 +439,7 @@ switch ($_GET["op"]) {
                 //"5"=>$reg->presentacion,
                 "7" => $reg->stock_actual,
                 "8" => $reg->precio_ventapublico,
-                
+
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
