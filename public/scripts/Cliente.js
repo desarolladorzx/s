@@ -491,15 +491,33 @@ function ListadoCliente() {
   });
 
   tabla.on("click", "th.select-checkbox", function () {
-    var nodes = tabla.rows({ search: "applied" }).nodes();
+    var pageNum = tabla.page.info().page;
+    var rows = tabla.rows({ page: 'current' }).nodes();
+
+    // var nodes = tabla.rows({ search: "applied" }).nodes();
+
+    // console.log(nodes)
+    // if ($("th.select-checkbox").hasClass("selected")) {
+    //   tabla.rows().deselect();
+    //   $("th.select-checkbox").removeClass("selected");
+    // } else {
+    //   tabla.rows({ search: "applied" }).select();
+    //   $(nodes).addClass("selected");
+    //   $("th.select-checkbox").addClass("selected");
+    // }
     if ($("th.select-checkbox").hasClass("selected")) {
       tabla.rows().deselect();
       $("th.select-checkbox").removeClass("selected");
     } else {
-      tabla.rows({ search: "applied" }).select();
-      $(nodes).addClass("selected");
+      tabla.rows({ page: 'current' }).select();
+      $(rows).addClass("selected");
       $("th.select-checkbox").addClass("selected");
     }
+    
+    var numRows = rows.length;
+    console.log("Número de filas en la página " + (pageNum+1) + ": " + numRows);
+    
+
   });
 
   tabla.on("select deselect", function () {
@@ -516,6 +534,7 @@ function ListadoCliente() {
     tabla.rows().deselect();
     $("th.select-checkbox").removeClass("selected");
   });
+  
 }
 
 function eliminarCliente(id) {

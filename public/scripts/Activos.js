@@ -156,10 +156,10 @@ function init() {
       type: "get",
       dataType: "json",
       success: function (datos) {
-        console.log(datos);
+        
 
         datos.map((e) => {
-          console.log(e);
+
           option_text += `
           <option value="${e.idempleado}">${e.nombre} ${e.apellidos}</option>
 
