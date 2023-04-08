@@ -105,10 +105,14 @@ function init() {
             "success"
           );
 
+          
+
           $("#asignarUsuario").modal("hide");
         },
         error: function (e) {
           swal("Mensaje del Sistema",     "clientes asignados correctamente", "success");
+          $("#asignarUsuario").modal("hide");
+          
         },
       });
     } else {
@@ -516,7 +520,7 @@ function ListadoCliente() {
     
     var numRows = rows.length;
     console.log("Número de filas en la página " + (pageNum+1) + ": " + numRows);
-    
+
 
   });
 
