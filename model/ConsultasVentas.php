@@ -13,13 +13,15 @@
 			$query=$conexion->query($sql);
 			return $query;
 		}
-		public function ListarVentasFechas($idsucursal, $fecha_desde, $fecha_hasta,$ejecutivo_comercial ,$antiguedad_cliente ,$tipo_cliente){
+		public function ListarVentasFechas($fecha_desde, $fecha_hasta,$ejecutivo_comercial ,$antiguedad_cliente ,$tipo_cliente){
 			global $conexion;
 
 			$sql = "select 
 			pe.*,
 			concat(pe.direccion_departamento,' - ',pe.direccion_provincia,' - ',pe.direccion_distrito,'  |  ',pe.direccion_calle, '|',IFNULL(pe.direccion_referencia,'')) as destino,
 
+			CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',pe.direccion_calle ,' - ',IFNULL(pe.direccion_referencia,'')) destino 
+,
 			concat(e.nombre,' ',e.apellidos,' |  ',v.fecha) as aproba_venta,
 
 			concat(e.nombre,' ',e.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido ,
@@ -71,13 +73,13 @@
 				WHEN LENGTH('$antiguedad_cliente')>0 THEN  pe.numero_cuenta='$antiguedad_cliente'
 				else v.idventa
 				end
-				order by v.fecha desc ";
+				order by v.fecha desc";
 				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasDetalladas($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarVentasDetalladas($fecha_desde, $fecha_hasta){
 			global $conexion;
 				$sql="select s.razon_social as sucursal, v.fecha,pe.numero_cuenta as antiguedad,pe.tipo_persona as tipo_cliente,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -119,7 +121,7 @@
 			return $query;
 		}
 
-		public function ListarVentasAnuladas($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarVentasAnuladas($fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -138,13 +140,13 @@
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
-				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and s.idsucursal= $idsucursal and v.estado='C'
+				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.estado='C'
 				order by v.fecha desc ";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasPendientes($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarVentasPendientes($fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -164,7 +166,7 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' 
-				and s.idsucursal= $idsucursal and v.estado='A'
+				and v.estado='A'
 				order by v.fecha desc
 				";
 			$query = $conexion->query($sql);
@@ -198,7 +200,7 @@
 		// 	return $query;
 		// }
 
-		public function ListarVentasContado($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarVentasContado($fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -213,14 +215,14 @@
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
-				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and s.idsucursal= $idsucursal and v.tipo_venta='Contado' and v.estado='A'
+				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.tipo_venta='Contado' and v.estado='A'
 				order by v.fecha desc
 				";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasCredito($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarVentasCredito($fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -237,14 +239,14 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' 
-				and s.idsucursal= $idsucursal and v.tipo_venta='Credito' and v.estado='A'
+				and v.tipo_venta='Credito' and v.estado='A'
 				order by v.fecha desc
 				";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasCliente($idsucursal, $idcliente, $fecha_desde, $fecha_hasta){
+		public function ListarVentasCliente($idcliente, $fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -264,14 +266,14 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
-				and pe.idpersona= $idcliente and s.idsucursal= $idsucursal and v.estado='A'
+				and pe.idpersona= $idcliente and v.estado='A'
 				order by v.fecha desc
 				";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasEmpleado($idsucursal, $idempleado, $fecha_desde, $fecha_hasta){
+		public function ListarVentasEmpleado($idempleado, $fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -287,14 +289,14 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
-				and e.idempleado= $idempleado and s.idsucursal= $idsucursal and v.estado='A'
+				and e.idempleado= $idempleado and v.estado='A'
 				order by v.fecha desc;
 				";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarVentasEmpleadoDet($idsucursal, $idempleado, $fecha_desde, $fecha_hasta){
+		public function ListarVentasEmpleadoDet($idempleado, $fecha_desde, $fecha_hasta){
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -313,7 +315,7 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
-				and s.idsucursal= $idsucursal and v.estado='A'
+				and v.estado='A'
 				and e.idempleado= $idempleado
 				order by v.fecha desc
 				";
