@@ -27,7 +27,7 @@ switch ($_GET["op"]) {
           $idsucursal = $_REQUEST["idsucursal"];
 
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasFechas($idsucursal, $fecha_desde, $fecha_hasta, $ejecutivo_comercial, $antiguedad_cliente, $tipo_cliente);
+          $query_Tipo = $objCategoria->ListarVentasFechas( $fecha_desde, $fecha_hasta, $ejecutivo_comercial, $antiguedad_cliente, $tipo_cliente);
           while ($reg = $query_Tipo->fetch_object()) {
                require_once "../model/Pedido.php";
                $objPedido = new Pedido();
