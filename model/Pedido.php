@@ -413,7 +413,7 @@ class Pedido
 		// $sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
 
 		// se modifico el sql para que los iddocumentos no se repita
-		$sql = "SELECT * from persona 
+		$sql = "SELECT *,persona.tipo_persona,persona.num_documento,persona.nombre,persona.apellido,persona.telefono,persona.direccion_calle ,persona.email from persona 
 
 	INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
 	$join
