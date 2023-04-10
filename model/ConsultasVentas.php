@@ -20,6 +20,8 @@
 			pe.*,
 			concat(pe.direccion_departamento,' - ',pe.direccion_provincia,' - ',pe.direccion_distrito,'  |  ',pe.direccion_calle, '|',IFNULL(pe.direccion_referencia,'')) as destino,
 
+			CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',pe.direccion_calle ,' - ',IFNULL(pe.direccion_referencia,'')) destino 
+,
 			concat(e.nombre,' ',e.apellidos,' |  ',v.fecha) as aproba_venta,
 
 			concat(e.nombre,' ',e.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido ,
@@ -71,7 +73,7 @@
 				WHEN LENGTH('$antiguedad_cliente')>0 THEN  pe.numero_cuenta='$antiguedad_cliente'
 				else v.idventa
 				end
-				order by v.fecha desc ";
+				order by v.fecha desc";
 				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
