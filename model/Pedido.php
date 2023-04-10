@@ -88,8 +88,9 @@ class Pedido
 		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
 	
 
-		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+	
 
+		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 
 
 			from pedido p
@@ -349,7 +350,7 @@ class Pedido
 		,p.observacion as observaciones,p.modo_pago,
 		p.tipo_entrega
 		
-		,	CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 		
 	,if(c.direccion_distrito>0 AND c.direccion_provincia>0,'',CONCAT(c.direccion_departamento ,' ', c.direccion_distrito,' ',c.direccion_provincia)) direccion_antigua
 						
