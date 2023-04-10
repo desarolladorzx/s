@@ -103,7 +103,7 @@ error_reporting(0); ?>
       </tr>
       <tr>
         <td><b>DESTINO: </b>
-          <font size=2> <?php echo mb_strtoupper($reg_cli->direccion_distrito . " - " . $reg_cli->direccion_provincia . " - " . $reg_cli->direccion_departamento, 'UTF-8'); ?> </font>
+          <font size=2> <?php echo mb_strtoupper($reg_cli->distrito . " - " . $reg_cli->provincia . " - " . $reg_cli->departamento, 'UTF-8'); ?> </font>
         </td>
       </tr>
       <tr>

@@ -1147,7 +1147,9 @@ function cargarDataPedido(
   ultimo,
   modificar_detalle,
   idcliente,
-  estado
+  estado,
+  ubicacion
+  
 ) {
   console.log(
     idPedido,
@@ -1172,8 +1174,10 @@ function cargarDataPedido(
   ultimo,
   modificar_detalle,
   idcliente,
-  estado
+  estado,
+  ubicacion
   );
+  console.log('hola')
 
 
   $('.ventasFechasOcultar').hide()

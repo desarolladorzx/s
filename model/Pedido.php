@@ -84,7 +84,14 @@ class Pedido
 	{
 		global $conexion;
 		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		
 		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
+	
+
+		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+
+
+
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
@@ -97,6 +104,10 @@ class Pedido
 
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+
+		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
+		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
+		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
 
             where p.idsucursal = $idsucursal
 			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
@@ -326,23 +337,35 @@ class Pedido
 		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 	
 
-			(CASE
-				WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
-				WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
-				WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
-			END ) AS estado,
-			p.metodo_pago AS metodo_pago,
-			p.agencia_envio AS agencia_envio,
-			p.tipo_promocion AS tipo_promocion,
-			p.estado AS estadoId
-			,p.observacion as observaciones,p.modo_pago,
-			p.tipo_entrega
-			from pedido p inner join persona c on p.idcliente = c.idpersona
-			inner join usuario u on p.idusuario=u.idusuario
-			inner join empleado e on u.idempleado=e.idempleado
-			
-			where p.idsucursal =  $idsucursal
-			and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
+		(CASE
+			WHEN p.estado = 'A' THEN '<span class=\'badge bg-blue\'>Activo</span>'
+			WHEN p.estado = 'C' THEN '<span class=\'badge bg-red\'>Cancelado</span>'
+			WHEN p.estado = 'D' THEN '<span class=\'badge bg-green\'>Aprobado</span>'
+		END ) AS estado,
+		p.metodo_pago AS metodo_pago,
+		p.agencia_envio AS agencia_envio,
+		p.tipo_promocion AS tipo_promocion,
+		p.estado AS estadoId
+		,p.observacion as observaciones,p.modo_pago,
+		p.tipo_entrega
+		
+		,	CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+		
+	,if(c.direccion_distrito>0 AND c.direccion_provincia>0,'',CONCAT(c.direccion_departamento ,' ', c.direccion_distrito,' ',c.direccion_provincia)) direccion_antigua
+						
+		from pedido p inner join persona c on p.idcliente = c.idpersona
+
+				
+						
+		inner join usuario u on p.idusuario=u.idusuario
+		inner join empleado e on u.idempleado=e.idempleado
+		
+		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
+		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
+		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+						 
+		where p.idsucursal =  $idsucursal
+		and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 
 		//var_dump($sql);exit;
 
@@ -510,6 +533,9 @@ order by idpersona DESC ;";
 	{
 		global $conexion;
 		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado,concat(emp_anu.apellidos,' ',emp_anu.nombre) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
+		
+		,distrito.descripcion distrito,provincia.descripcion provincia ,departamento.descripcion departamento
+		
 		from persona p inner join pedido ped on ped.idcliente = p.idpersona
 		inner join detalle_pedido dp on dp.idpedido = ped.idpedido
 		inner join sucursal s on ped.idsucursal = s.idsucursal
@@ -518,6 +544,12 @@ order by idpersona DESC ;";
 		inner join empleado e on u.idempleado=e.idempleado
 		left JOIN  usuario usu_anu on usu_anu.idusuario= v.idusuario_anu
 		LEFT  JOIN  empleado emp_anu on emp_anu.idempleado=usu_anu.idempleado
+
+		left JOIN distrito ON distrito.iddistrito=p.direccion_distrito
+	LEFT  JOIN provincia ON provincia.idprovincia=p.direccion_provincia
+		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+
+
 		where ped.idpedido =$idpedido";
 		$query = $conexion->query($sql);
 		return $query;
