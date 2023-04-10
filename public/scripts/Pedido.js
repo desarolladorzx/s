@@ -1180,6 +1180,8 @@ function cargarDataPedido(
   console.log('hola')
 
 
+
+
   $('.ventasFechasOcultar').hide()
   
   if(modificar_detalle==='C'){
@@ -1195,7 +1197,11 @@ function cargarDataPedido(
   $("#VerForm").show();
   //$("#btnNuevoVent").hide();
   $("#VerListado").hide();
+
+
   $("#txtIdPedido").val(idPedido);
+
+
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 

@@ -1,6 +1,21 @@
 $(document).on("ready", init); // Inciamos el jquery
 var objC = new init();
 function init() {
+  $('#cerrar_formulario').click(function(e){
+    console.log('hola')
+
+    $("#VerFormVentaPed").hide();
+    $("#VerListado").show();
+    //$("#btnNuevoVent").hide();
+    // $(".inputs_filtros").show();
+
+    $('#cboFechaDesdeVent').show()
+    $('.ventasFechasOcultar').show()
+    $('#lblHasta').show()
+    $('#cboFechaHastaVent').show()
+
+  })
+
   $("#tblVentaFechas").dataTable({
     dom: "Bfrtip",
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
