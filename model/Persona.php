@@ -255,8 +255,8 @@ iddistrito_factura='$iddistrito_factura'
 
 		$exepcion = "";
 		$join = "
-		left JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona AND cartera_cliente.estado='A'
-		left 
+		 JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona AND cartera_cliente.estado='A'
+		 
 		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
 		";
 
