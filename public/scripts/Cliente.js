@@ -314,11 +314,11 @@ function init() {
       function (r) {
         // llamamos la url por post. function(r). r-> llamada del callback
 
-        //ListadoCliente();
+        ListadoCliente();
         //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
         //swal("Mensaje del Sistema", r, "success");
-        //OcultarForm();
-        //Limpiar();
+        OcultarForm();
+        Limpiar();
 
         swal(
           {
