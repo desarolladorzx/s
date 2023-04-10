@@ -16,8 +16,8 @@ class Persona
 			$idpersona = $valor['12'];
 
 
-			echo $idpersona;
-			echo '-';
+			// echo $idpersona;
+			// echo '-';
 			
 			$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';
 
@@ -191,7 +191,7 @@ iddistrito_factura='$iddistrito_factura'
 			WHERE num_documento ='$num_documento' and 
 			idpersona=$idpersona";
 
-		echo ($sql);
+		// echo ($sql);
 
 		$query = $conexion->query($sql);
 		return $query;
