@@ -715,7 +715,15 @@ order by idpersona DESC ;";
 	public function traerUltimoPedido()
 	{
 		global $conexion;
-		$sql = "SELECT * FROM pedido ORDER	BY  fecha desc LIMIT 1 ";
+		// $sql = "SELECT * FROM pedido ORDER	BY  fecha desc LIMIT 1 ";
+		$sql="SELECT pedido.*,empleado.nombre,empleado.apellidos ,emp_est.nombre nombre_estado,emp_est.apellidos apellidos_estado FROM pedido 
+
+JOIN usuario ON usuario.idusuario=pedido.idusuario
+JOIN empleado ON empleado.idempleado=usuario.idempleado
+left JOIN usuario usu_est ON usu_est.idusuario=pedido.idusuario_est
+left JOIN empleado emp_est ON emp_est.idempleado=usu_est.idempleado
+
+ORDER	BY  fecha desc LIMIT 1 ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -724,6 +732,25 @@ order by idpersona DESC ;";
 	{
 		global $conexion;
 		$sql = "SELECT * FROM venta ORDER	BY  fecha DESC LIMIT 1";
+		$sql = "SELECT venta.*,empleado.nombre,empleado.apellidos FROM venta 
+		JOIN pedido ON pedido.idpedido=venta.idpedido
+		JOIN usuario ON usuario.idusuario=venta.idusuario
+		JOIN empleado ON empleado.idempleado=usuario.idempleado
+		
+		ORDER	BY  venta.fecha DESC LIMIT 1";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+	public function traerUltimaVentaLima()
+	{
+		global $conexion;
+		$sql = "SELECT venta.*,empleado.nombre,empleado.apellidos FROM venta 
+		JOIN pedido ON pedido.idpedido=venta.idpedido
+		JOIN usuario ON usuario.idusuario=venta.idusuario
+		JOIN empleado ON empleado.idempleado=usuario.idempleado
+		WHERE pedido.idsucursal=2
+		ORDER	BY  venta.fecha DESC LIMIT 1";
 		$query = $conexion->query($sql);
 		return $query;
 	}
