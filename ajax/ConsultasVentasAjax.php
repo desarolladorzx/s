@@ -123,7 +123,7 @@ switch ($_GET["op"]) {
 
 
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasAnuladas($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasAnuladas( $fecha_desde, $fecha_hasta);
           while ($reg = $query_Tipo->fetch_object()) {
 
                $data[] = array(
@@ -159,7 +159,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasPendientes($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasPendientes( $fecha_desde, $fecha_hasta);
           while ($reg = $query_Tipo->fetch_object()) {
                $data[] = array(
                     "0" => $reg->fecha,
@@ -191,7 +191,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasContado($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasContado( $fecha_desde, $fecha_hasta);
           while ($reg = $query_Tipo->fetch_object()) {
                $data[] = array(
                     "0" => $reg->fecha,
@@ -222,7 +222,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasCredito($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasCredito( $fecha_desde, $fecha_hasta);
 
           while ($reg = $query_Tipo->fetch_object()) {
 
@@ -329,7 +329,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasEmpleado($idsucursal, $_SESSION["idempleado"], $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasEmpleado( $_SESSION["idempleado"], $fecha_desde, $fecha_hasta);
 
           while ($reg = $query_Tipo->fetch_object()) {
                $data[] = array(
@@ -360,7 +360,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasEmpleadoDet($idsucursal, $_SESSION["idempleado"], $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasEmpleadoDet( $_SESSION["idempleado"], $fecha_desde, $fecha_hasta);
 
           while ($reg = $query_Tipo->fetch_object()) {
                $data[] = array(
