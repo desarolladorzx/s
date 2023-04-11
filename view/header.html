@@ -467,9 +467,57 @@
     notificacionEspera();
     ventaInfo();
     ventasINFO();
+
+    ventasLima()
+    function ventasLima(){
+      let idEmpleado = Number(idempleado);
+    if ([7, 6].includes(idEmpleado)) {
+      $.ajax({
+        url: "./ajax/PedidoAjax.php?op=informarVentaLima",
+        processData: false,
+        contentType: false,
+        type: "GET",
+        success: function (data) {
+          let ultimaVentaLima = JSON.parse(data);
+          let local = JSON.parse(
+              localStorage.getItem("ultimaVentaLima")
+            );
+          setTimeout(() => {
+            ventasLima();
+
+          }, 3000);
+
+          ultimoVenta = data;
+          if (localStorage.getItem("ultimaVentaLima")) {
+          
+            if (ultimaVentaLima.idventa != local.idventa) {
+              if ((Notification.permission = "grantFd")) {
+                const notification = new Notification(
+                  "Se ha registrado una nueva Venta ",
+                  {
+                    icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                    body:`Nueva Venta ${ultimaVentaLima.serie_comprobante}- ${ultimaVentaLima.num_comprobante} generada por ${ultimaVentaLima.nombre} ${ultimaVentaLima.apellidos} `
+                     
+                    
+                  }
+                );
+                notification.onclick = function () {
+                  window.open("https://medicfit.grupopuma.pe/Venta.php");
+                };
+                localStorage.setItem("ultimaVentaLima", data);
+              }
+            }
+          } else {
+            localStorage.setItem("ultimaVentaLima", data);
+          }
+        }})
+    }
+    }
   function ventaInfo() {
     let idEmpleado = Number(idempleado);
     if ([17, 11, 6].includes(idEmpleado)) {
+
+
       var ultimoPedido;
       $.ajax({
         url: "./ajax/PedidoAjax.php?op=informarPedido",
@@ -477,9 +525,10 @@
         contentType: false,
         type: "GET",
         success: function (data) {
+         
           setTimeout(() => {
             ventaInfo();
-          }, 3000);
+          }, 60000);
 
           ultimoPedido = data;
           let idEmpleado = Number($("#txtIdEmpleado").val());
@@ -490,11 +539,14 @@
             ).idpedido;
             let baseD = JSON.parse(data).idpedido;
             let nuevoPedido = JSON.parse(data);
+
             if (baseD != local && [17, 6].includes(idEmpleado)) {
+
+              console.log('notificiacion nueva cotizacion')
               if ((Notification.permission = "grantFd")) {
                 const notification = new Notification("Nueva cotizacion ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                  body: "Nueva cotizacion -" + JSON.parse(data).numero,
+                  body: `Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
                 });
                 notification.onclick = function () {
                   window.open("https://medicfit.grupopuma.pe/Pedido.php");
@@ -502,7 +554,15 @@
                 localStorage.setItem("ultimoPedido", ultimoPedido);
               }
             }
+
+//             console.log( nuevoPedido.estado=='D' &&
+
+// baseD == local &&
+// JSON.parse(data).estado !==
+//   JSON.parse(localStorage.getItem("ultimoPedido")).estado &&
+// [11, 6].includes(idEmpleado))
             if (
+              nuevoPedido.estado=='D' &&
               baseD == local &&
               JSON.parse(data).estado !==
                 JSON.parse(localStorage.getItem("ultimoPedido")).estado &&
@@ -510,12 +570,10 @@
             ) {
               if ((Notification.permission = "grantFd")) {
                 const notification = new Notification(
-                  " Nueva cotizacion Cotización Aprobada",
+                  " Cotización Aprobada",
                   {
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body: `${
-                      ultimoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"
-                    } Nueva cotizacion - ${ultimoPedido.numero}`,
+                    body: `${nuevoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"} Cotización  - ${nuevoPedido.numero} Aprobada por ${nuevoPedido.nombre_estado} ${nuevoPedido.apellidos_estado}`,
                   }
                 );
                 notification.onclick = function () {
@@ -542,6 +600,8 @@
         contentType: false,
         type: "GET",
         success: function (data) {
+
+          let ultimaVentajson= JSON.parse(data);
           ultimoVenta = data;
           if (localStorage.getItem("ultimoVenta")) {
             let local = JSON.parse(localStorage.getItem("ultimoVenta")).idventa;
@@ -549,14 +609,9 @@
             if (baseD != local) {
               if ((Notification.permission = "grantFd")) {
                 const notification = new Notification(
-                  "Se ha registrado una nueva Venta ",
-                  {
+                  "Se ha registrado una nueva Venta ",{
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body:
-                      "Nueva Venta -" +
-                      JSON.parse(data).serie_comprobante +
-                      "-" +
-                      JSON.parse(data).num_comprobante,
+                    body:`Nueva Venta ${ultimaVentajson?.idsucursal == "1" ? "Arequipa" : "Lima"} ${ultimaVentajson.serie_comprobante}- ${ultimaVentajson.num_comprobante} generada por ${ultimaVentajson.nombre} ${ultimaVentajson.apellidos} `
                   }
                 );
                 notification.onclick = function () {
@@ -663,12 +718,12 @@
                   if (e.estado == "A" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
-                        `cotizacion ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
+                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
                         {
                           icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                           body: `${
                             e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } Nueva cotizacion - ${e.numero}`,
+                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
                         }
                       );
                       notification.onclick = function () {
@@ -678,12 +733,12 @@
                   } else if (e.estado == "D" && [17, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
-                        `cotizacion ${e.numero}  Aprobada Pendiente de Generar Venta esta en Espera por ${minutes} Minutos`,
+                        `cotizacion ${e.numero} Aprobada Pendiente de Generar Venta`,
                         {
                           icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                           body: `${
                             e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } Nueva cotizacion - ${e.numero}`,
+                          } Cotización - ${e.numero} Aprobada Pendiente de Generar Venta esta en Espera por ${minutes} Minutos`,
                         }
                       );
                       notification.onclick = function () {

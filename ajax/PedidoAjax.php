@@ -183,6 +183,16 @@ switch ($_GET["op"]) {
 
         echo json_encode($reg);
         break;
+    
+        case "informarVentaLima":
+            require_once "../model/Pedido.php";
+            $objPedi = new Pedido();
+            $query = $objPedi->traerUltimaVentaLima();
+            $reg = $query->fetch_object();
+    
+            echo json_encode($reg);
+            break;
+
 
     case "informarVentaCancelada":
         require_once "../model/Pedido.php";
