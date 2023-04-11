@@ -257,7 +257,7 @@ switch ($_GET["op"]) {
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarVentasCliente($idsucursal, $idCliente, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarVentasCliente( $idCliente, $fecha_desde, $fecha_hasta);
           while ($reg = $query_Tipo->fetch_object()) {
                $data[] = array(
                     "0" => $reg->fecha,
