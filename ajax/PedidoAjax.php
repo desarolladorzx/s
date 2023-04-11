@@ -158,11 +158,23 @@ switch ($_GET["op"]) {
     case "imformarCotizacion":
         require_once "../model/Pedido.php";
         $objPedi = new Pedido();
+        $query = $objPedi->PedidosEnEspera();
+        $nuevo = array();
+        while ($reg = $query->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+        break;
+    case "informarPedido":
+        require_once "../model/Pedido.php";
+        $objPedi = new Pedido();
         $query = $objPedi->traerUltimoPedido();
         $reg = $query->fetch_object();
 
         echo json_encode($reg);
         break;
+
+
     case "informarVenta":
         require_once "../model/Pedido.php";
         $objPedi = new Pedido();
@@ -199,7 +211,7 @@ switch ($_GET["op"]) {
             $regTotal = $objPed->GetTotal($reg->idpedido);
             $fetch = $regTotal->fetch_object();
             $botonPasarAVenta = '';
-            
+
             if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) {
 
                 if ($reg->estadoId == "D") { // APROBADO
@@ -211,15 +223,15 @@ switch ($_GET["op"]) {
             $botonEliminar = '';
 
             if ($reg->estadoId == "D") {
-                if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) { 
+                if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) {
                     // if (true) {
                     $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
                 }
             }
             // if (true) {
-            if($reg->estadoId == "A"){
-                if ($_SESSION["idempleado"]==17 ||$_SESSION["idempleado"]==6) { // APROBADO
-                // if (true) {
+            if ($reg->estadoId == "A") {
+                if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) { // APROBADO
+                    // if (true) {
 
                     $botonEliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar Pedido" onclick="eliminarPedido(' . $reg->idpedido . ')" ><i class="fa fa-trash"></i> </button>&nbsp';
                 }

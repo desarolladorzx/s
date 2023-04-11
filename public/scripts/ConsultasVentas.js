@@ -190,8 +190,10 @@ function ListadoVentasDetalladas() {
     $("#cboFechaDesdeDetVent").val() != "" &&
     $("#cboFechaHastaDetVent").val() != ""
   ) {
-    var fecha_desde = $("#cboFechaDesdeDetVent").val(),
-      fecha_hasta = $("#cboFechaHastaDetVent").val(),
+    var fecha_desde = $("#cboFechaDesdeDetVent").val()
+
+  
+      fecha_hasta = $("#cboFechaHastaDetVent").val()
       idsucursal = $("#txtIdSucursal").val();
     var tabla = $("#tblVentasDetalladas")
       .dataTable({

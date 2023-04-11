@@ -127,14 +127,13 @@ function init() {
       dataType: "json",
       type: "get",
       success: function (rpta) {
-        console.log(rpta);
+       
         var ubicacion_containe_options_html = '<option value=""></option>';
 
         rpta.map((e) => {
           ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
         });
-        console.log(ubicacion_containe_options_html);
-
+       
         $("#select_personal_vendedor").html(ubicacion_containe_options_html);
       },
       error: function (e) {},
@@ -433,7 +432,7 @@ function guardarSelects() {
 function ListadoCliente() {
 
 
-  console.log($('#txtIdEmpleado').val())
+ 
   tabla = $("#tblCliente").DataTable({
     pagingType: "full_numbers",
     lengthMenu: [
