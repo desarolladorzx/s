@@ -80,6 +80,7 @@
 		}
 
 		public function ListarVentasDetalladas($fecha_desde, $fecha_hasta){
+			
 			global $conexion;
 				$sql="select s.razon_social as sucursal, v.fecha,pe.numero_cuenta as antiguedad,pe.tipo_persona as tipo_cliente,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -117,6 +118,7 @@
 				 and v.estado='A'
 				order by v.num_comprobante desc
 				";
+			
 			$query = $conexion->query($sql);
 			return $query;
 		}

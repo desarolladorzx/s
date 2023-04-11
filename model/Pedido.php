@@ -703,6 +703,15 @@ order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function PedidosEnEspera()
+	{
+		global $conexion;
+		// $sql = "SELECT * FROM pedido ORDER	BY  fecha desc LIMIT 1 ";
+		$sql = "SELECT * FROM pedido WHERE tipo_pedido='Pedido'";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 	public function traerUltimoPedido()
 	{
 		global $conexion;
@@ -710,6 +719,7 @@ order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
 	public function traerUltimaVenta()
 	{
 		global $conexion;
