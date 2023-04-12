@@ -60,6 +60,16 @@ class Activos
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function EliminarActivo($id){
+		global $conexion;
+
+		$sql = "UPDATE activo
+				 SET estado_activo = 'C'
+				 where idactivo='$id'
+			 ";
+		$conexion->query($sql); 
+
+	}
 	public function transferirActivo($valor)
 	{
 

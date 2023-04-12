@@ -180,6 +180,21 @@
                   </p>
                 </li>
 
+                <li class="" style="padding:5px; display: flex;justify-content: space-between;">
+                 
+                  
+                
+                 
+                    <button class="btn btn-primary" onclick="NuevoAcceder(1,'Arequipa - AREQUIPA - AREQUIPA')">
+                      Arequipa
+                    </button>
+                    <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,'Lima - LIMA - LIMA')">
+                      Lima
+                    </button>
+
+                
+                </li>
+
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
@@ -462,6 +477,25 @@
     </aside>
 
     <script>
+
+function NuevoAcceder(idsucursal,razon_social){
+
+//alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
+
+var data = {
+  
+    idsucursal : idsucursal,
+    razon_social:razon_social
+};
+
+//console.log(data)
+
+$.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
+  location.reload()
+});
+}
+
+
     var idempleado = JSON.parse('<?php echo json_encode($_SESSION["idempleado"]); ?>');
         
     notificacionEspera();
@@ -542,15 +576,15 @@
 
             console.log(baseD != local && [17, 6].includes(idEmpleado))
 
-            if (baseD != local && [17, 6].includes(idEmpleado)) {
+            if (baseD != local && [17, 6].includes(idEmpleado) && baseD>local) {
 
-              console.log(`Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`)
+              // console.log(`Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`)
               
               if ((Notification.permission = "grantFd")) {
             
                 const notification = new Notification("Nueva cotizacion ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                  body: `Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
+                  body: `${nuevoPedido.idsucursal == "1" ? "Arequipa" : "Lima"} Nueva cotizacion - ${nuevoPedido.numero} , registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
                   // body: `Nueva cotizacion `
                 });
                 notification.onclick = function () {
@@ -710,39 +744,26 @@
           type: "GET",
 
           success: function (data) {
-            setTimeout(() => {
-              notificacionEspera();
-            }, 3000);
-
+           
             let pedidosPendientes = JSON.parse(data);
 
-            ultimoPedido = pedidosPendientes[pedidosPendientes.length - 1];
-            console.log(pedidosPendientes);
-            if (localStorage.getItem("ultimoPedido")) {
               let hora_actual = new Date();
               pedidosPendientes.map((e) => {
                 let fecha_pedido = new Date(e.fecha);
+
+                let fecha_aprovacion = new Date(e.fecha_apro_coti);
+
                 let msDifference = hora_actual - fecha_pedido;
                 let minutes = Math.floor(msDifference / 1000 / 60);
-                console.log(minutes);
 
-                if (minutes >= 5) {
-                  if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
-                    if ((Notification.permission = "grantFd")) {
-                      const notification = new Notification(
-                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
-                        {
-                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                          body: `${
-                            e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
-                        }
-                      );
-                      notification.onclick = function () {
-                        window.open("https://medicfit.grupopuma.pe/Pedido.php");
-                      };
-                    }
-                  } else if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
+
+                let msDifference_aprovacion = hora_actual - fecha_aprovacion;
+                let minutes_aprovacion = Math.floor(msDifference / 1000 / 60);
+
+                console.log(e);
+
+                if(minutes_aprovacion > 5){
+                  if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
                         `cotizacion ${e.numero} Aprobada Pendiente de Generar Venta`,
@@ -759,13 +780,27 @@
                     }
                   }
                 }
-              });
-            } else {
-              localStorage.setItem(
-                "ultimoPedido",
-                JSON.stringify(ultimoPedido)
-              );
-            }
+
+                if (minutes > 5) {
+                  if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
+                    if ((Notification.permission = "grantFd")) {
+                      const notification = new Notification(
+                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
+                        {
+                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                          body: `${
+                            e?.idsucursal == "1" ? "Arequipa" : "Lima"
+                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
+                        }
+                      );
+                      notification.onclick = function () {
+                        window.open("https://medicfit.grupopuma.pe/Pedido.php");
+                      };
+                    }
+                  }
+                }
+              })
+           
           },
         });
       });

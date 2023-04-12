@@ -70,6 +70,11 @@ type="button"
 
     break;
 
+  case 'EliminarActivo':
+
+     $query_Tipo = $objActivos->EliminarActivo($_POST['id']);
+
+    break;
   case 'TrasferirActivo':
 
   
@@ -107,6 +112,8 @@ type="button"
 				type="button" 
 				onclick="ModificarDetallesActivosView(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>
+        
+
 				'
       );
 
