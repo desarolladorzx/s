@@ -2,7 +2,7 @@ $(document).on("ready", init);
 var idgestionActivo = "";
 function init() {
 
-  console.log('hola')
+
   $("#boton_actualizar_ultimo_empleado").hide();
   $("#table_activos_anteriores").hide();
   $("#act_fecha_ingreso ").change(function () {
@@ -388,6 +388,23 @@ function init() {
   });
 }
 
+
+function eliminarActivo(
+  id
+){
+  $.ajax({
+    url: "./ajax/ActivosAjax.php?op=EliminarActivo",
+    type: "post",
+    dataType: "json",
+    data: {
+      id,
+    },
+    success:function (data){
+      console.log(data);
+    }
+  
+  })
+}
 function cargarDataEmpleadoActivos(
   id,
   apellidos,

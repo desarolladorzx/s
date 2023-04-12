@@ -542,15 +542,15 @@
 
             console.log(baseD != local && [17, 6].includes(idEmpleado))
 
-            if (baseD != local && [17, 6].includes(idEmpleado)) {
+            if (baseD != local && [17, 6].includes(idEmpleado) && baseD>local) {
 
-              console.log(`Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`)
+              // console.log(`Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`)
               
               if ((Notification.permission = "grantFd")) {
             
                 const notification = new Notification("Nueva cotizacion ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                  body: `${nuevoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"} Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
+                  body: `${nuevoPedido.idsucursal == "1" ? "Arequipa" : "Lima"} Nueva cotizacion - ${nuevoPedido.numero} , registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
                   // body: `Nueva cotizacion `
                 });
                 notification.onclick = function () {
@@ -710,39 +710,26 @@
           type: "GET",
 
           success: function (data) {
-            setTimeout(() => {
-              notificacionEspera();
-            }, 70000);
-
+           
             let pedidosPendientes = JSON.parse(data);
 
-            ultimoPedido = pedidosPendientes[pedidosPendientes.length - 1];
-            console.log(pedidosPendientes);
-            if (localStorage.getItem("ultimoPedido")) {
               let hora_actual = new Date();
               pedidosPendientes.map((e) => {
                 let fecha_pedido = new Date(e.fecha);
+
+                let fecha_aprovacion = new Date(e.fecha_apro_coti);
+
                 let msDifference = hora_actual - fecha_pedido;
                 let minutes = Math.floor(msDifference / 1000 / 60);
-                console.log(minutes);
 
-                if (minutes >= 5) {
-                  if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
-                    if ((Notification.permission = "grantFd")) {
-                      const notification = new Notification(
-                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
-                        {
-                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                          body: `${
-                            e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
-                        }
-                      );
-                      notification.onclick = function () {
-                        window.open("https://medicfit.grupopuma.pe/Pedido.php");
-                      };
-                    }
-                  } else if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
+
+                let msDifference_aprovacion = hora_actual - fecha_aprovacion;
+                let minutes_aprovacion = Math.floor(msDifference / 1000 / 60);
+
+                console.log(e);
+
+                if(minutes_aprovacion > 5){
+                  if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
                         `cotizacion ${e.numero} Aprobada Pendiente de Generar Venta`,
@@ -759,13 +746,27 @@
                     }
                   }
                 }
-              });
-            } else {
-              localStorage.setItem(
-                "ultimoPedido",
-                JSON.stringify(ultimoPedido)
-              );
-            }
+
+                if (minutes > 5) {
+                  if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
+                    if ((Notification.permission = "grantFd")) {
+                      const notification = new Notification(
+                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
+                        {
+                          icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                          body: `${
+                            e?.idsucursal == "1" ? "Arequipa" : "Lima"
+                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
+                        }
+                      );
+                      notification.onclick = function () {
+                        window.open("https://medicfit.grupopuma.pe/Pedido.php");
+                      };
+                    }
+                  }
+                }
+              })
+           
           },
         });
       });
