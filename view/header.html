@@ -180,6 +180,21 @@
                   </p>
                 </li>
 
+                <li class="" style="padding:5px; display: flex;justify-content: space-between;">
+                 
+                  
+                
+                 
+                    <button class="btn btn-primary" onclick="NuevoAcceder(1,'Arequipa - AREQUIPA - AREQUIPA')">
+                      Arequipa
+                    </button>
+                    <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,'Lima - LIMA - LIMA')">
+                      Lima
+                    </button>
+
+                
+                </li>
+
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
@@ -462,6 +477,25 @@
     </aside>
 
     <script>
+
+function NuevoAcceder(idsucursal,razon_social){
+
+//alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
+
+var data = {
+  
+    idsucursal : idsucursal,
+    razon_social:razon_social
+};
+
+//console.log(data)
+
+$.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
+  location.reload()
+});
+}
+
+
     var idempleado = JSON.parse('<?php echo json_encode($_SESSION["idempleado"]); ?>');
         
     notificacionEspera();

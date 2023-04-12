@@ -115,7 +115,7 @@ error_reporting(0); ?>
         <td><b>REFERENCIA: </b><font size=2> <?php echo mb_strtoupper($reg_cli->direccion_referencia, 'UTF-8'); ?> </font> </td>
     </tr> -->
 
-      <tr>
+      <tr> 
         <td align="center"><?php echo "<b>" . "EMPAQUETADO : " . "</b>" . date("Y-m-d") . "<b>" . " Hora: " . "</b>" . date("H:i:s"); ?></td>
       </tr>
     </table>
