@@ -550,7 +550,7 @@
             
                 const notification = new Notification("Nueva cotizacion ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                  body: `Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
+                  body: `${nuevoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"} Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
                   // body: `Nueva cotizacion `
                 });
                 notification.onclick = function () {
@@ -712,7 +712,7 @@
           success: function (data) {
             setTimeout(() => {
               notificacionEspera();
-            }, 3000);
+            }, 70000);
 
             let pedidosPendientes = JSON.parse(data);
 
