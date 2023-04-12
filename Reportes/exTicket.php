@@ -108,7 +108,7 @@ error_reporting(0); ?>
       </tr>
       <tr>
         <td><b>DIRECCION: </b>
-          <font size=2> <?php echo mb_strtoupper($reg_cli->direccion_calle . " - " . $reg_cli->direccion_distrito, 'UTF-8'); ?> </font>
+          <font size=2> <?php echo mb_strtoupper($reg_cli->direccion_calle . " <b>ref: </b> " . $reg_cli->direccion_referencia, 'UTF-8'); ?> </font>
         </td>
       </tr>
       <!-- <tr>
