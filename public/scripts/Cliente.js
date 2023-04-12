@@ -1,10 +1,16 @@
 $(document).on("ready", init); // Inciamos el jquery
 
 function pulsar(e) {
-  if (e.which === 13 && !e.shiftKey) {
+    if (e.shiftKey) {
+      e.preventDefault();
+      return false;
+    }
+    if ( [1,16,14,13,15].includes(e.which) && !e.shiftKey) {
+
     e.preventDefault();
     console.log("prevented");
     return false;
+  
   }
 }
 
