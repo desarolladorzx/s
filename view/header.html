@@ -516,8 +516,6 @@
   function ventaInfo() {
     let idEmpleado = Number(idempleado);
     if ([17, 11, 6].includes(idEmpleado)) {
-
-
       var ultimoPedido;
       $.ajax({
         url: "./ajax/PedidoAjax.php?op=informarPedido",
@@ -525,13 +523,12 @@
         contentType: false,
         type: "GET",
         success: function (data) {
-         
-          setTimeout(() => {
-            ventaInfo();
-          }, 60000);
+
+          
+        
 
           ultimoPedido = data;
-          let idEmpleado = Number($("#txtIdEmpleado").val());
+       
 
           if (localStorage.getItem("ultimoPedido")) {
             let local = JSON.parse(
@@ -540,17 +537,27 @@
             let baseD = JSON.parse(data).idpedido;
             let nuevoPedido = JSON.parse(data);
 
+
+           
+
+            console.log(baseD != local && [17, 6].includes(idEmpleado))
+
             if (baseD != local && [17, 6].includes(idEmpleado)) {
 
-              console.log('notificiacion nueva cotizacion')
+              console.log(`Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`)
+              
               if ((Notification.permission = "grantFd")) {
+            
                 const notification = new Notification("Nueva cotizacion ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                   body: `Nueva cotizacion - ${nuevoPedido.numero} ,registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
+                  // body: `Nueva cotizacion `
                 });
                 notification.onclick = function () {
                   window.open("https://medicfit.grupopuma.pe/Pedido.php");
                 };
+
+                console.log(notification)
                 localStorage.setItem("ultimoPedido", ultimoPedido);
               }
             }
@@ -584,6 +591,11 @@
             } else {
               localStorage.setItem("ultimoPedido", ultimoPedido);
             }
+
+            setTimeout(() => {
+              ventaInfo();
+            }, 3000);
+
           } else {
             localStorage.setItem("ultimoPedido", ultimoPedido);
           }
@@ -715,7 +727,7 @@
                 console.log(minutes);
 
                 if (minutes >= 5) {
-                  if (e.estado == "A" && [11, 6].includes(idEmpleado)) {
+                  if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
                         `Cotizacion ${e.numero} Pendiente de Aprobación `,
@@ -730,7 +742,7 @@
                         window.open("https://medicfit.grupopuma.pe/Pedido.php");
                       };
                     }
-                  } else if (e.estado == "D" && [17, 6].includes(idEmpleado)) {
+                  } else if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
                         `cotizacion ${e.numero} Aprobada Pendiente de Generar Venta`,
