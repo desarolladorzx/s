@@ -3,30 +3,25 @@ $(document).on("ready", init); // Inciamos el jquery
 function pulsar(e) {
   if (e.which === 13 && !e.shiftKey) {
     e.preventDefault();
-    console.log('prevented');
+    console.log("prevented");
     return false;
   }
 }
 
-
-function demostrarTelefono(value,text) {
+function demostrarTelefono(value, text) {
   $("#container_alerta_telefono").hide(1000);
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide(1000);
 
+  $(`#${text}`).html("");
 
-  $(`#${text}`).html(
-    ''
-  );
-
-  console.log(value)
+  console.log(value);
   if (value) {
     $.post(
       "./ajax/ClienteAjax.php?op=comprobar_telefono",
       { telefono: value },
       function (r) {
-        console.log(r)
+        console.log(r);
         let response = JSON.parse(r);
-
 
         let textoListaTelefonoCoincidencias = "";
         if (response.length > 0) {
@@ -46,9 +41,7 @@ function demostrarTelefono(value,text) {
           // $("#containerListaTelefonoCoincidencias").html(
           //   textoListaTelefonoCoincidencias
           // );
-          $(`#${text}`).html(
-            textoListaTelefonoCoincidencias
-          );
+          $(`#${text}`).html(textoListaTelefonoCoincidencias);
           // $("#container_respuesta_inputs_coincidencia_de_telefonos").show(
           //   "slow"
           // );
@@ -105,14 +98,15 @@ function init() {
             "success"
           );
 
-          
-
           $("#asignarUsuario").modal("hide");
         },
         error: function (e) {
-          swal("Mensaje del Sistema",     "clientes asignados correctamente", "success");
+          swal(
+            "Mensaje del Sistema",
+            "clientes asignados correctamente",
+            "success"
+          );
           $("#asignarUsuario").modal("hide");
-          
         },
       });
     } else {
@@ -127,13 +121,12 @@ function init() {
       dataType: "json",
       type: "get",
       success: function (rpta) {
-       
         var ubicacion_containe_options_html = '<option value=""></option>';
 
         rpta.map((e) => {
           ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
         });
-       
+
         $("#select_personal_vendedor").html(ubicacion_containe_options_html);
       },
       error: function (e) {},
@@ -153,10 +146,10 @@ function init() {
         ]
     }); */
   $("#txtTelefono_2").change(function () {
-    demostrarTelefono($("#txtTelefono_2").val(),'txtTelefono_2_span');
+    demostrarTelefono($("#txtTelefono_2").val(), "txtTelefono_2_span");
   });
   $("#txtTelefono").change(function () {
-    demostrarTelefono($("#txtTelefono").val(),'txtTelefono_span');
+    demostrarTelefono($("#txtTelefono").val(), "txtTelefono_span");
   });
 
   $("#container_ubicacion_antigua").hide();
@@ -317,6 +310,14 @@ function init() {
         //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
         //swal("Mensaje del Sistema", r, "success");
         OcultarForm();
+
+        $("#btnNuevo").show();
+        console.log("hola");
+
+        if ([17, 6].includes(Number($("#txtIdEmpleado").val()))){
+          $("#btn_asignar_vendedor").show();
+        }
+
         Limpiar();
 
         swal(
@@ -372,13 +373,12 @@ function init() {
   }
 
   function VerForm() {
-    btnNuevo
+    btnNuevo;
     $("#VerForm").show(); // Mostramos el formulario
     //$("#btnNuevo").hide();// ocultamos el boton nuevo
     $("#VerListado").hide();
-    
-    $("#btn_asignar_vendedor").hide();// ocultamos el boton nuevo
 
+    $("#btn_asignar_vendedor").hide(); // ocultamos el boton nuevo
 
     $("#optionsRadios1").prop("checked", false);
     $("#optionsRadios2").prop("checked", false);
@@ -395,7 +395,6 @@ function init() {
     //$("#btnNuevo").show();// ocultamos el boton nuevo
     $("#VerListado").show();
     // $("#btn_asignar_vendedor").hide();
-
   }
 }
 var tabla;
@@ -430,13 +429,10 @@ function guardarSelects() {
   }
 }
 function ListadoCliente() {
-
-
- 
   tabla = $("#tblCliente").DataTable({
     pagingType: "full_numbers",
     lengthMenu: [
-      [25, 50, 100, 150, 300 ],
+      [25, 50, 100, 150, 300],
       [25, 50, 100, 150, 300],
     ],
     aProcessing: true,
@@ -455,7 +451,9 @@ function ListadoCliente() {
         className: "select-checkbox", // Agregar la opción
         mDataProp: "0",
         targets: 0,
-        visible:[6,17].includes(Number($('#txtIdEmpleado').val()))? true:false,
+        visible: [6, 17].includes(Number($("#txtIdEmpleado").val()))
+          ? true
+          : false,
         checkboxes: {
           selectAll: true,
         },
@@ -495,7 +493,7 @@ function ListadoCliente() {
 
   tabla.on("click", "th.select-checkbox", function () {
     var pageNum = tabla.page.info().page;
-    var rows = tabla.rows({ page: 'current' }).nodes();
+    var rows = tabla.rows({ page: "current" }).nodes();
 
     // var nodes = tabla.rows({ search: "applied" }).nodes();
 
@@ -512,15 +510,15 @@ function ListadoCliente() {
       tabla.rows().deselect();
       $("th.select-checkbox").removeClass("selected");
     } else {
-      tabla.rows({ page: 'current' }).select();
+      tabla.rows({ page: "current" }).select();
       $(rows).addClass("selected");
       $("th.select-checkbox").addClass("selected");
     }
-    
+
     var numRows = rows.length;
-    console.log("Número de filas en la página " + (pageNum+1) + ": " + numRows);
-
-
+    console.log(
+      "Número de filas en la página " + (pageNum + 1) + ": " + numRows
+    );
   });
 
   tabla.on("select deselect", function () {
@@ -537,7 +535,6 @@ function ListadoCliente() {
     tabla.rows().deselect();
     $("th.select-checkbox").removeClass("selected");
   });
-  
 }
 
 function eliminarCliente(id) {
@@ -973,15 +970,14 @@ function buscarPorNumeroDocumento() {
             break;
           case "error":
             alert("Ocurrio un error al registrar cliente...");
-            
+
             $("#txtTelefono_2").val(0);
             swal("Mensaje del Sistema", "error del sistema", "error");
             break;
           case "no_encontrado":
+            $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
 
-          $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
-          
-          $("#cboTipo_Persona").val("");
+            $("#cboTipo_Persona").val("");
             $("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
             $("#txtNombre").val("");
             $("#txtApellido").val("");
