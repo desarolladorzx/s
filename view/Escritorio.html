@@ -1,11 +1,11 @@
 <section class="content-header">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-lg-6">
       <h3>
         Totales
         <small>Compras, Ventas y Creditos</small>
       </h3>
-    </div>
+    </div> -->
     <!-- <div class="col-lg-6">
       <label for="inputMarca">Sucursal </label>
       <select
@@ -18,7 +18,7 @@
         <option value="2">Lima</option>
       </select>
     </div> -->
-  </div>
+  <!-- </div> -->
 </section>
 <?php
 
@@ -58,7 +58,7 @@ $cantidad7=$reg_Global3->cantidad7; $cantidad8=$reg_Global3->cantidad8; }
 
 
 
-// $_SESSION["idempleado"]=6;
+ //$_SESSION["idempleado"]=6;
 require_once "model/Grafico.php"; 
 $objGlobal = new Grafico(); 
 $query_Global = $objGlobal->VentasTotales(0,$_SESSION["idempleado"]); 
@@ -101,10 +101,14 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 
 <section class="content">
   <?php 
-  if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
-    echo ' <div class="box">
+  // if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+    echo '
+    <div class="box">
       <div class="box-header with-border">
-        <h4>Ventas Generales</h4>
+        <h3>
+          Totales
+          <small>Compras, Ventas y Creditos</small>
+        </h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse">
             <i class="fa fa-minus"></i>
@@ -115,52 +119,50 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
         </div>
       </div>
       <div class="row box-body">
+        <div class="col-lg-12 col-xs-12">
+            <h4>Ventas Globales</h4>
+        </div>
         <div class="col-lg-3 col-xs-6">
-          <div class="small-box bg-aqua disabled">
+          <div class="small-box bg-aqua ">
             <div class="inner">
-              <h3>
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
                  '.$ventas_diarias.'
-            
-                <!-- <?php echo .$ventas_diarias.;?> -->
-                <sup style="font-size: 20px"> '.$moneda.' </sup>
-              </h3>
+              </h4>
               <p>Total de Compras Diarias</p>
             </div>
             <div class="icon">
-              <i class="glyphicon glyphicon-chevron-up"></i>
+              <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
               >Ventas del dia <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
-  
         <div class="col-lg-3 col-xs-6">
-          <div class="small-box bg-green disabled">
+          <div class="small-box bg-aqua ">
             <div class="inner">
-              <h3>
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_semanales.'
-                <sup style="font-size: 20px"> '.$moneda.' </sup>
-              </h3>
+              </h4>
               <p>Total de Compras Semanales</p>
             </div>
             <div class="icon">
-              <i class="glyphicon glyphicon-eject"></i>
+              <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
               >Ventas del dia <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
-        <!-- ./col -->
-  
         <div class="col-lg-3 col-xs-6">
-          <div class="small-box bg-yellow disabled">
+          <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_mensuales.'
-                <sup style="font-size: 20px"> '.$moneda.' </sup>
-              </h3>
+              </h4>
               <p>Total de Ventas Mensuales</p>
             </div>
             <div class="icon">
@@ -171,15 +173,181 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             ></a>
           </div>
         </div>
-        <!-- ./col -->
-  
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-red disabled">
             <div class="inner">
-              <h3>
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_anuladas.'
-                <sup style="font-size: 20px"> '.$moneda.' </sup>
-              </h3>
+              </h4>
+              <p>Total de Ventas Anuladas en el Mes</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-ban-circle"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12">
+          <h4>Ventas - Arequipa</h4>
+      </div>
+
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-green "
+           
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_diarias1.'
+            
+              </h4>
+              <p>Total de Compras Diarias</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-green "
+           
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_semanales1.'
+
+              </h4>
+              <p>Total de Compras Semanales</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-green "
+         
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_mensuales1.'
+              </h4>
+              <p>Total de Ventas Mensuales</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-red "
+          
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_anuladas1.'
+              </h4>
+              <p>Total de Ventas Anuladas en el Mes</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-ban-circle"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xs-12">
+          <h4>Ventas - Lima</h4>
+      </div>
+
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-yellow "
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_diarias2.'
+              </h4>
+              <p>Total de Compras Diarias</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-yellow "
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_semanales2. '
+              </h4>
+              <p>Total de Compras Semanales</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-yellow "
+         
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_mensuales2.'
+              </h4>
+              <p>Total de Ventas Mensuales</p>
+            </div>
+            <div class="icon">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+            <a href="ComprasFechas.php" class="small-box-footer"
+              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <div
+            class="small-box bg-red "
+           
+          >
+            <div class="inner">
+              <h4>
+                <sup style="font-size: 16px">'.$moneda.'</sup>
+                '.$ventas_anuladas2.'
+              </h4>
               <p>Total de Ventas Anuladas en el Mes</p>
             </div>
             <div class="icon">
@@ -192,210 +360,12 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
         </div>
       </div>
     </div>';
-  }
+  //}
   ?>
 
  
-  <div class="box">
-    <div class="box-header with-border">
-      <h4>Ventas - Arequipa</h4>
-      <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse">
-          <i class="fa fa-minus"></i>
-        </button>
-        <button class="btn btn-box-tool" data-widget="remove">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-    </div>
-    <div class="row box-body">
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-aqua disabled"
-          style="background-color: rgba(0, 192, 239, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_diarias1;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Compras Diarias</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-chevron-up"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-green disabled"
-          style="background-color: rgba(0, 166, 90, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_semanales1;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Compras Semanales</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-eject"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-      <!-- ./col -->
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-yellow disabled"
-          style="background-color: rgba(243, 156, 18, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_mensuales1;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Ventas Mensuales</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-calendar"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-      <!-- ./col -->
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-red disabled"
-          style="background-color: rgba(221, 75, 57, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_anuladas1;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Ventas Anuladas en el Mes</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-ban-circle"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="box">
-    <div class="box-header with-border">
-      <h4>Ventas - Lima</h4>
-      <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse">
-          <i class="fa fa-minus"></i>
-        </button>
-        <button class="btn btn-box-tool" data-widget="remove">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-    </div>
-    <div class="row box-body">
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-aqua disabled"
-          style="background-color: rgba(0, 192, 239, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_diarias2;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Compras Diarias</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-chevron-up"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-green disabled"
-          style="background-color: rgba(0, 166, 90, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_semanales2;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Compras Semanales</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-eject"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-      <!-- ./col -->
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-yellow disabled"
-          style="background-color: rgba(243, 156, 18, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_mensuales2;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Ventas Mensuales</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-calendar"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-      <!-- ./col -->
-
-      <div class="col-lg-3 col-xs-6">
-        <div
-          class="small-box bg-red disabled"
-          style="background-color: rgba(221, 75, 57, 0.8) !important"
-        >
-          <div class="inner">
-            <h3>
-              <?php echo $ventas_anuladas2;?>
-              <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
-            </h3>
-            <p>Total de Ventas Anuladas en el Mes</p>
-          </div>
-          <div class="icon">
-            <i class="glyphicon glyphicon-ban-circle"></i>
-          </div>
-          <a href="ComprasFechas.php" class="small-box-footer"
-            >Ventas del dia <i class="fa fa-arrow-circle-right"></i
-          ></a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+ 
 
 <?php 
   if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
@@ -426,9 +396,29 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
           $elemento->color='bg-green';
         }
         echo '
+   
+
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box '.$elemento->color.' ">
+          <div class="box box-widget widget-user-2">
+
+            <div class="widget-user-header '.$elemento->color.' ">
+            <div class="widget-user-image">
+            <img class="img-circle" src="'.$elemento->foto.'" alt="User Avatar">
+            </div>
+            
+            <h3 class="widget-user-username">'.$elemento->vendedor.'</h3>
+            <h5 class="widget-user-desc">Empleado</h5>
+            </div>
+             <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+            <li><a href="#">Monto Diario : <strong>S/ '.$elemento->ventas_diarias.'</strong>  <span class="pull-right badge bg-blue">'.$elemento->ventas_diarias_cantidad.' pedidos</span></a></li>
+            <li><a href="#"> Monto Semanal: <strong>S/ '.$elemento->ventas_semanales.'</strong> <span class="pull-right badge bg-aqua">'.$elemento->ventas_semanales_cantidad.' pedidos</span></a></li>
+            <li><a href="#"> Monto Mensual: <strong>S/ '.$elemento->ventas_mensuales.'</strong> <span class="pull-right badge bg-green">'.$elemento->ventas_mensuales_cantidad.' pedidos</span></a></li>
+            <li><a href="#">Monto Anulados: <strong>S/ '.$elemento->ventas_anuladas.'</strong> <span class="pull-right badge bg-red">'.$elemento->ventas_anuladas_cantidad.' pedidos</span></a></li>
+            </ul>
+            </div>
+          </div>
+          <!-- <div class="small-box  ">
             <div class="inner">
               <p>
                 Monto Diario : <strong>S/ '.$elemento->ventas_diarias.'</strong>
@@ -450,7 +440,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <a href="#" class="small-box-footer"
               >'.$elemento->vendedor.' <i class="fa fa-arrow-circle-right"></i
             ></a>
-          </div>
+          </div> -->
         </div>
         '
       ;

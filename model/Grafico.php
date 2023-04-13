@@ -185,7 +185,6 @@ class Grafico
 		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) ) ventas_mensuales,
 		
 		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)) ventas_anuladas
-		
 			";
 		if ($idsucursal != 0) {
 		$sql = "SELECT 
@@ -241,7 +240,49 @@ class Grafico
 			";
 
 		}
+
+	
+
 		}
+		if($idsucursal==0 && in_array($idempleado,[12, 14, 15, 16, 18, 20 , 19])){
+			$sql = "SELECT 
+			(SELECT  IFNULL(SUM(venta.total),0) 
+			FROM venta
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			AND empleado.idempleado=$idempleado)   ventas_diarias,
+			
+			(SELECT IFNULL(SUM(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			AND empleado.idempleado=$idempleado) ventas_semanales,
+			
+			(SELECT IFNULL(SUM(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND empleado.idempleado=$idempleado) ventas_mensuales,
+			
+			(SELECT IFNULL(SUM(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado 
+			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND empleado.idempleado=$idempleado) ventas_anuladas
+				";
+
+				
+				
+		}
+
 		global $conexion;
 
 
@@ -292,6 +333,17 @@ class Grafico
 			AND empleado.idempleado=$idempleado
 			)
 			 ventas_diarias,
+			 (
+			SELECT  IFNULL(count(venta.total),0) 
+			FROM venta
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			AND empleado.idempleado=$idempleado
+			)
+			 ventas_diarias_cantidad,
+
 			(
 			SELECT IFNULL(SUM(venta.total),0) 
 			FROM venta 
@@ -302,6 +354,16 @@ class Grafico
 			AND empleado.idempleado=$idempleado
 			) ventas_semanales,
 			(
+			SELECT IFNULL(count(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			AND empleado.idempleado=$idempleado
+			) ventas_semanales_cantidad,
+
+			(
 			SELECT IFNULL(SUM(venta.total),0) 
 			FROM venta 
 			join pedido on venta.idpedido=pedido.idpedido 
@@ -311,6 +373,16 @@ class Grafico
 			AND empleado.idempleado=$idempleado
 			) ventas_mensuales,
 			(
+			SELECT IFNULL(count(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado
+			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND empleado.idempleado=$idempleado
+			) ventas_mensuales_cantidad,
+
+			(
 			SELECT IFNULL(SUM(venta.total),0) 
 			FROM venta 
 			join pedido on venta.idpedido=pedido.idpedido 
@@ -319,11 +391,23 @@ class Grafico
 			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
 			AND empleado.idempleado=$idempleado
 			) ventas_anuladas,
-			(SELECT CONCAT(nombre,' ',apellidos) FROM empleado WHERE idempleado=$idempleado) vendedor
-			";
+			(
+			SELECT IFNULL(count(venta.total),0) 
+			FROM venta 
+			join pedido on venta.idpedido=pedido.idpedido 
+			JOIN usuario ON usuario.idusuario=pedido.idusuario
+			join empleado ON empleado.idempleado=usuario.idempleado 
+			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND empleado.idempleado=$idempleado
+			) ventas_anuladas_cantidad,
+
+			(SELECT CONCAT(nombre,' ',apellidos) FROM empleado WHERE idempleado=$idempleado) vendedor,
+
+			(SELECT foto FROM empleado WHERE idempleado=$idempleado) foto
+			;";
 			$query = $conexion->query($sql);
 
-
+			// echo $sql;
 			$array[] = $query->fetch_object();
 
 		}
