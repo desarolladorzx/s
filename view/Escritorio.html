@@ -6,7 +6,7 @@
         <small>Compras, Ventas y Creditos</small>
       </h3>
     </div>
-    <div class="col-lg-6">
+    <!-- <div class="col-lg-6">
       <label for="inputMarca">Sucursal </label>
       <select
         id="idSucursalFormulario"
@@ -17,7 +17,7 @@
         <option value="1">Arequipa</option>
         <option value="2">Lima</option>
       </select>
-    </div>
+    </div> -->
   </div>
 </section>
 <?php
@@ -122,7 +122,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                  '.$ventas_diarias.'
             
                 <!-- <?php echo .$ventas_diarias.;?> -->
-                <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
+                <sup style="font-size: 20px"> '.$moneda.' </sup>
               </h3>
               <p>Total de Compras Diarias</p>
             </div>
@@ -140,7 +140,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <div class="inner">
               <h3>
                 '.$ventas_semanales.'
-                <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
+                <sup style="font-size: 20px"> '.$moneda.' </sup>
               </h3>
               <p>Total de Compras Semanales</p>
             </div>
@@ -159,7 +159,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <div class="inner">
               <h3>
                 '.$ventas_mensuales.'
-                <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
+                <sup style="font-size: 20px"> '.$moneda.' </sup>
               </h3>
               <p>Total de Ventas Mensuales</p>
             </div>
@@ -178,7 +178,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <div class="inner">
               <h3>
                 '.$ventas_anuladas.'
-                <sup style="font-size: 20px"> <?php echo $moneda;?></sup>
+                <sup style="font-size: 20px"> '.$moneda.' </sup>
               </h3>
               <p>Total de Ventas Anuladas en el Mes</p>
             </div>
