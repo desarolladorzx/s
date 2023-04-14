@@ -4,6 +4,8 @@
 	$objGlobal = new Configuracion();
 	switch ($_GET["op"]) {
 
+
+
 		case 'SaveOrUpdate':			
 			$empresa = $_POST["txtEmpresa"]; // Llamamos al input txtNombre
 			$nombre_impuesto = $_POST["txtNombre_Impuesto"];
