@@ -2,10 +2,52 @@
 
 require "Conexion.php";
 class Grafico
+	
 {
 
 	public function __construct()
 	{
+	}
+	public function TraerVentasUltimosAños()
+	{
+		global $conexion;
+
+		$sql="SELECT DISTINCT YEAR(fecha) year  FROM venta;";
+
+		$query = $conexion->query($sql);
+
+
+		$reg = $query->fetch_all();
+		
+
+		$super=array();
+		foreach($reg as $row){
+			$sql="SELECT meses.mes, $row[0] AS año, IFNULL(SUM(venta.total), 0) AS total_venta
+			FROM (
+				SELECT 1 AS mes UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
+				UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12
+			) AS meses
+			LEFT JOIN venta ON MONTH(venta.fecha) = meses.mes AND venta.estado = 'A' AND YEAR(venta.fecha) = $row[0]
+			GROUP BY meses.mes
+			ORDER BY meses.mes
+			";
+
+			
+			$queryMeses = $conexion->query($sql);
+
+			$nuevo = array();
+			
+			while($reg = $queryMeses->fetch_object()){
+				
+				$nuevo[] = $reg;
+
+			}
+			$super[] = $nuevo;
+			// echo  json_encode($nuevo);
+
+		}
+
+		return $super; 
 	}
 
 	public function ComprasMesSucursal($idsucursal)
