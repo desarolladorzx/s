@@ -106,8 +106,8 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
     <div class="box">
       <div class="box-header with-border">
         <h3>
-          Totales
-          <small>Compras, Ventas y Creditos</small>
+          Ventas
+          <small>General y por Sucursales</small>
         </h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse">
@@ -120,7 +120,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
       </div>
       <div class="row box-body">
         <div class="col-lg-12 col-xs-12">
-            <h4>Ventas Globales</h4>
+            <h4>Ventas General</h4>
         </div>
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-aqua ">
@@ -129,7 +129,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 <sup style="font-size: 16px">'.$moneda.'</sup>
                  '.$ventas_diarias.'
               </h4>
-              <p>Total de Compras Diarias</p>
+              <p>Total de Venta del Dia</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -146,13 +146,13 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_semanales.'
               </h4>
-              <p>Total de Compras Semanales</p>
+              <p>Total de Venta Semanal</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Semanales <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -169,7 +169,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Mensuales <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -186,7 +186,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-ban-circle"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Anuladas en el Me <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -205,7 +205,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 '.$ventas_diarias1.'
             
               </h4>
-              <p>Total de Compras Diarias</p>
+              <p>Total de Ventas Diarias</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -226,13 +226,13 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 '.$ventas_semanales1.'
 
               </h4>
-              <p>Total de Compras Semanales</p>
+              <p>Total de Ventas Semanales</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Semanales<i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -252,7 +252,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Mensuales <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -272,7 +272,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-ban-circle"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Anuladas en el Me <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -289,7 +289,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_diarias2.'
               </h4>
-              <p>Total de Compras Diarias</p>
+              <p>Total de Ventas Diarias</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -308,13 +308,13 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
                 <sup style="font-size: 16px">'.$moneda.'</sup>
                 '.$ventas_semanales2. '
               </h4>
-              <p>Total de Compras Semanales</p>
+              <p>Total de Ventas Semanales</p>
             </div>
             <div class="icon">
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Semanales <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -334,7 +334,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-calendar"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Mensuales <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -354,7 +354,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <i class="glyphicon glyphicon-ban-circle"></i>
             </div>
             <a href="ComprasFechas.php" class="small-box-footer"
-              >Ventas del dia <i class="fa fa-arrow-circle-right"></i
+              >Ventas Anuladas en el Me <i class="fa fa-arrow-circle-right"></i
             ></a>
           </div>
         </div>
@@ -373,7 +373,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
   echo '
   <div class="box">
     <div class="box-header with-border">
-      <h4>Ventas diarias por cuentas</h4>
+      <h4>Ventas por Ejecutivos de Ventas</h4>
       <div class="box-tools pull-right">
         <button class="btn btn-box-tool" data-widget="collapse">
           <i class="fa fa-minus"></i>
