@@ -10,23 +10,10 @@ function init() {
 
   $('#idbtnRegistar').prop('disabled', true);
 
-  $('#idbtnRegistar').click((e)=>{
-    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
-    $('#idbtnRegistar').prop('disabled', true);
-
-    setTimeout(function() {
-      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
-      $('#idbtnRegistar').prop('disabled', false);
-
-    },3000)
-  });
 
   $('#cboTipoComprobante').change(
     function(){
-
       $('#idbtnRegistar').prop('disabled', false);
-
-
     }
   )
 
@@ -221,6 +208,19 @@ function init() {
 
   function GuardarPedido(e) {
     e.preventDefault();
+
+
+    
+
+    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
+    $('#idbtnRegistar').prop('disabled', true);
+
+    setTimeout(function() {
+      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
+      $('#idbtnRegistar').prop('disabled', false);
+
+    },3000)
+
 
     if ($("#txtIdCliente").val() != "") {
       if (elementos.length > 0) {
