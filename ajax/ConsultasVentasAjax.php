@@ -17,15 +17,12 @@ switch ($_GET["op"]) {
           $ejecutivo_comercial = $_REQUEST["ejecutivo_comercial"];
           $antiguedad_cliente = $_REQUEST["antiguedad_cliente"];
           $tipo_cliente = $_REQUEST["tipo_cliente"];
-
           $ejecutivo_comercial = '';
           $antiguedad_cliente = '';
           $tipo_cliente = '';
-
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];
-
           $data = array();
           $query_Tipo = $objCategoria->ListarVentasFechas( $fecha_desde, $fecha_hasta, $ejecutivo_comercial, $antiguedad_cliente, $tipo_cliente);
           while ($reg = $query_Tipo->fetch_object()) {
@@ -71,10 +68,10 @@ switch ($_GET["op"]) {
      case "listVentasDetalladas":
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
-          $idsucursal = $_REQUEST["idsucursal"];
+        
           $data = array();
           $query_Tipo = $objCategoria->ListarVentasDetalladas( $fecha_desde, $fecha_hasta);
-
+           
           while ($reg = $query_Tipo->fetch_object()) {
 
                $data[] = array(
@@ -106,8 +103,10 @@ switch ($_GET["op"]) {
                     "23" => $reg->banco_abono,
                );
           }
+
+          // print_r($data);
           $results = array(
-               "sEcho" => 1,
+               // "sEcho" => 0,
                "iTotalRecords" => count($data),
                "iTotalDisplayRecords" => count($data),
                "aaData" => $data

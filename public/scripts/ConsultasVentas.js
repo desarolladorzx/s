@@ -127,8 +127,6 @@ function ListadoVentasFechas() {
     var antiguedad_cliente = $("#cboAntiguedadCliente").val();
     var tipo_cliente = $("#cboTipo_Cliente").val();
 
-    
-  
     var tabla = $("#tblVentaFechas")
       .dataTable({
         aProcessing: true,
@@ -139,7 +137,7 @@ function ListadoVentasFechas() {
           extend: "excelHtml5",
           text: "Excel",
           exportOptions: {
-                 columns: [1,2,3,4,5,6,7,8,9,10,11,12]
+                 columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
           }
           }
           
@@ -234,7 +232,7 @@ function ListadoVentasDetalladas() {
           data: {
             fecha_desde: fecha_desde,
             fecha_hasta: fecha_hasta,
-            idsucursal: 1 - 2,
+        
           },
           error: function (e) {
             console.log(e.responseText);
