@@ -132,6 +132,9 @@ function ListadoVentasFechas() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
+
+        "order": [[1, "desc"]],
+
         buttons: ["copyHtml5",
         {
           extend: "excelHtml5",
@@ -197,6 +200,7 @@ function ListadoVentasDetalladas() {
       .dataTable({
         aProcessing: true,
         aServerSide: true,
+        "order": [[1, "desc"]],
         dom: "Bfrtip",
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         aoColumns: [
