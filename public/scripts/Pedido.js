@@ -8,6 +8,27 @@ var email = "";
 
 function init() {
 
+  $('#idbtnRegistar').prop('disabled', true);
+
+  $('#idbtnRegistar').click((e)=>{
+    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
+    $('#idbtnRegistar').prop('disabled', true);
+
+    setTimeout(function() {
+      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
+      $('#idbtnRegistar').prop('disabled', false);
+
+    },3000)
+  });
+
+  $('#cboTipoComprobante').change(
+    function(){
+
+      $('#idbtnRegistar').prop('disabled', false);
+
+
+    }
+  )
 
   var total = 0.0;
   //GetNextNumero();
