@@ -524,6 +524,8 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
               <canvas id="lineChart" style="height: 250px"></canvas>
             </div>
           </div>
+
+
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -570,10 +572,54 @@ $query_ProductosVendidosAno =
 $obj->ProductosVendidosAno($_SESSION["idsucursal"]);
 $query_ProductosVendidosAno2 =
 $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
-<script src="public/js/Chart.js"></script>
+<!-- <script src="public/js/Chart.js"></script> -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
 <script>
+  
   $(function () {
+
+   
+  var ctx = $("#myChart").get(0).getContext("2d");
+  var data = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  datasets: [{
+    label: '# of Votes',
+    data: [12, 19, 3, 5, 2, 3],
+    borderWidth: 1,
+    backgroundColor: ['#CB4335', '#1F618D', '#F1C40F', '#27AE60', '#884EA0', '#D35400'],
+  }]
+  };
+  function handleHover(evt, item, legend) {
+  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
+  });
+  legend.chart.update();
+}
+function handleLeave(evt, item, legend) {
+  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+    colors[index] = color.length === 9 ? color.slice(0, -2) : color;
+  });
+  legend.chart.update();
+}
+
+
+  var myBarChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+    options: {
+     plugins: {
+      legend: {
+        onHover: handleHover,
+        onLeave: handleLeave
+      }
+    }
+  }
+  })
+
+
+
   /* ChartJS
    * -------
    * Here we will create a few charts using ChartJS
