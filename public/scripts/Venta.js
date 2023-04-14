@@ -40,7 +40,6 @@ function init() {
 
     }).then(function (data) {
       VerNumSerie()
-
     });
   }
 
@@ -159,7 +158,8 @@ function init() {
                   ListadoVenta();
                   ListadoPedidos();
                   LimpiarPedido();
-  
+                  VerNumSerie()
+                  
                   bootbox.prompt({
                     title:
                       "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
