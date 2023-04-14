@@ -51,10 +51,6 @@
 							LEFT JOIN distrito ON distrito.iddistrito=pe.direccion_distrito
 							left JOIN provincia ON provincia.idprovincia=pe.direccion_provincia
 							left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
-
-
-
-
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.estado='A'
 				AND 
 				CASE
@@ -73,7 +69,7 @@
 				WHEN LENGTH('$antiguedad_cliente')>0 THEN  pe.numero_cuenta='$antiguedad_cliente'
 				else v.idventa
 				end
-				order by v.fecha desc";
+				order by v.idventa asc";
 				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
@@ -116,8 +112,9 @@
 
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
 				 and v.estado='A'
-				order by v.num_comprobante desc
+				order by v.fecha asc
 				";
+				// echo $sql;
 			
 			$query = $conexion->query($sql);
 			return $query;
