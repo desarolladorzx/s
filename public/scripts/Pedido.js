@@ -8,6 +8,14 @@ var email = "";
 
 function init() {
 
+  // $('#idbtnRegistar').prop('disabled', true);
+
+
+  $('#cboTipoComprobante').change(
+    function(){
+      $('#idbtnRegistar').prop('disabled', false);
+    }
+  )
 
   var total = 0.0;
   //GetNextNumero();
@@ -200,6 +208,10 @@ function init() {
 
   function GuardarPedido(e) {
     e.preventDefault();
+
+
+ 
+
 
     if ($("#txtIdCliente").val() != "") {
       if (elementos.length > 0) {
@@ -458,7 +470,7 @@ function init() {
     $("#txtIdCliente").val("");
     $("#cboTipoPedido").val("Pedido");
     $("#txtNumeroPed").val("");
-    $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+    // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
     $("#cboMetodoPago").val("");
     $("#cboAgenEnvio").val("");
     $("#cboTipoPromocion").val("");

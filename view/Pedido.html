@@ -496,6 +496,7 @@
                 >
                 <div class="form-group has-success">
                   <select
+                  disabled
                     id="cboTipoComprobante"
                     name="cboTipoComprobante"
                     class="form-control"
@@ -506,6 +507,7 @@
                 <label for="inputMarca">Serie/Folio:</label>
                 <div class="form-group has-success">
                   <input
+                  
                     id="txtIdTipoDoc"
                     type="hidden"
                     maxlength="50"
@@ -516,6 +518,8 @@
                     placeholder=""
                   />
                   <input
+                  disabled
+                  
                     id="txtSerieVent"
                     type="text"
                     maxlength="50"
@@ -531,6 +535,7 @@
                 <label for="inputInscripcion">Numero</label>
                 <div class="form-group has-success">
                   <input
+                  disabled
                     id="txtNumeroVent"
                     type="text"
                     class="form-control"
@@ -540,36 +545,6 @@
                   />
                 </div>
               </div>
-
-              <!-- <div class="col-lg-12 left">
-                                <div class="row">
-                                    <div class="col-lg-3 left">
-                                        <div class="form-group has-success">
-                                            <label>Asesor :</label>
-                                            <input id="txtEjecutivo" type="text" name="txtEjecutivo" class="form-control" readonly="readonly"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 left">
-                                        <div class="form-group has-success">
-                                            <label>Fecha y Hora de registro :</label>
-                                            <input id="txtClienteFech" type="text" name="txtClienteFech" class="form-control" readonly="readonly"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 left">
-                                        <div class="form-group has-success">
-                                            <label>Nuevo o Antiguo :</label>
-                                            <input id="txtNuevo_Antiguo" type="text" name="txtNuevo_Antiguo" class="form-control" readonly="readonly"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 left">
-                                        <div class="form-group has-warning">
-                                            <label>Tipo de Cliente:</label>
-                                            <input id="txtTipoCliente" type="text" name="txtTipoCliente" class="form-control" readonly="readonly"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
               <div class="col-lg-12 left">
                 <div class="row">
                   <div class="col-lg-3 left">
@@ -638,7 +613,6 @@
                   </select>
                 </div>
               </div>
-
               <div class="col-lg-2 left">
                 <label for="inputMarca">Tipo de Entrega:</label>
                 <div class="form-group has-success">
@@ -655,14 +629,6 @@
                   </select>
                 </div>
               </div>
-
-              <!-- <div class="col-lg-3 left">
-                                <div class="form-group has-success">
-                                    <label>Género (*):</label>
-                                    <input id="txtNombre" type="text" maxlength="40" name="txtNombre" class="form-control" autofocus="" />
-                                </div>
-                            </div> -->
-
               <div class="col-lg-12 left">
                 <div class="row">
                   <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
@@ -765,7 +731,8 @@
               </div>
 
               <div class="col-lg-12 left">
-                <button class="btn btn-success" type="submit">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <button class="btn btn-success buttonload" type="submit" id="idbtnRegistar">
                   <i class="fa fa-floppy-o"></i>Registrar
                 </button>
                 <a href="Pedido.php" class="btn btn-primary"
@@ -937,7 +904,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-default">
               Cancelar
             </button>
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Registrar </button>
           </div>
         </form>
       </div>

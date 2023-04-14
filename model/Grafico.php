@@ -178,23 +178,26 @@ class Grafico
 	public function VentasTotales($idsucursal,$idempleado)
 	{
 		$sql = "SELECT 
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE)   ventas_diarias,
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE AND year(venta.fecha)=year(CURRENT_DATE) )   ventas_diarias,
 		
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE)) ventas_semanales,
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE) ) ventas_semanales,
 		
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) ) ventas_mensuales,
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE) ) ventas_mensuales,
 		
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)) ventas_anuladas
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE) ) ventas_anuladas
 			";
 		if ($idsucursal != 0) {
 		$sql = "SELECT 
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  and pedido.idsucursal='$idsucursal'  )   ventas_diarias,
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE
+		AND year(venta.fecha)=year(CURRENT_DATE) 
+		  and pedido.idsucursal='$idsucursal' )   ventas_diarias,
 		
-		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) and pedido.idsucursal='$idsucursal' ) ventas_semanales,
+		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE)  and pedido.idsucursal='$idsucursal' ) ventas_semanales,
 		
-		(SELECT IFNULL(SUM(venta.total),0) FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) and pedido.idsucursal='$idsucursal') ventas_mensuales,
+		(SELECT IFNULL(SUM(venta.total),0) FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE)  and pedido.idsucursal='$idsucursal') ventas_mensuales,
 		
-		(SELECT SUM(venta.total) FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) and pedido.idsucursal='$idsucursal') ventas_anuladas
+		(SELECT SUM(venta.total) FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)  
+		AND year(venta.fecha)=year(CURRENT_DATE) and pedido.idsucursal='$idsucursal') ventas_anuladas
 		";
 
 		if($idempleado==12 || $idempleado==14 ||$idempleado==15 ||$idempleado==16 ||$idempleado==18 ||$idempleado==20  ||$idempleado==19 ){
@@ -205,7 +208,9 @@ class Grafico
 			join pedido on venta.idpedido=pedido.idpedido 
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
-			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado and pedido.idsucursal='$idsucursal'
 			)
 			 ventas_diarias,
@@ -216,6 +221,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado and pedido.idsucursal='$idsucursal'
 			) ventas_semanales,
 			(
@@ -225,6 +232,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado and pedido.idsucursal='$idsucursal'
 			) ventas_mensuales,
 			(
@@ -234,6 +243,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado 
 			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado and pedido.idsucursal='$idsucursal'
 			) ventas_anuladas,
 			(SELECT CONCAT(nombre,' ',apellidos) FROM empleado WHERE idempleado=$idempleado) vendedor
@@ -252,6 +263,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado)   ventas_diarias,
 			
 			(SELECT IFNULL(SUM(venta.total),0) 
@@ -259,7 +272,9 @@ class Grafico
 			join pedido on venta.idpedido=pedido.idpedido 
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
-			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE)
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado) ventas_semanales,
 			
 			(SELECT IFNULL(SUM(venta.total),0) 
@@ -268,6 +283,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado) ventas_mensuales,
 			
 			(SELECT IFNULL(SUM(venta.total),0) 
@@ -276,6 +293,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado 
 			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado) ventas_anuladas
 				";
 
@@ -330,6 +349,9 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			)
 			 ventas_diarias,
@@ -340,6 +362,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE  
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			)
 			 ventas_diarias_cantidad,
@@ -351,6 +375,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			) ventas_semanales,
 			(
@@ -360,6 +386,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND WEEK(venta.fecha)=WEEK(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			) ventas_semanales_cantidad,
 
@@ -370,6 +398,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			) ventas_mensuales,
 			(
@@ -379,6 +409,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado
 			WHERE venta.estado='A' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE)
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			) ventas_mensuales_cantidad,
 
@@ -389,6 +421,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado 
 			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+
 			AND empleado.idempleado=$idempleado
 			) ventas_anuladas,
 			(
@@ -398,6 +432,8 @@ class Grafico
 			JOIN usuario ON usuario.idusuario=pedido.idusuario
 			join empleado ON empleado.idempleado=usuario.idempleado 
 			WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) 
+			AND year(venta.fecha)=year(CURRENT_DATE) 
+			
 			AND empleado.idempleado=$idempleado
 			) ventas_anuladas_cantidad,
 

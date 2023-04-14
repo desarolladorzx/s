@@ -37,6 +37,10 @@ function init() {
   function ComboTipo_Documento() {
     $.get("./ajax/PedidoAjax.php?op=listTipoDoc", function (r) {
       $("#cboTipoComprobante").html(r);
+
+    }).then(function (data) {
+      VerNumSerie()
+
     });
   }
 
@@ -67,6 +71,20 @@ function init() {
   */
 
   function SaveOrUpdate(e) {
+
+
+    console.log('loaderActivado')
+
+    $('#idbtnRegistar').prop('disabled', true);
+    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
+
+    setTimeout(function() {
+      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
+      $('#idbtnRegistar').prop('disabled', false);
+
+    },3000)
+
+
     e.preventDefault(); // para que no se recargue la pagina
     if ($("#txtSerieVent").val() != "" && $("#txtNumeroVent").val() != "") {
       //alert($("#txtIdPedido").val())
@@ -249,7 +267,6 @@ function init() {
       $("#cboTipoDocumentoSN").html(r);
     });
   }
-
   function VerNumSerie() {
     var nombre = $("#cboTipoComprobante").val();
     var idsucursal = $("#txtIdSucursal").val();
@@ -302,7 +319,7 @@ function init() {
     $("#txtNumeroPed").val("");
     elementos.length = 0;
     $("#tblDetallePedido tbody").html("");
-    $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+    // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
     $("#txtSerieVent").val("");
     $("#txtNumeroVent").val("");
     GetNextNumero();

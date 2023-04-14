@@ -498,7 +498,9 @@ order by idpersona DESC ;";
 		global $conexion;
 		$sql = "SELECT dds.*, td.nombre
 			from detalle_documento_sucursal dds inner join tipo_documento td on dds.idtipo_documento = td.idtipo_documento
-			where dds.idsucursal = $idsucursal and operacion = 'Comprobante'";
+			where dds.idsucursal = $idsucursal and operacion = 'Comprobante'
+			AND( iddetalle_documento_sucursal=5 or iddetalle_documento_sucursal=9 )
+			";
 		$query = $conexion->query($sql);
 		return $query;
 	}
