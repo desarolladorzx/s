@@ -8,7 +8,7 @@ var email = "";
 
 function init() {
 
-  $('#idbtnRegistar').prop('disabled', true);
+  // $('#idbtnRegistar').prop('disabled', true);
 
 
   $('#cboTipoComprobante').change(
@@ -470,7 +470,7 @@ function init() {
     $("#txtIdCliente").val("");
     $("#cboTipoPedido").val("Pedido");
     $("#txtNumeroPed").val("");
-    $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+    // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
     $("#cboMetodoPago").val("");
     $("#cboAgenEnvio").val("");
     $("#cboTipoPromocion").val("");

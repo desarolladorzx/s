@@ -37,6 +37,10 @@ function init() {
   function ComboTipo_Documento() {
     $.get("./ajax/PedidoAjax.php?op=listTipoDoc", function (r) {
       $("#cboTipoComprobante").html(r);
+
+    }).then(function (data) {
+      VerNumSerie()
+
     });
   }
 
@@ -80,7 +84,7 @@ function init() {
 
     },3000)
 
-    
+
     e.preventDefault(); // para que no se recargue la pagina
     if ($("#txtSerieVent").val() != "" && $("#txtNumeroVent").val() != "") {
       //alert($("#txtIdPedido").val())
@@ -263,7 +267,6 @@ function init() {
       $("#cboTipoDocumentoSN").html(r);
     });
   }
-
   function VerNumSerie() {
     var nombre = $("#cboTipoComprobante").val();
     var idsucursal = $("#txtIdSucursal").val();
@@ -316,7 +319,7 @@ function init() {
     $("#txtNumeroPed").val("");
     elementos.length = 0;
     $("#tblDetallePedido tbody").html("");
-    $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+    // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
     $("#txtSerieVent").val("");
     $("#txtNumeroVent").val("");
     GetNextNumero();

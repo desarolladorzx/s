@@ -484,7 +484,7 @@ switch ($_GET["op"]) {
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_Categoria = $objPedido->ListarTipoDocumento($_SESSION["idsucursal"]);
-        echo "<option>--Seleccione Comprobante--</option>";
+        // echo "<option>--Seleccione Comprobante--</option>";
         while ($reg = $query_Categoria->fetch_object()) {
             echo '<option value=' . $reg->nombre . '>' . $reg->nombre . '</option>';
         }
