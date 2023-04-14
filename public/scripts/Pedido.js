@@ -210,16 +210,7 @@ function init() {
     e.preventDefault();
 
 
-    
-
-    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
-    $('#idbtnRegistar').prop('disabled', true);
-
-    setTimeout(function() {
-      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
-      $('#idbtnRegistar').prop('disabled', false);
-
-    },3000)
+ 
 
 
     if ($("#txtIdCliente").val() != "") {
