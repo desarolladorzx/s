@@ -183,14 +183,19 @@
                 <li class="" style="padding:5px; display: flex;justify-content: space-between;">
                  
                   
-                
+                <?php
+                if($_SESSION["idempleado"]!=7){
+                  echo '<button class="btn btn-primary" onclick="NuevoAcceder(1,`Arequipa - AREQUIPA - AREQUIPA`)">
+                    Arequipa
+                  </button>
+                  <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,`Lima - LIMA - LIMA`)">
+                    Lima
+                  </button>';
+
+                }
+                ?>
                  
-                    <button class="btn btn-primary" onclick="NuevoAcceder(1,'Arequipa - AREQUIPA - AREQUIPA')">
-                      Arequipa
-                    </button>
-                    <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,'Lima - LIMA - LIMA')">
-                      Lima
-                    </button>
+                    
 
                 
                 </li>

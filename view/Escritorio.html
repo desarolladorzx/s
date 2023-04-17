@@ -101,7 +101,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 
 <section class="content">
   <?php 
-  // if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+  // if(in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
     echo '
     <div class="box">
       <div class="box-header with-border">
@@ -368,7 +368,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
  
 
 <?php 
-  if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+  if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
     
   echo '
   <div class="box">
@@ -431,7 +431,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 <?php 
 $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 
-if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
     
   
   echo '
