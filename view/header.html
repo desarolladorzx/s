@@ -733,6 +733,8 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
   function notificacionEspera() {
     let idEmpleado = Number(idempleado);
 
+ 
+
     if ([17, 6, 11].includes(idEmpleado)) {
       Notification.requestPermission().then((resultado) => {
         var ultimoPedido;
@@ -744,6 +746,11 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
           type: "GET",
 
           success: function (data) {
+
+            setTimeout(() => {
+              notificacionEspera();
+            }, 70000);
+
            
             let pedidosPendientes = JSON.parse(data);
 
