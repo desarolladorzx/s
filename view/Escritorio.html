@@ -460,7 +460,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
    
       <div class="col-md-12">
       
-        <!-- <div class="box box-info">
+        <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title" style="font-size: 17px">
               Ventas Mensuales
@@ -478,7 +478,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <div class="chart">
               <canvas id="VentasMensuales" style="height: 250px"></canvas>
             </div>
-          </div> -->
+          </div>
 
 
          
@@ -547,7 +547,7 @@ $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
       let dataset=[]
 
       response.map((e,key)=>{
-        console.log(key)
+       
 
         var color=''
           var borderColor=''
@@ -579,7 +579,7 @@ $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
         })
 
         e.map((meses)=>{
-            console.log(meses)
+            
             
             dataset.map(value=>{
               if(meses.año==value.año){
@@ -620,55 +620,66 @@ $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
 
 
 $.ajax({
-    url: "./ajax/GraficoAjax.php?op=traerVentasAños",
+    url: "./ajax/GraficoAjax.php?op=VentasDelMesPorUsuario",
     dataType: "json",
     method:'get',
+    error: function (response) {
+      console.log(response.responseText)
+    },
     success: function (response) {
 
+      console.log(response)
+
+      let labelsGrafica=[]
+
       let dataset=[]
+      response[0].data.map((e)=>{
+        labelsGrafica.push(e.fecha)
+      })
         
         response.map((e,key)=>{
-          console.log(key)
-
           var color=''
           var borderColor=''
-            if(e[0].año=='2019'){
+            if(key==1){
                color='rgba(255, 99, 132, 1)'
-               borderColor='rgba(255, 99, 132, 0.87)'
-            }else if(e[0].año=='2020'){
+               borderColor='rgba(255, 99, 132, 0)'
+            }else if(key==2){
                color= 'rgba(54, 162, 235, 1)'
-               borderColor= 'rgba(54, 162, 235, 0.87)'
-            }else if(e[0].año=='2021'){
+               borderColor= 'rgba(54, 162, 235, 0)'
+            }else if(key==3){
                color='rgba(75, 192, 192, 1)'
-               borderColor='rgba(75, 192, 192, 0.87)'
-            }else if(e[0].año=='2022'){
+               borderColor='rgba(75, 192, 192, 0)'
+            }else if(key==4){
                color= 'rgba(153, 102, 255, 1)'
-               borderColor= 'rgba(153, 102, 255, 0.87)'
-            }else if(e[0].año=='2023'){
+               borderColor= 'rgba(153, 102, 255, 0)'
+            }else if(key==5){
                color= 'rgba(255, 206, 86, 1)'
-               borderColor= 'rgba(255, 206, 86, 0.87)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }else if(key==0){
+               color= 'rgba(255, 100, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
             }
+          let elementos=[]
+          e.data.map((value)=>{
+          
+            elementos.push(value.ventas_totales)
+           
+          })
+
+          
           dataset.push({
             borderWidth: 1,
-            año:`${e[0].año}`,
-            label:`Ventas ${e[0].año}`,
-            data:[],
+         
+            label:`${e.nombre}`,
+            data:elementos,
+            usuario:e.nombre,
             backgroundColor:borderColor,
             borderColor: color,
               borderWidth: 2,
               pointRadius: 3,
           })
 
-          e.map((meses)=>{
-              console.log(meses)
-              
-              dataset.map(value=>{
-                if(meses.año==value.año){
-                    
-                    value.data.push(meses.total_venta)
-                }
-              })
-            })
+          
 
         })
       console.log(dataset)
@@ -677,19 +688,28 @@ $.ajax({
       var ctx = $("#VentasMensuales").get(0).getContext("2d");
 // Crear un nuevo gráfico de barras
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      labels:labelsGrafica,
+
         datasets: dataset
             
     },
     options: {
-        scales: {
-            y: {
+    
+    scales: {
+        yAxes: [{
+            ticks: {
                 beginAtZero: true
             }
+        }]
+    },
+    elements: {
+        line: {
+            tension: 0
         }
     }
+  }
 });
     }})
 

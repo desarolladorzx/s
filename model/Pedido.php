@@ -535,7 +535,7 @@ order by idpersona DESC ;";
 	public function GetVenta($idpedido)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.apellidos,' ',e.nombre) as empleado,concat(emp_anu.apellidos,' ',emp_anu.nombre) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
+		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(emp_anu.nombre,' ',emp_anu.apellidos) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
 		
 		,distrito.descripcion distrito,provincia.descripcion provincia ,departamento.descripcion departamento
 		
