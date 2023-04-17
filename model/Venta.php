@@ -3,7 +3,20 @@ require "Conexion.php";
 
 class Venta
 {	
-	
+	public function VerificarStockMinimo($idpedido){
+		global $conexion;
+		$sql=
+		"SELECT stock_min , detalle_ingreso.* ,sum(detalle_ingreso.stock_actual) stock_actual_total,articulo.* ,categoria.nombre marca_nombre  FROM detalle_pedido 
+		JOIN detalle_ingreso ON detalle_ingreso.iddetalle_ingreso=detalle_pedido.iddetalle_ingreso
+		JOIN articulo ON articulo.idarticulo=detalle_ingreso.idarticulo
+		JOIN categoria ON categoria.idcategoria=articulo.idcategoria
+		WHERE idpedido =$idpedido 
+		GROUP BY detalle_ingreso.idarticulo
+		;
+		;";
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function __construct()
 	{
 	}

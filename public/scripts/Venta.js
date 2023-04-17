@@ -103,7 +103,7 @@ function init() {
         function (r) {
         newDetalle=JSON.parse(r);
    
-
+        
       
         var data = {
           idCliente: $("#hdn_idClientePedido").val(),
@@ -152,7 +152,42 @@ function init() {
   
                 if ($("#cboTipoVenta").val() == "Contado") {
                   swal("Mensaje del Sistema", r, "success");
-  
+
+                  $.get(
+                    "./ajax/VentaAjax.php?op=VerificarStockMinimo",
+                    "idPedido=" + data.idPedido,
+                  function (r) {
+                    var obj= jQuery.parseJSON(r)
+                    console.log(obj);
+                    obj.map(articulo=>{
+                      console.log(articulo.stock_min,articulo.stock_actual_total)
+
+                      // if([7 , 21 , 22 ].includes(idempleado)){
+
+                        if(Number(articulo.stock_min)>=Number(articulo.stock_actual_total)){
+                          console.log('se mostrara la notificacion')
+                          if ((Notification.permission = "grantFd")) {
+                            const notification = new Notification(
+                              "Producto Stock ",
+                              {
+                                icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                                body:`El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`
+                              }
+                              );
+                              notification.onclick = function () {
+                                window.open("https://medicfit.grupopuma.pe/Venta.php");
+                              };
+                            }
+                        // }
+
+                      }
+                    })
+                  
+                   
+
+                  } )
+                  idPedido
+                  
                   $("#btnNuevoPedido").show();
                   OcultarForm();
                   ListadoVenta();

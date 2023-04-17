@@ -8,6 +8,20 @@ $objCliente = new Persona();
 switch ($_GET["op"]) {
 
 
+	case "VerificarStockMinimo":
+		require_once "../model/Pedido.php";
+		// $data = array();
+		
+		$idPedido = $_GET["idPedido"];
+		$query_prov = $objVenta->VerificarStockMinimo($idPedido);
+		$nuevo=array();
+		while($reg=$query_prov->fetch_object()){
+			$nuevo[]=$reg;
+
+		}
+		echo json_encode($nuevo);
+		break;
+
 	case 'GetDetallePedidoSolo':
 		require_once "../model/Pedido.php";
 		// $data = array();
