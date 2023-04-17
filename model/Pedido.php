@@ -734,7 +734,7 @@ ORDER	BY  fecha desc LIMIT 1 ;";
 	{
 		global $conexion;
 		$sql = "SELECT * FROM venta ORDER	BY  fecha DESC LIMIT 1";
-		$sql = "SELECT venta.*,empleado.nombre,empleado.apellidos FROM venta 
+		$sql = "SELECT venta.*,pedido.idsucursal,empleado.nombre,empleado.apellidos FROM venta 
 		JOIN pedido ON pedido.idpedido=venta.idpedido
 		JOIN usuario ON usuario.idusuario=venta.idusuario
 		JOIN empleado ON empleado.idempleado=usuario.idempleado

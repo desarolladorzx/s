@@ -731,7 +731,9 @@ class Grafico
 		inner join pedido p on p.idpedido=dp.idpedido
 		inner join venta v on p.idpedido=v.idpedido
 		where v.estado='A'  AND a.idmarca<>3  and year(v.fecha)=year(curdate())
-		and month(v.fecha)>=MONTH(current_date)
+
+
+and month(v.fecha)>=MONTH(current_date)
 		group by a.nombre
 		order by SUM(v.total) desc
 		limit 10";
