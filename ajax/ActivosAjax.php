@@ -29,7 +29,7 @@ switch ($_GET["op"]) {
 
           
 type="button"
-				onclick="modicarUltimoUsuarioAsignado(`' . $reg->idgestion_activos . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-pencil
+				onclick="modicarUltimoUsuarioAsignado(`' . $reg->idgestion_activos . '`)"  title="Editar Empleado Asignado" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>';
       }
       $data[] = array(
@@ -110,7 +110,7 @@ type="button"
 				&nbsp
 				<button class="btn btn-warning" data-toggle="tooltip" 
 				type="button" 
-				onclick="ModificarDetallesActivosView(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-pencil
+				onclick="ModificarDetallesActivosView(`' . $reg->idactivo . '`)"  title="Editar Activo" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>
         
 
@@ -164,7 +164,7 @@ type="button"
 				&nbsp
 				<button class="btn btn-warning" data-toggle="tooltip" 
 				type="button" 
-				onclick="ModificarDetallesActivosView(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="glyphicon glyphicon-pencil
+				onclick="ModificarDetallesActivosView(`' . $reg->idactivo . '`)"  title="Editar Activo" ><i class="glyphicon glyphicon-pencil
 				"></i> </button>
 				'
       );

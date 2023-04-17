@@ -239,7 +239,7 @@ error_reporting(0); ?>
         <td colspan="3" align="center">+51 962 723 138</td>
       </tr>
       <tr>
-        <td colspan="3" align="center"><b>Recuerde visitar : www.medicfitcen.com</b></td>
+        <td colspan="3" align="center"><b>Recuerde visitar : www.medicfit.pe</b></td>
       </tr>
       <tr>
       <tr>

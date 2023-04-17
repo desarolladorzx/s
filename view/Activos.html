@@ -263,7 +263,7 @@
                         <div class="row" id="container_asignar_activos">
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Empleado (*):</label>
+                              <label>Empleado Asignado (*):</label>
                               <select required class="form-control gestion_activo empleadosList" name="act_idempleado"
                                 id="act_idempleado" placeholder="'empleado"></select>
                             </div>
@@ -279,14 +279,25 @@
                           </div>
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Area / Departamento (*):</label>
-                              <input id="act_area" type="text" maxlength="20" name="act_area" required=""
-                                class="form-control gestion_activo" placeholder="area" autofocus="" />
+                              <label>Area (*):</label>
+                              <select id="act_area" type="text" maxlength="20" name="act_area" required=""
+                                class="form-control gestion_activo" placeholder="area" autofocus="">
+                                <option value=""></option>
+                                <option value="Administracion">Administracion</option>
+                                <option value="Logistica">Logistica</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Ventas">Ventas</option>
+                                <option value="Sistemas">Sistemas</option>
+                                <option value="RRHH">RRHH</option>
+                                <option value="Contabilidad">Contabilidad</option>
+                                <option value="Finanzas">Finanzas</option>
+                              </select>
                             </div>
                           </div>
+
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Fecha Asignacion (*):</label>
+                              <label>Fecha de Asignacion (*):</label>
                               <input id="act_fecha_asignacion" type="date" maxlength="20" name="act_fecha_asignacion"
                                 required="" class="form-control gestion_activo" placeholder="Número de documento"
                                 autofocus="" />
@@ -295,7 +306,7 @@
 
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Ubicación (*):</label>
+                              <label>Ubicación - Sucursal (*):</label>
                               <select class="form-control gestion_activo" name="act_ubicacion" id="act_ubicacion">
                                 <option value=""></option>
                                 <option value="2">LIMA</option>
@@ -305,8 +316,8 @@
                           </div>
                           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                             <div class="form-group">
-                              <label>Adjuntar un Archivo (*):</label>
-                              <input id="act_activo_archivo" type="file" name="act_activo_archivo" required="" multiple
+                              <label>Adjuntar un Archivo:</label>
+                              <input id="act_activo_archivo" type="file" name="act_activo_archivo" multiple
                                 class="form-control gestion_activo" placeholder="Número de documento" autofocus="" />
                             </div>
                           </div>
@@ -350,12 +361,10 @@
                             <tfoot>
                               <tr>
                                 <th>#</th>
-                                <th>Nombre</th>
-
-                                <th>Tipo de activo</th>
-                                <th>Usado por</th>
-                                <th>Departamento</th>
-
+                                <th>Empleado Asignado</th>
+                                <th>Empleado en Uso</th>
+                                <th>Fecha de Asignacion</th>
+                                <th>Estado de Asignacion</th>
                                 <th>Opciones</th>
                               </tr>
                             </tfoot>
@@ -431,7 +440,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
                 <h5></h5>
 
-                <a href="activos.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
+                <a href="Activos.php" class="btn btn-primary"><i class="fa fa-remove"></i> Cancelar</a>
                 <hr />
                 <span class="lead text-primary"></span>
               </div>
