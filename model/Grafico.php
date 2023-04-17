@@ -20,7 +20,7 @@ class Grafico
 		$super=array();
 		foreach ($reg as $idempleado) {
 			$sql="SELECT 
-			concat(MONTHNAME(DATE_RANGE),' ',DATE_FORMAT(DATE_RANGE, '%d'))
+			concat(DATE_FORMAT(DATE_RANGE, '%d'),' ',MONTHNAME(DATE_RANGE))
 			 AS fecha, COALESCE(ventas_totales, 0) AS ventas_totales
 			FROM (
 			   SELECT IFNULL(SUM(venta.total),0) ventas_totales, DATE(venta.fecha) fecha
@@ -28,7 +28,7 @@ class Grafico
 			   JOIN pedido ON venta.idpedido = pedido.idpedido 
 			   JOIN usuario ON usuario.idusuario = pedido.idusuario
 			   JOIN empleado ON empleado.idempleado = usuario.idempleado
-			   WHERE empleado.idempleado = $idempleado[0]
+			   WHERE empleado.idempleado = $idempleado[0] and venta.estado = 'A'
 			   GROUP BY DATE(venta.fecha)
 			) AS fechas_venta 
 			RIGHT JOIN (
@@ -60,7 +60,47 @@ class Grafico
 
 	}
 
+	public function TraerVentasSemanalesUltimosAños(){
+		global $conexion;
+		$sql="SELECT DISTINCT YEAR(fecha) year  FROM venta;";
 
+		$query = $conexion->query($sql);
+
+
+		$reg = $query->fetch_all();
+
+		$super=array();
+		foreach($reg as $row){
+			$sql="SELECT DAYNAME(dias.fecha) AS nombre_dia, dias.fecha, IFNULL(SUM(venta.total), 0) AS total_venta
+			FROM (
+			  SELECT '$row[0]-01-01' + INTERVAL ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1 DAY AS fecha
+			  FROM information_schema.columns
+			  LIMIT 366 -- número máximo de días en un año
+			) AS dias
+			LEFT JOIN venta ON date(venta.fecha) = dias.fecha AND venta.estado = 'A' AND YEAR(venta.fecha) = $row[0] 
+			  AND (WEEK(venta.fecha, 1) = week(current_date) OR venta.fecha IS NULL)
+			
+			GROUP BY nombre_dia
+			ORDER BY FIELD(nombre_dia, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			";
+
+			
+			$queryMeses = $conexion->query($sql);
+
+			$nuevo = array();
+			
+			while($reg = $queryMeses->fetch_object()){
+				$nuevo['año']=$row[0];
+				$nuevo['data'][] = $reg;
+
+			}
+			$super[] = $nuevo;
+			// echo  json_encode($nuevo);
+
+		}
+		return $super; 
+
+	}
 	public function TraerVentasUltimosAños()
 	{
 		global $conexion;
@@ -667,19 +707,41 @@ class Grafico
 
 		global $conexion;
 		$sql = "SELECT a.nombre as articulo,sum(dp.cantidad) as cantidad
-			from articulo a inner join detalle_ingreso di
-			on a.idarticulo=di.idarticulo
-			inner join detalle_pedido dp on dp.iddetalle_ingreso=di.iddetalle_ingreso
-			inner join pedido p on p.idpedido=dp.idpedido
-			inner join venta v on p.idpedido=v.idpedido
-			where v.estado='A' and year(v.fecha)=year(curdate())
-			and date(v.fecha)>='2021-06-01' and date(v.fecha)<='2022-07-01'
-			group by a.nombre
-			order by sum(dp.cantidad) desc
-			limit 10";
+		from articulo a inner join detalle_ingreso di
+		on a.idarticulo=di.idarticulo
+		inner join detalle_pedido dp on dp.iddetalle_ingreso=di.iddetalle_ingreso
+		inner join pedido p on p.idpedido=dp.idpedido
+		inner join venta v on p.idpedido=v.idpedido
+		where v.estado='A' and year(v.fecha)=year(curdate())
+		and month(v.fecha)>=MONTH(current_date)
+		group by a.nombre
+		order by sum(dp.cantidad) desc
+		limit 10";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function ProductosVendidosAnoTotalPorDinero()
+	{
+
+		global $conexion;
+		$sql = "	SELECT a.nombre as articulo,SUM(v.total) as cantidad
+		from articulo a inner join detalle_ingreso di
+		on a.idarticulo=di.idarticulo
+		inner join detalle_pedido dp on dp.iddetalle_ingreso=di.iddetalle_ingreso
+		inner join pedido p on p.idpedido=dp.idpedido
+		inner join venta v on p.idpedido=v.idpedido
+		where v.estado='A' and year(v.fecha)=year(curdate())
+		and month(v.fecha)>=MONTH(current_date)
+		group by a.nombre
+		order by SUM(v.total) desc
+		limit 10";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
+
+	
 
 	public function CantPedidosVendidos()
 	{

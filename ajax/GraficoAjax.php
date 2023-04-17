@@ -11,6 +11,14 @@
              echo json_encode($reg);
       
         break;
+        case "TraerVentasSemanalesUltimosAños":
+          
+            $query = $objGlobal->TraerVentasSemanalesUltimosAños();
+             $reg = $query;
+
+             echo json_encode($reg);
+      
+        break;
         case "VentasDelMesPorUsuario":
           
             $query = $objGlobal->VentasDelMesPorUsuario();
@@ -19,6 +27,31 @@
              echo json_encode($reg);
       
         break;
+        case "ProductosVendidosMesTotal":
+          
+            $query = $objGlobal->ProductosVendidosAnoTotal();
+            $reg = $query;
+            $nuevo = array();
+            while ($reg = $query->fetch_object()) {
+                $nuevo[] = $reg;
+            }
+            echo  json_encode($nuevo);
+
+      
+        break;
+        case "ProductosVendidosMesTotalDinero":
+          
+            $query = $objGlobal->ProductosVendidosAnoTotalPorDinero();
+            $reg = $query;
+            $nuevo = array();
+            while ($reg = $query->fetch_object()) {
+                $nuevo[] = $reg;
+            }
+            echo  json_encode($nuevo);
+
+      
+        break;
 
 
     }
+    

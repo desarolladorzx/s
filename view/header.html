@@ -767,7 +767,7 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
                 let msDifference_aprovacion = hora_actual - fecha_aprovacion;
                 let minutes_aprovacion = Math.floor(msDifference / 1000 / 60);
 
-                console.log(e);
+              
 
                 if(minutes_aprovacion > 5){
                   if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
