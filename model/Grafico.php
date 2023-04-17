@@ -8,6 +8,59 @@ class Grafico
 	public function __construct()
 	{
 	}
+
+	public function VentasDelMesPorUsuario() { 
+		global $conexion;
+
+		$sql="SELECT idempleado ,concat(nombre,' ',apellidos) nombre FROM empleado WHERE idrol=1;";
+		$query = $conexion->query($sql);
+
+		$reg = $query->fetch_all();
+	
+		$super=array();
+		foreach ($reg as $idempleado) {
+			$sql="SELECT 
+			concat(MONTHNAME(DATE_RANGE),' ',DATE_FORMAT(DATE_RANGE, '%d'))
+			 AS fecha, COALESCE(ventas_totales, 0) AS ventas_totales
+			FROM (
+			   SELECT IFNULL(SUM(venta.total),0) ventas_totales, DATE(venta.fecha) fecha
+			   FROM venta 
+			   JOIN pedido ON venta.idpedido = pedido.idpedido 
+			   JOIN usuario ON usuario.idusuario = pedido.idusuario
+			   JOIN empleado ON empleado.idempleado = usuario.idempleado
+			   WHERE empleado.idempleado = $idempleado[0]
+			   GROUP BY DATE(venta.fecha)
+			) AS fechas_venta 
+			RIGHT JOIN (
+			   SELECT DATE(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-','01')) AS date_range 
+			   UNION 
+			   SELECT LAST_DAY(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-','01')) AS date_range
+			   UNION 
+			   SELECT DATE_ADD(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-','01'), INTERVAL n.n DAY) AS date_range
+			   FROM (
+				  SELECT a.N + b.N * 10 + 1 n
+				  FROM (SELECT 0 AS N UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) a
+				  CROSS JOIN (SELECT 0 AS N UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+			   ) n
+			   WHERE DATE_ADD(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-','01'), INTERVAL n.n DAY) <= LAST_DAY(CONCAT(YEAR(CURRENT_DATE),'-',MONTH(CURRENT_DATE),'-','01'))
+			) AS temp_dates ON fechas_venta.fecha = temp_dates.date_range
+			ORDER BY fecha ASC;
+			";
+		
+			$query_venta_por_empleado = $conexion->query($sql);
+			
+			$nuevo=[];
+			while($reg = $query_venta_por_empleado->fetch_object()){		
+				$nuevo['data'][] = $reg;
+				$nuevo['nombre']=$idempleado[1];
+			}
+			$super[] = $nuevo;
+		}
+		return $super; 
+
+	}
+
+
 	public function TraerVentasUltimosAños()
 	{
 		global $conexion;
@@ -217,6 +270,9 @@ class Grafico
 		// echo $sql;
 		return $query;
 	}
+
+
+
 	public function VentasTotales($idsucursal,$idempleado)
 	{
 		$sql = "SELECT 
@@ -375,6 +431,8 @@ class Grafico
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+
 	public function VentasPorUsuario($empleados){
 
 
