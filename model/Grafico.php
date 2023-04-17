@@ -713,7 +713,7 @@ class Grafico
 		inner join pedido p on p.idpedido=dp.idpedido
 		inner join venta v on p.idpedido=v.idpedido
 		where v.estado='A' and year(v.fecha)=year(curdate())
-		and month(v.fecha)>=MONTH(current_date)
+		and month(v.fecha)>=MONTH(current_date)  AND a.idmarca<>3 
 		group by a.nombre
 		order by sum(dp.cantidad) desc
 		limit 10";
@@ -730,7 +730,7 @@ class Grafico
 		inner join detalle_pedido dp on dp.iddetalle_ingreso=di.iddetalle_ingreso
 		inner join pedido p on p.idpedido=dp.idpedido
 		inner join venta v on p.idpedido=v.idpedido
-		where v.estado='A' and year(v.fecha)=year(curdate())
+		where v.estado='A'  AND a.idmarca<>3  and year(v.fecha)=year(curdate())
 		and month(v.fecha)>=MONTH(current_date)
 		group by a.nombre
 		order by SUM(v.total) desc
