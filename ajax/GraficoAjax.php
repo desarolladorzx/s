@@ -11,5 +11,14 @@
              echo json_encode($reg);
       
         break;
+        case "VentasDelMesPorUsuario":
+          
+            $query = $objGlobal->VentasDelMesPorUsuario();
+            $reg = $query;
+
+             echo json_encode($reg);
+      
+        break;
+
 
     }
