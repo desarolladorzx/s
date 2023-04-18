@@ -167,12 +167,11 @@ function init() {
                               Number(articulo.stock_min) >=
                               Number(articulo.stock_actual_total)
                             ) {
-                              console.log("se mostrara la notificacion");
 
                               $.post(
                                 "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
-                                {
-                                },
+                                articulo
+                                ,
                                 function (r) {
                                   bootbox.alert(r);
                                 }

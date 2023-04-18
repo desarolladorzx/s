@@ -6,18 +6,18 @@
 		public function __construct(){
 		}
 
-		public function Registrar($idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen){
+		public function Registrar($idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo){
 			global $conexion;
-			$sql = "INSERT INTO articulo(idmarca, idcategoria,idunidad_medida, nombre, descripcion, imagen, estado)
-						VALUES($idmarca, $idcategoria, $idunidad_medida, '$nombre','$descripcion', '$imagen', 'A')";
+			$sql = "INSERT INTO articulo(idmarca, idcategoria,idunidad_medida, nombre, descripcion, imagen, estado,stock_min)
+						VALUES($idmarca, $idcategoria, $idunidad_medida, '$nombre','$descripcion', '$imagen', 'A',$stockMinimo)";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 		
-		public function Modificar($idarticulo, $idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen){
+		public function Modificar($idarticulo, $idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo){
 			global $conexion;
 			$sql = "UPDATE articulo set idmarca = $idmarca, idcategoria = $idcategoria, idunidad_medida = $idunidad_medida, nombre = '$nombre',
-						descripcion = '$descripcion', imagen = '$imagen'
+						descripcion = '$descripcion', imagen = '$imagen',stock_min='$stockMinimo'
 						WHERE idarticulo = $idarticulo";
 			$query = $conexion->query($sql);
 			return $query;

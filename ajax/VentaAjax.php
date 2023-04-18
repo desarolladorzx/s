@@ -344,6 +344,9 @@ switch ($_GET["op"]) {
 		$server = $_SERVER["HTTP_HOST"];
 		$idPedido = $_POST["idPedido"];
 
+		$nombre=$_POST['nombre'];
+		$marca_nombre=$_POST['marca_nombre'];
+		$stock_min=$_POST['stock_min'];
 
 		$result1 = 'zuiersadien@gmail.com';
 		$result2 = 'zuiersadien@gmail.com';
@@ -354,7 +357,7 @@ switch ($_GET["op"]) {
 		$email = $_SESSION["email"];
 		$mail = new PHPMailer;
 
-		$mensaje='El producto 1 de la marca 2 llego a su stock minimo de stock_min Unidades ALERTA¡¡¡';
+		$mensaje="El producto $nombre de la marca $marca_nombre llego a su stock minimo de $stock_min Unidades ALERTA¡¡¡";
 		$mail->Host = "$server";
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - Administracion";
