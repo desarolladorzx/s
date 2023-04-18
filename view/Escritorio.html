@@ -101,7 +101,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 
 <section class="content">
   <?php 
-  // if(in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+   if(in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 19, 20,1, 6, 11, 17, 22, 27])){
     echo '
     <div class="box">
       <div class="box-header with-border">
@@ -360,7 +360,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
         </div>
       </div>
     </div>';
-  //}
+  }
   ?>
 
  
@@ -439,7 +439,6 @@ if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
   <div class="box">
     <div class="row">
       <div class="col-md-12">
-
         <div class="box box-danger">
           <div class="box-header with-border">
             <h3 class="box-title" style="font-size: 17px">
@@ -458,14 +457,8 @@ if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
             <canvas id="VentasAnuales" style="height:  500px"></canvas>
           </div>
         </div>
-     
       </div>
-
-
-   
-
       <div class="col-md-12">
-      
         <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title" style="font-size: 17px">
@@ -505,19 +498,8 @@ if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
                 <canvas id="VentasSemanales" style="height: 500px"></canvas>
               </div>
             </div>
-
-
-
-         
         </div>
-
-
-        <!-- /.box -->
-
-        <!-- BAR CHART -->
     </div>
-       
-        <!-- /.box -->
     </div>
     <div class="col-md-6">
       <div class="box box-success">
@@ -710,29 +692,18 @@ $.ajax({
                borderColor= 'rgba(255, 206, 86, 0)'
             }
           let elementos=[]
-
-
-          
           dataset.push(e.cantidad)
           labelsGrafica.push(e.articulo)
-          
-
         })
-  
-
       // var ctx = document.getElementById('myChart').getContext('2d');
       var ctx = $("#myCharstMasVendidosPordinero").get(0).getContext("2d");
 // Crear un nuevo gráfico de barras
-
-
-
 var myChart = new Chart(ctx, {
   type: 'polarArea',
     data: {
       labels: labelsGrafica,
         datasets: [
             {
-                
                 data:dataset,
                 backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

@@ -11,13 +11,12 @@ switch ($_GET["op"]) {
 	case "VerificarStockMinimo":
 		require_once "../model/Pedido.php";
 		// $data = array();
-		
+
 		$idPedido = $_GET["idPedido"];
 		$query_prov = $objVenta->VerificarStockMinimo($idPedido);
-		$nuevo=array();
-		while($reg=$query_prov->fetch_object()){
-			$nuevo[]=$reg;
-
+		$nuevo = array();
+		while ($reg = $query_prov->fetch_object()) {
+			$nuevo[] = $reg;
 		}
 		echo json_encode($nuevo);
 		break;
@@ -340,6 +339,65 @@ switch ($_GET["op"]) {
 
 
 		break;
+	case "EnviarCorreoStockMin":
+		require_once "../PHPMailer/class.phpmailer.php";
+		$server = $_SERVER["HTTP_HOST"];
+		$idPedido = $_POST["idPedido"];
+
+
+		$result1 = 'zuiersadien@gmail.com';
+		$result2 = 'zuiersadien@gmail.com';
+		$result3 = 'zuiersadien@gmail.com';
+
+
+		$sucursal = $_SESSION["sucursal"];
+		$email = $_SESSION["email"];
+		$mail = new PHPMailer;
+
+		$mensaje='El producto 1 de la marca 2 llego a su stock minimo de stock_min Unidades ALERTA¡¡¡';
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Administracion";
+		$mail->Subject = "$sucursal - Detalle de compra";
+		$mail->addAddress("$result", "Alex");
+		$mail->MsgHTML($mensaje);
+
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio";
+		}
+		
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Administracion";
+		$mail->Subject = "$sucursal - Detalle de compra";
+		
+		$mail->addAddress("$result1", "Alex");
+		$mail->MsgHTML($mensaje);
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio";
+		}
+
+
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Administracion";
+		$mail->Subject = "$sucursal - Detalle de compra";
+		$mail->addAddress("$result2", "Alex");
+
+		$mail->MsgHTML($mensaje);
+
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio";
+		}
+		break;
+
+
 	case "EnviarCorreo":
 		require_once "../PHPMailer/class.phpmailer.php";
 		$server = $_SERVER["HTTP_HOST"];
