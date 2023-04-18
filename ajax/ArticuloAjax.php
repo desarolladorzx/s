@@ -78,14 +78,16 @@
             $i = 1;
      		while ($reg = $query_Tipo->fetch_object()) {
 
-     			$data[] = array("id"=>$i,
+     			$data[] = array(
+					"id"=>$i,
 					"1"=>$reg->marca,
 					"2"=>$reg->categoria,
 					"3"=>$reg->unidadMedida,
 					"4"=>$reg->nombre,
 					"5"=>$reg->descripcion,
+					"7"=>$reg->stock_min,
 					"6"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
-					'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
+					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
 					,\''.$reg->stock_min.'\'
 					
 					)"><i class="fa fa-pencil"></i> </button>&nbsp;'.
