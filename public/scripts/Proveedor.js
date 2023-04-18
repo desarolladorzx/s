@@ -11,7 +11,7 @@ function init(){
             'pdfHtml5'
         ]
     });
-    
+
 	ListadoProveedor();// Ni bien carga la pagina que cargue el metodo
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmProveedor").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
