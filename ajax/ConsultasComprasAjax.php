@@ -48,7 +48,7 @@ switch ($_GET["op"]) {
           $fecha_fin = $_REQUEST["fecha_fin"];
           $data = array();
 
-          $query_Tipo = $objCategoria->ListarStockArticulosVencidos();
+          $query_Tipo = $objCategoria->ListarStockArticulosVencidos($fecha_inicio , $fecha_fin);
 
           while ($reg = $query_Tipo->fetch_object()) {
 

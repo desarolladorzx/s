@@ -3,14 +3,14 @@ $(document).on("ready", init);
 function init(){
     ListadoStockArticuloVencimiento()
 
-    $('#fecha_inicio_vencimiento').change(ListadoStockArticuloVencimiento(
+    $('#fecha_inicio_vencimiento').on('input',()=>ListadoStockArticuloVencimiento(
     ))
     
-    $('#fecha_fin_vencimiento').change(ListadoStockArticuloVencimiento(
+    $('#fecha_fin_vencimiento').on('input',()=>ListadoStockArticuloVencimiento(
         ))
 
     function ListadoStockArticuloVencimiento(){
-
+			console.log($('#fecha_inicio_vencimiento').val())
 		    var idsucursal = $("#txtIdSucursal").val();
             			
             var tabla = $('#tblStockArticulosVencimiento').dataTable(
@@ -25,12 +25,12 @@ function init(){
 	        ],
         	"aoColumns":[
 				{"mDataProp":"0"},
+				{"mDataProp":"6"},
 				{"mDataProp":"1"},
 				{"mDataProp":"2"},
 				{"mDataProp":"3"},
-				{"mDataProp":"4"},
+				// {"mDataProp":"4"},
 				{"mDataProp":"5"},
-				{"mDataProp":"6"},
 				{"mDataProp":"7"},
 				{"mDataProp":"8"},
 				{"mDataProp":"9"},

@@ -32,8 +32,15 @@
 			$query = $conexion->query($sql);  
 			return $query;
 		}
-		public function ListarStockArticulosVencidos(){
-
+		public function ListarStockArticulosVencidos($fecha_inicio , $fecha_fin){
+			$inicio='';
+			$fin='';
+			if($fecha_inicio){
+				$inicio="AND DATE(di.serie)>=DATE('$fecha_inicio')";
+			}
+			if($fecha_fin){
+				$fin="AND DATE(di.serie)<=DATE('$fecha_fin')";
+			}
 			global $conexion;
 			$sql = "select distinct s.razon_social as sucursal,a.nombre as articulo,
 			c.nombre as categoria,di.codigo,di.serie,a.imagen,
@@ -46,15 +53,21 @@
 			sum(di.stock_ingreso-di.stock_actual) as totalventa,precio_ventapublico as precioventa,
 			sum((di.stock_ingreso-di.stock_actual)*di.precio_ventapublico) as valorizadoventa,
 			sum((di.precio_ventapublico-di.precio_compra)*di.stock_ingreso) as utilidadvalorizada
-			from articulo a inner join detalle_ingreso di on di.idarticulo=a.idarticulo
+			from articulo a 
+			inner join detalle_ingreso di on di.idarticulo=a.idarticulo
 			inner join ingreso i on di.idingreso=i.idingreso
 			inner join sucursal s on i.idsucursal=s.idsucursal
 			inner join categoria c on a.idcategoria=c.idcategoria
 			inner join unidad_medida u on a.idunidad_medida=u.idunidad_medida
-            inner join marca m on a.idmarca=m.idmarca
-			where di.stock_actual>'0' and i.estado='A'
+         inner join marca m on a.idmarca=m.idmarca
+			where di.stock_actual>'0' 
+			and i.estado='A'
+			$inicio
+			$fin
 			group by a.nombre,a.imagen,c.nombre,u.nombre,di.serie,di.codigo
-			order by a.nombre asc";
+			order BY di.serie asc;";
+
+			// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 
