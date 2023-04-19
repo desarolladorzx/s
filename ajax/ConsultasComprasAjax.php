@@ -7,7 +7,25 @@ require_once "../model/ConsultasCompras.php";
 $objCategoria = new ConsultasCompras();
 
 switch ($_GET["op"]) {
+     case 'TraerCategoria':
+          $query_prov = $objCategoria->TraerCategoria();
+          $nuevo = array();
+          while ($reg = $query_prov->fetch_object()) {
+              $nuevo[] = $reg;
+          }
+          echo  json_encode($nuevo);
+          
+          break;
 
+     case 'TraerProveedor':
+          $query_prov = $objCategoria->TraerProveedor();
+          $nuevo = array();
+          while ($reg = $query_prov->fetch_object()) {
+              $nuevo[] = $reg;
+          }
+          echo  json_encode($nuevo);
+         
+          break;
      case "listKardexValorizado":
           if (!isset($_REQUEST['idsucursal'])) $_REQUEST['idsucursal'] = 1;
           $idsucursal = $_REQUEST["idsucursal"];
@@ -157,9 +175,13 @@ switch ($_GET["op"]) {
 
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
+
+          $categoria = $_REQUEST["categoria"];
+          $proveedor = $_REQUEST["proveedor"];
+
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarComprasFechas($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarComprasFechas($idsucursal, $fecha_desde, $fecha_hasta, $categoria, $proveedor);
 
           while ($reg = $query_Tipo->fetch_object()) {
 
@@ -194,10 +216,12 @@ switch ($_GET["op"]) {
 
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
+          $categoria = $_REQUEST["categoria"];
+          $proveedor = $_REQUEST["proveedor"];
           //if ( !isset($_REQUEST['idsucursal'])) $_REQUEST['idsucursal'] = 1;
           $idsucursal = $_REQUEST["idsucursal"];
           $data = array();
-          $query_Tipo = $objCategoria->ListarComprasDetalladas($idsucursal, $fecha_desde, $fecha_hasta);
+          $query_Tipo = $objCategoria->ListarComprasDetalladas($idsucursal, $fecha_desde, $fecha_hasta,$categoria, $proveedor);
 
           while ($reg = $query_Tipo->fetch_object()) {
 

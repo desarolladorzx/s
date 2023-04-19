@@ -4,6 +4,22 @@
 
 		public function __construct(){
 		}
+
+		public function TraerCategoria(){
+			global $conexion;
+			$sql="SELECT * FROM categoria;";
+			$query = $conexion->query($sql);
+			return $query;
+
+		}
+
+		public function TraerProveedor(){
+			global $conexion;
+
+			$sql="SELECT * FROM persona WHERE tipo_persona='Proveedor';";
+			$query = $conexion->query($sql);
+			return $query;
+		}
 		public function ListarKardexValorizado($idsucursal){
 			global $conexion;
 
@@ -100,8 +116,17 @@
 
 		}
 
-		public function ListarComprasFechas($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarComprasFechas($idsucursal, $fecha_desde, $fecha_hasta,$categoria, $proveedor){
 
+			$sqlCategoria="";	
+
+			if($categoria){
+				$sqlCategoria="and idproveedor=$proveedor";
+			}
+			$sqlProveedor="";
+			if($proveedor){
+				$sqlProveedor="and p.nombre='$proveedor'";
+			}
 			global $conexion;
 			$sql = "select i.idingreso, i.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -116,13 +141,27 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona p on i.idproveedor=p.idpersona
 				where i.fecha>='$fecha_desde' and i.fecha<='$fecha_hasta'
+				 $sqlProveedor
 				and s.idsucursal= $idsucursal  and i.estado='A'
 				order by i.fecha desc";
+				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
 
-		public function ListarComprasDetalladas($idsucursal, $fecha_desde, $fecha_hasta){
+		public function ListarComprasDetalladas($idsucursal, $fecha_desde, $fecha_hasta,$categoria, $proveedor){
+
+
+			$sqlCategoria="";	
+
+			if($categoria){
+				$sqlCategoria="and c.nombre='$categoria'";
+			}
+			$sqlProveedor="";
+			if($proveedor){
+				$sqlProveedor="and p.nombre='$proveedor'";
+			}
+
 			global $conexion;
 			$sql = "select i.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
@@ -144,8 +183,10 @@
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona p on i.idproveedor=p.idpersona
 				where i.fecha>='$fecha_desde' and i.fecha<='$fecha_hasta'
-				and s.idsucursal= $idsucursal and i.estado='A'
+				and s.idsucursal= $idsucursal and i.estado='A' $sqlProveedor 
+				 $sqlCategoria
 				order by i.fecha desc";
+				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}

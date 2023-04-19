@@ -173,7 +173,8 @@ function init() {
                                 articulo
                                 ,
                                 function (r) {
-                                  bootbox.alert(r);
+                                  console.log(r)
+                                  // bootbox.alert(r);
                                 }
                               );
 

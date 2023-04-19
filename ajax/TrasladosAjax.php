@@ -171,15 +171,6 @@ switch ($_GET["op"]) {
         $nuevo = array();
         while ($reg = $query_prov->fetch_object()) {
             $nuevo[] = $reg;
-            //     echo '<tr>
-            //                 <td>' . $reg->Articulo . '</td>
-            //                 <td>' . $reg->marca . '</td>
-            //                 <td>' . $reg->Codigo . '</td>
-            //                 <td>' . $reg->Serie . '</td>
-            //                 <td>' . $reg->Cantidad . '</td>
-
-            //                </tr>';
-            //     $i++;
         }
         echo  json_encode($nuevo);
         break;

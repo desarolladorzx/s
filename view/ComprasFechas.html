@@ -186,18 +186,31 @@
                             </div>
                         </div>
                         <?php } ?>
-                <div class="col-lg-4 left">
+                <div class="col-lg-6 left">
                     <div class="form-group has-success">
                         <label for="inputMarca" id="lblDesde">Desde :</label>
                         <input id="cboFechaDesde" type="date" maxlength="50" class="form-control" value="<?php echo date("Y-m-d"); ?>"  name="cboFechaDesde" required="" />
                     </div>
                 </div>
-                <div class="col-lg-4 left">
+                <div class="col-lg-6 left">
                     <div class="form-group has-success">
                         <label for="inputMarca" id="lblHasta">Hasta :</label>
                         <input id="cboFechaHasta" type="date" maxlength="50" class="form-control" value="<?php echo date("Y-m-d"); ?>"  name="cboFechaHasta" required="" />
                     </div>
                 </div>
+                <div  style="display: none;" class="col-lg-6 left form-group has-success">
+                    <label for="inputMarca" id="lblDesde">Categoria :</label>
+                    <select name="idListCategoria" id="idListCategoria" class="form-control" >
+                        
+                    </select>
+                </div>
+                <div class="col-lg-6 left form-group has-success">
+                    <label for="inputMarca" id="lblDesde">Proveedor :</label>
+                    <select name="idListProveedor" id="idListProveedor" class="form-control" >
+                        
+                    </select>
+                </div>
+
             </div>
         </form>
         <br>

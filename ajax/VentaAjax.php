@@ -342,7 +342,7 @@ switch ($_GET["op"]) {
 	case "EnviarCorreoStockMin":
 		require_once "../PHPMailer/class.phpmailer.php";
 		$server = $_SERVER["HTTP_HOST"];
-		$idPedido = $_POST["idPedido"];
+		// $idPedido = $_POST["idPedido"];
 
 		$nombre=$_POST['nombre'];
 		$marca_nombre=$_POST['marca_nombre'];
@@ -362,22 +362,22 @@ switch ($_GET["op"]) {
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - Administracion";
 		$mail->Subject = "$sucursal - Detalle de compra";
-		$mail->addAddress("$result", "Alex");
-		$mail->MsgHTML($mensaje);
-
-		if ($mail->Send()) {
-			echo "Enviado con éxito";
-		} else {
-			echo "Venta Registrada correctamente. No se pudo realizar el envio";
-		}
-		
-		$mail->Host = "$server";
-		$mail->From = "$email";
-		$mail->FromName = "$sucursal - Administracion";
-		$mail->Subject = "$sucursal - Detalle de compra";
-		
 		$mail->addAddress("$result1", "Alex");
 		$mail->MsgHTML($mensaje);
+
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio";
+		}
+		
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Administracion";
+		$mail->Subject = "$sucursal - Detalle de compra";
+		
+		$mail->addAddress("$result2", "Alex");
+		$mail->MsgHTML($mensaje);
 		if ($mail->Send()) {
 			echo "Enviado con éxito";
 		} else {
@@ -389,7 +389,7 @@ switch ($_GET["op"]) {
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - Administracion";
 		$mail->Subject = "$sucursal - Detalle de compra";
-		$mail->addAddress("$result2", "Alex");
+		$mail->addAddress("$result3", "Alex");
 
 		$mail->MsgHTML($mensaje);
 
