@@ -119,14 +119,15 @@ function ListadoVentasFechas() {
     $("#cboFechaDesdeVent").val() != "" &&
     $("#cboFechaHastaVent").val() != ""
   ) {
-    var fecha_desde = $("#cboFechaDesdeVent").val(),
-      fecha_hasta = $("#cboFechaHastaVent").val(),
-      idsucursal = $("#txtIdSucursal").val();
+    var fecha_desde = $("#cboFechaDesdeVent").val()
+    var fecha_hasta = $("#cboFechaHastaVent").val()
+    var idsucursal = $("#txtIdSucursal").val()
 
+    
     var ejecutivo_comercial = $("#cboEjecutivoComercial").val();
     var antiguedad_cliente = $("#cboAntiguedadCliente").val();
     var tipo_cliente = $("#cboTipo_Cliente").val();
-
+    
     var tabla = $("#tblVentaFechas")
       .dataTable({
         aProcessing: true,

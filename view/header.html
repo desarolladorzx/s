@@ -27,6 +27,7 @@
 
 
 
+
   <!-- jQuery 2.1.4 -->
   <script type="text/javascript" src="public/js/jquery.min.js"></script>
   <script type="text/javascript" src="public/js/jquery.numeric.min.js"></script>
@@ -56,8 +57,8 @@
   <script type="text/javascript" src="public/js/vfs_fonts.js"></script>
   <script type="text/javascript" src="public/js/buttons.html5.min.js"></script>
   <script type="text/javascript" src="public/js/Chart.js"></script>
-
-
+  
+  <script type="text/javascript" src="public/scripts/ProductosPorVencimiento.js"></script>
   <script type="text/javascript" src="public/scripts/Activos.js"></script>
   <script type="text/javascript" src="public/scripts/Devolucion.js"></script>
   <script type="text/javascript" src="public/scripts/Traslados.js"></script>
@@ -183,14 +184,19 @@
                 <li class="" style="padding:5px; display: flex;justify-content: space-between;">
                  
                   
-                
+                <?php
+                if($_SESSION["idempleado"]!=7){
+                  echo '<button class="btn btn-primary" onclick="NuevoAcceder(1,`Arequipa - AREQUIPA - AREQUIPA`)">
+                    Arequipa
+                  </button>
+                  <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,`Lima - LIMA - LIMA`)">
+                    Lima
+                  </button>';
+
+                }
+                ?>
                  
-                    <button class="btn btn-primary" onclick="NuevoAcceder(1,'Arequipa - AREQUIPA - AREQUIPA')">
-                      Arequipa
-                    </button>
-                    <button class="btn btn-md btn-primary"  onclick="NuevoAcceder(2,'Lima - LIMA - LIMA')">
-                      Lima
-                    </button>
+                    
 
                 
                 </li>
@@ -287,7 +293,7 @@
             </a>
             <ul class="treeview-menu">
               <li id="liVenta"><a href="Venta.php"><i class="fa fa-circle-o"></i> Ventas</a></li>
-              <li id="liPedido"><a href="Pedido.php"><i class="fa fa-circle-o"></i> Cotizacion</a></li>
+              <li id="liPedido"><a href="Pedido.php"><i class="fa fa-circle-o"></i> Notas de Venta</a></li>
               <li id="liClientes"><a href="Cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
               <!-- -->
               <li id="liCreditos"><a href="Credito.php"><i class="fa fa-circle-o"></i> Créditos</a></li>
@@ -312,10 +318,13 @@
               </li>
               <li id="liCompraDetalladas"><a href="ComprasDetalladas.php"><i class="fa fa-circle-o"></i> Compras
                   Detalladas</a></li>
-              <li id="liCompraProveedor"><a href="ComprasProveedor.php"><i class="fa fa-circle-o"></i> C. Gen.
+              <!-- <li id="liCompraProveedor"><a href="ComprasProveedor.php"><i class="fa fa-circle-o"></i> C. Gen.
                   Proveedor</a></li>
               <li id="liComprasDetProveedor"><a href="ComprasDetProveedor.php"><i class="fa fa-circle-o"></i> C. Det.
-                  Proveedor</a></li>
+                  Proveedor</a></li> -->
+ 
+                  <li id="liProductosVencimientos"><a href="ProductosPorVencimiento.php"><i class="fa fa-circle-o"></i> Productos por Vencimiento</a></li>
+
               <li id="liKardexValorizado"><a href="KardexValorizado.php"><i class="fa fa-circle-o"></i> Kardex
                   Valorizado</a></li>
               <li id="liStockArticulos"><a href="StockArticulos.php"><i class="fa fa-circle-o"></i> Stock de
@@ -505,7 +514,7 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
     ventasLima()
     function ventasLima(){
       let idEmpleado = Number(idempleado);
-    if ([7, 6].includes(idEmpleado)) {
+    if ([7,6].includes(idEmpleado)) {
       $.ajax({
         url: "./ajax/PedidoAjax.php?op=informarVentaLima",
         processData: false,
@@ -527,12 +536,10 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
             if (ultimaVentaLima.idventa != local.idventa) {
               if ((Notification.permission = "grantFd")) {
                 const notification = new Notification(
-                  "Se ha registrado una nueva Venta ",
+                  "Nueva Venta ",
                   {
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body:`Nueva Venta ${ultimaVentaLima.serie_comprobante}- ${ultimaVentaLima.num_comprobante} generada por ${ultimaVentaLima.nombre} ${ultimaVentaLima.apellidos} `
-                     
-                    
+                    body:`Ticket ${ultimaVentaLima.serie_comprobante}- ${ultimaVentaLima.num_comprobante} Generada por ${ultimaVentaLima.nombre} ${ultimaVentaLima.apellidos} `
                   }
                 );
                 notification.onclick = function () {
@@ -582,9 +589,9 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
               
               if ((Notification.permission = "grantFd")) {
             
-                const notification = new Notification("Nueva cotizacion ", {
+                const notification = new Notification("Nueva Nota de Venta ", {
                   icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                  body: `${nuevoPedido.idsucursal == "1" ? "Arequipa" : "Lima"} Nueva cotizacion - ${nuevoPedido.numero} , registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
+                  body: `${nuevoPedido.idsucursal == "1" ? "Arequipa" : "Lima"} - Numero ${nuevoPedido.numero} Registrada por ${nuevoPedido.nombre} ${nuevoPedido.apellidos}`,
                   // body: `Nueva cotizacion `
                 });
                 notification.onclick = function () {
@@ -611,10 +618,10 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
             ) {
               if ((Notification.permission = "grantFd")) {
                 const notification = new Notification(
-                  " Cotización Aprobada",
+                  "Nota de Venta Aprobada",
                   {
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body: `${nuevoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"} Cotización  - ${nuevoPedido.numero} Aprobada por ${nuevoPedido.nombre_estado} ${nuevoPedido.apellidos_estado}`,
+                    body: `${nuevoPedido?.idsucursal == "1" ? "Arequipa" : "Lima"} - Numero ${nuevoPedido.numero} Aprobada por ${nuevoPedido.nombre_estado} ${nuevoPedido.apellidos_estado}`,
                   }
                 );
                 notification.onclick = function () {
@@ -654,10 +661,11 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
             let baseD = JSON.parse(data).idventa;
             if (baseD != local) {
               if ((Notification.permission = "grantFd")) {
+                console.log(ultimaVentajson)
                 const notification = new Notification(
-                  "Se ha registrado una nueva Venta ",{
+                  "Nueva Venta ",{
                     icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                    body:`Nueva Venta ${ultimaVentajson?.idsucursal == "1" ? "Arequipa" : "Lima"} ${ultimaVentajson.serie_comprobante}- ${ultimaVentajson.num_comprobante} generada por ${ultimaVentajson.nombre} ${ultimaVentajson.apellidos} `
+                    body:`${ultimaVentajson?.idsucursal == "1" ? "Arequipa" : "Lima"} - Ticket ${ultimaVentajson.serie_comprobante}- ${ultimaVentajson.num_comprobante} Generada por ${ultimaVentajson.nombre} ${ultimaVentajson.apellidos} `
                   }
                 );
                 notification.onclick = function () {
@@ -693,11 +701,11 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
               if (baseD != local) {
                 if ((Notification.permission = "grantFd")) {
                   const notification = new Notification(
-                    "Se ha anulador un pedido ",
+                    "Venta Anulada ",
                     {
                       icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                       body:
-                        "Venta Anulada -" +
+                        "Ticket -" +
                         JSON.parse(data).serie_comprobante +
                         "-" +
                         JSON.parse(data).num_comprobante,
@@ -749,7 +757,7 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
 
             setTimeout(() => {
               notificacionEspera();
-            }, 70000);
+            }, 15000);
 
            
             let pedidosPendientes = JSON.parse(data);
@@ -767,18 +775,18 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
                 let msDifference_aprovacion = hora_actual - fecha_aprovacion;
                 let minutes_aprovacion = Math.floor(msDifference / 1000 / 60);
 
-                console.log(e);
+              
 
                 if(minutes_aprovacion > 5){
                   if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
-                        `cotizacion ${e.numero} Aprobada Pendiente de Generar Venta`,
+                        `Nota de Venta ${e.numero} Aprobada`,
                         {
                           icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                           body: `${
                             e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } Cotización - ${e.numero} Aprobada Pendiente de Generar Venta esta en Espera por ${minutes} Minutos`,
+                          } - Pendiente a Generar Venta por ${minutes} Minutos - JA`,
                         }
                       );
                       notification.onclick = function () {
@@ -792,12 +800,12 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
                   if (e.estado == "A" && [17, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
                       const notification = new Notification(
-                        `Cotizacion ${e.numero} Pendiente de Aprobación `,
+                        `Nota de Venta ${e.numero} Registrada` ,
                         {
                           icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                           body: `${
                             e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } - cotizacion - ${e.numero} Pendiente de Aprobación esta En Espera por ${minutes} Minutos`,
+                          } - Pendiente de Aprobación por ${minutes} Minutos - JV`,
                         }
                       );
                       notification.onclick = function () {

@@ -15,11 +15,11 @@ switch ($_GET["op"]) {
           break;
      case "listVentasFechas":
           $ejecutivo_comercial = $_REQUEST["ejecutivo_comercial"];
+
           $antiguedad_cliente = $_REQUEST["antiguedad_cliente"];
+
           $tipo_cliente = $_REQUEST["tipo_cliente"];
-          $ejecutivo_comercial = '';
-          $antiguedad_cliente = '';
-          $tipo_cliente = '';
+
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
           $idsucursal = $_REQUEST["idsucursal"];

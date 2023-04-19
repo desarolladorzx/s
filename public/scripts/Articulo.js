@@ -101,7 +101,9 @@ function ListadoArticulos(){
                     {   "mDataProp": "4"},
                     {   "mDataProp": "5"},
                     {   "mDataProp": "6"},
-					{   "mDataProp": "7"}
+					{   "mDataProp": "7"},
+					{   "mDataProp": "8"},
+					
 
         	],"ajax": 
 	        	{
@@ -130,7 +132,7 @@ function eliminarArticulo(id){
 	})
 }
 
-function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, nombre, descripcion, imagen){
+function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, nombre, descripcion, imagen,stock_min){
 		$("#VerForm").show();
 		$("#btnNuevo").hide();
 		$("#VerListado").hide();
@@ -143,6 +145,9 @@ function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, n
 	    $("#txtDescripcion").val(descripcion);
 	   // $("#imagenArt").val(imagen);
 	    $("#txtRutaImgArt").val(imagen);
+
+		$("#txtStockMinimo").val(stock_min);
+
 	    $("#txtRutaImgArt").show();
 	    //$("#txtRutaImgArt").prop("disabled", true);
 }

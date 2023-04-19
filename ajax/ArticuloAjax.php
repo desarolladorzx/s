@@ -10,6 +10,9 @@
 
 		case 'SaveOrUpdate':
 
+			$stockMinimo = $_POST["txtStockMinimo"];
+
+
 			$idcategoria = $_POST["cboCategoria"];
 			$idmarca = $_POST["cboMarca"];
 			$idunidad_medida = $_POST["cboUnidadMedida"];
@@ -22,7 +25,7 @@
 
 				if(empty($_POST["txtIdArticulo"])){
 					
-					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta)){
+					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo)){
 						echo "Articulo RegistradoN";
 					}else{
 						echo "Articulo no ha podido ser registadoON.";
@@ -30,8 +33,8 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta)){
-						echo "Informacion del Articulo ha sido actualizadON";
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo)){
+						echo "Informacion del Articulo ha sido actualizados";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
 					}
@@ -40,7 +43,7 @@
 				$ruta_img = $_POST["txtRutaImgArt"];
 				if(empty($_POST["txtIdArticulo"])){
 					
-					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img)){
+					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo)){
 						echo "Articulo RegistradA";
 					}else{
 						echo "Articulo no ha podido ser registadAN.";
@@ -48,8 +51,8 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img)){
-						echo "Informacion del Articulo ha sido actualizadAN";
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo)){
+						echo "Informacion del Articulo ha sido actualizadas";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
 					}
@@ -75,14 +78,19 @@
             $i = 1;
      		while ($reg = $query_Tipo->fetch_object()) {
 
-     			$data[] = array("id"=>$i,
+     			$data[] = array(
+					"id"=>$i,
 					"1"=>$reg->marca,
 					"2"=>$reg->categoria,
 					"3"=>$reg->unidadMedida,
 					"4"=>$reg->nombre,
 					"5"=>$reg->descripcion,
+					"7"=>$reg->stock_min,
 					"6"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
-					'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
+					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
+					,\''.$reg->stock_min.'\'
+					
+					)"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarArticulo('.$reg->idarticulo.')"><i class="fa fa-trash"></i> </button>');
 				$i++;
 			}

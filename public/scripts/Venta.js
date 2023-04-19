@@ -37,9 +37,8 @@ function init() {
   function ComboTipo_Documento() {
     $.get("./ajax/PedidoAjax.php?op=listTipoDoc", function (r) {
       $("#cboTipoComprobante").html(r);
-
     }).then(function (data) {
-      VerNumSerie()
+      VerNumSerie();
     });
   }
 
@@ -70,19 +69,17 @@ function init() {
   */
 
   function SaveOrUpdate(e) {
+    console.log("loaderActivado");
 
+    $("#idbtnRegistar").prop("disabled", true);
+    $("#idbtnRegistar").html(
+      `<i class="fa fa-spinner fa-spin"></i>Registrando`
+    );
 
-    console.log('loaderActivado')
-
-    $('#idbtnRegistar').prop('disabled', true);
-    $('#idbtnRegistar').html(`<i class="fa fa-spinner fa-spin"></i>Registrando`)
-
-    setTimeout(function() {
-      $('#idbtnRegistar').html(`<i class="fa fa-floppy-o"></i>Registrar`)
-      $('#idbtnRegistar').prop('disabled', false);
-
-    },3000)
-
+    setTimeout(function () {
+      $("#idbtnRegistar").html(`<i class="fa fa-floppy-o"></i>Registrar`);
+      $("#idbtnRegistar").prop("disabled", false);
+    }, 3000);
 
     e.preventDefault(); // para que no se recargue la pagina
     if ($("#txtSerieVent").val() != "" && $("#txtNumeroVent").val() != "") {
@@ -96,144 +93,193 @@ function init() {
 
       // $.get("./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado")
 
-      let newDetalle=[];
+      let newDetalle = [];
       $.get(
         "./ajax/VentaAjax.php?op=GetDetallePedidoSolo",
         "idPedido=" + idPedido,
         function (r) {
-        newDetalle=JSON.parse(r);
-   
+          newDetalle = JSON.parse(r);
 
-      
-        var data = {
-          idCliente: $("#hdn_idClientePedido").val(),
-          idUsuario: $("#txtIdUsuario").val(),
-          idPedido: $("#txtIdPedido").val(),
-          tipo_venta: $("#cboTipoVenta").val(),
-          iddetalle_doc_suc: $("#txtIdTipoDoc").val(),
-          tipo_comprobante: $("#cboTipoComprobante").val(),
-          serie_vent: $("#txtSerieVent").val(),
-          num_vent: $("#txtNumeroVent").val(),
-  
-          metodo_pago: $("#hdn_metodo_pago").val(), // Cuenta donde es abonada
-          agencia_envio: $("#hdn_agencia_envio").val(), // Transporte
-          tipo_promocion: $("#hdn_tipo_promocion").val(), // Promociones de ventas
-          //num_operacion : $("#txtNumeroOpe").val(), // Comprobantes de pago
-          //hora_operacion : $("#txtHoraOpe").val(),  // Fecha en que se registra la operacion
-  
-          impuesto: $("#txtImpuesto").val(),
-          total_vent: $("#txtTotalVent").val(),
-          //idCliente : $("#hdn_idcliente").val(),
-          // detalle: detalle,
-          detalle: newDetalle,
-        };
-  
-        $.get(
-          "./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado",
-          "idPedido=" + data.idPedido,
-          function (r) {
-            var obj = jQuery.parseJSON(r);
-  
-            if (obj.length == 0) {
-              $.post("./ajax/VentaAjax.php?op=SaveOrUpdate", data, function (r) {
-                // llamamos la url por post. function(r). r-> llamada del callback
-  
-                if ($("#cboTipoComprobante").val() == "TICKET") {
-                  //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
-                  // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
-                  //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
-                  //EN LA WEB
-                  //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
-                  window.open(
-                    "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(),
-                    "_blank"
-                  );
-                }
-  
-                if ($("#cboTipoVenta").val() == "Contado") {
-                  swal("Mensaje del Sistema", r, "success");
-  
-                  $("#btnNuevoPedido").show();
-                  OcultarForm();
-                  ListadoVenta();
-                  ListadoPedidos();
-                  LimpiarPedido();
-                  VerNumSerie()
-                  
-                  bootbox.prompt({
-                    title:
-                      "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
-                    value: email,
-                    callback: function (result) {
-                      if (result !== null) {
-                        $.post(
-                          "./ajax/VentaAjax.php?op=EnviarCorreo",
-                          { result: result, idPedido: $("#txtIdPedido").val() },
-                          function (r) {
-                            bootbox.alert(r);
+          var data = {
+            idCliente: $("#hdn_idClientePedido").val(),
+            idUsuario: $("#txtIdUsuario").val(),
+            idPedido: $("#txtIdPedido").val(),
+            tipo_venta: $("#cboTipoVenta").val(),
+            iddetalle_doc_suc: $("#txtIdTipoDoc").val(),
+            tipo_comprobante: $("#cboTipoComprobante").val(),
+            serie_vent: $("#txtSerieVent").val(),
+            num_vent: $("#txtNumeroVent").val(),
+
+            metodo_pago: $("#hdn_metodo_pago").val(), // Cuenta donde es abonada
+            agencia_envio: $("#hdn_agencia_envio").val(), // Transporte
+            tipo_promocion: $("#hdn_tipo_promocion").val(), // Promociones de ventas
+            //num_operacion : $("#txtNumeroOpe").val(), // Comprobantes de pago
+            //hora_operacion : $("#txtHoraOpe").val(),  // Fecha en que se registra la operacion
+
+            impuesto: $("#txtImpuesto").val(),
+            total_vent: $("#txtTotalVent").val(),
+            //idCliente : $("#hdn_idcliente").val(),
+            // detalle: detalle,
+            detalle: newDetalle,
+          };
+
+          $.get(
+            "./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado",
+            "idPedido=" + data.idPedido,
+            function (r) {
+              var obj = jQuery.parseJSON(r);
+
+              if (obj.length == 0) {
+                $.post(
+                  "./ajax/VentaAjax.php?op=SaveOrUpdate",
+                  data,
+                  function (r) {
+                    // llamamos la url por post. function(r). r-> llamada del callback
+
+                    if ($("#cboTipoComprobante").val() == "TICKET") {
+                      //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
+                      // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
+                      //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
+                      //EN LA WEB
+                      //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
+                      window.open(
+                        "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(),
+                        "_blank"
+                      );
+                    }
+
+                    if ($("#cboTipoVenta").val() == "Contado") {
+                      swal("Mensaje del Sistema", r, "success");
+
+                      $.get(
+                        "./ajax/VentaAjax.php?op=VerificarStockMinimo",
+                        "idPedido=" + data.idPedido,
+                        function (r) {
+                          var obj = jQuery.parseJSON(r);
+                          console.log(obj);
+                          obj.map((articulo) => {
+                            console.log(
+                              articulo.stock_min,
+                              articulo.stock_actual_total
+                            );
+                            // if([7 , 21 , 22 ].includes(idempleado)){
+                            if (
+                              Number(articulo.stock_min) >=
+                              Number(articulo.stock_actual_total)
+                            ) {
+
+                              $.post(
+                                "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
+                                articulo
+                                ,
+                                function (r) {
+                                  console.log(r)
+                                  // bootbox.alert(r);
+                                }
+                              );
+
+
+                              if ((Notification.permission = "grantFd")) {
+                                const notification = new Notification(
+                                  "Producto Stock ",
+                                  {
+                                    icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                                    body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                                  }
+                                );
+                                notification.onclick = function () {
+                                  window.open(
+                                    "https://medicfit.grupopuma.pe/Venta.php"
+                                  );
+                                };
+                              }
+                              // }
+                            }
+                          });
+                        }
+                      );
+                      idPedido;
+
+                      $("#btnNuevoPedido").show();
+                      OcultarForm();
+                      ListadoVenta();
+                      ListadoPedidos();
+                      LimpiarPedido();
+                      VerNumSerie();
+
+                      bootbox.prompt({
+                        title:
+                          "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
+                        value: email,
+                        callback: function (result) {
+                          if (result !== null) {
+                            $.post(
+                              "./ajax/VentaAjax.php?op=EnviarCorreo",
+                              {
+                                result: result,
+                                idPedido: $("#txtIdPedido").val(),
+                              },
+                              function (r) {
+                                console.log(result)
+                                console.log('aqui')
+                                bootbox.alert(r);
+                              }
+                            );
                           }
-                        );
-                      }
-                    },
-                  });
-                  //location.reload();
-                } else {
-                  $("#btnNuevoPedido").show();
-  
-                  bootbox.prompt({
-                    title:
-                      "Ingrese el correo para enviar el detalle de la compra",
-                    value: email,
-                    callback: function (result) {
-                      if (result !== null) {
-                        $.post(
-                          "./ajax/VentaAjax.php?op=EnviarCorreo",
-                          { result: result, idPedido: $("#txtIdPedido").val() },
-                          function (r) {
-                            bootbox.alert(r);
+                        },
+                      });
+                      //location.reload();
+                    } else {
+                      $("#btnNuevoPedido").show();
+
+                      bootbox.prompt({
+                        title:
+                          "Ingrese el correo para enviar el detalle de la compra",
+                        value: email,
+                        callback: function (result) {
+                          if (result !== null) {
+                            $.post(
+                              "./ajax/VentaAjax.php?op=EnviarCorreo",
+                              {
+                                result: result,
+                                idPedido: $("#txtIdPedido").val(),
+                              },
+                              function (r) {
+                                bootbox.alert(r);
+                              }
+                            );
+                            bootbox.alert(
+                              r + ", Pasaremos a Registrar el Credito",
+                              function () {
+                                $("#modalCredito").modal("show");
+                                GetIdVenta();
+                              }
+                            );
+                          } else {
+                            bootbox.alert(
+                              r + ", Pasaremos a Registrar el Credito",
+                              function () {
+                                $("#modalCredito").modal("show");
+                                GetIdVenta();
+                              }
+                            );
                           }
-                        );
-                        bootbox.alert(
-                          r + ", Pasaremos a Registrar el Credito",
-                          function () {
-                            $("#modalCredito").modal("show");
-                            GetIdVenta();
-                          }
-                        );
-                      } else {
-                        bootbox.alert(
-                          r + ", Pasaremos a Registrar el Credito",
-                          function () {
-                            $("#modalCredito").modal("show");
-                            GetIdVenta();
-                          }
-                        );
-                      }
-                    },
-                  });
-                }
-              });
-            } else {
-              var arr = obj;
-              alert(
-                "No se puede completar el proceso ya que existen productos sin stock:\n" +
-                  arr.join("\n")
-              );
+                        },
+                      });
+                    }
+                  }
+                );
+              } else {
+                var arr = obj;
+                alert(
+                  "No se puede completar el proceso ya que existen productos sin stock:\n" +
+                    arr.join("\n")
+                );
+              }
             }
-          }
-        );
-
-
-
-
-
-
-
+          );
         }
-      )
-
-
-
+      );
     } else {
       bootbox.alert("Debe seleccionar un comprobante");
     }

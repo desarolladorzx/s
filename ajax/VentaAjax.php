@@ -8,6 +8,19 @@ $objCliente = new Persona();
 switch ($_GET["op"]) {
 
 
+	case "VerificarStockMinimo":
+		require_once "../model/Pedido.php";
+		// $data = array();
+
+		$idPedido = $_GET["idPedido"];
+		$query_prov = $objVenta->VerificarStockMinimo($idPedido);
+		$nuevo = array();
+		while ($reg = $query_prov->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo json_encode($nuevo);
+		break;
+
 	case 'GetDetallePedidoSolo':
 		require_once "../model/Pedido.php";
 		// $data = array();
@@ -165,7 +178,7 @@ switch ($_GET["op"]) {
 
 			$buttonSucursal = '';
 
-			if ($_SESSION['idempleado'] == 1 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11 || $_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22) {
+			if ($_SESSION['idempleado'] == 7 || $_SESSION['idempleado'] == 6 || $_SESSION['idempleado'] == 11 || $_SESSION['idempleado'] == 21 || $_SESSION['idempleado'] == 22) {
 
 				$buttonSucursal = '&nbsp<button class="btn btn-warning" data-toggle="tooltip" title="Modificar detalle de venta" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\',`modificarDetalles`,' . $reg->idcliente . ')" ><i class="glyphicon glyphicon-pencil
 					"></i> </button>&nbsp';
@@ -326,6 +339,67 @@ switch ($_GET["op"]) {
 
 
 		break;
+	case "EnviarCorreoStockMin":
+		require_once "../PHPMailer/class.phpmailer.php";
+		$server = $_SERVER["HTTP_HOST"];
+		// $idPedido = $_POST["idPedido"];
+
+		$nombre=$_POST['nombre'];
+		$marca_nombre=$_POST['marca_nombre'];
+		$stock_min=$_POST['stock_min'];
+
+		$result1 = 'logistica@grupopuma.pe';
+		$result2 = 'almacen@grupopuma.pe';
+		$result3 = 'ventas@grupopuma.pe';
+
+
+		$sucursal = $_SESSION["sucursal"];
+		$email = $_SESSION["email"];
+		$mail = new PHPMailer;
+
+		$mensaje="El producto $nombre de la marca $marca_nombre llego a su stock minimo de $stock_min Unidades ALERTA¡¡¡";
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Logistica";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result1", "Logistica");
+		$mail->MsgHTML($mensaje);
+
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		}
+		
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Almacen";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result2", "Almacen");
+		$mail->MsgHTML($mensaje);
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		}
+
+
+		$mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Ventas";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result3", "Ventas");
+
+		$mail->MsgHTML($mensaje);
+
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		}
+		break;
+
+
 	case "EnviarCorreo":
 		require_once "../PHPMailer/class.phpmailer.php";
 		$server = $_SERVER["HTTP_HOST"];
@@ -338,7 +412,7 @@ switch ($_GET["op"]) {
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - Administracion";
 		$mail->Subject = "$sucursal - Detalle de compra";
-		$mail->addAddress("$result", "Alex");
+		$mail->addAddress("$result", "Cliente");
 		$mail->MsgHTML("Puede ver el detalle de su compra haciendo click <a href='$server/Reportes/exVenta.php?id=" . $idPedido . "'> Aqui</a>");
 
 		if ($mail->Send()) {

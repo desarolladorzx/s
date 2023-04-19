@@ -101,7 +101,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 
 <section class="content">
   <?php 
-  // if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+   if(in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 19, 20,1, 6, 11, 17, 22, 27])){
     echo '
     <div class="box">
       <div class="box-header with-border">
@@ -360,7 +360,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
         </div>
       </div>
     </div>';
-  //}
+  }
   ?>
 
  
@@ -368,7 +368,7 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
  
 
 <?php 
-  if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+  if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
     
   echo '
   <div class="box">
@@ -429,14 +429,16 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
 ?>
   
 <?php 
-  if(!in_array($_SESSION["idempleado"],[12, 14, 15, 16, 18, 20 , 19])){
+$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+if(in_array($_SESSION["idempleado"],[1, 6, 11, 17, 22, 27])){
     
+  
   echo '
   <h4>Graficos Estadisticos</h4>
   <div class="box">
     <div class="row">
       <div class="col-md-12">
-
         <div class="box box-danger">
           <div class="box-header with-border">
             <h3 class="box-title" style="font-size: 17px">
@@ -452,18 +454,15 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             </div>
           </div>
           <div class="box-body">
-            <canvas id="VentasAnuales" style="height: 250px"></canvas>
+            <canvas id="VentasAnuales" style="height:  500px"></canvas>
           </div>
         </div>
-     
       </div>
-   
       <div class="col-md-12">
-      
         <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title" style="font-size: 17px">
-              Ventas Mensuales
+              Ventas Diarias del mes de '.$meses[date('n')-1].' del 20'.date('y').'
             </h3>
             <div class="box-tools pull-right">
               <button class="btn btn-box-tool" data-widget="collapse">
@@ -476,37 +475,73 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
           </div>
           <div class="box-body">
             <div class="chart">
-              <canvas id="VentasMensuales" style="height: 250px"></canvas>
+              <canvas id="VentasMensuales" style="height:  500px"></canvas>
             </div>
           </div>
 
-
-         
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title" style="font-size: 17px">
+                Ventas Diarias de la semana de '.$meses[date('n')-1].' del 20'.date('y').'
+              </h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse">
+                  <i class="fa fa-minus"></i>
+                </button>
+                <button class="btn btn-box-tool" data-widget="remove">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="VentasSemanales" style="height: 500px"></canvas>
+              </div>
+            </div>
         </div>
-        <!-- /.box -->
-
-        <!-- BAR CHART -->
-        <!-- <div class="box box-success">
-          <div class="box-header with-border">
-            <h3 class="box-title" style="font-size: 17px">Productos Mas Vendidos</h3>
-            <div class="box-tools pull-right">
-              <button class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-              </button>
-              <button class="btn btn-box-tool" data-widget="remove">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="box-body">
-            <div class="chart">
-              <canvas id="myCharst" style="height: 230px"></canvas>
-            </div>
-          </div>
-    
-        </div> -->
-        <!-- /.box -->
     </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 17px">Productos Mas Vendidos  por Cantidad</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+            <button class="btn btn-box-tool" data-widget="remove">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="myCharst" style="height: 500px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title" style="font-size: 17px">Productos Mas Vendidos  por Total</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+            <button class="btn btn-box-tool" data-widget="remove">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="chart">
+            <canvas id="myCharstMasVendidosPordinero" style="height: 500px"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
       <!-- /.col (RIGHT) -->
     </div>
   </div>
@@ -534,6 +569,7 @@ $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
 
 
 <script>
@@ -617,6 +653,351 @@ $obj->ProductosVendidosAno($_SESSION["idsucursal"]); ?>
   }
   
 })
+$.ajax({
+    url: "./ajax/GraficoAjax.php?op=ProductosVendidosMesTotalDinero",
+    dataType: "json",
+    method:'get',
+    error: function (response) {
+      console.log(response.responseText)
+    },
+    success: function (response) {
+
+      console.log(response)
+
+      let labelsGrafica=[]
+
+      let dataset=[]
+
+        
+        response.map((e,key)=>{
+          var color=''
+          var borderColor=''
+            if(key==1){
+               color='rgba(255, 99, 132, 1)'
+               borderColor='rgba(255, 99, 132, 0)'
+            }else if(key==2){
+               color= 'rgba(54, 162, 235, 1)'
+               borderColor= 'rgba(54, 162, 235, 0)'
+            }else if(key==3){
+               color='rgba(75, 192, 192, 1)'
+               borderColor='rgba(75, 192, 192, 0)'
+            }else if(key==4){
+               color= 'rgba(153, 102, 255, 1)'
+               borderColor= 'rgba(153, 102, 255, 0)'
+            }else if(key==5){
+               color= 'rgba(255, 206, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }else if(key==0){
+               color= 'rgba(255, 100, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }
+          let elementos=[]
+          dataset.push(e.cantidad)
+          labelsGrafica.push(e.articulo)
+        })
+      // var ctx = document.getElementById('myChart').getContext('2d');
+      var ctx = $("#myCharstMasVendidosPordinero").get(0).getContext("2d");
+// Crear un nuevo gráfico de barras
+var myChart = new Chart(ctx, {
+  type: 'polarArea',
+    data: {
+      labels: labelsGrafica,
+        datasets: [
+            {
+                data:dataset,
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],  
+            },
+           
+        ]
+            
+    },
+    options: {
+      circular:false,
+      labels: {
+      display: true,
+      text: 'Título del gráfico',
+      fontSize: 16,
+      fontStyle: 'normal',
+      textAlign: 'left' // alinea el título a la izquierda
+    },
+      legend: {
+            align: 'left',
+        },
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right'
+            },
+            title: {
+                display: true,
+                text: 'Ventas por categoría de producto (en miles de dólares)'
+            }
+        },
+        scales: {
+            r: {
+                angleLines: {
+                    display: false
+                },
+                suggestedMin: 0
+            }
+        }
+    }
+})
+    }
+  
+  })
+
+
+$.ajax({
+    url: "./ajax/GraficoAjax.php?op=ProductosVendidosMesTotal",
+    dataType: "json",
+    method:'get',
+    error: function (response) {
+      console.log(response.responseText)
+    },
+    success: function (response) {
+
+      console.log(response)
+
+      let labelsGrafica=[]
+
+      let dataset=[]
+
+        
+        response.map((e,key)=>{
+          var color=''
+          var borderColor=''
+            if(key==1){
+               color='rgba(255, 99, 132, 1)'
+               borderColor='rgba(255, 99, 132, 0)'
+            }else if(key==2){
+               color= 'rgba(54, 162, 235, 1)'
+               borderColor= 'rgba(54, 162, 235, 0)'
+            }else if(key==3){
+               color='rgba(75, 192, 192, 1)'
+               borderColor='rgba(75, 192, 192, 0)'
+            }else if(key==4){
+               color= 'rgba(153, 102, 255, 1)'
+               borderColor= 'rgba(153, 102, 255, 0)'
+            }else if(key==5){
+               color= 'rgba(255, 206, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }else if(key==0){
+               color= 'rgba(255, 100, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }
+          let elementos=[]
+
+
+          
+          dataset.push(e.cantidad)
+          labelsGrafica.push(e.articulo)
+          
+
+        })
+  
+
+      // var ctx = document.getElementById('myChart').getContext('2d');
+      var ctx = $("#myCharst").get(0).getContext("2d");
+// Crear un nuevo gráfico de barras
+
+
+
+var myChart = new Chart(ctx, {
+  type: 'polarArea',
+    data: {
+      labels: labelsGrafica,
+        datasets: [
+            {
+                
+                data:dataset,
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+            ],  
+            },
+           
+        ]
+            
+    },
+    options: {
+      circular:false,
+
+      legend: {
+            align: 'left',
+        },
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right'
+            },
+            title: {
+                display: true,
+                text: 'Ventas por categoría de producto (en miles de dólares)'
+            }
+        },
+        scales: {
+            r: {
+                angleLines: {
+                    display: false
+                },
+                suggestedMin: 0
+            }
+        }
+    }
+})
+    }
+  
+  })
+
+
+
+
+$.ajax({
+    url: "./ajax/GraficoAjax.php?op=TraerVentasSemanalesUltimosAños",
+    dataType: "json",
+    method:'get',
+    error: function (response) {
+      console.log(response.responseText)
+    },
+    success: function (response) {
+
+      console.log(response)
+
+      let labelsGrafica=[]
+
+      let dataset=[]
+      response[0].data.map((e)=>{
+        labelsGrafica.push(e.fecha)
+      })
+        
+        response.map((e,key)=>{
+          var color=''
+          var borderColor=''
+            if(key==1){
+               color='rgba(255, 99, 132, 1)'
+               borderColor='rgba(255, 99, 132, 0)'
+            }else if(key==2){
+               color= 'rgba(54, 162, 235, 1)'
+               borderColor= 'rgba(54, 162, 235, 0)'
+            }else if(key==3){
+               color='rgba(75, 192, 192, 1)'
+               borderColor='rgba(75, 192, 192, 0)'
+            }else if(key==4){
+               color= 'rgba(153, 102, 255, 1)'
+               borderColor= 'rgba(153, 102, 255, 0)'
+            }else if(key==5){
+               color= 'rgba(255, 206, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }else if(key==0){
+               color= 'rgba(255, 100, 86, 1)'
+               borderColor= 'rgba(255, 206, 86, 0)'
+            }
+          let elementos=[]
+          e.data.map((value)=>{
+          
+            elementos.push(value.total_venta)
+           
+          })
+
+          
+          dataset.push({
+            borderWidth: 1,
+         
+            label:`${e.año}`,
+            data:elementos,
+            usuario:e.nombre,
+            backgroundColor:borderColor,
+            borderColor: color,
+              borderWidth: 2,
+              pointRadius: 3,
+          })
+
+            console.log(dataset)
+
+        })
+  
+
+      // var ctx = document.getElementById('myChart').getContext('2d');
+      var ctx = $("#VentasSemanales").get(0).getContext("2d");
+// Crear un nuevo gráfico de barras
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels:['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+
+        datasets: dataset
+            
+    },
+    options: {
+    
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    },
+    elements: {
+        // line: {
+        //     tension: 0
+        // }
+    }
+  }
+})
+    }})
+
 
 
 $.ajax({
@@ -628,7 +1009,7 @@ $.ajax({
     },
     success: function (response) {
 
-      console.log(response)
+     
 
       let labelsGrafica=[]
 
@@ -682,7 +1063,7 @@ $.ajax({
           
 
         })
-      console.log(dataset)
+   
 
       // var ctx = document.getElementById('myChart').getContext('2d');
       var ctx = $("#VentasMensuales").get(0).getContext("2d");
@@ -696,7 +1077,7 @@ var myChart = new Chart(ctx, {
             
     },
     options: {
-    
+  
     scales: {
         yAxes: [{
             ticks: {
@@ -713,45 +1094,10 @@ var myChart = new Chart(ctx, {
 });
     }})
 
+
+    
+
   
-
-
-
-// 
-var ctx = $("#myCharst").get(0).getContext("2d");
-  var data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [{
-    label: '# of Votes',
-    data: [12, 19, 3, 5, 2, 200],
-    borderWidth: 1,
-    backgroundColor: ['#CB4335', '#1F618D', '#F1C40F', '#27AE60', '#884EA0', '#D35400'],
-  }]
-  };
-  function handleHover(evt, item, legend) {
-  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
-    colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
-  });
-  legend.chart.update();
-}
-function handleLeave(evt, item, legend) {
-  legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
-    colors[index] = color.length === 9 ? color.slice(0, -2) : color;
-  });
-  legend.chart.update();
-}
-  var myBarChart = new Chart(ctx,{
-    type: 'pie',
-    data: data,
-    options: {
-     plugins: {
-      legend: {
-        onHover: handleHover,
-        onLeave: handleLeave
-      }
-    }
-  }
-  })
 
   })
 
