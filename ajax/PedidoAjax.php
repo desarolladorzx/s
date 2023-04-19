@@ -634,7 +634,7 @@ switch ($_GET["op"]) {
         if (is_null($reg)) {
             echo json_encode($codigoAletorio);
         } else {
-            echo json_encode(true);
+            echo json_encode($reg);
         }
 
         break;

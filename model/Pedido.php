@@ -22,6 +22,11 @@ class Pedido
 			//exit;
 			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega')";
+			$sql="INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
+
+
+			SELECT $idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(), concat(10,max(idpedido)+1),'A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega'
+			 FROM pedido;";
 			//var_dump($sql);
 			$conexion->query($sql);
 			// echo ($sql);
@@ -698,9 +703,7 @@ order by idpersona DESC ;";
 	public function GetCodigoAleatorio($codigoAleatorio)
 	{
 		global $conexion;
-		$sql = "SELECT
-					idpedido AS idpedido
-			 		from pedido where numero = $codigoAleatorio";
+		$sql = "SELECT MAX(idpedido)+1 pedidoSiguiente FROM pedido";
 		//var_dump($sql);exit;
 		$query = $conexion->query($sql);
 		return $query;

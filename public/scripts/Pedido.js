@@ -531,10 +531,11 @@ function init() {
 
   function getCodigoAleatorio() {
     $.getJSON("./ajax/PedidoAjax.php?op=GetCodigoAleatorio", function (r) {
+      // console.log(r)
       if (r == true) {
         getCodigoAleatorio();
       } else {
-        $("#txtNumeroPed").val(r);
+        $("#txtNumeroPed").val(r.pedidoSiguiente);
       }
     });
   }
