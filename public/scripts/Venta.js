@@ -396,6 +396,9 @@ function ListadoPedidos() {
         { mDataProp: "5" },
         { mDataProp: "6" },
         { mDataProp: "7" },
+        { mDataProp: "8" },
+        { mDataProp: "9" },
+     
       ],
       ajax: {
         url: "./ajax/VentaAjax.php?op=list",
