@@ -263,16 +263,25 @@ switch ($_GET["op"]) {
                 }
             }
 
-
+            $fecha_cotizacion='';
+            if(strlen($reg->fecha)>0){
+                $fecha_cotizacion="<p><b>f. pedido : </b> $reg->fecha</p><p>";
+            }
+            $fecha_aprobacion='';
+            if(strlen($reg->fecha_apro_coti)>0){
+                $fecha_aprobacion="<p><b>f. pedido : </b> $reg->fecha_apro_coti</p><p>";
+            }
 
 
 
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
-                "2" => $reg->fecha,
+                "2" =>"$fecha_cotizacion $fecha_aprobacion  "
+              
+                ,
                 "3" => $reg->numero,
-                "4" => $reg->empleado,
+                "4" =>  explode("|", $reg->empleado)[0],
                 "5" => $reg->cliente,
                 "6" => $reg->agencia_envio,
                 "7" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO

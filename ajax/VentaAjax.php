@@ -191,11 +191,16 @@ switch ($_GET["op"]) {
 			$data[] = array(
 				"0" => $i,
 				"1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
-				"2" => $reg->fecha,
+				"2" => 
+				
+			
+				
+				"<p><b>f. pedido</b> $reg->fecha</p><p>	<b>f. aprovacion</b> $reg->fecha_apro_coti</p><p><b>f. venta</b> $reg->fecha_venta</p>"
+				,
 									
 				"3" =>"<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
 				"4" => $reg->cliente,
-				"5" => $reg->empleado,
+				"5" => explode("|", $reg->empleado)[0],
 				"6" => $reg->agencia_envio,
 			
 				// "6" => ($reg->tipo_pedido == "Pedido") ? '<span class="badge bg-blue">Pedido</span>' : (($reg->tipo_pedido == "Venta") ? '<span class="badge bg-aqua">Venta</span>' : '<span class="badge bg-green">Proforma</span>'),
