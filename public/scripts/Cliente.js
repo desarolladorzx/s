@@ -291,6 +291,50 @@ function init() {
   $("#btnNuevo").click(VerForm); // evento click de jquery que llamamos al metodo VerForm
   $("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon
 
+
+  $("#cliente_filtro").change( function() {
+    var valor = $(this).val();
+
+    console.log(valor)
+    console.log( tabla.column(11).data())
+    tabla.column(2).search(valor).draw();
+  });
+  $("#ejecutivo_filtro").change( function() {
+    var valor = $(this).val();
+   
+    tabla.column(11).search(valor).draw();
+  });
+  $("#estado_filtro").change( function() {
+    var valor = $(this).val();
+    console.log(valor)
+    tabla.column(3).search(valor).draw();
+  });
+
+  TraerRoles()
+  function TraerRoles() {
+    $.ajax({
+      url: "./ajax/ConsultasVentasAjax.php?op=listaEjecutivoComercial",
+      dataType: "json",
+  
+      success: function (s) {
+        console.log(s)
+        var lista = s;
+  
+        var html = `<option value=""></option>`;
+        lista.map((e) => {
+          html += `
+          <option value="${e.nombre.split(' ')[1]} ${e.nombre.split(' ')[0]}">${e.nombre}</option>`;
+        });
+  
+        $("#ejecutivo_filtro").html(html);
+      },
+      error: function (e) {
+        
+      },
+    });
+  }
+
+
   function SaveOrUpdate(e) {
     e.preventDefault(); // para que no se recargue la pagina
 
@@ -404,6 +448,9 @@ function init() {
   }
 }
 var tabla;
+
+
+
 var listadeClientesAsignados = [];
 function guardarSelects() {
   var selectedRows = $("#tblCliente")
@@ -466,18 +513,20 @@ function ListadoCliente() {
       },
       { mDataProp: "id" },
       { mDataProp: "1" },
+      { mDataProp: "13"},
+      { mDataProp: "14"},
+
       { mDataProp: "2" },
       { mDataProp: "3" },
       { mDataProp: "4" },
       { mDataProp: "5" },
       { mDataProp: "6" },
-      { mDataProp: "7" },
+      // { mDataProp: "7" },
       { mDataProp: "8" },
-      { mDataProp: "9" },
-      { mDataProp: "10" },
+      // { mDataProp: "9" },
+      // { mDataProp: "10" },
       { mDataProp: "vendedor_asignado" },
-      { mDataProp: "13"},
-      { mDataProp: "14"},
+  
       { mDataProp: "12" ,visible:false },
       { mDataProp: "11" },
     ],
@@ -492,6 +541,9 @@ function ListadoCliente() {
       url: "./ajax/ClienteAjax.php?op=list",
       type: "get",
       dataType: "json",
+      // success :function(e){
+      //   console.log(e)
+      // },
       error: function (e) {
         console.log(e.responseText);
       },

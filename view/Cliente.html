@@ -809,9 +809,7 @@
             </div>
           </form>
         </div>
-        <button class="btn btn-primary" id="btnNuevo">
-          <i class="fa fa-file"></i> Nuevo
-        </button>
+      
 
         <div
           id="asignarUsuario"
@@ -872,26 +870,158 @@
           </div>
         </div>
 
-        <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
-          
-          echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
-            Reasingar EV
-          </button> ';
-			
-        }else{
         
-        }
-        ?>
-       
+        <div class="row">
+         
+          <div class="col col-lg-3" >
 
+            <label for="" style="opacity: 0;">Ejecutivo de Ventas</label>
+            <div style="display: flex;">
+
+              <button class="btn btn-primary" style="margin:0 5px" id="btnNuevo">
+                <i class="fa fa-file"></i> Nuevo
+              </button>
+              
+              <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+                echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
+                  Reasignar EV
+                </button> ';
+              }
+              ?>
+            </div>
+          </div>
+            <div class="col col-lg-3">
+              <label for="">Ejecutivo de Ventas</label>
+              <select name="ejecutivo_filtro" id="ejecutivo_filtro" class="form-control">
+                
+              </select>
+            </div>
+            <div class="col col-lg-3">
+              <label for="">Tipo de cliente</label>
+              <select name="cliente_filtro" id="cliente_filtro" class="form-control">
+                <option value=""> </option>
+                <option value="final">Final</option>
+
+                <option value="Distribuidor">Distribuidor</option>
+                <option value="proveedor">Proveedor</option>
+              </select>
+            </div>
+            <div class="col col-lg-3">
+              <label for="">Estado de Cliente</label>
+              <select name="estado_filtro" id="estado_filtro" class="form-control">
+
+                <option value=""> </option>
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+                <option value="PERDIDO">PERDIDO</option>
+              </select>
+            </div>
+            
+        </div>
+        <div class="row">
+          <div class="col-lg-1 col-lg-1 col-lg-1 col-lg-1">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="form-group has-success">
+              <label>Creado por :</label>
+              <input
+                id="texto"
+                type="number"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
+            </div>
+          </div>
+
+          
+        </div>
+          
+    
         
-        <a
-          style="display: none"
-          href="ClienteClasificacion.php"
-          class="btn btn-primary"
-          id=""
-          ><i class="fa fa-file"></i> Clasificación</a
-        >
+       
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table
@@ -904,25 +1034,25 @@
             <thead>
               <tr>
                 <th></th>
+
                 <th>#</th>
                 <th>Tipo de Cliente</th>
+                <th>Estado de Cliente</th>
+                <th>Ultima Fecha de venta</th>
+                
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
                 <th>Direccion</th>
                 <th>Correo Electronico</th>
-                <th>Creado por</th>
+                <!-- <th>Creado por</th> -->
                 <th>Fecha de creación</th>
-                <th>Modificado por</th>
-                <th>Fecha de modificación</th>
-                <th>EV. Responsable</th>
+                <!-- <th>Modificado por</th> -->
+                <!-- <th>Fecha de modificación</th> -->
+                <th>EV Responsable</th>
                 <th>Estado de Cliente</th>
-                <th>Ultima Fecha de venta</th>
-                <th>Estado de Cliente</th>
-                
-
+           
                 <th>Opciones</th>
-                
               </tr>
             </thead>
 
@@ -932,19 +1062,21 @@
 
                 <th>#</th>
                 <th>Tipo de Cliente</th>
+                <th>Estado de Cliente</th>
+                <th>Ultima Fecha de venta</th>
+                
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
                 <th>Direccion</th>
                 <th>Correo Electronico</th>
-                <th>Creado por</th>
+                <!-- <th>Creado por</th> -->
                 <th>Fecha de creación</th>
-                <th>Modificado por</th>
-                <th>Fecha de modificación</th>
+                <!-- <th>Modificado por</th> -->
+                <!-- <th>Fecha de modificación</th> -->
                 <th>EV Responsable</th>
                 <th>Estado de Cliente</th>
-                <th>Ultima Fecha de venta</th>
-                <th>Estado de Cliente</th>
+           
                 <th>Opciones</th>
               </tr>
             </tfoot>

@@ -104,10 +104,6 @@ function TraerRoles() {
       });
 
       $("#cboEjecutivoComercial").html(html);
-      //   for (var i = 0; i < s.length; i++) {
-      // 	AgregarDetalleCantStock(s[i][0], s[i][1], s[i][2]);
-      //   }
-      //      Ver();
     },
     error: function (e) {
       
