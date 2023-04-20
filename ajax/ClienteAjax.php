@@ -213,7 +213,7 @@ switch ($_GET["op"]) {
 		while ($reg = $query_Tipo->fetch_object()) {
 
 			$clasificacion = $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->clasificacion;
-
+			$ultima_venta= $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->fecha;
 
 			if ($_SESSION['rol_usuario'] == "S") {
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
@@ -267,8 +267,10 @@ switch ($_GET["op"]) {
 				"8" => $reg->fecha_registro,
 				"9" => $reg->empleado_modificado,
 				"10" => $reg->fecha_modificado,
+				'13'=>$clasificacion,
 
-
+				'14'=>$ultima_venta,
+				
 				"11" => $boton_editar . ' ' . $boton_eliminar
 			);
 			$i++;

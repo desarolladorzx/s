@@ -1,16 +1,14 @@
 $(document).on("ready", init); // Inciamos el jquery
 
 function pulsar(e) {
-    if (e.shiftKey) {
-      e.preventDefault();
-      return false;
-    }
-    if ( [1,16,14,13,15].includes(e.which) && !e.shiftKey) {
-
+  if (e.shiftKey) {
+    e.preventDefault();
+    return false;
+  }
+  if ([1, 16, 14, 13, 15].includes(e.which) && !e.shiftKey) {
     e.preventDefault();
     console.log("prevented");
     return false;
-  
   }
 }
 
@@ -291,6 +289,51 @@ function init() {
   $("#btnNuevo").click(VerForm); // evento click de jquery que llamamos al metodo VerForm
   $("#btnExtraerClientes").click(buscarPorNumeroDocumento); // Evento para buscar documento por Extracioon
 
+  $("#cliente_filtro").change(function () {
+    var valor = $(this).val();
+    tabla.column(2).search(valor).draw();
+
+    llenarCantidades();
+ 
+  });
+  $("#ejecutivo_filtro").change(function () {
+    var valor = $(this).val();
+
+    tabla.column(11).search(valor).draw();
+
+    $("#cant_total_cliente").val(tabla.page.info().end);
+    llenarCantidades();
+  });
+  $("#estado_filtro").change(function () {
+    var valor = $(this).val();
+    tabla.column(3).search(valor).draw();
+    llenarCantidades();
+  });
+
+  TraerRoles();
+  function TraerRoles() {
+    $.ajax({
+      url: "./ajax/ConsultasVentasAjax.php?op=listaEjecutivoComercial",
+      dataType: "json",
+
+      success: function (s) {
+        console.log(s);
+        var lista = s;
+
+        var html = `<option value=""></option>`;
+        lista.map((e) => {
+          html += `
+          <option value="${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}">${
+            e.nombre
+          }</option>`;
+        });
+
+        $("#ejecutivo_filtro").html(html);
+      },
+      error: function (e) {},
+    });
+  }
+
   function SaveOrUpdate(e) {
     e.preventDefault(); // para que no se recargue la pagina
 
@@ -320,7 +363,7 @@ function init() {
         $("#btnNuevo").show();
         console.log("hola");
 
-        if ([17, 6].includes(Number($("#txtIdEmpleado").val()))){
+        if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
           $("#btn_asignar_vendedor").show();
         }
 
@@ -404,6 +447,55 @@ function init() {
   }
 }
 var tabla;
+
+function llenarCantidades() {
+  $("#cant_total_cliente").val(tabla.page.info().recordsDisplay);
+
+  let valoresFiltrados=tabla.rows({ search: 'applied' }).data().toArray()
+
+  console.log(valoresFiltrados)
+  
+  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("ACTIVO")
+  ).length
+
+  let clientes_inactivos=valoresFiltrados.filter(e=>e[13].includes("INACTIVO")
+  ).length
+
+  let clientes_perdidos=valoresFiltrados.filter(e=>e[13].includes("PERDIDO")
+  ).length
+
+
+
+  let clientes_FINAL=valoresFiltrados.filter(e=>e[1].includes("FINAL")
+  ).length
+
+  let clientes_final=valoresFiltrados.filter(e=>e[1].includes("Final")
+  ).length
+
+   
+  let clientes_distribuidores=valoresFiltrados.filter(e=>e[1].includes("Distribuidor")
+  ).length
+
+
+
+  let clientes_Superdistribuidores=valoresFiltrados.filter(e=>e[1].includes("Superdistribuidores")
+    ).length
+
+  let clientes_representantes=valoresFiltrados.filter(e=>e[1].includes("Representante")
+  ).length
+  
+  $('#cant_clientes_activos').val(clientes_activos)
+  $('#cant_clientes_inactivos').val(clientes_inactivos)
+  $('#cant_clientes_perdidos').val(clientes_perdidos)
+ 
+  $('#cant_clientes_finales').val(clientes_final+clientes_FINAL)
+  $('#cant_clientes_distribuidor').val(clientes_distribuidores)
+  $('#cant_clientes_Superdistribuidores').val(clientes_Superdistribuidores)
+  $('#cant_clientes_Representantes').val(clientes_representantes)
+
+
+
+}
 var listadeClientesAsignados = [];
 function guardarSelects() {
   var selectedRows = $("#tblCliente")
@@ -466,18 +558,22 @@ function ListadoCliente() {
       },
       { mDataProp: "id" },
       { mDataProp: "1" },
+      { mDataProp: "13" },
+      { mDataProp: "14" },
+
       { mDataProp: "2" },
       { mDataProp: "3" },
       { mDataProp: "4" },
       { mDataProp: "5" },
       { mDataProp: "6" },
-      { mDataProp: "7" },
+      // { mDataProp: "7" },
       { mDataProp: "8" },
-      { mDataProp: "9" },
-      { mDataProp: "10" },
+      // { mDataProp: "9" },
+      // { mDataProp: "10" },
       { mDataProp: "vendedor_asignado" },
-      { mDataProp: "11" },
+
       { mDataProp: "12", visible: false },
+      { mDataProp: "11" },
     ],
 
     select: {
@@ -493,6 +589,12 @@ function ListadoCliente() {
       error: function (e) {
         console.log(e.responseText);
       },
+    },
+    initComplete: function (settings, json) {
+      llenarCantidades()
+
+      // $("#cant_clientes_finales").val(tabla.page.info())
+
     },
     bDestroy: true,
   });
@@ -650,7 +752,6 @@ function cargarDataCliente(
 
   $("#txtDireccion_Referencia").val(direccion_referencia);
 
-  console.log(newClasifiacion);
   $("#txtClasificacion").val(newClasifiacion);
 
   // console.log(tipo_persona)

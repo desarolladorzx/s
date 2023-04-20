@@ -326,7 +326,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-		
+		/* limit 1000 */
 ;
 		";
 
@@ -613,6 +613,7 @@ iddistrito_factura='$iddistrito_factura'
 		$sql = "	SELECT 
 				idpersona ,
 				tipo_persona,
+				venta.fecha,
 			CASE 
 				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
 					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 

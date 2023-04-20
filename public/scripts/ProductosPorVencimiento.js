@@ -10,7 +10,7 @@ function init(){
         ))
 
     function ListadoStockArticuloVencimiento(){
-			console.log($('#fecha_inicio_vencimiento').val())
+			
 		    var idsucursal = $("#txtIdSucursal").val();
             			
             var tabla = $('#tblStockArticulosVencimiento').dataTable(

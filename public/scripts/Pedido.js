@@ -531,10 +531,11 @@ function init() {
 
   function getCodigoAleatorio() {
     $.getJSON("./ajax/PedidoAjax.php?op=GetCodigoAleatorio", function (r) {
+      // console.log(r)
       if (r == true) {
         getCodigoAleatorio();
       } else {
-        $("#txtNumeroPed").val(r);
+        $("#txtNumeroPed").val(r.pedidoSiguiente);
       }
     });
   }
@@ -784,18 +785,25 @@ function ListadoVenta() {
       aoColumns: [
         {
           mDataProp: "0",
+          sClass: "text-center",
         },
         {
           mDataProp: "1",
+          sClass: "text-center",
         },
+
+   
         {
           mDataProp: "2",
+          sClass: "text-center",
         },
         {
           mDataProp: "3",
+          sClass: "text-center",
         },
         {
           mDataProp: "4",
+          sClass: "text-center",
         },
         {
           mDataProp: "5",
@@ -803,12 +811,20 @@ function ListadoVenta() {
         },
         {
           mDataProp: "6",
+          sClass: "text-center",
         },
         {
           mDataProp: "7",
+          sClass: "text-center",
         },
         {
           mDataProp: "8",
+          sClass: "text-center",
+        },
+        {
+          mDataProp: "9",
+          sClass: "text-center",
+
         },
         // {
         //   mDataProp: "9",

@@ -263,20 +263,30 @@ switch ($_GET["op"]) {
                 }
             }
 
-
+            $fecha_cotizacion='';
+            if(strlen($reg->fecha)>0){
+                $fecha_cotizacion="<p><b>f. pedido : </b> $reg->fecha</p><p>";
+            }
+            $fecha_aprobacion='';
+            if(strlen($reg->fecha_apro_coti)>0){
+                $fecha_aprobacion="<p><b>f. pedido : </b> $reg->fecha_apro_coti</p><p>";
+            }
 
 
 
             $data[] = array(
                 "0" => $i,
-                "1" => $reg->fecha,
-                "2" => $reg->numero,
-                "3" => $reg->empleado,
-                "4" => $reg->cliente,
-                "5" => $reg->tipo_pedido,
-                "6" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
-                "7" => $reg->estado,
-                "8" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
+                "1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
+                "2" =>"$fecha_cotizacion $fecha_aprobacion  "
+              
+                ,
+                "3" => $reg->numero,
+                "4" =>  explode("|", $reg->empleado)[0],
+                "5" => $reg->cliente,
+                "6" => $reg->agencia_envio,
+                "7" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+                "8" => $reg->estado,
+                "9" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
                 ,\'' . $reg->tipo_entrega . '\'
 
                 
@@ -634,7 +644,7 @@ switch ($_GET["op"]) {
         if (is_null($reg)) {
             echo json_encode($codigoAletorio);
         } else {
-            echo json_encode(true);
+            echo json_encode($reg);
         }
 
         break;

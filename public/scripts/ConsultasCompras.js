@@ -32,7 +32,7 @@ function init() {
 			type: "GET",
 			success: function (data) {
 				let response=JSON.parse(data)
-				console.log(response)
+			
 				let textValueCategoria='<option value=""></option>';
 				  response.map(e=>{
 					textValueCategoria+=`<option ${e.idcategoria}>${e.nombre} ${e.apellido}</option>`

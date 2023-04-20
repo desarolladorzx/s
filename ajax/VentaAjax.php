@@ -190,14 +190,24 @@ switch ($_GET["op"]) {
 			}
 			$data[] = array(
 				"0" => $i,
-				"1" => $reg->fecha,
-				"2" => $reg->ticket,
-				"3" => $reg->cliente,
-				"4" => ($reg->tipo_pedido == "Pedido") ? '<span class="badge bg-blue">Pedido</span>' : (($reg->tipo_pedido == "Venta") ? '<span class="badge bg-aqua">Venta</span>' : '<span class="badge bg-green">Proforma</span>'),
+				"1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
+				"2" => 
+				
+			
+				
+				"<p><b>f. pedido</b> $reg->fecha</p><p>	<b>f. aprovacion</b> $reg->fecha_apro_coti</p><p><b>f. venta</b> $reg->fecha_venta</p>"
+				,
+									
+				"3" =>"<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
+				"4" => $reg->cliente,
+				"5" => explode("|", $reg->empleado)[0],
+				"6" => $reg->agencia_envio,
+			
+				// "6" => ($reg->tipo_pedido == "Pedido") ? '<span class="badge bg-blue">Pedido</span>' : (($reg->tipo_pedido == "Venta") ? '<span class="badge bg-aqua">Venta</span>' : '<span class="badge bg-green">Proforma</span>'),
 				//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
-				"5" => $reg_total->Total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
-				"6" => ($reg->estado == "A") ? '<span class="badge bg-green">ACTIVO</span>' : '<span class="badge bg-red">CANCELADO</span>',
-				"7" => ($reg->estado == "A") ? '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+				"7" => $reg_total->Total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
+				"8" => ($reg->estado == "A") ? '<span class="badge bg-green">ACTIVO</span>' : '<span class="badge bg-red">CANCELADO</span>',
+				"9" => ($reg->estado == "A") ? '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
 
 					/* '<button class="btn btn-warning" data-toggle="tooltip" title="Anular VENTASASSS" onclick="cancelarPedido('.$reg->idpedido.')" ><i class="fa fa-times-circle"></i> </button>&nbsp'. */
 					'<a href="./Reportes/exTicket.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>' . $buttonSucursal . '' . $butonAnular . '
