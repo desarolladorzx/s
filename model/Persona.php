@@ -613,6 +613,7 @@ iddistrito_factura='$iddistrito_factura'
 		$sql = "	SELECT 
 				idpersona ,
 				tipo_persona,
+				venta.fecha,
 			CASE 
 				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
 					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
