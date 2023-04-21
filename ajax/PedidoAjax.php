@@ -265,11 +265,11 @@ switch ($_GET["op"]) {
 
             $fecha_cotizacion='';
             if(strlen($reg->fecha)>0){
-                $fecha_cotizacion="<p><b>f. pedido : </b> $reg->fecha</p><p>";
+                $fecha_cotizacion="<p>$reg->fecha <b>| EV</b></p><p>";
             }
             $fecha_aprobacion='';
             if(strlen($reg->fecha_apro_coti)>0){
-                $fecha_aprobacion="<p><b>f. pedido : </b> $reg->fecha_apro_coti</p><p>";
+                $fecha_aprobacion="<p>$reg->fecha_apro_coti <b>| JV</b></p><p>";
             }
 
 
