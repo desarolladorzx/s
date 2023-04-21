@@ -299,7 +299,7 @@ function init() {
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
 
-    tabla.column(11).search(valor).draw();
+    tabla.column(11).search(`^${valor}$`, true, false).draw();
 
     $("#cant_total_cliente").val(tabla.page.info().end);
     llenarCantidades();
@@ -323,7 +323,7 @@ function init() {
         var html = `<option value=""></option>`;
         lista.map((e) => {
           html += `
-          <option value="${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}">${e.nombre.split(" ")[2]?e.nombre.split(" ")[2]:''} ${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}</option>`;
+          <option value="${e.nombre}">${e.nombre}</option>`;
         });
 
         $("#ejecutivo_filtro").html(html);
