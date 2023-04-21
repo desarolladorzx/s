@@ -252,6 +252,9 @@ switch ($_GET["op"]) {
 
 			$boton_eliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>';
 
+			if($clasificacion=='ACTIVO'){
+				$clasificacion='-ACTIVO';
+			}
 			$data[] = array(
 				"id" => $i,
 				"0" => '',

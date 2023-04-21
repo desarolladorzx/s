@@ -323,9 +323,7 @@ function init() {
         var html = `<option value=""></option>`;
         lista.map((e) => {
           html += `
-          <option value="${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}">${
-            e.nombre
-          }</option>`;
+          <option value="${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}">${e.nombre.split(" ")[2]?e.nombre.split(" ")[2]:''} ${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}</option>`;
         });
 
         $("#ejecutivo_filtro").html(html);
@@ -456,7 +454,7 @@ function llenarCantidades() {
 
   console.log(valoresFiltrados)
   
-  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("ACTIVO")
+  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("-ACTIVO")
   ).length
 
   let clientes_inactivos=valoresFiltrados.filter(e=>e[13].includes("INACTIVO")
