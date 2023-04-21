@@ -153,7 +153,7 @@ type="button"
         "14" => $reg->precio_compra,
         "15" => $reg->proveedor,
         "16" => $reg->area,
-        "17" => $reg->gestionado_por,
+        "17" => $reg->usado_por,
 
         // "18" => $reg->area,
 

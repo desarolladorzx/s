@@ -299,7 +299,7 @@ function init() {
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
 
-    tabla.column(11).search(valor).draw();
+    tabla.column(11).search(`^${valor}$`, true, false).draw();
 
     $("#cant_total_cliente").val(tabla.page.info().end);
     llenarCantidades();
@@ -323,9 +323,7 @@ function init() {
         var html = `<option value=""></option>`;
         lista.map((e) => {
           html += `
-          <option value="${e.nombre.split(" ")[1]} ${e.nombre.split(" ")[0]}">${
-            e.nombre
-          }</option>`;
+          <option value="${e.nombre}">${e.nombre}</option>`;
         });
 
         $("#ejecutivo_filtro").html(html);
@@ -359,9 +357,13 @@ function init() {
         //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
         //swal("Mensaje del Sistema", r, "success");
         OcultarForm();
+        
 
         $("#btnNuevo").show();
-        console.log("hola");
+       
+        $('.container_info_filtro').show()
+
+        $('.container_info_filtro input').val('')
 
         if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
           $("#btn_asignar_vendedor").show();
@@ -377,6 +379,7 @@ function init() {
           },
           function () {
             // location.reload();
+            // window.location.href = "Cliente.php";
           }
         );
       }
@@ -423,6 +426,7 @@ function init() {
 
   function VerForm() {
     btnNuevo;
+    $('.container_info_filtro').hide()
     $("#VerForm").show(); // Mostramos el formulario
     //$("#btnNuevo").hide();// ocultamos el boton nuevo
     $("#VerListado").hide();
@@ -455,7 +459,7 @@ function llenarCantidades() {
 
   console.log(valoresFiltrados)
   
-  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("ACTIVO")
+  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("-ACTIVO")
   ).length
 
   let clientes_inactivos=valoresFiltrados.filter(e=>e[13].includes("INACTIVO")
@@ -698,10 +702,11 @@ function cargarDataCliente(
   direccion_antigua,
 
   idempleado_asignado,
-  empleado_asignado
+  empleado_asignado,
+  disabled
 ) {
-  console.log(direccion_antigua);
-  $("#btn_asignar_vendedor").hide();
+
+ 
   $("#txt_empleado_asignado").val(empleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
@@ -795,8 +800,10 @@ function cargarDataCliente(
 
     $("#panel_rbg_habilitado").show(200);
     $("#panel_rbg_desabilitado").hide(200);
-
-    $("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+    if(genero){
+      
+      $("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+    }
   } else if ($("#hdn_rol_usuario").val() == "A") {
     // USUARIO / TRABAJADOR
 
@@ -810,6 +817,14 @@ function cargarDataCliente(
     $("#optionsRadios_id_edit").val(genero);
 
     $("input[name=optionsRadios]").prop("disabled", true);
+  }
+
+
+  $('.container_info_filtro').hide()
+  if(disabled=='disabled'){
+    $('#button_registrar_nuevo_cliente').hide()
+    $("input").prop("disabled", true);
+    $("select").prop("disabled", true);
   }
 
   //PROBLEMA CUANDO SE EDITA UN CLIENTE
@@ -853,6 +868,9 @@ function cargarDataCliente(
 			$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", true);
 			$('#cboTipo_Documento option[value="CE"]').attr("disabled", true);*/
   }
+
+
+  
 }
 
 function buscarPorNumeroDocumento() {

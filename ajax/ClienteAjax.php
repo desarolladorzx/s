@@ -233,7 +233,7 @@ switch ($_GET["op"]) {
 
 				)"><i class="fa fa-pencil"></i> </button>';
 			} else {
-				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
+				$boton_editar = '<button class="btn btn-warning"  data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
 				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
 
 				,\'' . $reg->ubicacion_factura . '\'
@@ -252,6 +252,9 @@ switch ($_GET["op"]) {
 
 			$boton_eliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>';
 
+			if($clasificacion=='ACTIVO'){
+				$clasificacion='-ACTIVO';
+			}
 			$data[] = array(
 				"id" => $i,
 				"0" => '',
@@ -271,7 +274,24 @@ switch ($_GET["op"]) {
 
 				'14'=>$ultima_venta,
 				
-				"11" => $boton_editar . ' ' . $boton_eliminar
+				"11" => $boton_editar . ' ' . $boton_eliminar.''.'
+				 <button class="btn btn-success"  data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
+				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
+
+				,\'' . $reg->ubicacion_factura . '\'
+				,\'' . $reg->ubicacion . '\'
+				,\'' . $reg->idubicacion_factura . '\'
+				,\'' . $reg->idubicacion . '\'
+				,\'' . $reg->direccion_referencia_factura . '\'
+				,\'' . $reg->direccion_calle_factura . '\'
+				,\'' . $reg->direccion_antigua . '\'
+
+				,\'' . $reg->idempleado_asignado . '\'
+				,\'' . $reg->empleado_asignado . '\'
+				,\'disabled\'
+				)"><i class="fa fa-eye"></i> </button>'
+				
+				
 			);
 			$i++;
 		}
