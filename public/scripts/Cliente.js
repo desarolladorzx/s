@@ -362,7 +362,7 @@ function init() {
 
         $("#btnNuevo").show();
         console.log("hola");
-
+        $('.container_info_filtro').hide()
         if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
           $("#btn_asignar_vendedor").show();
         }
@@ -423,6 +423,7 @@ function init() {
 
   function VerForm() {
     btnNuevo;
+    $('.container_info_filtro').hide()
     $("#VerForm").show(); // Mostramos el formulario
     //$("#btnNuevo").hide();// ocultamos el boton nuevo
     $("#VerListado").hide();
@@ -698,9 +699,10 @@ function cargarDataCliente(
   direccion_antigua,
 
   idempleado_asignado,
-  empleado_asignado
+  empleado_asignado,
+  disabled
 ) {
-  console.log(direccion_antigua);
+
   $("#btn_asignar_vendedor").hide();
   $("#txt_empleado_asignado").val(empleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
@@ -852,6 +854,14 @@ function cargarDataCliente(
 			$('#cboTipo_Documento option[value="RUC"]').attr("disabled", true);
 			$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", true);
 			$('#cboTipo_Documento option[value="CE"]').attr("disabled", true);*/
+  }
+
+
+  $('#button_registrar_nuevo_cliente').hide()
+  $('.container_info_filtro').hide()
+  if(disabled=='disabled'){
+    $("input").prop("disabled", true);
+    $("select").prop("disabled", true);
   }
 }
 
