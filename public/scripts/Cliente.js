@@ -357,10 +357,14 @@ function init() {
         //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
         //swal("Mensaje del Sistema", r, "success");
         OcultarForm();
+        
 
         $("#btnNuevo").show();
-        console.log("hola");
-        $('.container_info_filtro').hide()
+       
+        $('.container_info_filtro').show()
+
+        $('.container_info_filtro input').val('')
+
         if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
           $("#btn_asignar_vendedor").show();
         }
@@ -375,6 +379,7 @@ function init() {
           },
           function () {
             // location.reload();
+            // window.location.href = "Cliente.php";
           }
         );
       }
@@ -701,7 +706,7 @@ function cargarDataCliente(
   disabled
 ) {
 
-  $("#btn_asignar_vendedor").hide();
+ 
   $("#txt_empleado_asignado").val(empleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
@@ -795,8 +800,10 @@ function cargarDataCliente(
 
     $("#panel_rbg_habilitado").show(200);
     $("#panel_rbg_desabilitado").hide(200);
-
-    $("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+    if(genero){
+      
+      $("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+    }
   } else if ($("#hdn_rol_usuario").val() == "A") {
     // USUARIO / TRABAJADOR
 
@@ -810,6 +817,14 @@ function cargarDataCliente(
     $("#optionsRadios_id_edit").val(genero);
 
     $("input[name=optionsRadios]").prop("disabled", true);
+  }
+
+
+  $('.container_info_filtro').hide()
+  if(disabled=='disabled'){
+    $('#button_registrar_nuevo_cliente').hide()
+    $("input").prop("disabled", true);
+    $("select").prop("disabled", true);
   }
 
   //PROBLEMA CUANDO SE EDITA UN CLIENTE
@@ -855,12 +870,7 @@ function cargarDataCliente(
   }
 
 
-  $('#button_registrar_nuevo_cliente').hide()
-  $('.container_info_filtro').hide()
-  if(disabled=='disabled'){
-    $("input").prop("disabled", true);
-    $("select").prop("disabled", true);
-  }
+  
 }
 
 function buscarPorNumeroDocumento() {
