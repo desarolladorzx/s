@@ -86,12 +86,18 @@ switch ($_GET["op"]) {
                  echo '<tr>
                         <td>'.$reg->articulo.'</td>
                         <td>'.$reg->codigo.'</td>
+                        <td>'.$reg->lote.'</td>
                         <td>'.$reg->serie.'</td>
+
                         <td>'.$reg->descripcion.'</td>
                         <td>'.$reg->stock_ingreso.'</td>
                         <td>'.$reg->precio_compra.'</td>
                         <td>'.$reg->precio_ventadistribuidor.'</td>
                         <td>'.$reg->precio_ventapublico.'</td>
+
+                        <td>'.$reg->precio_ventasuperdistribuidor.'</td>
+                        <td>'.$reg->precio_ventarepresentante.'</td>
+
                        </tr>';
                        //<td><input type="radio" name="optProveedorBusqueda" data-nombre="'.$reg->nombre.'" id="'.$reg->idpersona.'" value="'.$reg->idpersona.'" /></td>
                  $i++; 
