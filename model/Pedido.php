@@ -111,8 +111,8 @@ class Pedido
 						inner join empleado eva on uva.idempleado=eva.idempleado
 
 						JOIN rol r_e ON r_e.r_id=e.idrol
-						JOIN rol r_eva ON r_e.r_id=eva.idrol
-						JOIN rol r_ev ON r_e.r_id=ev.idrol
+						JOIN rol r_eva ON r_eva.r_id=eva.idrol
+						JOIN rol r_ev ON r_ev.r_id=ev.idrol
 						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
@@ -364,14 +364,21 @@ class Pedido
 		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 		
 	,if(c.direccion_distrito>0 AND c.direccion_provincia>0,'',CONCAT(c.direccion_departamento ,' ', c.direccion_distrito,' ',c.direccion_provincia)) direccion_antigua
-						
-		from pedido p inner join persona c on p.idcliente = c.idpersona
 
+		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado 
 				
-						
+		from pedido p inner join persona c on p.idcliente = c.idpersona
+		
+		
+		inner join usuario uva on p.idusuario_est=uva.idusuario
+		inner join empleado eva on uva.idempleado=eva.idempleado			
 		inner join usuario u on p.idusuario=u.idusuario
 		inner join empleado e on u.idempleado=e.idempleado
 		
+
+		JOIN rol r_e ON r_e.r_id=e.idrol
+		JOIN rol r_eva ON r_eva.r_id=eva.idrol
+
 		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
 		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
 		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
