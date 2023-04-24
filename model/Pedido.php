@@ -98,6 +98,8 @@ class Pedido
 		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 
 
+		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta
+
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
@@ -108,6 +110,10 @@ class Pedido
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
 
+						JOIN rol r_e ON r_e.r_id=e.idrol
+						JOIN rol r_eva ON r_e.r_id=eva.idrol
+						JOIN rol r_ev ON r_e.r_id=ev.idrol
+						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
 
