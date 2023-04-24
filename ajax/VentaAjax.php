@@ -195,7 +195,7 @@ switch ($_GET["op"]) {
 				
 			
 				
-				"<p><b>f. pedido</b> $reg->fecha</p><p>	<b>f. aprovacion</b> $reg->fecha_apro_coti</p><p><b>f. venta</b> $reg->fecha_venta</p>"
+				"<p>$reg->fecha <b>| EV</b></p><p> $reg->fecha_apro_coti <b>| JV</b></p><p>$reg->fecha_venta <b>| JA</b></p>"
 				,
 									
 				"3" =>"<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
