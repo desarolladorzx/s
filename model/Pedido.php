@@ -427,8 +427,8 @@ class Pedido
 
 		$exepcion = "";
 		$join = "
-		left JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
-		left 
+		 JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
+		 
 		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
 		";
 
@@ -461,6 +461,8 @@ where
 
 GROUP BY persona.num_documento
 order by idpersona DESC ;";
+
+		// echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}

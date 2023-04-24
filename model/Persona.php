@@ -321,6 +321,7 @@ iddistrito_factura='$iddistrito_factura'
 		p.estado='A'
 
 		$exepcion
+	
 
 		 AND (
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
