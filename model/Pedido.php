@@ -370,14 +370,14 @@ class Pedido
 		from pedido p inner join persona c on p.idcliente = c.idpersona
 		
 		
-		inner join usuario uva on p.idusuario_est=uva.idusuario
-		inner join empleado eva on uva.idempleado=eva.idempleado			
-		inner join usuario u on p.idusuario=u.idusuario
-		inner join empleado e on u.idempleado=e.idempleado
+		left join usuario uva on p.idusuario_est=uva.idusuario
+		left join empleado eva on uva.idempleado=eva.idempleado			
+		left join usuario u on p.idusuario=u.idusuario
+		left join empleado e on u.idempleado=e.idempleado
 		
 
-		JOIN rol r_e ON r_e.r_id=e.idrol
-		JOIN rol r_eva ON r_eva.r_id=eva.idrol
+		left JOIN rol r_e ON r_e.r_id=e.idrol
+		left JOIN rol r_eva ON r_eva.r_id=eva.idrol
 
 		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
 		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
