@@ -455,17 +455,17 @@ function ConsultarDetalles() {
     $("table#tblDetalleIngreso").append(
       "<tr><td>" +
         data[pos][1] +
-        " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" +
+        " <input class='form-control' required type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" +
         data[pos][0] +
-        "' /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
+        "' /></td><td><input class='form-control' required type='text' onkeyup='Modificar(" +
         pos +
         ");' name='txtCodgo' id='txtCodgo[]' value='" +
         data[pos][2] +
-        "' /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
+        "' /></td><td><input class='form-control'  required type='text' onkeyup='Modificar(" +
         pos +
-        ");' name='txtLote' id='txtLote[]' value='" +
+        ");' name='txtLote' required id='txtLote[]' value='" +
         data[pos][10] +
-        "' /></td><td><input class='form-control' type='date' name='txtSeries' onkeyup='Modificar(" +
+        "' /></td><td><input required class='form-control' type='date' name='txtSeries' onkeyup='Modificar(" +
         pos +
         ");' id='txtSeries[]'  value='" +
         data[pos][3] +
@@ -473,31 +473,31 @@ function ConsultarDetalles() {
         pos +
         ");' id='txtDescripcion[]' value='" +
         data[pos][4] +
-        "' /></td><td><input class='form-control' type='text' onkeypress='return justNumbers(event);' name='txtStockIng' id='txtStockIng[]'   value='" +
+        "' /></td><td><input class='form-control' type='text' onkeypress='return justNumbers(event);' name='txtStockIng' required id='txtStockIng[]'   value='" +
         data[pos][5] +
         "' onkeyup='calcularTotal(" +
         pos +
-        ");' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioComp' id='txtPrecioComp[]'  value='" +
+        ");' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioComp' required id='txtPrecioComp[]'  value='" +
         data[pos][6] +
         "' onkeyup='calcularTotal(" +
         pos +
         ");' required /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
         pos +
-        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentaP' id='txtPrecioVentaP[]'  value='" +
+        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentaP' required id='txtPrecioVentaP[]'  value='" +
         data[pos][8] +
         "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
-        ");' name='txtPrecioVentD' id='txtPrecioVentD[]' value='" +
+        ");' name='txtPrecioVentD' required id='txtPrecioVentD[]' value='" +
         data[pos][7] +
         "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
         ");' name='txtPrecioVentaSD' id='txtPrecioVentaSD[]' value='" +
         data[pos][11] +
-        "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
+        "' required /></td><td><input required class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
         ");' name='txtPrecioVentaR' id='txtPrecioVentaR[]' value='" +
         data[pos][12] +
-        "' required /></td><td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" +
+        "' required /></td><td WIDTH='100'><button type='button'  data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" +
         pos +
         ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" +
         data[pos][0] +
