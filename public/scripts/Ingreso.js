@@ -483,12 +483,12 @@ function ConsultarDetalles() {
         pos +
         ");' required /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
         pos +
-        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentD' id='txtPrecioVentD[]'  value='" +
-        data[pos][7] +
+        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentaP' id='txtPrecioVentaP[]'  value='" +
+        data[pos][8] +
         "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
-        ");' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" +
-        data[pos][8] +
+        ");' name='txtPrecioVentD' id='txtPrecioVentD[]' value='" +
+        data[pos][7] +
         "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
         ");' name='txtPrecioVentaSD' id='txtPrecioVentaSD[]' value='" +
