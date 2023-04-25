@@ -6,16 +6,14 @@ var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
 
+let tipo_persona = "";
+var tabla;
 function init() {
-
   // $('#idbtnRegistar').prop('disabled', true);
 
-
-  $('#cboTipoComprobante').change(
-    function(){
-      $('#idbtnRegistar').prop('disabled', false);
-    }
-  )
+  $("#cboTipoComprobante").change(function () {
+    $("#idbtnRegistar").prop("disabled", false);
+  });
 
   var total = 0.0;
   //GetNextNumero();
@@ -67,6 +65,21 @@ function init() {
 
     var opt = $("input[type=radio]:checked");
     $("#txtIdCliente").val(opt.val());
+
+    tipo_persona = opt.attr("tipo_persona");
+
+    $('#btnBuscarCliente').prop('disabled',true)
+
+    // $('#btnBuscarCliente').hide()
+    // for (var i = 0; i < columnas.length; i++) {
+    //   if (['10','12','11'].includes(columnas[i].mDataProp)) {
+    //     columnas[i].visible = false;
+    //     break;
+    //   }
+    // }
+
+    // tabla.columns.adjust().draw();
+
     $("#txtCliente").val(opt.attr("data-nombre"));
     email = opt.attr("data-email");
 
@@ -208,10 +221,6 @@ function init() {
 
   function GuardarPedido(e) {
     e.preventDefault();
-
-
- 
-
 
     if ($("#txtIdCliente").val() != "") {
       if (elementos.length > 0) {
@@ -652,8 +661,46 @@ function init() {
   }
 
   function AbrirModalDetPed() {
+    console.log("hola");
+
+    let valores = {
+      publico: true,
+      distribuidor: true,
+      superdistribuidor: true,
+      representante: true,
+    };
+
+    if (tipo_persona.length > 0) {
+     
+      if (tipo_persona == "FINAL") {
+        valores.publico = true;
+        valores.distribuidor = false;
+        valores.superdistribuidor = false;
+        valores.representante = false;
+      }else if(tipo_persona == "Distribuidor"){
+        valores.publico = false;
+        valores.distribuidor = true;
+        valores.superdistribuidor = false;
+        valores.representante = false;
+      }else if(tipo_persona == "superdistribuidor"){
+        valores.publico = false;
+        valores.distribuidor = false;
+        valores.superdistribuidor = true;
+        valores.representante = false;
+      }else if(tipo_persona == "representante"){
+        valores.publico = false;
+        valores.distribuidor = false;
+        valores.superdistribuidor = false;
+        valores.representante = true;
+      }
+    } else {
+      valores.publico = true;
+      valores.distribuidor = true;
+      valores.superdistribuidor = true;
+      valores.representante = true;
+    }
     $("#modalListadoArticulosPed").modal("show");
-    var tabla = $("#tblArticulosPed")
+    tabla = $("#tblArticulosPed")
       .dataTable({
         aProcessing: true,
         aServerSide: true,
@@ -664,6 +711,7 @@ function init() {
         aoColumns: [
           {
             mDataProp: "0",
+            visible:tipo_persona.length>0?true:false
           },
           {
             mDataProp: "1",
@@ -688,6 +736,20 @@ function init() {
           },
           {
             mDataProp: "8",
+            // visible: valores.publico,
+          },
+          {
+            mDataProp: "10",
+
+            // visible: valores.distribuidor,
+          },
+          {
+            mDataProp: "11",
+            // visible: valores.superdistribuidor,
+          },
+          {
+            mDataProp: "12",
+            // visible: valores.superdistribuidor,
           },
           {
             mDataProp: "9",
@@ -703,8 +765,29 @@ function init() {
           },
         },
         bDestroy: true, //funcion que causa problemas en el rendimiento
+        createdRow: function (row, data, index) {
+          
+          if(tipo_persona=='FINAL'){
+
+            $(row).find("td:eq(8)").addClass('bg-info'); 
+
+          }else if (tipo_persona=='Distribuidor'){
+            $(row).find("td:eq(9)").addClass('bg-info'); 
+          }else if (tipo_persona=='superDistribuidor'){
+            $(row).find("td:eq(10)").addClass('bg-info'); 
+          }else if (tipo_persona=='Representante'){
+            $(row).find("td:eq(11)").addClass('bg-info'); 
+          }
+
+        }
       })
       .DataTable();
+      tabla.column(1).nodes().to$().css('background-color', 'blue')
+      // var columna2 = tabla.column(2);
+
+      // columna2.nodes().to$().css("background-color", "blue");
+
+
   }
 
   function AgregatStockCant(idPedido) {
@@ -792,7 +875,6 @@ function ListadoVenta() {
           sClass: "text-center",
         },
 
-   
         {
           mDataProp: "2",
           sClass: "text-center",
@@ -824,7 +906,6 @@ function ListadoVenta() {
         {
           mDataProp: "9",
           sClass: "text-center",
-
         },
         // {
         //   mDataProp: "9",
@@ -1508,20 +1589,59 @@ function AgregarPedCarrito(
   serie,
   precio_venta,
   idart,
-  marca
+  marca,
+  precio_ventadistribuidor,
+  precio_ventarepresentante,
+  precio_ventasuperdistribuidor
+
 ) {
   if (stock_actual > 0) {
+
+    let confirmarElProducto=true
+      var datos=tabla.rows().data()
+
+      datos.map(element=>{
+       if(element[4]==art
+        ){
+          var fechaselecionada = new Date(serie+'T00:00:00');
+
+          var fecha1 = new Date(element[6]+'T00:00:00');
+     
+         
+          if(fecha1.getTime()<fechaselecionada.getTime()){
+             confirmarElProducto = confirm('existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto')
+          }
+
+        } 
+      })
     //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
     //elementos.push(detalles);
     //console.log(detalles);
 
     //let elementosSearch = [];
 
+    if(confirmarElProducto){
+      let precio_a_vender=precio_venta
+    if(tipo_persona=='FINAL'){
+      precio_a_vender=precio_venta
+    }else if (tipo_persona=='Distribuidor'){
+      precio_a_vender=precio_ventadistribuidor 
+
+    }else if (tipo_persona=='SuperDistribuidor'){
+      precio_a_vender=precio_ventasuperdistribuidor 
+
+    }else if (tipo_persona=='Representante'){
+      precio_a_vender=precio_ventarepresentante 
+
+    }else{
+      precio_a_vender=precio_venta
+    }
+
     var data = JSON.parse(objinit.consultar());
     var detalles = new Array(
       iddet_ing,
       art,
-      precio_venta,
+      precio_a_vender,
       "1",
       "0.0",
       stock_actual,
@@ -1546,6 +1666,10 @@ function AgregarPedCarrito(
     //console.log(data);
 
     ConsultarDetallesPed();
+
+    confirmarElProducto=false
+    }
+    
   } else {
     bootbox.alert("No se puede agregar al detalle. No tiene stock");
   }

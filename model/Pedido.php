@@ -487,7 +487,7 @@ order by idpersona DESC ;";
 	END	
 		AS estado_n
 		
-	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
+	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,di.precio_ventadistribuidor,di.precio_ventarepresentante,di.precio_ventasuperdistribuidor,
 			i.idsucursal,razon_social  
 						from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 						inner join articulo a on di.idarticulo = a.idarticulo
