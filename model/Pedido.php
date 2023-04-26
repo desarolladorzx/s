@@ -386,7 +386,8 @@ class Pedido
 		where p.idsucursal =  $idsucursal
 		and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 
-		//var_dump($sql);exit;
+		// echo $sql;
+		// exit;
 
 		$query = $conexion->query($sql);
 		return $query;

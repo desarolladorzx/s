@@ -40,7 +40,7 @@
 						WHERE idarticulo = $idarticulo";
 			$query = $conexion->query($sql);
 
-			echo $sql;
+			// echo $sql;
 			return $query;
 		}
 		

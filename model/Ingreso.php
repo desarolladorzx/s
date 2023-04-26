@@ -35,10 +35,8 @@ class Ingreso
 				$sql_detalle = "INSERT INTO detalle_ingreso(
 					idingreso, idarticulo, codigo, serie, descripcion, stock_ingreso, stock_actual, precio_compra, precio_ventadistribuidor, precio_ventapublico,
 					estado_detalle_ingreso,
-					
-					precio_ventasuperdistribuidor
-					,precio_ventarepresentante,
-
+					precio_ventasuperdistribuidor,
+					precio_ventarepresentante,
 					lote
 					)
                                             VALUES($idingreso, " . $valor[0] . ", '" . $valor[1] . "', '" . $valor[2] . "', '" . $valor[3] . "', " . $valor[4] . ", " . $valor[4] . ", " . $valor[6] . ", " . $valor[7] . ", " . $valor[8] . ",'INGRESO',
