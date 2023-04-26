@@ -42,10 +42,10 @@ class Ingreso
 					lote
 					)
                                             VALUES($idingreso, " . $valor[0] . ", '" . $valor[1] . "', '" . $valor[2] . "', '" . $valor[3] . "', " . $valor[4] . ", " . $valor[4] . ", " . $valor[6] . ", " . $valor[7] . ", " . $valor[8] . ",'INGRESO',
-											" . $valor[9] . ", " . $valor[10] . ", " . $valor[11] . ")";
+											" . $valor[9] . ", " . $valor[10] . ", '" . $valor[11] . "')";
 				$conexion->query($sql_detalle) or $sw = false;
 
-
+				// echo $sql_detalle;
 				// $sql_stock_producto = "SELECT
 				// i.fecha,di.stock_actual AS stockActual,di.idarticulo,di.iddetalle_ingreso AS iddetalle_ingreso
 				// FROM detalle_ingreso di

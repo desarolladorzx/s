@@ -26,7 +26,7 @@ function init(){
 			e.preventDefault();
 
 	        var formData = new FormData($("#frmArticulos")[0]);
-
+			console.log($("#frmArticulos")[0])
 	        $.ajax({
 
 	                url: "./ajax/ArticuloAjax.php?op=SaveOrUpdate",
@@ -132,7 +132,14 @@ function eliminarArticulo(id){
 	})
 }
 
-function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, nombre, descripcion, imagen,stock_min){
+function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, nombre, descripcion, imagen,stock_min
+	,precio_compra
+	,precio_final
+	,precio_distribuidor
+	,precio_superdistribuidor
+	,precio_representante
+	
+	){
 		$("#VerForm").show();
 		$("#btnNuevo").hide();
 		$("#VerListado").hide();
@@ -148,6 +155,15 @@ function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, n
 
 		$("#txtStockMinimo").val(stock_min);
 
-	    $("#txtRutaImgArt").show();
+		$("#txtprecio_compra").val(precio_compra);
+		$("#txtprecio_final").val(precio_final);
+		$("#txtprecio_distribuidor").val(precio_distribuidor);
+		$("#txtprecio_superdistribuidor").val(precio_superdistribuidor);
+		$("#txtprecio_representante").val(precio_representante);
+
+
+	    // $("#txtRutaImgArt").show();
+	    // $("#txtRutaImgArt").show();
+
 	    //$("#txtRutaImgArt").prop("disabled", true);
 }

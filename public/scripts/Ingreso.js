@@ -452,7 +452,8 @@ function ConsultarDetalles() {
             detalle += "<td><input class='form-control' type='text' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" + data[pos][9] + "' onchange='calcularTotal(" + pos + ");' required /></td>";
             detalle += "<td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" + pos + ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" + data[pos][0] + ",\"" + data[pos][1] +"\",\"" + data[pos][2] + "\",\"" + "" + "\",\"" + data[pos][4] + "\",\"" + data[pos][5] + "\",\"" + data[pos][6] + "\",\"" + data[pos][7] + "\",\"" + data[pos][8] + "\",\"" + data[pos][9] + "\",\"" + pos + "\")' class='btn btn-success'><i class='fa fa-plus' ></i> </button></td></tr>";
  */
-    $("table#tblDetalleIngreso").append(
+            var hoy = new Date().toISOString().split('T')[0];
+            $("table#tblDetalleIngreso").append(
       "<tr><td>" +
         data[pos][1] +
         " <input class='form-control' required type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" +
@@ -465,7 +466,7 @@ function ConsultarDetalles() {
         pos +
         ");' name='txtLote' required id='txtLote[]' value='" +
         data[pos][10] +
-        "' /></td><td><input required class='form-control' type='date' name='txtSeries' onkeyup='Modificar(" +
+        "' /></td><td><input required class='form-control' type='date' min='"+hoy+"' name='txtSeries' onkeyup='Modificar(" +
         pos +
         ");' id='txtSeries[]'  value='" +
         data[pos][3] +
@@ -828,8 +829,10 @@ function AgregarDetalleCarrito(
   ConsultarDetalles();
 }
 
-function Agregar(id, art) {
+function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante) {
   console.log('hola qu hace')
+
+  console.log( art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante)
  let error 
   elementos.map(e=>{
     if(e[0]==id){ 
@@ -837,7 +840,8 @@ function Agregar(id, art) {
     }
   })
   if(!error){
-    AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0", "" ,"0.0", "0.0");
+    // AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0", "" ,"0.0", "0.0");
+    AgregarDetalleCarrito(id, art, "", "", "", "1", precio_compra, precio_distribuidor,precio_final,' ' ,'  ' ,precio_superdistribuidor, precio_representante);
   }else{
     alert("El producto elegido ya se encuentra ingresado en la lista...");
   }
