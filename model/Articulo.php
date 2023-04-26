@@ -6,20 +6,41 @@
 		public function __construct(){
 		}
 
-		public function Registrar($idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo){
+		public function Registrar($idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante){
 			global $conexion;
-			$sql = "INSERT INTO articulo(idmarca, idcategoria,idunidad_medida, nombre, descripcion, imagen, estado,stock_min)
-						VALUES($idmarca, $idcategoria, $idunidad_medida, '$nombre','$descripcion', '$imagen', 'A',$stockMinimo)";
+			$sql = "INSERT INTO articulo(idmarca, idcategoria,idunidad_medida, nombre, descripcion, imagen, estado,stock_min,
+			
+			precio_compra,precio_final,precio_distribuidor,
+			precio_superdistribuidor,precio_representante
+			)
+						VALUES($idmarca, $idcategoria, $idunidad_medida, '$nombre','$descripcion', '$imagen', 'A',$stockMinimo,
+						'$precio_compra',
+						'$precio_final',
+						'$precio_distribuidor',
+						'$precio_superdistribuidor',
+						'$precio_representante'
+						)";
 			$query = $conexion->query($sql);
 			return $query;
 		}
 		
-		public function Modificar($idarticulo, $idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo){
+		public function Modificar($idarticulo, $idmarca, $idcategoria,  $idunidad_medida, $nombre, $descripcion, $imagen,$stockMinimo,
+		
+		$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+		
+
+		){
 			global $conexion;
 			$sql = "UPDATE articulo set idmarca = $idmarca, idcategoria = $idcategoria, idunidad_medida = $idunidad_medida, nombre = '$nombre',
 						descripcion = '$descripcion', imagen = '$imagen',stock_min='$stockMinimo'
+
+						,precio_compra='$precio_compra',
+						precio_final='$precio_final',				precio_distribuidor='$precio_distribuidor'					,precio_superdistribuidor='$precio_superdistribuidor',						precio_representante='$precio_representante'
+
 						WHERE idarticulo = $idarticulo";
 			$query = $conexion->query($sql);
+
+			// echo $sql;
 			return $query;
 		}
 		

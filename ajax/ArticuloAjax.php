@@ -11,13 +11,23 @@
 		case 'SaveOrUpdate':
 
 			$stockMinimo = $_POST["txtStockMinimo"];
-
-
 			$idcategoria = $_POST["cboCategoria"];
 			$idmarca = $_POST["cboMarca"];
 			$idunidad_medida = $_POST["cboUnidadMedida"];
 			$nombre = $_POST["txtNombre"];
 			$descripcion = $_POST["txtDescripcion"];
+
+
+			$precio_compra = $_POST["txtprecio_compra"];
+			$precio_final = $_POST["txtprecio_final"];
+			$precio_distribuidor = $_POST["txtprecio_distribuidor"];
+			$precio_superdistribuidor = $_POST["txtprecio_superdistribuidor"];
+			$precio_representante = $_POST["txtprecio_representante"];
+
+
+			
+			// $precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+
 			$imagen = $_FILES["imagenArt"]["tmp_name"];
 			$ruta = $_FILES["imagenArt"]["name"];
 
@@ -25,7 +35,7 @@
 
 				if(empty($_POST["txtIdArticulo"])){
 					
-					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo)){
+					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
 						echo "Articulo RegistradoN";
 					}else{
 						echo "Articulo no ha podido ser registadoON.";
@@ -33,7 +43,7 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo)){
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
 						echo "Informacion del Articulo ha sido actualizados";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
@@ -43,7 +53,9 @@
 				$ruta_img = $_POST["txtRutaImgArt"];
 				if(empty($_POST["txtIdArticulo"])){
 					
-					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo)){
+					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo,
+					$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+					)){
 						echo "Articulo RegistradA";
 					}else{
 						echo "Articulo no ha podido ser registadAN.";
@@ -51,7 +63,7 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo)){
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
 						echo "Informacion del Articulo ha sido actualizadas";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
@@ -89,6 +101,11 @@
 					"6"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
 					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
 					,\''.$reg->stock_min.'\'
+					,\''.$reg->precio_compra.'\'
+					,\''.$reg->precio_final.'\'
+					,\''.$reg->precio_distribuidor.'\'
+					,\''.$reg->precio_superdistribuidor.'\'
+					,\''.$reg->precio_representante.'\'
 					
 					)"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarArticulo('.$reg->idarticulo.')"><i class="fa fa-trash"></i> </button>');
@@ -109,7 +126,13 @@
      		while ($reg = $query_Tipo->fetch_object()) {
 
      			$data[] = array(
-     				"0"=>'<button type="button" class="btn btn-warning" data-toggle="tooltip" title="Agregar al detalle" onclick="Agregar('.$reg->idarticulo.',\''.$reg->nombre.'\')" name="optArtBusqueda[]" data-nombre="'.$reg->nombre.'" id="'.$reg->idarticulo.'" value="'.$reg->idarticulo.'" ><i class="fa fa-check" ></i> </button>',
+     				"0"=>'<button type="button" class="btn btn-warning" data-toggle="tooltip" title="Agregar al detalle" onclick="Agregar('.$reg->idarticulo.',\''.$reg->nombre.'\'
+					,\''.$reg->precio_compra.'\'
+					,\''.$reg->precio_final.'\'
+					,\''.$reg->precio_distribuidor.'\'
+					,\''.$reg->precio_superdistribuidor.'\'
+					,\''.$reg->precio_representante.'\'
+					)" name="optArtBusqueda[]" data-nombre="'.$reg->nombre.'" id="'.$reg->idarticulo.'" value="'.$reg->idarticulo.'" ><i class="fa fa-check" ></i> </button>',
      				"1"=>$i,
 					"2"=>$reg->categoria,
 					"3"=>$reg->marca,

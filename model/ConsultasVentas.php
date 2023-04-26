@@ -9,7 +9,10 @@
 
 		public function listaDeRoles(){
 			global $conexion;
-			$sql="SELECT idempleado , CONCAT(nombre,' ',apellidos) nombre FROM empleado WHERE idrol=1";
+			$sql="SELECT idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre FROM empleado
+			JOIN rol ON rol.r_id=empleado.idrol
+			
+			 WHERE idrol=1";
 			$query=$conexion->query($sql);
 			return $query;
 		}

@@ -323,7 +323,7 @@ function init() {
         var html = `<option value=""></option>`;
         lista.map((e) => {
           html += `
-          <option value="${e.nombre}">${e.nombre}</option>`;
+          <option value="${e.nombre}">${e.r_prefijo} ${e.nombre}</option>`;
         });
 
         $("#ejecutivo_filtro").html(html);

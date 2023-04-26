@@ -98,6 +98,8 @@ class Pedido
 		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 
 
+		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta
+
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
             inner join venta v on p.idpedido = v.idpedido
@@ -108,6 +110,10 @@ class Pedido
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
 
+						JOIN rol r_e ON r_e.r_id=e.idrol
+						JOIN rol r_eva ON r_eva.r_id=eva.idrol
+						JOIN rol r_ev ON r_ev.r_id=ev.idrol
+						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
 
@@ -358,14 +364,21 @@ class Pedido
 		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
 		
 	,if(c.direccion_distrito>0 AND c.direccion_provincia>0,'',CONCAT(c.direccion_departamento ,' ', c.direccion_distrito,' ',c.direccion_provincia)) direccion_antigua
-						
-		from pedido p inner join persona c on p.idcliente = c.idpersona
 
+		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado 
 				
-						
-		inner join usuario u on p.idusuario=u.idusuario
-		inner join empleado e on u.idempleado=e.idempleado
+		from pedido p inner join persona c on p.idcliente = c.idpersona
 		
+		
+		left join usuario uva on p.idusuario_est=uva.idusuario
+		left join empleado eva on uva.idempleado=eva.idempleado			
+		left join usuario u on p.idusuario=u.idusuario
+		left join empleado e on u.idempleado=e.idempleado
+		
+
+		left JOIN rol r_e ON r_e.r_id=e.idrol
+		left JOIN rol r_eva ON r_eva.r_id=eva.idrol
+
 		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
 		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
 		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
@@ -373,7 +386,8 @@ class Pedido
 		where p.idsucursal =  $idsucursal
 		and c.tipo_persona = 'Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido <> 'Venta' order by idpedido limit 0,300";
 
-		//var_dump($sql);exit;
+		// echo $sql;
+		// exit;
 
 		$query = $conexion->query($sql);
 		return $query;
@@ -421,8 +435,8 @@ class Pedido
 
 		$exepcion = "";
 		$join = "
-		left JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
-		left 
+		 JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
+		 
 		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
 		";
 
@@ -455,6 +469,8 @@ where
 
 GROUP BY persona.num_documento
 order by idpersona DESC ;";
+
+		// echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -472,7 +488,7 @@ order by idpersona DESC ;";
 	END	
 		AS estado_n
 		
-	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,
+	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,di.precio_ventadistribuidor,di.precio_ventarepresentante,di.precio_ventasuperdistribuidor,
 			i.idsucursal,razon_social  
 						from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
 						inner join articulo a on di.idarticulo = a.idarticulo

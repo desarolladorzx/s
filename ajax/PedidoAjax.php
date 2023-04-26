@@ -265,11 +265,11 @@ switch ($_GET["op"]) {
 
             $fecha_cotizacion='';
             if(strlen($reg->fecha)>0){
-                $fecha_cotizacion="<p>$reg->fecha <b>| EV</b></p><p>";
+                $fecha_cotizacion="<p>$reg->fecha <b>| $reg->prefijo_pedido</b></p><p>";
             }
             $fecha_aprobacion='';
             if(strlen($reg->fecha_apro_coti)>0){
-                $fecha_aprobacion="<p>$reg->fecha_apro_coti <b>| JV</b></p><p>";
+                $fecha_aprobacion="<p>$reg->fecha_apro_coti <b>| $reg->prefijo_estado</b></p><p>";
             }
 
 
@@ -420,7 +420,9 @@ switch ($_GET["op"]) {
         $i = 1;
         while ($reg = $query_cli->fetch_object()) {
             echo '<tr>
-                        <td><input type="radio" name="optClienteBusqueda" data-nombre="' . $reg->nombre . ' ' . $reg->apellido . ' | ' . $reg->tipo_persona . '" data-email="' . $reg->email . '" id="' . $reg->idpersona . '" value="' . $reg->idpersona . '" data-cliente="' . $reg->tipo_persona . '" data-telefono="' . $reg->telefono . '-' . $reg->telefono_2 . '" data-direccion="' . $reg->direccion_departamento . '" /></td>
+                        <td><input type="radio" name="optClienteBusqueda" data-nombre="' . $reg->nombre . ' ' . $reg->apellido . ' | ' . $reg->tipo_persona . '" data-email="' . $reg->email . '" id="' . $reg->idpersona . '" value="' . $reg->idpersona . '"
+                        tipo_persona="' .$reg->tipo_persona . '"
+                        data-cliente="' . $reg->tipo_persona . '" data-telefono="' . $reg->telefono . '-' . $reg->telefono_2 . '" data-direccion="' . $reg->direccion_departamento . '" /></td>
                         <td>' . $i . '</td>
                         <td>' . $reg->tipo_persona . '</td>
                         <td>' . $reg->num_documento . '</td>
@@ -442,15 +444,11 @@ switch ($_GET["op"]) {
 
         while ($reg = $query_cli->fetch_object()) {
 
-
             if ($_SESSION["idsucursal"] == $reg->idsucursal && $reg->estado_detalle_ingreso == 'INGRESO') {
                 $disabledButton = '';
             } else {
                 $disabledButton = 'disabled';
             }
-
-
-
             $data[] = array(
                 "0" => '<button type="button" ' . $disabledButton . '  class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
                     data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
@@ -464,7 +462,14 @@ switch ($_GET["op"]) {
                         \'' . $reg->serie . '\',
                         \'' . $reg->precio_ventapublico . '\',
                         \'' . $reg->idarticulo . '\',
-                        \'' . $reg->marca . '\')" >
+                        \'' . $reg->marca . '\'
+                        ,
+                        \'' . $reg->precio_ventadistribuidor . '\'
+                        ,
+                        \'' . $reg->precio_ventarepresentante . '\'
+                        ,
+                        \'' . $reg->precio_ventasuperdistribuidor . '\'
+                        )" >
                     <i class="fa fa-check" ></i> </button>',
                 "1" => $reg->razon_social,
                 "2" => $reg->estado_n,
@@ -475,6 +480,9 @@ switch ($_GET["op"]) {
                 //"5"=>$reg->presentacion,
                 "7" => $reg->stock_actual,
                 "8" => $reg->precio_ventapublico,
+                "10" => $reg->precio_ventadistribuidor,
+                "11" => $reg->precio_ventasuperdistribuidor ,
+                "12" => $reg->precio_ventarepresentante,
 
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );

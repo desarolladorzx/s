@@ -202,6 +202,11 @@ function init() {
     for (var key in idValueObj) {
       formData.append(key, idValueObj[key]);
     }
+    $("#registrar_nuevo_articulo_submit").prop("disabled", true);
+    $("#registrar_nuevo_articulo_submit").html(
+      `<i class="fa fa-spinner fa-spin"></i>Registrando`
+    );
+
 
     if (idValueObj.act_idactivo) {
       console.log("se esta actualizando un articulo");
@@ -213,6 +218,19 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+          inputs.forEach(function (input) {
+            input.value=''
+          });
+          textareas.forEach(function (textarea) {
+            textarea.value=''
+          });
+          select.forEach(function (textarea) {
+           textarea.value=''
+          });
+
+
+               $("#registrar_nuevo_articulo_submit").html(`<i class="fa fa-floppy-o"></i>Registrar`);
+               $("#registrar_nuevo_articulo_submit").prop("disabled", false);
           swal("Mensaje del Sistema", datos, "success");
 
           $("#VerForm").hide(); // mostramos el formulario
@@ -220,11 +238,14 @@ function init() {
           $("#VerListado").show();
 
           ListadoActivo();
+
+   
+      
+        
+          
         },
       });
     } else {
-      console.log("se esta creando un nuevo activo");
-
       $.ajax({
         url: "./ajax/ActivosAjax.php?op=guardarActivo",
         type: "POST",
@@ -233,6 +254,24 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+
+          console.log("se esta creando un nuevo activo");
+
+          inputs.forEach(function (input) {
+            input.value=''
+          });
+          textareas.forEach(function (textarea) {
+            textarea.value=''
+          });
+          select.forEach(function (textarea) {
+           textarea.value=''
+          });
+    
+    
+               $("#registrar_nuevo_articulo_submit").html(`<i class="fa fa-floppy-o"></i>Registrar`);
+               $("#registrar_nuevo_articulo_submit").prop("disabled", false);
+
+               
           $("#VerForm").hide(); // mostramos el formulario
           $("#btnNuevo").show();
           $("#VerListado").show();

@@ -92,6 +92,7 @@ function init() {
   });
 
   function Agregar() {
+   
     var idArt = document.getElementsByName("txtIdArticulo");
     var cod = document.getElementsByName("txtCodgo");
     var serie = document.getElementsByName("txtSeries");
@@ -101,6 +102,10 @@ function init() {
     var prec_ventaD = document.getElementsByName("txtPrecioVentD");
     var prec_ventaP = document.getElementsByName("txtPrecioVentaP");
 
+
+    var lote = document.getElementsByName("txtLote");
+    var prec_ventaR = document.getElementsByName("txtPrecioVentaR");
+     var prec_ventaSD = document.getElementsByName("txtPrecioVentaSD");
     //alert(idArt)
     /*
 		var idArt = document.frmIngresos.elements["txtIdArticulo[]"];
@@ -116,6 +121,7 @@ function init() {
     for (var i = 0; i < stock_ing.length; i++) {
       if (stock_ing[i].value !== "") {
         AgregarDetalleRegistrar(
+          
           idArt[i].value,
           cod[i].value,
           serie[i].value,
@@ -124,8 +130,11 @@ function init() {
           1,
           prec_comp[i].value,
           prec_ventaD[i].value,
-          prec_ventaP[i].value
-        );
+          prec_ventaP[i].value,
+          prec_ventaSD[i].value,
+          prec_ventaR[i].value,
+          lote[i].value,
+          );
       }
     }
   }
@@ -137,7 +146,9 @@ function init() {
       if ($("#cboTipoComprobanteIng").val() != "") {
         if (elementos.length > 0) {
           Agregar();
+
           var detalle = JSON.parse(consultarReg());
+          console.log(detalle)
 
           var data = {
             idUsuario: $("#txtIdUsuario").val(),
@@ -333,7 +344,10 @@ function init() {
     stock_act,
     p_compra,
     p_ventaD,
-    p_ventaP
+    p_ventaP,
+    prec_ventaSD,
+    prec_ventaR,
+    lote
   ) {
     var detallesReg = new Array(
       idart,
@@ -344,7 +358,10 @@ function init() {
       stock_act,
       p_compra,
       p_ventaD,
-      p_ventaP
+      p_ventaP,
+      prec_ventaSD,
+      prec_ventaR,
+      lote
     );
     elementosReg.push(detallesReg);
   }
@@ -412,6 +429,7 @@ function ConsultarDetalles() {
   var data = JSON.parse(objinit.consultar());
   //alert(pos)
   for (var pos in data) {
+    console.log(data)
     /*
             detalle = "<tr><td>" + data[pos][1] + " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" + data[pos][0] + "' /></td>";
             detalle += "<td><input class='form-control' type='text' onkeyup='ModificarIngreso(" + pos + ");' name='txtCodgo' id='txtCodgo[]' value='" + data[pos][2] + "' /></td>";
@@ -434,16 +452,21 @@ function ConsultarDetalles() {
             detalle += "<td><input class='form-control' type='text' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" + data[pos][9] + "' onchange='calcularTotal(" + pos + ");' required /></td>";
             detalle += "<td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" + pos + ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" + data[pos][0] + ",\"" + data[pos][1] +"\",\"" + data[pos][2] + "\",\"" + "" + "\",\"" + data[pos][4] + "\",\"" + data[pos][5] + "\",\"" + data[pos][6] + "\",\"" + data[pos][7] + "\",\"" + data[pos][8] + "\",\"" + data[pos][9] + "\",\"" + pos + "\")' class='btn btn-success'><i class='fa fa-plus' ></i> </button></td></tr>";
  */
-    $("table#tblDetalleIngreso").append(
+            var hoy = new Date().toISOString().split('T')[0];
+            $("table#tblDetalleIngreso").append(
       "<tr><td>" +
         data[pos][1] +
-        " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" +
+        " <input class='form-control' required type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" +
         data[pos][0] +
-        "' /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
+        "' /></td><td><input class='form-control' required type='text' onkeyup='Modificar(" +
         pos +
         ");' name='txtCodgo' id='txtCodgo[]' value='" +
         data[pos][2] +
-        "' /></td><td><input class='form-control' type='text' name='txtSeries' onkeyup='Modificar(" +
+        "' /></td><td><input class='form-control'  required type='text' onkeyup='Modificar(" +
+        pos +
+        ");' name='txtLote' required id='txtLote[]' value='" +
+        data[pos][10] +
+        "' /></td><td><input required class='form-control' type='date' min='"+hoy+"' name='txtSeries' onkeyup='Modificar(" +
         pos +
         ");' id='txtSeries[]'  value='" +
         data[pos][3] +
@@ -451,23 +474,31 @@ function ConsultarDetalles() {
         pos +
         ");' id='txtDescripcion[]' value='" +
         data[pos][4] +
-        "' /></td><td><input class='form-control' type='text' onkeypress='return justNumbers(event);' name='txtStockIng' id='txtStockIng[]'   value='" +
+        "' /></td><td><input class='form-control' type='text' onkeypress='return justNumbers(event);' name='txtStockIng' required id='txtStockIng[]'   value='" +
         data[pos][5] +
         "' onkeyup='calcularTotal(" +
         pos +
-        ");' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioComp' id='txtPrecioComp[]'  value='" +
+        ");' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioComp' required id='txtPrecioComp[]'  value='" +
         data[pos][6] +
         "' onkeyup='calcularTotal(" +
         pos +
         ");' required /></td><td><input class='form-control' type='text' onkeyup='Modificar(" +
         pos +
-        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentD' id='txtPrecioVentD[]'  value='" +
+        ");' onkeypress='return onKeyDecimal(event,this);' name='txtPrecioVentaP' required id='txtPrecioVentaP[]'  value='" +
+        data[pos][8] +
+        "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
+        pos +
+        ");' name='txtPrecioVentD' required id='txtPrecioVentD[]' value='" +
         data[pos][7] +
         "' required /></td><td><input class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
         pos +
-        ");' name='txtPrecioVentaP' id='txtPrecioVentaP[]' value='" +
-        data[pos][8] +
-        "' required /></td><td WIDTH='100'><button type='button' data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" +
+        ");' name='txtPrecioVentaSD' id='txtPrecioVentaSD[]' value='" +
+        data[pos][11] +
+        "' required /></td><td><input required class='form-control' type='text' onkeypress='return onKeyDecimal(event,this);' onkeyup='Modificar(" +
+        pos +
+        ");' name='txtPrecioVentaR' id='txtPrecioVentaR[]' value='" +
+        data[pos][12] +
+        "' required /></td><td WIDTH='100'><button type='button'  data-toggle='tooltip' title='Quitar Articulo del detalle' onclick='eliminarDetalle(" +
         pos +
         ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button> <button type='button' data-toggle='tooltip' title='Pulse aqui para agregar mas filas de este articulo' onclick='AgregarDetalle(" +
         data[pos][0] +
@@ -657,6 +688,11 @@ function Modificar(pos) {
   var prec_ventaD = document.getElementsByName("txtPrecioVentD");
   var prec_ventaP = document.getElementsByName("txtPrecioVentaP");
 
+  var lote = document.getElementsByName("txtLote");
+
+  var prec_ventaSD = document.getElementsByName("txtPrecioVentaSD");
+  var prec_ventaR = document.getElementsByName("txtPrecioVentaR");
+
   elementos[pos][2] = cod[pos].value;
   elementos[pos][3] = serie[pos].value;
   elementos[pos][4] = desc[pos].value;
@@ -664,6 +700,11 @@ function Modificar(pos) {
   elementos[pos][6] = prec_comp[pos].value;
   elementos[pos][7] = prec_ventaD[pos].value;
   elementos[pos][8] = prec_ventaP[pos].value;
+  
+  elementos[pos][10] = lote[pos].value;
+  elementos[pos][11] = prec_ventaSD[pos].value;
+  elementos[pos][12] = prec_ventaR[pos].value;
+
   // alert(elementos[pos][3] + " " + serie[pos].value);
   calcularIgv();
   calcularSubTotal();
@@ -763,7 +804,10 @@ function AgregarDetalleCarrito(
   stock_act,
   p_compra,
   p_ventaD,
-  p_ventaP
+  p_ventaP,
+  lote,
+  p_ventaSD,
+  p_ventaR
 ) {
   //alert(idart+' - '+nombre)
   var detalles = new Array(
@@ -776,14 +820,19 @@ function AgregarDetalleCarrito(
     stock_act,
     p_compra,
     p_ventaD,
-    p_ventaP
+    p_ventaP,
+    lote,
+    p_ventaSD,
+    p_ventaR
   );
   elementos.push(detalles);
   ConsultarDetalles();
 }
 
-function Agregar(id, art) {
-  
+function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante) {
+  console.log('hola qu hace')
+
+  console.log( art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante)
  let error 
   elementos.map(e=>{
     if(e[0]==id){ 
@@ -791,7 +840,8 @@ function Agregar(id, art) {
     }
   })
   if(!error){
-    AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0");
+    // AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0", "" ,"0.0", "0.0");
+    AgregarDetalleCarrito(id, art, "", "", "", "1", precio_compra, precio_distribuidor,precio_final,' ' ,'  ' ,precio_superdistribuidor, precio_representante);
   }else{
     alert("El producto elegido ya se encuentra ingresado en la lista...");
   }
