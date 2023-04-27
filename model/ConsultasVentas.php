@@ -7,6 +7,16 @@
 		public function __construct(){
 		}
 
+		public function listaDePersonasVendedor(){
+			global $conexion;
+			$sql="SELECT idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre FROM empleado
+			JOIN rol ON rol.r_id=empleado.idrol
+			
+			 WHERE idrol=1 or idrol=2 or idrol=3 ";
+			$query=$conexion->query($sql);
+			return $query;
+		}
+
 		public function listaDeRoles(){
 			global $conexion;
 			$sql="SELECT idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre FROM empleado
