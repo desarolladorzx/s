@@ -1,4 +1,5 @@
 $(document).on("ready", init);
+// var objinit 
 var objinit = new init();
 var bandera = 1;
 var detalleIngresos = new Array();
@@ -9,6 +10,9 @@ var email = "";
 let tipo_persona = "";
 var tabla;
 function init() {
+	console.log('pedido')
+
+
   // $('#idbtnRegistar').prop('disabled', true);
 
   $("#cboTipoComprobante").change(function () {

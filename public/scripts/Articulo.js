@@ -1,7 +1,7 @@
 $(document).on("ready", init);
 
 function init(){
-	
+	console.log('articulo')
 	var tabla = $('#tblArticulos').dataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -131,7 +131,6 @@ function eliminarArticulo(id){
 		}	
 	})
 }
-
 function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, nombre, descripcion, imagen,stock_min
 	,precio_compra
 	,precio_final
