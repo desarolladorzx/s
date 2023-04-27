@@ -116,13 +116,13 @@
             $email = "";
             $login = "";
             $mnu_almacen = 1;
-	            $mnu_compras = 1;
-	            $mnu_ventas = 1;
-	            $mnu_mantenimiento = 1;
-	            $mnu_seguridad = 1;
-	            $mnu_consulta_compras = 1;
-	            $mnu_consulta_ventas = 1;
-	            $mnu_admin = 1;
+			$mnu_compras = 1;
+	        $mnu_ventas = 1;
+	        $mnu_mantenimiento = 1;
+	        $mnu_seguridad = 1;
+	        $mnu_consulta_compras = 1;
+	        $mnu_consulta_ventas = 1;
+	        $mnu_admin = 1;
 
 	        $regConf = $query_conf->fetch_object();
 

@@ -181,7 +181,7 @@
                   </p>
                 </li>
 
-                <li class="" style="padding:5px; display: flex;justify-content: space-between;">
+                <li class="" id="container_button_sucursal_container" style="padding:5px; display: flex;justify-content: space-between;">
                  
                   
                 <?php
@@ -376,7 +376,7 @@
             </ul>
           </li>
 
-          <li class="" id="liDocumentacion">
+          <li class="treeview" id="liDocumentacion">
             <a href="#">
               <i class="fa fa-book"></i> <span> Documentacion</span>
               <small class="label pull-right bg-green">Ayuda</small>
@@ -520,8 +520,6 @@
 
                 </ul>
               </li>
-             
-
             </ul>
           </li>
 
@@ -553,6 +551,54 @@
 
     <script>
 
+
+$.get('ajax/UsuarioAjax.php?op=Container_cambiarSucursal_global',function(r){
+  $('#container_button_sucursal_container').html(r)
+})
+
+function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, superadmin, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl) {
+
+//alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
+
+var data = {
+  idusuario: idusuario,
+  idsucursal: idsucursal,
+  idempleado: idempleado,
+  empleado: empleado,
+  tipo_documento: tipo_documento,
+  tipo_usuario: tipo_usuario,
+  num_documento: num_documento,
+  direccion: direccion,
+  telefono: telefono,
+  foto: foto,
+  logo: logo,
+  email: email,
+  login: login,
+  razon_social: razon_social,
+  mnu_almacen: mnu_almacen,
+  mnu_compras: mnu_compras,
+  mnu_ventas: mnu_ventas,
+  mnu_mantenimiento: mnu_mantenimiento,
+  mnu_seguridad: mnu_seguridad,
+  mnu_consulta_compras: mnu_consulta_compras,
+  mnu_consulta_ventas: mnu_consulta_ventas,
+  mnu_admin: mnu_admin,
+  mnu_documentacion_ev: mnu_documentacion_ev,
+  mnu_documentacion_jv: mnu_documentacion_jv,
+  mnu_documentacion_ja: mnu_documentacion_ja,
+  mnu_documentacion_jl: mnu_documentacion_jl,
+  mnu_admin: mnu_admin,
+  superadmin: superadmin
+};
+
+//console.log(data)
+
+$.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
+  $(location).attr("href", "EscritorioEmp.php");
+});
+}
+
+
 function NuevoAcceder(idsucursal,razon_social){
 
 //alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
@@ -564,6 +610,8 @@ var data = {
 };
 
 //console.log(data)
+
+
 
 $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
   location.reload()
@@ -903,16 +951,14 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuVentas" value="<?php echo $_SESSION["mnu_ventas"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuMantenimiento"
               value="<?php echo $_SESSION["mnu_mantenimiento"]; ?>">
-            <input type="hidden" name="txtMnuAlmacen" id="txtMnuSeguridad"
-              value="<?php echo $_SESSION["mnu_seguridad"]; ?>">
+            <input type="hidden" name="txtMnuAlmacen" id="txtMnuSeguridad" value="<?php echo $_SESSION["mnu_seguridad"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuConsultaCompras"
               value="<?php echo $_SESSION["mnu_consulta_compras"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuConsultaVentas"
               value="<?php echo $_SESSION["mnu_consulta_ventas"]; ?>">
             
 
-              <!-- <?php echo $_SESSION["mnu_documentacion"]=1; ?>
-              <?php echo $_SESSION["mnu_documentacion_ventas"]=1; ?> -->
+            
               <input type="hidden" name="doc-txtMnuDocumentacion" id="doc-txtMnuDocumentacion" value="<?php echo $_SESSION["mnu_documentacion"]; ?>">
               <input type="hidden" name="doc-txtMnuDocVentas" id="doc-txtMnuDocVentas" value="<?php echo $_SESSION["mnu_documentacion_ventas"]; ?>">
               <input type="hidden" name="doc-txtMnuDocMarketing" id="doc-txtMnuDocMarketing" value="<?php echo $_SESSION["mnu_documentacion_marketing"]; ?>">
