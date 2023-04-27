@@ -110,9 +110,9 @@ class Pedido
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
 
-						JOIN rol r_e ON r_e.r_id=e.idrol
-						JOIN rol r_eva ON r_eva.r_id=eva.idrol
-						JOIN rol r_ev ON r_ev.r_id=ev.idrol
+						LEFT JOIN rol r_e ON r_e.r_id=e.idrol
+						LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
+						LEFT JOIN rol r_ev ON r_ev.r_id=ev.idrol
 						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
