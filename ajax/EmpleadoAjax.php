@@ -24,10 +24,19 @@
 			$login = $_POST["txtLogin"];
 			$clave = md5($_POST["txtClave"]);
 			$estado = $_POST["txtEstado"];
+
+			$cargo = $_POST["txtCargo"];
+			$fecha_ingreso = $_POST["txtfecha_ingreso"];
+			$sexo = $_POST["txtsexo"];
 			
 			if(move_uploaded_file($imagen, "../Files/Empleado/".$ruta)){
 				if(empty($_POST["txtIdEmpleado"])){
-					if($objEmpleado->Registrar($apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $clave,$estado)){
+					if($objEmpleado->Registrar($apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $clave,$estado
+					
+					,$cargo
+					,$fecha_ingreso
+					,$sexo
+					)){
 						echo "Empleado Registrado correctamente.";
 					}else{
 						echo "Empleado no ha podido ser registado.";
@@ -36,14 +45,23 @@
 					
 					if ($_POST["txtClave"] == "") {
 						$idempleado = $_POST["txtIdEmpleado"];
-						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $_POST["txtClaveOtro"], $estado)){
+						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $_POST["txtClaveOtro"], $estado
+						
+						,$cargo
+						,$fecha_ingreso
+						,$sexo
+						)){
 							echo "La información del empleado ha sido actualizada.";
 						}else{
 							echo "La información del empleado no ha podido ser actualizada.";
 						}
 					} else {
 						$idempleado = $_POST["txtIdEmpleado"];
-						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $clave, $estado)){
+						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,"Files/Empleado/".$ruta, $login, $clave, $estado
+						,$cargo
+						,$fecha_ingreso
+						,$sexo
+						)){
 							echo "La información del empleado ha sido actualizada.";
 						}else{
 							echo "La información del empleado no ha podido ser actualizada.";
@@ -54,7 +72,11 @@
 				$ruta_img = $_POST["txtRutaImgEmp"];
 				if(empty($_POST["txtIdEmpleado"])){
 					
-					if($objEmpleado->Registrar($apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento, $ruta_img, $login, $clave, $estado)){
+					if($objEmpleado->Registrar($apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento, $ruta_img, $login, $clave, $estado
+					,$cargo
+					,$fecha_ingreso
+					,$sexo
+					)){
 						echo "Empleado Registrado correctamente.";
 					}else{
 						echo "Empleado no ha podido ser registado.";
@@ -64,14 +86,23 @@
 					$idempleado = $_POST["txtIdEmpleado"];
 					if ($_POST["txtClave"] == "") {
 						$idempleado = $_POST["txtIdEmpleado"];
-						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,$ruta_img, $login, $_POST["txtClaveOtro"], $estado)){
+						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento,$ruta_img, $login, $_POST["txtClaveOtro"], $estado
+						,$cargo
+						,$fecha_ingreso
+						,$sexo
+						)){
 							echo "La información del empleado ha sido actualizada.";
 						}else{
 							echo "La información del empleado no ha podido ser actualizada.";
 						}
 					} else {
 						$idempleado = $_POST["txtIdEmpleado"];
-						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento, $ruta_img, $login, $clave, $estado)){
+						if($objEmpleado->Modificar($idempleado, $apellidos,$nombre,$tipo_documento,$num_documento,$direccion,$telefono,$email,$fecha_nacimiento, $ruta_img, $login, $clave, $estado
+						
+						,$cargo
+						,$fecha_ingreso
+						,$sexo
+						)){
 							echo "La información del empleado ha sido actualizada.";
 						}else{
 							echo "La información del empleado no ha podido ser actualizada.";
@@ -105,7 +136,12 @@
 					"5"=>$reg->telefono,
 					"6"=>$reg->login,
 					"7"=>'<img width=100px height=100px src="./'.$reg->foto.'" />',
-					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataEmpleado('.$reg->idempleado.',\''.$reg->apellidos.'\',\''.$reg->nombre.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->email.'\',\''.$reg->fecha_nacimiento.'\',\''.$reg->foto.'\',\''.$reg->login.'\',\''.$reg->clave.'\',\''.$reg->estado.'\')"><i class="fa fa-pencil"></i> </button>&nbsp;'.
+					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataEmpleado('.$reg->idempleado.',\''.$reg->apellidos.'\',\''.$reg->nombre.'\',\''.$reg->tipo_documento.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->email.'\',\''.$reg->fecha_nacimiento.'\',\''.$reg->foto.'\',\''.$reg->login.'\',\''.$reg->clave.'\',\''.$reg->estado.'\'
+					
+					,\''.$reg->cargo.'\'
+					,\''.$reg->fecha_ingreso.'\'
+					,\''.$reg->sexo.'\'
+					)"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarEmpleado('.$reg->idempleado.')"><i class="fa fa-trash"></i> </button>');
 				$i++;
 			}
