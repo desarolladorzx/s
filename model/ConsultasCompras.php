@@ -97,7 +97,7 @@
 			sum(di.stock_ingreso) as totalingreso,
 			sum(di.stock_ingreso*di.precio_compra) as valorizadoingreso,
 			sum(di.stock_actual) as totalstock, 
-			precio_compra as preciocompra,
+			di.	precio_compra as preciocompra,
 			sum(di.stock_actual*di.precio_compra) as valorizadostock,
 			sum(di.stock_ingreso-di.stock_actual) as totalventa,precio_ventapublico as precioventa,
 			sum((di.stock_ingreso-di.stock_actual)*di.precio_ventapublico) as valorizadoventa,

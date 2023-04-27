@@ -86,6 +86,59 @@ switch ($_GET["op"]) {
 			$admin = 0;
 		}
 
+		// print_r($_POST);
+// documentacion
+		if (isset($_POST["chkMnuDocumentacion"])) {
+			$chkMnuDocumentacion = true;
+		} else {
+			$chkMnuDocumentacion = 0;
+		}
+
+		if (isset($_POST["chkMnuDocVentas"])) {
+			$chkMnuDocVentas = true;
+		} else {
+			$chkMnuDocVentas = 0;
+		}
+
+		if (isset($_POST["chkMnuDocMarketing"])) {
+			$chkMnuDocMarketing = true;
+		} else {
+			$chkMnuDocMarketing = 0;
+		}
+
+		if (isset($_POST["chkMnuDocLogistica"])) {
+			$chkMnuDocLogistica = true;
+		} else {
+			$chkMnuDocLogistica = 0;
+		}
+
+		if (isset($_POST["chkMnuDocFinanzas"])) {
+			$chkMnuDocFinanzas = true;
+		} else {
+			$chkMnuDocFinanzas = 0;
+		}
+
+		if (isset($_POST["chkMnuDocRRHH"])) {
+			$chkMnuDocRRHH = true;
+		} else {
+			$chkMnuDocRRHH = 0;
+		}
+
+		if (isset($_POST["chkMnuDocIT"])) {
+			$chkMnuDocIT = true;
+		} else {
+			$chkMnuDocIT = 0;
+		}
+
+		if (isset($_POST["chkMnuDoProduccion"])) {
+			$chkMnuDoProduccion = true;
+		} else {
+			$chkMnuDoProduccion = 0;
+		}
+// documentacion
+
+		
+
 		if (empty($_POST["txtIdUsuario"])) {
 
 			if ($objusuario->Registrar(
@@ -103,7 +156,17 @@ switch ($_GET["op"]) {
 				$docs_jv,
 				$docs_ja,
 				$docs_jl,
-				$admin
+				$admin,
+// documentacion
+$chkMnuDocumentacion,
+$chkMnuDocVentas,
+$chkMnuDocMarketing,
+$chkMnuDocLogistica,
+$chkMnuDocFinanzas,
+$chkMnuDocRRHH,
+$chkMnuDocIT,
+$chkMnuDoProduccion
+// 
 			)) {
 				echo "Registrado Exitosamente";
 			} else {
@@ -129,6 +192,17 @@ switch ($_GET["op"]) {
 				$docs_ja,
 				$docs_jl,
 				$admin
+				// documentacion
+				,$chkMnuDocumentacion,
+				$chkMnuDocVentas,
+				$chkMnuDocMarketing,
+				$chkMnuDocLogistica,
+				$chkMnuDocFinanzas,
+				$chkMnuDocRRHH,
+				$chkMnuDocIT,
+				$chkMnuDoProduccion
+
+				// documentacion 
 			)) {
 				echo "Informacion del Usuario ha sido actualizada";
 			} else {
@@ -160,7 +234,18 @@ switch ($_GET["op"]) {
 				"2" => $reg->empleado,
 				"3" => $reg->tipo_usuario,
 				"4" => $reg->fecha_registro,
-				"5" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataUsuario(' . $reg->idusuario . ',\'' . $reg->idsucursal . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->tipo_usuario . '\',\'' . $reg->mnu_almacen . '\',\'' . $reg->mnu_compras . '\',\'' . $reg->mnu_ventas . '\',\'' . $reg->mnu_mantenimiento . '\',\'' . $reg->mnu_seguridad . '\',\'' . $reg->mnu_consulta_compras . '\',\'' . $reg->mnu_consulta_ventas . '\',\'' . $reg->mnu_documentacion_ev . '\',\'' . $reg->mnu_documentacion_jv . '\',\'' . $reg->mnu_documentacion_ja . '\',\'' . $reg->mnu_documentacion_jl . '\',\'' . $reg->mnu_admin . '\')"><i class="fa fa-pencil"></i> </button>&nbsp;' .
+				"5" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataUsuario(' . $reg->idusuario . ',\'' . $reg->idsucursal . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->tipo_usuario . '\',\'' . $reg->mnu_almacen . '\',\'' . $reg->mnu_compras . '\',\'' . $reg->mnu_ventas . '\',\'' . $reg->mnu_mantenimiento . '\',\'' . $reg->mnu_seguridad . '\',\'' . $reg->mnu_consulta_compras . '\',\'' . $reg->mnu_consulta_ventas . '\',\'' . $reg->mnu_documentacion_ev . '\',\'' . $reg->mnu_documentacion_jv . '\',\'' . $reg->mnu_documentacion_ja . '\',\'' . $reg->mnu_documentacion_jl . '\',\'' . $reg->mnu_admin . '\'
+				
+				,\'' . $reg->mnu_documentacion . '\'
+				,\'' . $reg->mnu_documentacion_marketing . '\'
+				,\'' . $reg->mnu_documentacion_finanzas . '\'
+				,\'' . $reg->mnu_documentacion_logistica . '\'
+				,\'' . $reg->mnu_documentacion_ventas . '\'
+				,\'' . $reg->mnu_documentacion_it . '\'
+				,\'' . $reg->mnu_documentacion_rrhh . '\'
+				,\'' . $reg->mnu_documentacion_produccion . '\'
+
+				)"><i class="fa fa-pencil"></i> </button>&nbsp;' .
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarUsuario(' . $reg->idusuario . ')"><i class="fa fa-trash"></i> </button>'
 			);
 			$i++;
@@ -252,6 +337,17 @@ switch ($_GET["op"]) {
 			$_SESSION["mnu_admin"] = $fetch->mnu_admin;
 			$_SESSION["superadmin"] = $fetch->superadmin;
 			$_SESSION["rol"] = $fetch->rol_id;
+
+			// documentacion
+			$_SESSION["mnu_documentacion_produccion"] = $fetch->mnu_documentacion_produccion;
+			$_SESSION["mnu_documentacion_ventas"] = $fetch->mnu_documentacion_ventas;
+			$_SESSION["mnu_documentacion_logistica"] = $fetch->mnu_documentacion_logistica;
+			$_SESSION["mnu_documentacion_finanzas"] = $fetch->mnu_documentacion_finanzas;
+			$_SESSION["mnu_documentacion_marketing"] = $fetch->mnu_documentacion_marketing;
+			$_SESSION["mnu_documentacion_it"] = $fetch->mnu_documentacion_it;
+			$_SESSION["mnu_documentacion_rrhh"] = $fetch->mnu_documentacion_rrhh;
+			$_SESSION["mnu_documentacion"] = $fetch->mnu_documentacion;
+			// 
 		}
 		break;
 
