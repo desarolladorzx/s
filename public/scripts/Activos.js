@@ -27,6 +27,32 @@ function init() {
   $("#actualizar_nuevo_articulo_submit").hide();
   optionEmpleados();
 
+  $('.empleadosList').focus(function() {
+    optionEmpleados();
+  })
+  function optionEmpleados() {
+    var option_text = '   <option value=""></option>';
+    $.ajax({
+      url: "./ajax/ActivosAjax.php?op=optionEmpleados",
+      type: "get",
+      dataType: "json",
+      success: function (datos) {
+        
+
+        datos.map((e) => {
+
+          option_text += `
+          <option value="${e.idempleado}">${e.nombre} ${e.apellidos}</option>
+
+          `;
+
+          $(".empleadosList").html(option_text);
+        });
+      },
+    });
+  }
+
+
   $("#btn_asignar_a_empleado").hide();
 
   $("#actualizar_boton_asigacion_empleado").click(function () {
@@ -151,27 +177,7 @@ function init() {
 
     $("#actualizar_nuevo_articulo_submit").hide();
   });
-  function optionEmpleados() {
-    var option_text = '   <option value=""></option>';
-    $.ajax({
-      url: "./ajax/ActivosAjax.php?op=optionEmpleados",
-      type: "get",
-      dataType: "json",
-      success: function (datos) {
-        
-
-        datos.map((e) => {
-
-          option_text += `
-          <option value="${e.idempleado}">${e.nombre} ${e.apellidos}</option>
-
-          `;
-
-          $(".empleadosList").html(option_text);
-        });
-      },
-    });
-  }
+ 
   $("#frmActivo").submit(function (e) {
     e.preventDefault();
 

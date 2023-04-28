@@ -665,7 +665,6 @@ function init() {
   }
 
   function AbrirModalDetPed() {
-    console.log("hola");
 
     let valores = {
       publico: true,
@@ -703,6 +702,10 @@ function init() {
       valores.superdistribuidor = true;
       valores.representante = true;
     }
+
+
+
+    
     $("#modalListadoArticulosPed").modal("show");
     tabla = $("#tblArticulosPed")
       .dataTable({
@@ -772,9 +775,7 @@ function init() {
         createdRow: function (row, data, index) {
           
           if(tipo_persona=='FINAL'){
-
             $(row).find("td:eq(8)").addClass('bg-info'); 
-
           }else if (tipo_persona=='Distribuidor'){
             $(row).find("td:eq(9)").addClass('bg-info'); 
           }else if (tipo_persona=='superDistribuidor'){

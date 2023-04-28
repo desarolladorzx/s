@@ -222,25 +222,25 @@ function init() {
     $("#id_ubicacion_envio_array").val(selectedOption.data("id"));
   });
 
-  traerUbicacion();
-  function traerUbicacion() {
-    $.ajax({
-      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
-      dataType: "json",
-      type: "get",
-      success: function (rpta) {
-        var ubicacion_containe_options_html = "";
+  // traerUbicacion();
+  // function traerUbicacion() {
+  //   $.ajax({
+  //     url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+  //     dataType: "json",
+  //     type: "get",
+  //     success: function (rpta) {
+  //       var ubicacion_containe_options_html = "";
 
-        rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
-        });
-        // console.log(rpta);
+  //       rpta.map((e) => {
+  //         ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+  //       });
+  //       // console.log(rpta);
 
-        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
-      },
-      error: function (e) {},
-    });
-  }
+  //       $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+  //     },
+  //     error: function (e) {},
+  //   });
+  // }
   $("#btn_minimizar_container_localizacion_recepcion").hide();
 
   $("#btnNuevo").show();
@@ -294,7 +294,6 @@ function init() {
     tabla.column(2).search(valor).draw();
 
     llenarCantidades();
- 
   });
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
@@ -357,13 +356,12 @@ function init() {
         //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
         //swal("Mensaje del Sistema", r, "success");
         OcultarForm();
-        
 
         $("#btnNuevo").show();
-       
-        $('.container_info_filtro').show()
 
-        $('.container_info_filtro input').val('')
+        $(".container_info_filtro").show();
+
+        $(".container_info_filtro input").val("");
 
         if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
           $("#btn_asignar_vendedor").show();
@@ -426,7 +424,7 @@ function init() {
 
   function VerForm() {
     btnNuevo;
-    $('.container_info_filtro').hide()
+    $(".container_info_filtro").hide();
     $("#VerForm").show(); // Mostramos el formulario
     //$("#btnNuevo").hide();// ocultamos el boton nuevo
     $("#VerListado").hide();
@@ -455,50 +453,50 @@ var tabla;
 function llenarCantidades() {
   $("#cant_total_cliente").val(tabla.page.info().recordsDisplay);
 
-  let valoresFiltrados=tabla.rows({ search: 'applied' }).data().toArray()
+  let valoresFiltrados = tabla.rows({ search: "applied" }).data().toArray();
 
-  console.log(valoresFiltrados)
-  
-  let clientes_activos=valoresFiltrados.filter(e=>e[13].includes("-ACTIVO")
-  ).length
+  console.log(valoresFiltrados);
 
-  let clientes_inactivos=valoresFiltrados.filter(e=>e[13].includes("INACTIVO")
-  ).length
+  let clientes_activos = valoresFiltrados.filter((e) =>
+    e[13].includes("-ACTIVO")
+  ).length;
 
-  let clientes_perdidos=valoresFiltrados.filter(e=>e[13].includes("PERDIDO")
-  ).length
+  let clientes_inactivos = valoresFiltrados.filter((e) =>
+    e[13].includes("INACTIVO")
+  ).length;
 
+  let clientes_perdidos = valoresFiltrados.filter((e) =>
+    e[13].includes("PERDIDO")
+  ).length;
 
+  let clientes_FINAL = valoresFiltrados.filter((e) =>
+    e[1].includes("FINAL")
+  ).length;
 
-  let clientes_FINAL=valoresFiltrados.filter(e=>e[1].includes("FINAL")
-  ).length
+  let clientes_final = valoresFiltrados.filter((e) =>
+    e[1].includes("Final")
+  ).length;
 
-  let clientes_final=valoresFiltrados.filter(e=>e[1].includes("Final")
-  ).length
+  let clientes_distribuidores = valoresFiltrados.filter((e) =>
+    e[1].includes("Distribuidor")
+  ).length;
 
-   
-  let clientes_distribuidores=valoresFiltrados.filter(e=>e[1].includes("Distribuidor")
-  ).length
+  let clientes_Superdistribuidores = valoresFiltrados.filter((e) =>
+    e[1].includes("Superdistribuidores")
+  ).length;
 
+  let clientes_representantes = valoresFiltrados.filter((e) =>
+    e[1].includes("Representante")
+  ).length;
 
+  $("#cant_clientes_activos").val(clientes_activos);
+  $("#cant_clientes_inactivos").val(clientes_inactivos);
+  $("#cant_clientes_perdidos").val(clientes_perdidos);
 
-  let clientes_Superdistribuidores=valoresFiltrados.filter(e=>e[1].includes("Superdistribuidores")
-    ).length
-
-  let clientes_representantes=valoresFiltrados.filter(e=>e[1].includes("Representante")
-  ).length
-  
-  $('#cant_clientes_activos').val(clientes_activos)
-  $('#cant_clientes_inactivos').val(clientes_inactivos)
-  $('#cant_clientes_perdidos').val(clientes_perdidos)
- 
-  $('#cant_clientes_finales').val(clientes_final+clientes_FINAL)
-  $('#cant_clientes_distribuidor').val(clientes_distribuidores)
-  $('#cant_clientes_Superdistribuidores').val(clientes_Superdistribuidores)
-  $('#cant_clientes_Representantes').val(clientes_representantes)
-
-
-
+  $("#cant_clientes_finales").val(clientes_final + clientes_FINAL);
+  $("#cant_clientes_distribuidor").val(clientes_distribuidores);
+  $("#cant_clientes_Superdistribuidores").val(clientes_Superdistribuidores);
+  $("#cant_clientes_Representantes").val(clientes_representantes);
 }
 var listadeClientesAsignados = [];
 function guardarSelects() {
@@ -595,10 +593,9 @@ function ListadoCliente() {
       },
     },
     initComplete: function (settings, json) {
-      llenarCantidades()
+      llenarCantidades();
 
       // $("#cant_clientes_finales").val(tabla.page.info())
-
     },
     bDestroy: true,
   });
@@ -705,8 +702,6 @@ function cargarDataCliente(
   empleado_asignado,
   disabled
 ) {
-
- 
   $("#txt_empleado_asignado").val(empleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
@@ -800,9 +795,11 @@ function cargarDataCliente(
 
     $("#panel_rbg_habilitado").show(200);
     $("#panel_rbg_desabilitado").hide(200);
-    if(genero){
-      
-      $("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
+    if (genero) {
+      $("input[name=optionsRadios][value=" + genero + "]").prop(
+        "checked",
+        true
+      );
     }
   } else if ($("#hdn_rol_usuario").val() == "A") {
     // USUARIO / TRABAJADOR
@@ -819,10 +816,9 @@ function cargarDataCliente(
     $("input[name=optionsRadios]").prop("disabled", true);
   }
 
-
-  $('.container_info_filtro').hide()
-  if(disabled=='disabled'){
-    $('#button_registrar_nuevo_cliente').hide()
+  $(".container_info_filtro").hide();
+  if (disabled == "disabled") {
+    $("#button_registrar_nuevo_cliente").hide();
     $("input").prop("disabled", true);
     $("select").prop("disabled", true);
   }
@@ -868,9 +864,6 @@ function cargarDataCliente(
 			$('#cboTipo_Documento option[value="PASAPORTE"]').attr("disabled", true);
 			$('#cboTipo_Documento option[value="CE"]').attr("disabled", true);*/
   }
-
-
-  
 }
 
 function buscarPorNumeroDocumento() {

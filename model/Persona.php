@@ -300,10 +300,6 @@ iddistrito_factura='$iddistrito_factura'
 		INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
 		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
 		t2 ON t2.num_documento = p.num_documento AND p.idpersona = t2.max_fecha
-		
-		
-
-			
 		LEFT JOIN distrito ON distrito.iddistrito=p.direccion_distrito
 		left JOIN provincia ON provincia.idprovincia=p.direccion_provincia
 		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
@@ -330,7 +326,7 @@ iddistrito_factura='$iddistrito_factura'
 		
 ;
 		";
-
+		// $sql = "SELECT *  from persona";
 		// echo $sql;
 		//var_dump($sql);exit;
 

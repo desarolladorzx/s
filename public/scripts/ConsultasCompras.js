@@ -1,10 +1,21 @@
 $(document).on("ready", init); // Inciamos el jquery
 
-var objC = new init();
+
 
 function init() {
-	TraerProveedor()
-	TraerCategoria()
+
+  // console.log('hola tardo demacido')
+
+
+  $('#idListCategoria').focus(function() {
+    TraerCategoria()
+  })
+
+  $('#idListProveedor').focus(function() {
+    TraerProveedor()
+  })
+
+
 	function TraerCategoria(){
 		$.ajax({
 			url: "./ajax/ConsultasComprasAjax.php?op=TraerCategoria",
@@ -24,6 +35,7 @@ function init() {
 			}
 		  });
 	}
+
 	function TraerProveedor(){
 		$.ajax({
 			url: "./ajax/ConsultasComprasAjax.php?op=TraerProveedor",
@@ -42,11 +54,6 @@ function init() {
 			},
 		  });
 	}
-
-
-	
-
-	
 
   $("#tblCompraFechas").dataTable({
     dom: "Bfrtip",
