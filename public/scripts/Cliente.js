@@ -578,7 +578,7 @@ function ListadoCliente() {
     initComplete: function (settings, json) {
       llenarCantidades();
 
-      console.log(json)
+      // console.log(json)
 
       // $("#cant_clientes_finales").val(tabla.page.info())
     },

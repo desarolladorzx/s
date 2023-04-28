@@ -87,6 +87,8 @@
   <!-- nuevo modulos -->
   <script type="text/javascript" src="public/scripts/Banco.js"></script>
 
+  <script type="text/javascript" src="public/scripts/CuentaBancaria.js"></script>
+
 <!--  -->
   <style type="text/css">
     input[type="text"] {
@@ -377,6 +379,18 @@
               </li>
               <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a>
               </li>
+
+              <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i>Banco</a>
+              </li>
+
+
+              <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i>Cuenta Bancaria</a>
+              </li>
+
+
+
+
+
             </ul>
           </li>
 
@@ -556,9 +570,9 @@
     <script>
 
 
-// $.get('ajax/UsuarioAjax.php?op=Container_cambiarSucursal_global',function(r){
-//   $('#container_button_sucursal_container').html(r)
-// })
+$.get('ajax/UsuarioAjax.php?op=Container_cambiarSucursal_global',function(r){
+  $('#container_button_sucursal_container').html(r)
+})
 
 function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, superadmin, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl) {
 

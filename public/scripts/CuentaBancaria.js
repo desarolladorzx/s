@@ -12,21 +12,21 @@ function init(){
         ]
     });
     
-	ListadoBancos();// Ni bien carga la pagina que cargue el metodo
+	ListadoCuentaBancaria();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
-	$("form#frmBanco").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
+	$("form#frmCuentaBancaria").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
 
 	function SaveOrUpdate(e){
 		e.preventDefault();
 
-        var formData = new FormData($("#frmBanco")[0]);
+        var formData = new FormData($("#frmCuentaBancaria")[0]);
 
         $.ajax({
 
-                url: "./ajax/BancoAjax.php?op=SaveOrUpdate",
+                url: "./ajax/CuentaBancariaAjax.php?op=SaveOrUpdate",
 
                 type: "POST",
 
@@ -69,8 +69,8 @@ function init(){
 	}
 }
 
-function ListadoBancos(){ 
-	var tabla = $("#tblBancos")
+function ListadoCuentaBancaria(){ 
+	var tabla = $("#tblCuentaBancario")
     .dataTable({
       aProcessing: true,
       aServerSide: true,
@@ -80,11 +80,12 @@ function ListadoBancos(){
         { mDataProp: "0" },
         { mDataProp: "1" },
         { mDataProp: "2" },
+        { mDataProp: "3" },
       
 
       ],
       ajax: {
-        url: "./ajax/BancoAjax.php?op=list",
+        url: "./ajax/CuentaBancariaAjax.php?op=list",
         type: "get",
         dataType: "json",
 
@@ -97,7 +98,7 @@ function ListadoBancos(){
     .DataTable();
     };
 
-function eliminarBanco(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
+function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar la Sucursal?", function(result){ // confirmamos con una pregunta si queremos eliminar
 		if(result){// si el result es true
 			$.post("./ajax/BancoAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
@@ -110,13 +111,14 @@ function eliminarBanco(id){// funcion que llamamos del archivo ajax/CategoriaAja
 	})
 }
 
-function cargarDataBanco(id, razon_social){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataCuentaBancaria(id, descripcion,numero){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();// ocultamos el listado
 
-		$("#txtIdbanco").val(id);// recibimos la variable id a la caja de texto txtIdMarca
-	    $("#txtDescripcion").val(razon_social);
+		$("#txtIdcuenta_bancaria").val(id);// recibimos la variable id a la caja de texto txtIdMarca
+	    $("#txtDescripcion").val(descripcion);
+	    $("#txtNumero").val(numero);
 
  	}	
 

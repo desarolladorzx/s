@@ -1,7 +1,7 @@
 $(document).on("ready", init);
 
 function init(){
-	console.log('articulo')
+
 	var tabla = $('#tblArticulos').dataTable({
         dom: 'Bfrtip',
         buttons: [

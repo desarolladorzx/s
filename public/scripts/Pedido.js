@@ -10,8 +10,7 @@ var email = "";
 let tipo_persona = "";
 var tabla;
 function init() {
-	console.log('pedido')
-
+	
 
   // $('#idbtnRegistar').prop('disabled', true);
 
