@@ -118,24 +118,7 @@ function init() {
     }
   });
 
-  traerPersonalVendedor();
-  function traerPersonalVendedor() {
-    $.ajax({
-      url: "./ajax/ClienteAjax.php?op=traerPersonalVendedor",
-      dataType: "json",
-      type: "get",
-      success: function (rpta) {
-        var ubicacion_containe_options_html = '<option value=""></option>';
 
-        rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
-        });
-
-        $("#select_personal_vendedor").html(ubicacion_containe_options_html);
-      },
-      error: function (e) {},
-    });
-  }
 
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide();
   $("#container_alerta_telefono").hide();
@@ -594,6 +577,8 @@ function ListadoCliente() {
     },
     initComplete: function (settings, json) {
       llenarCantidades();
+
+      console.log(json)
 
       // $("#cant_clientes_finales").val(tabla.page.info())
     },

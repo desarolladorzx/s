@@ -323,10 +323,27 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-		
+		-- limit 3000
 ;
 		";
-		// $sql = "SELECT *  from persona";
+		// $sql = "SELECT  
+		// tipo_documento empleado ,
+		// tipo_documento empleado_modificado ,
+		// tipo_documento genero_txt ,
+		// tipo_documento ubicacion_factura ,
+
+		// tipo_documento  idubicacion ,
+		// tipo_documento  direccion_antigua ,
+		// tipo_documento  idempleado_asignado  ,
+		// tipo_documento  empleado_asignado  ,
+		// tipo_documento  ubicacion ,
+		// tipo_documento idubicacion_factura, 
+		// persona.* 
+	
+
+		// from persona
+		// limit 1000
+		// ";
 		// echo $sql;
 		//var_dump($sql);exit;
 

@@ -1105,24 +1105,23 @@
   $("#liVentas").addClass("treeview active");
   $("#liClientes").addClass("active");
 
+  $('#select_personal_vendedor').focus(function() {
 
- 
- 
- traerUbicacion();
-  function traerUbicacion() {
+    traerPersonalVendedor();
+  })
+  function traerPersonalVendedor() {
     $.ajax({
-      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+      url: "./ajax/ClienteAjax.php?op=traerPersonalVendedor",
       dataType: "json",
       type: "get",
       success: function (rpta) {
-        var ubicacion_containe_options_html = "";
+        var ubicacion_containe_options_html = '<option value=""></option>';
 
         rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
         });
-        // console.log(rpta);
 
-        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+        $("#select_personal_vendedor").html(ubicacion_containe_options_html);
       },
       error: function (e) {},
     });

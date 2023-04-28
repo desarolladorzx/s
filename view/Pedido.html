@@ -1114,4 +1114,25 @@
 <script type="text/javascript">
   $("#liVentas").addClass("treeview active");
   $("#liPedido").addClass("active");
+
+  traerUbicacion();
+  function traerUbicacion() {
+    $.ajax({
+      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        var ubicacion_containe_options_html = "";
+
+        rpta.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+        });
+        // console.log(rpta);
+
+        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+      },
+      error: function (e) {},
+    });
+  }
+  
 </script>
