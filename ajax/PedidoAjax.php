@@ -1,6 +1,23 @@
 <?php
 session_start();
 switch ($_GET["op"]) {
+
+    case 'traerDatosTransporte':
+        require_once "../model/Pedido.php";
+
+		$objPersona = new Pedido();
+
+		$query_Tipo = $objPersona->traerPersonalTransporte();
+
+		$nuevo = array();
+		while ($reg = $query_Tipo->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo  json_encode($nuevo);
+
+
+
+        break;
     case 'SaveImagesEmpaquetado':
         require_once "../model/Pedido.php";
         $obj = new Pedido();

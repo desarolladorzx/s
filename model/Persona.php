@@ -6,7 +6,6 @@ ini_set('max_input_vars', 2000);
 class Persona
 {
 
-
 	public function  asignarCarteraVendedor($lista, $idempleado)
 	{
 		global $conexion;

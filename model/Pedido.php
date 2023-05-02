@@ -2,7 +2,15 @@
 
 require "Conexion.php";
 class Pedido
-{
+{	
+	public function traerPersonalTransporte(){
+		global $conexion;
+		$sql = "SELECT * from transporte where estado='A'";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function DatosUsuario($id_usuario)
 	{
 		global $conexion;

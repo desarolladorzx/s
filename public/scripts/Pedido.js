@@ -10,9 +10,35 @@ var email = "";
 let tipo_persona = "";
 var tabla;
 function init() {
-	
-
   // $('#idbtnRegistar').prop('disabled', true);
+
+
+$('.Transportes_select').focus(function() {
+  traerDatosTransporte()
+})
+
+function traerDatosTransporte(){
+  $.ajax({
+    url: "./ajax/PedidoAjax.php?op=traerDatosTransporte",
+    dataType: "json",
+    type: "get",
+    success: function (rpta) {
+      console.log(rpta)
+      var options_html = '<option value=""></option>';
+
+      rpta.map((e) => {
+        options_html += `<option data-id='${e.descripcion}' value='${e.descripcion} '> ${e.descripcion} </option>`;
+      });
+
+      $(".Transportes_select").html(options_html);
+    },
+    error: function (e) {
+      console.log(e)
+    },
+  });
+}
+
+
 
   $("#cboTipoComprobante").change(function () {
     $("#idbtnRegistar").prop("disabled", false);
