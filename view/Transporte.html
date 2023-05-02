@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">Bancos</h3>
+    <h3 class="box-title">Transporte</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse">
         <i class="fa fa-minus"></i>
@@ -19,37 +19,35 @@
 
         <div class="col-sm-14" id="VerForm">
           <!--
-<div class="row">
-<div class="col-lg-12">
-    <h3 class="page-header">Categoria</h3>
-</div>
-</div>
--->
+  <div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header">Categoria</h3>
+  </div>
+  </div>
+  -->
           <form
             role="form"
-            name="frmBanco"
-            id="frmBanco"
+            name="frmTransporte"
+            id="frmTransporte"
             enctype="multipart/form-data"
           >
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Los campos con (*) son olbigatorios</label><br />
-          
-                
+                <label>Los campos con (*) son obligatorios</label><br />
               </div>
-              <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12 left">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group has-success">
                   <input
-                    id="txtIdbanco"
+                    id="txtIdtransporte"
                     type="hidden"
                     maxlength="50"
                     class="form-control"
-                    name="txtIdbanco"
+                    name="txtIdtransporte"
                     required=""
                     placeholder=""
                     autofocus=""
                   />
-                  <label>Banco(*):</label>
+                  <label>Transporte (*):</label>
                   <input
                     id="txtDescripcion"
                     type="text"
@@ -57,12 +55,11 @@
                     class="form-control"
                     name="txtDescripcion"
                     required=""
-                    placeholder="Banco"
+                    placeholder="Trasporte"
                     autofocus=""
                   />
                 </div>
               </div>
-           
             </div>
             <div class="row">
               <div class="col-lg-12 left">
@@ -70,7 +67,7 @@
                 <button class="btn btn-success" type="submit">
                   <i class="fa fa-floppy-o"></i> Registrar
                 </button>
-                <a href="Sucursal.php" class="btn btn-primary"
+                <a href="CuentaBancaria.php" class="btn btn-primary"
                   ><i class="fa fa-remove"></i> Cancelar</a
                 >
                 <hr />
@@ -86,7 +83,7 @@
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table
-            id="tblBancos"
+            id="tblTransporte"
             class="table table-striped table-bordered table-condensed table-hover"
             cellspacing="0"
             cellpadding="0"
@@ -96,8 +93,8 @@
               <tr>
                 <th>#</th>
                 <th>Nombre</th>
+
                 <th>Opciones</th>
-               
               </tr>
             </thead>
 
@@ -109,7 +106,7 @@
               </tr>
             </tfoot>
 
-            <tbody id="sucursal"></tbody>
+            <tbody id="transporte"></tbody>
           </table>
         </div>
         <!--Fin-Contenido-->
@@ -122,6 +119,6 @@
 <!-- /.box -->
 
 <script type="text/javascript">
-  $("#liSeguridad").addClass("treeview active");
-  $("#liConfiguraBanco").addClass("active");
+   $("#liSeguridad").addClass("treeview active");
+  $("#liConfiguraTransporte").addClass("active");
 </script>

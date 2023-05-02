@@ -15,18 +15,18 @@ function init(){
 	ListadoCuentaBancaria();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
-	$("form#frmCuentaBancaria").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
+	$("form#frmTransporte").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
 
 	function SaveOrUpdate(e){
 		e.preventDefault();
 
-        var formData = new FormData($("#frmCuentaBancaria")[0]);
+        var formData = new FormData($("#frmTransporte")[0]);
 
         $.ajax({
 
-                url: "./ajax/CuentaBancariaAjax.php?op=SaveOrUpdate",
+                url: "./ajax/TransporteAjax.php?op=SaveOrUpdate",
 
                 type: "POST",
 
@@ -51,9 +51,9 @@ function init(){
 
 	function Limpiar(){
 		// Limpiamos las cajas de texto
-		$("#txtIdcuenta_bancaria").val("");
+		$("#txtIdtransporte").val("");
 	  $("#txtDescripcion").val("");
-	  $("#txtNumero").val("");
+
 
 	}
 
@@ -72,7 +72,7 @@ function init(){
 }
 
 function ListadoCuentaBancaria(){ 
-	var tabla = $("#tblCuentaBancario")
+	var tabla = $("#tblTransporte")
     .dataTable({
       aProcessing: true,
       aServerSide: true,
@@ -82,12 +82,12 @@ function ListadoCuentaBancaria(){
         { mDataProp: "0" },
         { mDataProp: "1" },
         { mDataProp: "2" },
-        { mDataProp: "3" },
+       
       
 
       ],
       ajax: {
-        url: "./ajax/CuentaBancariaAjax.php?op=list",
+        url: "./ajax/TransporteAjax.php?op=list",
         type: "get",
         dataType: "json",
 
@@ -100,10 +100,10 @@ function ListadoCuentaBancaria(){
     .DataTable();
     };
 
-function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
+function eliminarTransporte(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar la Sucursal?", function(result){ // confirmamos con una pregunta si queremos eliminar
 		if(result){// si el result es true
-			$.post("./ajax/CuentaBancariaAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
+			$.post("./ajax/TransporteAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
                 swal("Mensaje del Sistema", e, "success");
                 ListadoCuentaBancaria();
 
@@ -113,15 +113,14 @@ function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/Cat
 	})
 }
 
-function cargarDataCuentaBancaria(id, descripcion,numero){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataTransporte(id, descripcion){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();// ocultamos el listado
 
-		$("#txtIdcuenta_bancaria").val(id);// recibimos la variable id a la caja de texto txtIdMarca
+        
+		$("#txtIdtransporte").val(id);// recibimos la variable id a la caja de texto txtIdMarca
 	    $("#txtDescripcion").val(descripcion);
-	    $("#txtNumero").val(numero);
-
  	}	
 
 

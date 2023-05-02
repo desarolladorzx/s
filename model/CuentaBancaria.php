@@ -7,13 +7,13 @@
 			global $conexion;
 			$sql = "SELECT * from cuenta_bancaria where estado='A'";
 			$query = $conexion->query($sql);
+
 			return $query;
 		}
 
 		public function Eliminar($idcuentaBancaria){
 			global $conexion;
 			$sql = "UPDATE cuenta_bancaria set estado='C' WHERE idcuenta_bancaria = $idcuentaBancaria";
-           
 			$query = $conexion->query($sql);
 
 			return $query;

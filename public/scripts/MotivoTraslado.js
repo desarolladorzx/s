@@ -2,7 +2,7 @@ $(document).on("ready", init);// Inciamos el jquery
 
 function init(){
 
-    $('#tblBancos').dataTable({
+    $('#tblMotivoTraslado').dataTable({
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
@@ -12,21 +12,21 @@ function init(){
         ]
     });
     
-	ListadoCuentaBancaria();// Ni bien carga la pagina que cargue el metodo
+	ListadoMotivoTraslado();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
-	$("form#frmCuentaBancaria").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
+	$("form#frmMotivoTraslado").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 	
 	$("#btnNuevo").click(VerForm);// evento click de jquery que llamamos al metodo VerForm
 
 	function SaveOrUpdate(e){
 		e.preventDefault();
 
-        var formData = new FormData($("#frmCuentaBancaria")[0]);
+        var formData = new FormData($("#frmMotivoTraslado")[0]);
 
         $.ajax({
 
-                url: "./ajax/CuentaBancariaAjax.php?op=SaveOrUpdate",
+                url: "./ajax/MotivoTrasladoAjax.php?op=SaveOrUpdate",
 
                 type: "POST",
 
@@ -41,7 +41,7 @@ function init(){
                 {
 
                     swal("Mensaje del Sistema", datos, "success");
-                    ListadoCuentaBancaria();
+                    ListadoMotivoTraslado();
 					OcultarForm();
           Limpiar()
                 }
@@ -51,9 +51,9 @@ function init(){
 
 	function Limpiar(){
 		// Limpiamos las cajas de texto
-		$("#txtIdcuenta_bancaria").val("");
+		$("#txtIdtransporte").val("");
 	  $("#txtDescripcion").val("");
-	  $("#txtNumero").val("");
+
 
 	}
 
@@ -71,8 +71,8 @@ function init(){
 	}
 }
 
-function ListadoCuentaBancaria(){ 
-	var tabla = $("#tblCuentaBancario")
+function ListadoMotivoTraslado(){ 
+	var tabla = $("#tblMotivoTraslado")
     .dataTable({
       aProcessing: true,
       aServerSide: true,
@@ -83,11 +83,10 @@ function ListadoCuentaBancaria(){
         { mDataProp: "1" },
         { mDataProp: "2" },
         { mDataProp: "3" },
-      
-
+        { mDataProp: "4" }
       ],
       ajax: {
-        url: "./ajax/CuentaBancariaAjax.php?op=list",
+        url: "./ajax/MotivoTrasladoAjax.php?op=list",
         type: "get",
         dataType: "json",
 
@@ -100,12 +99,12 @@ function ListadoCuentaBancaria(){
     .DataTable();
     };
 
-function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
+function eliminarMotivoTraslado(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar la Sucursal?", function(result){ // confirmamos con una pregunta si queremos eliminar
 		if(result){// si el result es true
-			$.post("./ajax/CuentaBancariaAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
+			$.post("./ajax/MotivoTrasladoAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
                 swal("Mensaje del Sistema", e, "success");
-                ListadoCuentaBancaria();
+                ListadoMotivoTraslado();
 
             });
 		}
@@ -113,15 +112,16 @@ function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/Cat
 	})
 }
 
-function cargarDataCuentaBancaria(id, descripcion,numero){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataMotivoTraslado(id, descripcion,codigo,descuento_stock){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();// ocultamos el boton nuevo
 		$("#VerListado").hide();// ocultamos el listado
 
-		$("#txtIdcuenta_bancaria").val(id);// recibimos la variable id a la caja de texto txtIdMarca
-	    $("#txtDescripcion").val(descripcion);
-	    $("#txtNumero").val(numero);
-
+        
+		$("#txtIdmotivo_traslado").val(id);// recibimos la variable id a la caja de texto txtIdMarca
+	  $("#txtDescripcion").val(descripcion);
+	  $("#txtCodigo").val(codigo);
+	  $("#txtDescuentoStock").val(descuento_stock);
  	}	
 
 
