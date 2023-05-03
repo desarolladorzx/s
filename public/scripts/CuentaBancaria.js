@@ -1,5 +1,33 @@
 $(document).on("ready", init);// Inciamos el jquery
+function ListadoCuentaBancaria(){ 
+  console.log('hola')
+  var tabla = $("#tblCuentaBancario")
+    .dataTable({
+      aProcessing: true,
+      aServerSide: true,
+      dom: "Bfrtip",
+      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      aoColumns: [
+        { mDataProp: "0" },
+        { mDataProp: "1" },
+        { mDataProp: "2" },
+        { mDataProp: "3" },
+      
 
+      ],
+      ajax: {
+        url: "./ajax/CuentaBancariaAjax.php?op=list",
+        type: "get",
+        dataType: "json",
+
+        error: function (e) {
+          console.log(e.responseText);
+        },
+      },
+      bDestroy: true,
+    })
+    .DataTable();
+    };
 function init(){
 
     $('#tblBancos').dataTable({
@@ -11,7 +39,9 @@ function init(){
             'pdfHtml5'
         ]
     });
-    
+   
+
+        
 	ListadoCuentaBancaria();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
@@ -71,34 +101,6 @@ function init(){
 	}
 }
 
-function ListadoCuentaBancaria(){ 
-	var tabla = $("#tblCuentaBancario")
-    .dataTable({
-      aProcessing: true,
-      aServerSide: true,
-      dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
-      aoColumns: [
-        { mDataProp: "0" },
-        { mDataProp: "1" },
-        { mDataProp: "2" },
-        { mDataProp: "3" },
-      
-
-      ],
-      ajax: {
-        url: "./ajax/CuentaBancariaAjax.php?op=list",
-        type: "get",
-        dataType: "json",
-
-        error: function (e) {
-          console.log(e.responseText);
-        },
-      },
-      bDestroy: true,
-    })
-    .DataTable();
-    };
 
 function eliminarCuentaBancaria(id){// funcion que llamamos del archivo ajax/CategoriaAjax.php?op=delete linea 53
 	bootbox.confirm("¿Esta Seguro de eliminar la Sucursal?", function(result){ // confirmamos con una pregunta si queremos eliminar

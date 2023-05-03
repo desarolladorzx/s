@@ -12,7 +12,7 @@ function init(){
         ]
     });
     
-	ListadoCuentaBancaria();// Ni bien carga la pagina que cargue el metodo
+    ListadoTransporte();// Ni bien carga la pagina que cargue el metodo
 	ComboTipo_Documento();
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmTransporte").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
@@ -41,7 +41,7 @@ function init(){
                 {
 
                     swal("Mensaje del Sistema", datos, "success");
-                    ListadoCuentaBancaria();
+                    ListadoTransporte();
 					OcultarForm();
           Limpiar()
                 }
@@ -71,7 +71,7 @@ function init(){
 	}
 }
 
-function ListadoCuentaBancaria(){ 
+function ListadoTransporte(){ 
 	var tabla = $("#tblTransporte")
     .dataTable({
       aProcessing: true,
@@ -105,7 +105,7 @@ function eliminarTransporte(id){// funcion que llamamos del archivo ajax/Categor
 		if(result){// si el result es true
 			$.post("./ajax/TransporteAjax.php?op=delete", {id : id}, function(e){// llamamos la url de eliminar por post. y mandamos por parametro el id 
                 swal("Mensaje del Sistema", e, "success");
-                ListadoCuentaBancaria();
+                ListadoTransporte();
 
             });
 		}
