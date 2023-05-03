@@ -2,7 +2,7 @@ $(document).on("ready", init);// Inciamos el jquery
 
 function init(){
 
-    $('#tblBancos').dataTable({
+    $('#tblTransporte').dataTable({
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',

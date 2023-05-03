@@ -30,7 +30,7 @@ function ListadoCuentaBancaria(){
     };
 function init(){
 
-    $('#tblBancos').dataTable({
+    $('#tblCuentaBancario').dataTable({
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
