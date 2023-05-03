@@ -25,7 +25,9 @@
 			$precio_representante = $_POST["txtprecio_representante"];
 
 
-			
+			$lote = $_POST["txtLote"];
+			$bar_code = $_POST["txtCodigoBarra"];
+			$interno_id = $_POST["txtprecio_representante"];
 			// $precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
 
 			$imagen = $_FILES["imagenArt"]["tmp_name"];
@@ -35,7 +37,12 @@
 
 				if(empty($_POST["txtIdArticulo"])){
 					
-					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
+					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+					
+					,$lote
+					,$bar_code
+					,$interno_id
+					)){
 						echo "Articulo RegistradoN";
 					}else{
 						echo "Articulo no ha podido ser registadoON.";
@@ -43,7 +50,14 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, "Files/Articulo/".$ruta,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+					
+					,$lote
+					,$bar_code
+					,$interno_id
+
+					
+					)){
 						echo "Informacion del Articulo ha sido actualizados";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
@@ -54,7 +68,12 @@
 				if(empty($_POST["txtIdArticulo"])){
 					
 					if($objArticulo->Registrar($idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo,
-					$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+					$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante,
+
+					$lote
+					,$bar_code
+					,$interno_id
+
 					)){
 						echo "Articulo RegistradA";
 					}else{
@@ -63,7 +82,13 @@
 				}else{
 					
 					$idarticulo = $_POST["txtIdArticulo"];
-					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante)){
+					if($objArticulo->Modificar($idarticulo, $idmarca, $idcategoria, $idunidad_medida, $nombre, $descripcion, $ruta_img,$stockMinimo,$precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
+					
+					
+					,$lote
+					,$bar_code
+					,$interno_id
+					)){
 						echo "Informacion del Articulo ha sido actualizadas";
 					}else{
 						echo "Informacion del Articulo no ha podido ser actualizada.";
@@ -106,6 +131,12 @@
 					,\''.$reg->precio_distribuidor.'\'
 					,\''.$reg->precio_superdistribuidor.'\'
 					,\''.$reg->precio_representante.'\'
+
+
+					,\''.$reg->lote.'\'
+					,\''.$reg->barcode.'\'
+					,\''.$reg->interno_id.'\'
+
 					
 					)"><i class="fa fa-pencil"></i> </button>&nbsp;'.
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarArticulo('.$reg->idarticulo.')"><i class="fa fa-trash"></i> </button>');
