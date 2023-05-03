@@ -1631,7 +1631,7 @@ function AgregarPedCarrito(
       var datos=tabla.rows().data()
 
       datos.map(element=>{
-       if(element[4]==art
+       if(element[4]==art && $('#txtSucursal').val()==element[1]
         ){
           var fechaselecionada = new Date(serie+'T00:00:00');
 
