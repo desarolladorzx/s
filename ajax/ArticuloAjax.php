@@ -163,6 +163,12 @@
 					,\''.$reg->precio_distribuidor.'\'
 					,\''.$reg->precio_superdistribuidor.'\'
 					,\''.$reg->precio_representante.'\'
+
+					,\''.$reg->lote .'\'
+					,\''.$reg->barcode .'\'
+					,\''.$reg->descripcion .'\'
+
+					
 					)" name="optArtBusqueda[]" data-nombre="'.$reg->nombre.'" id="'.$reg->idarticulo.'" value="'.$reg->idarticulo.'" ><i class="fa fa-check" ></i> </button>',
      				"1"=>$i,
 					"2"=>$reg->categoria,
