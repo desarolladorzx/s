@@ -137,6 +137,12 @@ function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, n
 	,precio_distribuidor
 	,precio_superdistribuidor
 	,precio_representante
+
+
+	,lote
+	,barcode
+	,interno_id
+
 	
 	){
 		$("#VerForm").show();
@@ -159,6 +165,15 @@ function cargarDataArticulo(idarticulo, idcategoria, idmarca, idunidad_medida, n
 		$("#txtprecio_distribuidor").val(precio_distribuidor);
 		$("#txtprecio_superdistribuidor").val(precio_superdistribuidor);
 		$("#txtprecio_representante").val(precio_representante);
+
+
+
+		$("#txtLote").val(lote);
+		// $("#imagenArt").val(imagen);
+		 $("#txtCodigoBarra").val(barcode);
+ 
+		 $("#txtCodigoInterno").val(interno_id);
+
 
 
 	    // $("#txtRutaImgArt").show();
