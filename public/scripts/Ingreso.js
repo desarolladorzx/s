@@ -839,7 +839,7 @@ function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_s
 
   console.log( art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante)
 
-  let nuevoLote=lote+1
+  let nuevoLote=Number(lote)+1
 
  let error 
   elementos.map(e=>{
