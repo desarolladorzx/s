@@ -5,7 +5,7 @@
 	class Metodo_Pago{
 		public function listar(){
 			global $conexion;
-			$sql = "SELECT * from metodo_pago ";
+			$sql = "SELECT * from tipo_metodo_pago ";
 			$query = $conexion->query($sql);
 
 			return $query;

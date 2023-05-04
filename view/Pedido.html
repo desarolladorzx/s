@@ -331,6 +331,7 @@
                     </div>
                   </div>
 
+
                   <div class="row">
                     <div class="col-lg-12 left">
                       <div class="form-group">
@@ -655,7 +656,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
               <div class="col-lg-12 left">
                 <div class="row">
                   <div class="col-lg-2 left">
@@ -727,6 +728,19 @@
                 </div>
               </div>
 
+             
+
+                <div class="col-lg-10 left" id="container_metodos_pago">
+                  
+
+                 
+                </div>
+                <div class="col-lg-2 left" id="container_buttonMmetodos_pago">
+                  
+
+                 
+                </div>
+        
               <div class="col-lg-12 left">
                 <div class="form-group">
                   <label>Observaciones</label>
@@ -1121,6 +1135,78 @@
   $("#liVentas").addClass("treeview active");
   $("#liPedido").addClass("active");
 
+
+
+
+
+  function TraerBanco() {
+    console.log('se trajeron los bancos')
+    $.ajax({
+      url: "./ajax/BancoAjax.php?op=listSelect",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+       
+        
+        let data=rpta
+        var ubicacion_containe_options_html = '<option value=""></option>';
+
+        data.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idcuenta_bancaria}' value='${e.idcuenta_bancaria}'>${e.descripcion} </option>`;
+        });
+
+        $(".inputs_tipo_banco").html(ubicacion_containe_options_html)
+
+
+
+        $(".inputs_tipo_banco").each(function(index, select) {
+  // Obtenemos el valor almacenado en el array
+        var valorSeleccionado = arrayMetodosPago[index][2];
+        // Seleccionamos la opción correspondiente
+        $(select).val(valorSeleccionado);
+      })
+
+
+      },
+      error: function (e) {
+
+        console.log(e)
+      },
+    });
+  }
+
+
+
+  function TraerMetodoPago() {
+    console.log('se trajeron los metodos de pago')
+    $.ajax({
+      url: "./ajax/Metodo_PagoAjax.php?op=listSelect",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        arraryTipoMetodoPago=[...rpta]
+        let data=rpta
+        var ubicacion_containe_options_html = '<option value="" ></option>';
+
+        data.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idmetodo_pago}' value='${e.idmetodo_pago}'>${e.descripcion} </option>`;
+        });
+
+        $(".inputs_tipo_metodo_pago").html(ubicacion_containe_options_html);
+
+
+        $(".inputs_tipo_metodo_pago").each(function(index, select) {
+  // Obtenemos el valor almacenado en el array
+  var valorSeleccionado = arrayMetodosPago[index][1];
+  // Seleccionamos la opción correspondiente
+  $(select).val(valorSeleccionado);
+})
+
+      },
+      error: function (e) {},
+    });
+  }
+
   traerUbicacion();
   function traerUbicacion() {
     $.ajax({
@@ -1136,6 +1222,11 @@
         // console.log(rpta);
 
         $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+
+
+
+
+
       },
       error: function (e) {},
     });
