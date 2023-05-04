@@ -27,7 +27,7 @@ function traerDatosTransporte(){
       var options_html = '<option value=""></option>';
 
       rpta.map((e) => {
-        options_html += `<option data-id='${e.descripcion}' value='${e.descripcion} '> ${e.descripcion} </option>`;
+        options_html += `<option data-id='${e.descripcion}' value='${e.descripcion}'> ${e.descripcion} </option>`;
       });
 
       $(".Transportes_select").html(options_html);

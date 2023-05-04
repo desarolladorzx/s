@@ -5,6 +5,17 @@ $obj = new Metodo_Pago();
 
 switch ($_GET["op"]) {
 
+
+
+    case 'listSelect':
+        $query = $obj->listar();
+
+        $nuevo = array();
+        while ($reg = $query->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+        break;
     case 'list':
         $query = $obj->listar();
 

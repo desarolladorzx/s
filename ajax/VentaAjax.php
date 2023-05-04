@@ -72,6 +72,9 @@ switch ($_GET["op"]) {
 		$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($idCliente);
 		$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
+		 $arrayMetodosPago = $_POST["arrayMetodosPago"];
+
+		 
 		if ($resultExiste->countidpedido >= 2) {
 			$estadoCuenta = "ANTIGUO";
 		} else {
@@ -83,7 +86,7 @@ switch ($_GET["op"]) {
 
 
 		if (empty($_POST["txtIdVenta"])) {
-			if ($objVenta->Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_doc_suc, $_POST["detalle"], $tipo_promocion, $metodo_pago, $agencia_envio)) {
+			if ($objVenta->Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_doc_suc, $_POST["detalle"], $tipo_promocion, $metodo_pago, $agencia_envio,$arrayMetodosPago)) {
 				echo "Venta Registrada correctamente.";
 			} else {
 				echo "Venta no ha podido ser registado.";
