@@ -1,5 +1,5 @@
 $(document).on("ready", init);
-// var objinit 
+// var objinit
 var objinit = new init();
 var bandera = 1;
 var detalleIngresos = new Array();
@@ -12,33 +12,30 @@ var tabla;
 function init() {
   // $('#idbtnRegistar').prop('disabled', true);
 
-
-$('.Transportes_select').focus(function() {
-  traerDatosTransporte()
-})
-
-function traerDatosTransporte(){
-  $.ajax({
-    url: "./ajax/PedidoAjax.php?op=traerDatosTransporte",
-    dataType: "json",
-    type: "get",
-    success: function (rpta) {
-      console.log(rpta)
-      var options_html = '<option value=""></option>';
-
-      rpta.map((e) => {
-        options_html += `<option data-id='${e.descripcion}' value='${e.descripcion}'> ${e.descripcion} </option>`;
-      });
-
-      $(".Transportes_select").html(options_html);
-    },
-    error: function (e) {
-      console.log(e)
-    },
+  $(".Transportes_select").focus(function () {
+    traerDatosTransporte();
   });
-}
 
+  function traerDatosTransporte() {
+    $.ajax({
+      url: "./ajax/PedidoAjax.php?op=traerDatosTransporte",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        console.log(rpta);
+        var options_html = '<option value=""></option>';
 
+        rpta.map((e) => {
+          options_html += `<option data-id='${e.descripcion}' value='${e.descripcion}'> ${e.descripcion} </option>`;
+        });
+
+        $(".Transportes_select").html(options_html);
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  }
 
   $("#cboTipoComprobante").change(function () {
     $("#idbtnRegistar").prop("disabled", false);
@@ -97,7 +94,7 @@ function traerDatosTransporte(){
 
     tipo_persona = opt.attr("tipo_persona");
 
-    $('#btnBuscarCliente').prop('disabled',true)
+    $("#btnBuscarCliente").prop("disabled", true);
 
     // $('#btnBuscarCliente').hide()
     // for (var i = 0; i < columnas.length; i++) {
@@ -690,7 +687,6 @@ function traerDatosTransporte(){
   }
 
   function AbrirModalDetPed() {
-
     let valores = {
       publico: true,
       distribuidor: true,
@@ -699,23 +695,22 @@ function traerDatosTransporte(){
     };
 
     if (tipo_persona.length > 0) {
-     
       if (tipo_persona == "FINAL") {
         valores.publico = true;
         valores.distribuidor = false;
         valores.superdistribuidor = false;
         valores.representante = false;
-      }else if(tipo_persona == "Distribuidor"){
+      } else if (tipo_persona == "Distribuidor") {
         valores.publico = false;
         valores.distribuidor = true;
         valores.superdistribuidor = false;
         valores.representante = false;
-      }else if(tipo_persona == "superdistribuidor"){
+      } else if (tipo_persona == "superdistribuidor") {
         valores.publico = false;
         valores.distribuidor = false;
         valores.superdistribuidor = true;
         valores.representante = false;
-      }else if(tipo_persona == "representante"){
+      } else if (tipo_persona == "representante") {
         valores.publico = false;
         valores.distribuidor = false;
         valores.superdistribuidor = false;
@@ -728,9 +723,6 @@ function traerDatosTransporte(){
       valores.representante = true;
     }
 
-
-
-    
     $("#modalListadoArticulosPed").modal("show");
     tabla = $("#tblArticulosPed")
       .dataTable({
@@ -743,7 +735,7 @@ function traerDatosTransporte(){
         aoColumns: [
           {
             mDataProp: "0",
-            visible:tipo_persona.length>0?true:false
+            visible: tipo_persona.length > 0 ? true : false,
           },
           {
             mDataProp: "1",
@@ -798,26 +790,22 @@ function traerDatosTransporte(){
         },
         bDestroy: true, //funcion que causa problemas en el rendimiento
         createdRow: function (row, data, index) {
-          
-          if(tipo_persona=='FINAL'){
-            $(row).find("td:eq(8)").addClass('bg-info'); 
-          }else if (tipo_persona=='Distribuidor'){
-            $(row).find("td:eq(9)").addClass('bg-info'); 
-          }else if (tipo_persona=='superDistribuidor'){
-            $(row).find("td:eq(10)").addClass('bg-info'); 
-          }else if (tipo_persona=='Representante'){
-            $(row).find("td:eq(11)").addClass('bg-info'); 
+          if (tipo_persona == "FINAL") {
+            $(row).find("td:eq(8)").addClass("bg-info");
+          } else if (tipo_persona == "Distribuidor") {
+            $(row).find("td:eq(9)").addClass("bg-info");
+          } else if (tipo_persona == "superDistribuidor") {
+            $(row).find("td:eq(10)").addClass("bg-info");
+          } else if (tipo_persona == "Representante") {
+            $(row).find("td:eq(11)").addClass("bg-info");
           }
-
-        }
+        },
       })
       .DataTable();
-      tabla.column(1).nodes().to$().css('background-color', 'blue')
-      // var columna2 = tabla.column(2);
+    tabla.column(1).nodes().to$().css("background-color", "blue");
+    // var columna2 = tabla.column(2);
 
-      // columna2.nodes().to$().css("background-color", "blue");
-
-
+    // columna2.nodes().to$().css("background-color", "blue");
   }
 
   function AgregatStockCant(idPedido) {
@@ -1093,7 +1081,6 @@ function cargarDataPedido(
     estado,
     ubicacion
   );
-  console.log("hola");
 
   $(".ventasFechasOcultar").hide();
 
@@ -1178,6 +1165,97 @@ function cargarDataPedido(
       },
       function (r) {
         if (r) {
+          console.log(r.idventa);
+          $.getJSON(
+            "./ajax/PedidoAjax.php?op=TraerMetodosPago",
+            {
+              idventa: r.idventa,
+            },
+            function (r) {
+              console.log(r);
+              r.map((element,index)=>{
+                $('#container_metodo_pago_visual').append(`
+                <div class="row">
+
+                  <div class="col-lg-2 ">
+                    <label for="inputInscripcion">Fecha de Pago</label>
+                    <div class="form-group has-success">
+                      <input
+                      type="date"
+                      class="form-control"
+                      placeholder=""
+                      value='${element.fecha_pago}'
+                      disabled
+
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 ">
+                    <label for="inputInscripcion">Metodo de Pago</label>
+                    <div class="form-group has-success">
+                      <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      value='${element.tipo_metodo_pago}'
+                      disabled
+                      />
+                    </div>
+                  </div>
+                  
+                  ${element.es_efectivo!='1'?`
+                    <div class="col-lg-2 ">
+                    
+                    <label for="inputInscripcion">Cuenta Bancaria</label>
+                    <div class="form-group has-success">
+                      <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      value='${element.banco_cuenta}'
+                      disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 ">
+                    <label for="inputInscripcion">Referencia</label>
+                    <div class="form-group has-success">
+                      <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      value='${element.referencia}'
+                      disabled
+                      />
+                    </div>
+                  </div>
+              
+                  `:``}
+                  
+                  <div class="col-lg-2 ">
+                    <label for="inputInscripcion">Monto</label>
+                    <div class="form-group has-success">
+                      <input
+                      type="text"
+                      class="form-control"
+                      placeholder=""
+                      value='${element.pago}'
+                      disabled
+                      />
+                    </div>
+                  </div>
+              </div>
+              
+                
+                
+                `)
+                
+              
+              })
+
+            }
+          );
+
           $("#VerFormVentaPed").show();
           $("#VerDetallePedido").hide();
           $("#VerTotalesDetPedido").hide();
@@ -1623,83 +1701,76 @@ function AgregarPedCarrito(
   precio_ventadistribuidor,
   precio_ventarepresentante,
   precio_ventasuperdistribuidor
-
 ) {
   if (stock_actual > 0) {
+    let confirmarElProducto = true;
+    var datos = tabla.rows().data();
 
-    let confirmarElProducto=true
-      var datos=tabla.rows().data()
+    datos.map((element) => {
+      if (element[4] == art && $("#txtSucursal").val() == element[1]) {
+        var fechaselecionada = new Date(serie + "T00:00:00");
 
-      datos.map(element=>{
-       if(element[4]==art && $('#txtSucursal').val()==element[1]
-        ){
-          var fechaselecionada = new Date(serie+'T00:00:00');
+        var fecha1 = new Date(element[6] + "T00:00:00");
 
-          var fecha1 = new Date(element[6]+'T00:00:00');
-     
-         
-          if(fecha1.getTime()<fechaselecionada.getTime()){
-             confirmarElProducto = confirm('existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto')
-          }
-
-        } 
-      })
+        if (fecha1.getTime() < fechaselecionada.getTime()) {
+          confirmarElProducto = confirm(
+            "existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto"
+          );
+        }
+      }
+    });
     //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
     //elementos.push(detalles);
     //console.log(detalles);
 
     //let elementosSearch = [];
 
-    if(confirmarElProducto){
-      let precio_a_vender=precio_venta
-    if(tipo_persona=='FINAL'){
-      precio_a_vender=precio_venta
-    }else if (tipo_persona=='Distribuidor'){
-      precio_a_vender=precio_ventadistribuidor 
-
-    }else if (tipo_persona=='SuperDistribuidor'){
-      precio_a_vender=precio_ventasuperdistribuidor 
-
-    }else if (tipo_persona=='Representante'){
-      precio_a_vender=precio_ventarepresentante 
-
-    }else{
-      precio_a_vender=precio_venta
-    }
-
-    var data = JSON.parse(objinit.consultar());
-    var detalles = new Array(
-      iddet_ing,
-      art,
-      precio_a_vender,
-      "1",
-      "0.0",
-      stock_actual,
-      cod,
-      serie,
-      idart,
-      marca
-    );
-    // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
-    if (data.length >= 1) {
-      let rptaSearch = data.find((element) => element[0] == iddet_ing);
-
-      if (typeof rptaSearch === "undefined") {
-        elementos.push(detalles);
+    if (confirmarElProducto) {
+      let precio_a_vender = precio_venta;
+      if (tipo_persona == "FINAL") {
+        precio_a_vender = precio_venta;
+      } else if (tipo_persona == "Distribuidor") {
+        precio_a_vender = precio_ventadistribuidor;
+      } else if (tipo_persona == "SuperDistribuidor") {
+        precio_a_vender = precio_ventasuperdistribuidor;
+      } else if (tipo_persona == "Representante") {
+        precio_a_vender = precio_ventarepresentante;
       } else {
-        alert("El producto elegido ya se encuentra ingresado en la lista...");
+        precio_a_vender = precio_venta;
       }
-    } else {
-      elementos.push(detalles);
+
+      var data = JSON.parse(objinit.consultar());
+      var detalles = new Array(
+        iddet_ing,
+        art,
+        precio_a_vender,
+        "1",
+        "0.0",
+        stock_actual,
+        cod,
+        serie,
+        idart,
+        marca
+      );
+      // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
+      if (data.length >= 1) {
+        let rptaSearch = data.find((element) => element[0] == iddet_ing);
+
+        if (typeof rptaSearch === "undefined") {
+          elementos.push(detalles);
+        } else {
+          alert("El producto elegido ya se encuentra ingresado en la lista...");
+        }
+      } else {
+        elementos.push(detalles);
+      }
+
+      //console.log(data);
+
+      ConsultarDetallesPed();
+
+      confirmarElProducto = false;
     }
-
-    //console.log(data);
-
-    ConsultarDetallesPed();
-
-    confirmarElProducto=false
-    }
-    
   } else {
     bootbox.alert("No se puede agregar al detalle. No tiene stock");
   }
