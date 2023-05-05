@@ -318,7 +318,7 @@ function init() {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
               $("#container_datos_cliente_seleccionado").hide();
-              $("#slc_select_cliente").prop("disabled", false);
+              // $("#slc_select_cliente").prop("disabled", false);
               $("#slc_select_cliente").val(null);
 
               $("#slc_select_cliente").trigger("change");
@@ -711,7 +711,7 @@ function init() {
         valores.distribuidor = false;
         valores.superdistribuidor = false;
         valores.representante = false;
-      } else if (tipo_persona == "Distribuidor") {
+      } else if (tipo_persona == "DISTRIBUIDOR") {
         valores.publico = false;
         valores.distribuidor = true;
         valores.superdistribuidor = false;
@@ -803,7 +803,7 @@ function init() {
         createdRow: function (row, data, index) {
           if (tipo_persona == "FINAL") {
             $(row).find("td:eq(8)").addClass("bg-info");
-          } else if (tipo_persona == "Distribuidor") {
+          } else if (tipo_persona == "DISTRIBUIDOR") {
             $(row).find("td:eq(9)").addClass("bg-info");
           } else if (tipo_persona == "superDistribuidor") {
             $(row).find("td:eq(10)").addClass("bg-info");
@@ -1739,9 +1739,11 @@ function AgregarPedCarrito(
 
     if (confirmarElProducto) {
       let precio_a_vender = precio_venta;
+
+      console.log(tipo_persona == "DISTRIBUIDOR")
       if (tipo_persona == "FINAL") {
         precio_a_vender = precio_venta;
-      } else if (tipo_persona == "Distribuidor") {
+      } else if (tipo_persona == "DISTRIBUIDOR") {
         precio_a_vender = precio_ventadistribuidor;
       } else if (tipo_persona == "SuperDistribuidor") {
         precio_a_vender = precio_ventasuperdistribuidor;

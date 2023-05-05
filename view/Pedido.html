@@ -1233,6 +1233,11 @@ $('#container_datos_cliente_seleccionado').hide();
 
       var opcionSeleccionada = e.params.data;
       
+
+
+      elementos=[]
+
+      ConsultarDetallesPed()
       tipo_persona = opcionSeleccionada.tipo_persona;
 
     console.log(opcionSeleccionada.ubicacion)
@@ -1244,7 +1249,7 @@ $('#container_datos_cliente_seleccionado').hide();
       $('#txtNuevoDireccion').val(opcionSeleccionada.direccion)
       
 
-      $("#slc_select_cliente").prop("disabled", true);
+      // $("#slc_select_cliente").prop("disabled", true);
 
       $("#txtIdCliente").val($('#slc_select_cliente').val());
     });
@@ -1260,7 +1265,7 @@ function formatRepo(repo) {
         data-tipo_persona='${repo.tipo_persona}' 
         data-nombre_completo='${repo.nombre_completo}' data-documento='${repo.documento}' data-telefonos='${repo.telefonos}' data-ubicacion='${repo.ubicacion}' data-direccion='${repo.direccion}' >${repo.texto}</option>`;
       
-      console.log(markup)
+     
         return markup;
     }
 
@@ -1353,7 +1358,7 @@ $("#slc_select_cliente").select2({
     });
   }
 
-
+  
 
   function TraerMetodoPago() {
     console.log('se trajeron los metodos de pago')
@@ -1365,7 +1370,7 @@ $("#slc_select_cliente").select2({
         arraryTipoMetodoPago=[...rpta]
         let data=rpta
         var ubicacion_containe_options_html = '<option value="" ></option>';
-
+        
         data.map((e) => {
           ubicacion_containe_options_html += `<option data-id='${e.idtipo_metodo_pago}' value='${e.idtipo_metodo_pago}'>${e.descripcion} </option>`;
         });
