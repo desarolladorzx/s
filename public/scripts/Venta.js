@@ -612,7 +612,37 @@ function Renderizar(){
         onchange="actualizarMetodoPago(${index},${3}, this.value)"
       />
     </div>
-  </div>`:''}
+  </div>`:`<div class="col-lg-2 " style='display:none'>
+  <label for="inputInscripcion">Cuenta Bancaria</label>
+  <div class="form-group has-success">
+
+
+    <select  
+  value='${element[2]}'
+
+  onchange="actualizarMetodoPago(${index},${2}, this.value)"
+  class="form-control inputs_tipo_banco"
+  type="hidden"
+  
+  >
+  
+  </select>  
+  </div>
+</div>
+<div class="col-lg-2 " style='display:none'>
+  <label for="inputInscripcion">Referencia</label>
+  <div class="form-group has-success">
+    <input
+      
+    type="hidden"
+      class="form-control"
+      
+      placeholder=""
+      value='${element[3]}'
+      onchange="actualizarMetodoPago(${index},${3}, this.value)"
+    />
+  </div>
+</div>`}
     
     <div class="col-lg-2 ">
       <label for="inputInscripcion">Monto</label>

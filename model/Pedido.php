@@ -494,7 +494,7 @@ where
 GROUP BY persona.num_documento
 order by idpersona DESC ;";
 
-		// echo $sql;
+		echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}
