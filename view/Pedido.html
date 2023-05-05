@@ -1147,6 +1147,17 @@
 <script type="text/javascript">
 
 
+function formatRepo(repo) {
+      if (repo.loading) return repo.texto;
+      var markup =
+        "<option value='" + repo.id + "' > " + repo.texto + " </option>";
+      return markup;
+    }
+
+    function formatRepoSelection(repo) {
+      return repo.texto || repo.id;
+    }
+
 $("#slc_select_cliente").select2({
       ajax: {
         url: "./ajax/KardexAjax.php?op=BuscarArticulos",
