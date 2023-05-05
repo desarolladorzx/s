@@ -26,6 +26,19 @@
                 <div class="row">
                   <div class="col-lg-10 left">
                     <label id="inputCliente">Cliente:</label>
+
+                     <!-- <select
+                      class="form-control form-control-select2 form-control-lg"
+                      name="slc_select_cliente"
+                      id="slc_select_cliente"
+                      required
+                      style="width: 100%"
+                    >
+                      <option value="- Elegir opción -">
+                        - Seleccione un Cliente -
+                      </option>
+                    </select> -->
+
                     <div class="form-group has-success">
                       <input id="txtIdTipoUsuario" type="hidden" value="<?php echo $_SESSION["tipo_usuario"] ?>"
                       maxlength="50" class="form-control" name="txtIdUsuario"
@@ -79,17 +92,7 @@
                         </span>
                       </div>
 
-                      <!-- <select
-                      class="form-control form-control-select2 form-control-lg"
-                      name="slc_select_cliente"
-                      id="slc_select_cliente"
-                      required
-                      style="width: 100%"
-                    >
-                      <option value="- Elegir opción -">
-                        - Seleccione un Cliente -
-                      </option>
-                    </select> -->
+                     
 
                     </div>
                   </div>
@@ -1143,6 +1146,11 @@
     </div>
   </div>
 </div>
+<link
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+  rel="stylesheet"
+/>
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
 
