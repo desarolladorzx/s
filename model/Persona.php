@@ -6,32 +6,7 @@ ini_set('max_input_vars', 2000);
 class Persona
 {
 
-	public function  buscarArticulos($q){
-		global $conexion;
 
-		$sql = "SELECT *,persona.tipo_persona,persona.num_documento,persona.nombre,persona.apellido,persona.telefono,persona.direccion_calle ,persona.email from persona 
-
-		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
-			
-				JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
-				
-				JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
-				
-		where   
-		persona.estado = 'A'  
-		
-		AND (
-				tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
-				
-		
-		GROUP BY persona.num_documento
-		order by idpersona DESC ;
-		";
-
-			$query = $conexion->query($sql);
-
-
-	}
 	public function  asignarCarteraVendedor($lista, $idempleado)
 	{
 		global $conexion;
