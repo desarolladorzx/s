@@ -3,6 +3,7 @@ require "Conexion.php";
 
 class Venta
 {	
+	
 	public function VerificarStockMinimo($idpedido){
 		global $conexion;
 		$sql=

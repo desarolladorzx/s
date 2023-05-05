@@ -606,7 +606,7 @@ function Renderizar(){
         
         type="text"
         class="form-control"
-        
+        required
         placeholder=""
         value='${element[3]}'
         onchange="actualizarMetodoPago(${index},${3}, this.value)"

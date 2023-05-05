@@ -3,6 +3,22 @@
 require "Conexion.php";
 class Pedido
 {	
+
+	public function TraerMetodoPago($idventa){
+		global $conexion;
+		$sql = "SELECT * ,tipo_metodo_pago.descripcion tipo_metodo_pago ,banco_cuenta.descripcion banco_cuenta
+
+		FROM venta_pago
+		
+		left JOIN banco_cuenta ON banco_cuenta.idbanco_cuenta=venta_pago.idbanco_cuenta
+		left JOIN tipo_metodo_pago ON tipo_metodo_pago.idtipo_metodo_pago=venta_pago.idtipo_metodo_pago
+		where  
+		 idventa='$idventa'
+		";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 	public function traerPersonalTransporte(){
 		global $conexion;
 		$sql = "SELECT * from transporte where estado='A'";

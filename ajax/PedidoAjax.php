@@ -2,6 +2,23 @@
 session_start();
 switch ($_GET["op"]) {
 
+
+    case 'TraerMetodosPago':
+        $idventa = $_GET["idventa"];
+
+        
+        require_once "../model/Pedido.php";
+
+		$obj = new Pedido();
+
+		$query= $obj->TraerMetodoPago($idventa);
+
+		$nuevo = array();
+		while ($reg = $query->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo json_encode($nuevo);
+        break;
     case 'traerDatosTransporte':
         require_once "../model/Pedido.php";
 
@@ -15,8 +32,7 @@ switch ($_GET["op"]) {
 		}
 		echo  json_encode($nuevo);
 
-
-
+ 
         break;
     case 'SaveImagesEmpaquetado':
         require_once "../model/Pedido.php";
