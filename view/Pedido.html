@@ -78,6 +78,19 @@
                           </button>
                         </span>
                       </div>
+
+                      <!-- <select
+                      class="form-control form-control-select2 form-control-lg"
+                      name="slc_select_cliente"
+                      id="slc_select_cliente"
+                      required
+                      style="width: 100%"
+                    >
+                      <option value="- Elegir opción -">
+                        - Seleccione un Cliente -
+                      </option>
+                    </select> -->
+
                     </div>
                   </div>
                   <div class="col-lg-4 left" style="display: none;">
@@ -1130,8 +1143,50 @@
     </div>
   </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
+
+
+$("#slc_select_cliente").select2({
+      ajax: {
+        url: "./ajax/KardexAjax.php?op=BuscarArticulos",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            q: params.term,
+            page: params.page,
+          };
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data.items,
+            pagination: {
+              more: params.page * 30 < data.total_count,
+            },
+          };
+        },
+        cache: true,
+      },
+      escapeMarkup: function (markup) {
+        return markup;
+      },
+      // minimumInputLength: 1,
+
+      language: {
+        inputTooShort: function () {
+          return "Ingresar 3 caracteres para buscar...";
+        },
+      },
+      templateResult: formatRepo,
+      templateSelection: formatRepoSelection,
+  });
+
+
+
+
+
   $("#liVentas").addClass("treeview active");
   $("#liPedido").addClass("active");
 
@@ -1189,7 +1244,7 @@
         var ubicacion_containe_options_html = '<option value="" ></option>';
 
         data.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idmetodo_pago}' value='${e.idmetodo_pago}'>${e.descripcion} </option>`;
+          ubicacion_containe_options_html += `<option data-id='${e.idtipo_metodo_pago}' value='${e.idtipo_metodo_pago}'>${e.descripcion} </option>`;
         });
 
         $(".inputs_tipo_metodo_pago").html(ubicacion_containe_options_html);
