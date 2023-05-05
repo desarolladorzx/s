@@ -1192,7 +1192,7 @@ function cargarDataPedido(
                     <label for="inputInscripcion">Fecha de Pago</label>
                     <div class="form-group has-success">
                       <input
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                       placeholder=""
                       value='${element.fecha_pago}'
