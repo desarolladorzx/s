@@ -23,22 +23,13 @@ switch ($_GET["op"]) {
             array_push($data,$d);
         }
 
-        // while ($reg = $query->fetch_object()) {
-        //     $data[] = array(
-        //         "id" => $reg->id,
-        //         "texto" => $reg->texto
-        //     );
-        // }
-        // if(@data){
-
-        // }
+      
         $return = array(
             'items' => $data
         );
 
         echo json_encode($return);
 
-        //var_dump($obj->BuscarArticulos($q));exit;
 
         break;
     case 'TraerDatosTablaKardex':

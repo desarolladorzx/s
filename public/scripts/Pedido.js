@@ -302,30 +302,41 @@ function init() {
         //formData.append('detalle', detalle);
         //formData.append('ext', ext);
 
-        $.ajax({
-          url: "./ajax/PedidoAjax.php?op=Save",
-          data: formData,
-          processData: false,
-          contentType: false,
-          type: "POST",
+        if ($("#txtNuevoUbicacion").val().length == 0) {
+          alert(
+            "el Campo de Direccion es requerido , por favor actualize los datos del cliente para realizar la venta "
+          );
+        } else {
+          $.ajax({
+            url: "./ajax/PedidoAjax.php?op=Save",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: "POST",
 
-          success: function (data) {
-            swal("Mensaje del Sistema", data, "success");
-            // delete this.elementos;
+            success: function (data) {
+              swal("Mensaje del Sistema", data, "success");
+              // delete this.elementos;
+              $("#container_datos_cliente_seleccionado").hide();
+              $("#slc_select_cliente").prop("disabled", false);
+              $("#slc_select_cliente").val(null);
 
-            //$("#tblDetallePedido tbody").html("");
-            $("#txtIgvPed").val("");
-            $("#txtTotalPed").val("");
-            $("#txtSubTotalPed").val("");
-            OcultarForm();
-            $("#VerFormPed").hide(); // Mostramos el formulario
-            $("#btnNuevoPedido_nuevo").show();
-            Limpiar();
-            $("#txtCliente").val("");
-            ListadoVenta();
-            GetPrimerCliente();
-          },
-        });
+              $("#slc_select_cliente").trigger("change");
+
+              //$("#tblDetallePedido tbody").html("");
+              $("#txtIgvPed").val("");
+              $("#txtTotalPed").val("");
+              $("#txtSubTotalPed").val("");
+              OcultarForm();
+              $("#VerFormPed").hide(); // Mostramos el formulario
+              $("#btnNuevoPedido_nuevo").show();
+              Limpiar();
+              $("#txtCliente").val("");
+              ListadoVenta();
+              GetPrimerCliente();
+            },
+          });
+        }
 
         // alert(fileName);
         /*
@@ -1173,8 +1184,8 @@ function cargarDataPedido(
             },
             function (r) {
               console.log(r);
-              r.map((element,index)=>{
-                $('#container_metodo_pago_visual').append(`
+              r.map((element, index) => {
+                $("#container_metodo_pago_visual").append(`
                 <div class="row">
 
                   <div class="col-lg-2 ">
@@ -1203,7 +1214,9 @@ function cargarDataPedido(
                     </div>
                   </div>
                   
-                  ${element.es_efectivo!='1'?`
+                  ${
+                    element.es_efectivo != "1"
+                      ? `
                     <div class="col-lg-2 ">
                     
                     <label for="inputInscripcion">Cuenta Bancaria</label>
@@ -1230,7 +1243,9 @@ function cargarDataPedido(
                     </div>
                   </div>
               
-                  `:``}
+                  `
+                      : ``
+                  }
                   
                   <div class="col-lg-2 ">
                     <label for="inputInscripcion">Monto</label>
@@ -1248,11 +1263,8 @@ function cargarDataPedido(
               
                 
                 
-                `)
-                
-              
-              })
-
+                `);
+              });
             }
           );
 

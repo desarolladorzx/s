@@ -27,7 +27,7 @@
                   <div class="col-lg-10 left">
                     <label id="inputCliente">Cliente:</label>
 
-                     <!-- <select
+                     <select
                       class="form-control form-control-select2 form-control-lg"
                       name="slc_select_cliente"
                       id="slc_select_cliente"
@@ -37,7 +37,7 @@
                       <option value="- Elegir opción -">
                         - Seleccione un Cliente -
                       </option>
-                    </select> -->
+                    </select>
 
                     <div class="form-group has-success">
                       <input id="txtIdTipoUsuario" type="hidden" value="<?php echo $_SESSION["tipo_usuario"] ?>"
@@ -70,7 +70,7 @@
                         placeholder=""
                         autofocus=""
                       />
-                      <div class="input-group">
+                      <!-- <div class="input-group">
                         <input
                           id="txtCliente"
                           type="text"
@@ -90,7 +90,7 @@
                             <i class="fa fa-search"></i> Buscar Cliente
                           </button>
                         </span>
-                      </div>
+                      </div> -->
 
                      
 
@@ -141,7 +141,79 @@
                     </div>
                   </div>
                 </div>
+                <div class="row" id="container_datos_cliente_seleccionado">
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Nombre y Apellido:</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        id="txtNuevoNombre"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        name="txtNuevoNombre"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Documento :</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        name="txtNuevoDocumento"
+                        id="txtNuevoDocumento"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Celulares :</label>
+                    <div class="form-group has-success">
+                      <input
+                      name="txtNuevoCelulares"
+                      id="txtNuevoCelulares"
+                      type="text"
+                      class="form-control"
+                      style="text-align: center"
+                      required readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left" >
+                    <label id="inputNumero">ubicacion:</label>
+                    <div class="form-group has-success">
+                      <input
+                       name="txtNuevoUbicacion"
+                        id="txtNuevoUbicacion"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left" >
+                    <label id="inputNumero">Dirección :</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        id="txtNuevoDireccion"
+                        name="txtNuevoDireccion"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
 
+                </div>
                 <div class="row">
                   <div class="col-lg-4 left">
                     <label for="inputMarca">Cuenta Abonada / Medio de Pago:</label>
@@ -1154,12 +1226,42 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
 
+$('#container_datos_cliente_seleccionado').hide();
+ $("#slc_select_cliente").on("select2:select", function (e) {
+      // tabla.ajax.reload();
+      // console.log($("#slc_select_cliente").data('nombre'))
+
+      var opcionSeleccionada = e.params.data;
+      
+      tipo_persona = opcionSeleccionada.tipo_persona;
+
+    console.log(opcionSeleccionada.ubicacion)
+      $('#container_datos_cliente_seleccionado').show();
+      $('#txtNuevoNombre').val(opcionSeleccionada.nombre_completo)
+      $('#txtNuevoDocumento').val(opcionSeleccionada.documento)
+      $('#txtNuevoCelulares').val(opcionSeleccionada.telefonos)
+      $('#txtNuevoUbicacion').val(opcionSeleccionada.ubicacion)
+      $('#txtNuevoDireccion').val(opcionSeleccionada.direccion)
+      
+
+      $("#slc_select_cliente").prop("disabled", true);
+
+      $("#txtIdCliente").val($('#slc_select_cliente').val());
+    });
+
 
 function formatRepo(repo) {
       if (repo.loading) return repo.texto;
+
+
       var markup =
-        "<option value='" + repo.id + "' > " + repo.texto + " </option>";
-      return markup;
+        `<option value='${repo.id}'
+        
+        data-tipo_persona='${repo.tipo_persona}' 
+        data-nombre_completo='${repo.nombre_completo}' data-documento='${repo.documento}' data-telefonos='${repo.telefonos}' data-ubicacion='${repo.ubicacion}' data-direccion='${repo.direccion}' >${repo.texto}</option>`;
+      
+      console.log(markup)
+        return markup;
     }
 
     function formatRepoSelection(repo) {
@@ -1168,7 +1270,7 @@ function formatRepo(repo) {
 
 $("#slc_select_cliente").select2({
       ajax: {
-        url: "./ajax/KardexAjax.php?op=BuscarArticulos",
+        url: "./ajax/PedidoAjax.php?op=buscarCliente",
         dataType: "json",
         delay: 250,
         data: function (params) {
