@@ -515,7 +515,7 @@ function actualizarMetodoPago(index, sub, val) {
 
     arraryTipoMetodoPago.map(e=>{
       if(e.es_efectivo=='1'){
-        efectivo.push(e.idmetodo_pago)
+        efectivo.push(e.idtipo_metodo_pago)
       }
     })
 
