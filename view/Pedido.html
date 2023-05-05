@@ -1215,10 +1215,12 @@ $("#slc_select_cliente").select2({
        
         
         let data=rpta
+
+        console.log(data)
         var ubicacion_containe_options_html = '<option value=""></option>';
 
         data.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idcuenta_bancaria}' value='${e.idcuenta_bancaria}'>${e.descripcion} </option>`;
+          ubicacion_containe_options_html += `<option data-id='${e.idbanco_cuenta}' value='${e.idbanco_cuenta}'>${e.descripcion} </option>`;
         });
 
         $(".inputs_tipo_banco").html(ubicacion_containe_options_html)
