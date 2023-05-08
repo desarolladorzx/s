@@ -25,7 +25,6 @@ function init() {
   });
   ListadoActivo();
   $("#actualizar_nuevo_articulo_submit").hide();
-  optionEmpleados();
   // $('.empleadosList').focus(function() {
   //   optionEmpleados();
   // })
