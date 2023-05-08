@@ -25,10 +25,10 @@ function init() {
   });
   ListadoActivo();
   $("#actualizar_nuevo_articulo_submit").hide();
-  
-  $('.empleadosList').focus(function() {
-    optionEmpleados();
-  })
+  optionEmpleados();
+  // $('.empleadosList').focus(function() {
+  //   optionEmpleados();
+  // })
  
 
 
