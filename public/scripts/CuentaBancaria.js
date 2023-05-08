@@ -1,6 +1,5 @@
 $(document).on("ready", init);// Inciamos el jquery
-function ListadoCuentaBancaria(){ 
-  console.log('hola')
+function ListadoCuentaBancaria(){
   var tabla = $("#tblCuentaBancario")
     .dataTable({
       aProcessing: true,
@@ -12,6 +11,11 @@ function ListadoCuentaBancaria(){
         { mDataProp: "1" },
         { mDataProp: "2" },
         { mDataProp: "3" },
+        { mDataProp: "4" },
+        { mDataProp: "5" },
+        { mDataProp: "6" },
+        { mDataProp: "7" },
+        { mDataProp: "8" },
       
 
       ],
@@ -28,7 +32,54 @@ function ListadoCuentaBancaria(){
     })
     .DataTable();
     };
+
+
+function traerTipoCuenta(){
+$.ajax({
+      url: "./ajax/CuentaBancariaAjax.php?op=traerTipoCuenta",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        console.log(rpta);
+        var options_html = '<option value=""></option>';
+
+        rpta.map((e) => {
+          options_html += `<option data-id='${e.descripcion}' value='${e.idtipo_cuenta}'> ${e.descripcion} </option>`;
+        });
+
+        $(".tipo_cuenta_select_all").html(options_html);
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+}
+
+function traerBanco(){
+  $.ajax({
+      url: "./ajax/CuentaBancariaAjax.php?op=traerBanco",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        console.log(rpta);
+        var options_html = '<option value=""></option>';
+
+        rpta.map((e) => {
+          options_html += `<option data-id='${e.descripcion}' value='${e.idbanco}'> ${e.descripcion} </option>`;
+        });
+
+        $(".banco_select_all").html(options_html);
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+
+}
+
 function init(){
+  traerBanco()
+  traerTipoCuenta()
 
     $('#tblCuentaBancario').dataTable({
         dom: 'Bfrtip',

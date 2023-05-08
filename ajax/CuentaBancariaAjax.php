@@ -5,6 +5,34 @@ $obj = new CuentaBancaria();
 
 switch ($_GET["op"]) {
 
+    case 'traerTipoCuenta':
+
+
+        $query_Tipo = $obj->traerTipoCuenta();
+
+        $nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+
+
+        break;
+
+    case 'traerBanco':
+ 
+
+        $query_Tipo = $obj->traerBanco();
+
+        $nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+
+
+        break;
+
     case 'list':
         $query = $obj->listar();
 
@@ -14,12 +42,18 @@ switch ($_GET["op"]) {
         while ($reg = $query->fetch_object()) {
             $data[] = array(
                 "0" => $i,
-                "1" => $reg->descripcion,
-                "2" => $reg->numero,
-                "3" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCuentaBancaria('.$reg->idcuenta_bancaria.',\''.$reg->descripcion.'\'
-                ,\''.$reg->numero.'\'
-                )"><i class="fa fa-pencil"></i> </button>&nbsp;'.
-                '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCuentaBancaria('.$reg->idcuenta_bancaria.')"><i class="fa fa-trash"></i> </button>',
+                "1" => $reg->tipo_cuenta,
+                "2" => $reg->estado,
+                "3" => $reg->banco,
+                "4" => $reg->banco_cuenta,
+                "5" => $reg->numero,
+                "6" => $reg->cci,
+                "7" => $reg->balance_inicial,
+
+                "8" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCuentaBancaria(' . $reg->idbanco_cuenta . ',\'' . $reg->banco_cuenta . '\'
+                ,\'' . $reg->numero . '\'
+                )"><i class="fa fa-pencil"></i> </button>&nbsp;' .
+                    '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCuentaBancaria(' . $reg->idbanco_cuenta . ')"><i class="fa fa-trash"></i> </button>',
             );
             $i++;
         }
@@ -35,16 +69,19 @@ switch ($_GET["op"]) {
     case 'SaveOrUpdate':
 
         if (empty($_POST["txtIdcuenta_bancaria"])) {
-            if ($obj->Registrar($_POST["txtDescripcion"]
-            ,$_POST["txtNumero"]
+            if ($obj->Registrar(
+                $_POST["txtDescripcion"],
+                $_POST["txtNumero"]
             )) {
                 echo "Registrado Exitosamente";
             } else {
                 echo "Usuario no ha podido ser registado.";
             }
         } else {
-            if ($obj->Modificar($_POST["txtIdcuenta_bancaria"],$_POST["txtDescripcion"],
-            $_POST["txtNumero"]
+            if ($obj->Modificar(
+                $_POST["txtIdcuenta_bancaria"],
+                $_POST["txtDescripcion"],
+                $_POST["txtNumero"]
             )) {
                 echo "Registrado Exitosamente";
             } else {
