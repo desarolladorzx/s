@@ -14,16 +14,14 @@ class Activos
 
 		$sql="UPDATE gestion_activo
 				 SET 
-				 
-				 area = '$data->area',
-				  fecha_asignacion =  '$data->fecha_asignacion',
-				   idempleado = '$data->idempleado',
-				    idempleado_uso =  '$data->idempleado_uso',
-				     ubicacion = '$data->idubicacion'
-				 
+				area = '$data->area',
+				fecha_asignacion =  '$data->fecha_asignacion',
+				idempleado = '$data->idempleado',
+				idempleado_uso =  '$data->idempleado_uso',
+				ubicacion = '$data->idubicacion'
 				 WHERE idgestion_activos='$data->idgestionActivo'
 		";
-	
+		
 		$query = $conexion->query($sql);
 		return  $query;
 		
@@ -116,10 +114,27 @@ class Activos
 			'A',
 			'$data->ubicacion'
 		)";
-
-
+			
+		// print_r($valor); 
 
 		$query = $conexion->query($sql);
+		$idgestion_activo=$conexion->insert_id;
+
+		// $sql = "INSERT INTO gestion_activo_archivo(
+		// 	idgestion_activo,
+		// 	ruta,
+		// 	fecha,
+		// 	estado
+		// 	)
+		// VALUES(
+		// 	$idgestion_activo, 
+		// 	'$new_file_name', 
+		// 	CURRENT_TIMESTAMP(), 
+		// 	'A'			
+		// 	)";
+
+		// $query = $conexion->query($sql);
+		return $idgestion_activo;
 	}
 	public function verDetallesActivoUnidad($id)
 	{
