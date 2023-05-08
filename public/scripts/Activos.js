@@ -35,9 +35,9 @@ function init() {
 
   $("#actualizar_boton_asigacion_empleado").click(function () {
     let error = false;
-
+    
     var idValueObj = {};
-
+    
     var formData = new FormData();
 
     var gestion = document.querySelectorAll(".gestion_activo");
@@ -50,13 +50,13 @@ function init() {
       }
     });
 
-    // $(".gestion_activo").each(function () {
-
-    // });
-
     for (var key in idValueObj) {
       formData.append(key, idValueObj[key]);
     }
+
+    $.each($("#act_activo_archivo")[0].files, function (i, file) {
+      formData.append("fileupload[]", file);
+    });
 
     formData.append("idactivo", $("#act_idactivo").val());
 
@@ -69,6 +69,7 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+          console.log(datos);
           swal("Mensaje del Sistema", datos, "success");
 
           var tabla = $("#table_activos_anteriores")
@@ -107,6 +108,10 @@ function init() {
 
 
         },
+
+        error:function (datos) {
+        console.log(datos)
+        }
       });
     } else {
       alert("faltan llenar unos datos");
@@ -324,13 +329,32 @@ function init() {
       idubicacion: $("#act_ubicacion").val(),
       idgestionActivo: idgestionActivo,
     };
+    var formData = new FormData();
 
+   
+
+    formData.append('idempleado',$("#act_idempleado").val())
+    formData.append('idempleado_uso',$("#act_idempleado_uso").val())
+    formData.append('area',$("#act_area").val())
+    formData.append('fecha_asignacion',$("#act_fecha_asignacion").val())
+    formData.append('idubicacion',$("#act_ubicacion").val())
+    formData.append('idgestionActivo',idgestionActivo)
+
+
+    $.each($("#act_activo_archivo")[0].files, function (i, file) {
+      // console.log(file);
+      formData.append("fileupload[]", file);
+    });
+    
     $.ajax({
       url: "./ajax/ActivosAjax.php?op=actualizar_ultimo_empleado",
-      type: "post",
-      dataType: "json",
-      data: objet,
+      type: "POST",
+      data: formData,
+      contentType: "application/json",
+      contentType: false,
+      processData: false,
       success: function (datos) {
+        console.log(datos);
 
 
         swal("Mensaje del Sistema", 'actulizado correctamente', "success");
@@ -514,6 +538,10 @@ function modicarUltimoUsuarioAsignado(id) {
   $("#act_fecha_asignacion").prop("disabled", false);
   $("#act_ubicacion").prop("disabled", false);
 
+  $("#act_activo_archivo").prop("disabled", false);
+
+
+
   idgestionActivo = id;
   console.log(id);
   $("#boton_actualizar_ultimo_empleado").show();
@@ -586,7 +614,7 @@ function verDetallesActivoUnidad(id) {
     },
 
     success: function (datos) {
-      var htmldetalleArchivos;
+      // var htmldetalleArchivos;
       $.ajax({
         url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
         type: "get",
@@ -704,11 +732,43 @@ function ModificarDetallesActivosView(id) {
     },
 
     success: function (datos) {
+      
       console.log(datos);
+
+      $.ajax({
+        url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
+        type: "get",
+        dataType: "json",
+        data: {
+          id: datos.idgestion_activos,
+        },
+        success: function (dataArchivos) {
+          var htmldetalleArchivos = "";
+          dataArchivos.map(function (dataArchivo) {
+            htmldetalleArchivos += `<li>
+            <a href="./Files/Activos/${dataArchivo.ruta}" target="_blank">
+            <span class="mailbox-attachment-icon has-img">
+            <img src="https://img.freepik.com/vector-premium/simbolo-carpeta-icono-carpeta-documentos-ilustracion-vector-plano-aislado-sobre-fondo-blanco_97843-2848.jpg?w=2000">
+            </span>
+            </a>
+            <div class="mailbox-attachment-info">
+            <a href="./Files/Activos/${dataArchivo.ruta}" class="mailbox-attachment-name" target="_blank">${dataArchivo.ruta}</a>
+            </li>`;
+          });
+
+          $("#detalleArchivoActivo").html(htmldetalleArchivos);
+        },
+        error: function (erro) {
+          console.log(erro);
+        },
+      });
+
+
       $("#container_insertar_articulo").show();
       $('input[id^="act_"]').each(function () {
         $(this).attr("disabled", false);
       });
+
       $("select, textarea").each(function () {
         $(this).attr("disabled", false);
       });
@@ -722,6 +782,7 @@ function ModificarDetallesActivosView(id) {
       $("#registrar_nuevo_articulo_submit").hide();
 
       $("#actualizar_nuevo_articulo_submit").show();
+
       $.each(datos, function (key, value) {
         $("#act_" + key).val(value);
       });
