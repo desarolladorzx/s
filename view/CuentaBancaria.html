@@ -33,7 +33,7 @@
           >
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Los campos con (*) son olbigatorios</label><br />
+                <label>Los campos con (*) son obligatorios</label><br />
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group has-success">
@@ -42,32 +42,28 @@
                     type="hidden"
                     maxlength="50"
                     class="form-control"
-                    name="txtIdbanco"
+                    name="txtIdcuenta_bancaria"
                     required=""
                     placeholder=""
                     autofocus=""
                   />
-                  <label>Cuenta Bancaria (*):</label>
-                  <input
-                    id="txtDescripcion"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    name="txtDescripcion"
+                  <label>Tipo de Moneda(*):</label>
+                  <select
+                    id="cboModTipo_Moneda"
+                    name="cboModTipo_Moneda"
+                    class="form-control tipo_divisa_select_all"
                     required=""
-                    placeholder="Cuenta Bancaria"
-                    autofocus=""
-                  />
+                  ></select>
                 </div>
               </div>
+             
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group has-success">
                   <label>Tipo de Cuenta(*):</label>
-                 
+
                   <select
-                    id="cboModTipo_EntregaDetalles"
-                    name="cboModTipo_EntregaDetalles"
-                    
+                    id="cboModTipo_de_Cuenta"
+                    name="cboModTipo_de_Cuenta"
                     class="form-control tipo_cuenta_select_all"
                     required=""
                   ></select>
@@ -75,30 +71,89 @@
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group has-success">
-                  <label>Nº de cuenta(*):</label>
+                  <label>Banco(*):</label>
                   <select
-                    id="cbo"
-                    name="cboModTipo_EntregaDetalles"
-                    
-                    
+                    id="cboModIdBanco"
+                    name="cboModIdBanco"
+                    placeholder="Banco"
                     class="form-control banco_select_all"
                     required=""
-                  >
+                  ></select>
+                </div>
+              </div>
 
-                  </select>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nombre del Titular (*):</label>
+                  <input
+                    id="txtModNombreTitular"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtModNombreTitular"
+                    required=""
+                    placeholder="Nombre del Titular"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nombre de Cuenta (*):</label>
+                  <input
+                    id="txtNombreCuentaBancaria"
+                    name="txtNombreCuentaBancaria"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="Nombre de Cuenta"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Numero de Cuenta (*):</label>
+                  <input
+                    id="txtNumero"
+                    name="txtNumero"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="Numero de Cuenta "
+                    autofocus=""
+                  />
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="form-group has-success">
                   <label>CCI (*):</label>
                   <input
-                    id="txtNumero"
+                    id="txtNumeroCCI"
+                    name="txtNumeroCCI"
                     type="text"
                     maxlength="150"
                     class="form-control"
-                    name="txtNumero"
                     required=""
-                    placeholder="Numero"
+                    placeholder="CCI"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Descripcion (*):</label>
+                  <input
+                    id="txtDescripcion"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtDescripcion"
+                    required=""
+                    placeholder="Descripcion"
                     autofocus=""
                   />
                 </div>
@@ -107,26 +162,11 @@
                 <div class="form-group has-success">
                   <label>saldo inicial(*):</label>
                   <input
-                    id="txtNumero"
-                    type="text"
+                    id="txtSaldoInicial"
+                    type="number"
                     maxlength="150"
                     class="form-control"
-                    name="txtNumero"
-                    required=""
-                    placeholder="Numero"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Numero(*):</label>
-                  <input
-                    id="txtNumero"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    name="txtNumero"
+                    name="txtSaldoInicial"
                     required=""
                     placeholder="Numero"
                     autofocus=""
