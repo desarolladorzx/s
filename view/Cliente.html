@@ -41,6 +41,25 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">Clientes</h3>
+
+    <label for="" style="opacity: 0">Ejecutivo de Ventas</label>
+    <div style="display: flex">
+      <button
+        class="btn btn-primary"
+        style="margin: 0 5px"
+        id="btnNuevo"
+      >
+        <i class="fa fa-file"></i> Nuevo
+      </button>
+      <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+        echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
+          Reasignar EV
+        </button> ';
+      }
+      ?>
+
+    </div>
+
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse">
         <i class="fa fa-minus"></i>
@@ -861,22 +880,16 @@
 
         <div class="row">
           <div class="col col-lg-3">
-            <label for="" style="opacity: 0">Ejecutivo de Ventas</label>
-            <div style="display: flex">
-              <button
-                class="btn btn-primary"
-                style="margin: 0 5px"
-                id="btnNuevo"
-              >
-                <i class="fa fa-file"></i> Nuevo
-              </button>
-              <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
-                echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
-                  Reasignar EV
-                </button> ';
-              }
-              ?>
-
+           <div class="form-group has-success">
+              <label>Cantidad Total de Clientes :</label>
+              <input
+                id="cant_total_cliente"
+                type="number"
+                placeholder="Cantidad Total de Clientes"
+                maxlength="40"
+                class="form-control"
+                disabled
+              />
             </div>
           </div>
           <div class="col col-lg-9 container_info_filtro " >
@@ -922,6 +935,10 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-12">
+            
+        
         <div class="row container_info_filtro" style="margin:10px 0 ;">
           <div class="col-lg-3">
             <div class="form-group has-success">
@@ -1029,7 +1046,8 @@
           </div>
          
         </div>
-
+      </div>
+    </div>
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table

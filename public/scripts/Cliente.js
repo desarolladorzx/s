@@ -80,7 +80,10 @@ function handleClick(checkbox) {
 function ubicacionAntiguo() {
   console.log();
 }
+
 function init() {
+
+
   $("#insertarClientesACartera").click(function () {
     // $('.close').click()
     $(".loading_window").show();
@@ -100,8 +103,8 @@ function init() {
             "Mensaje del Sistema",
             "clientes asignados correctamente",
             "success"
-          );
-
+          )
+          ListadoCliente()
           $("#asignarUsuario").modal("hide");
         },
         error: function (e) {
@@ -109,7 +112,9 @@ function init() {
             "Mensaje del Sistema",
             "clientes asignados correctamente",
             "success"
-          );
+          )
+          ListadoCliente()
+
           $("#asignarUsuario").modal("hide");
         },
       });
