@@ -561,7 +561,7 @@ function Renderizar(){
       class="form-control"
       placeholder=""
       value='${element[0]}'
-      required
+      
       onchange="actualizarMetodoPago(${index},${0}, this.value)"
     />
       </div>
@@ -574,7 +574,7 @@ function Renderizar(){
       onchange="actualizarMetodoPago(${index},${1}, this.value)"
       class="form-control inputs_tipo_metodo_pago"
 
-      required
+      
       >
       
       </select>  
@@ -593,7 +593,7 @@ function Renderizar(){
     onchange="actualizarMetodoPago(${index},${2}, this.value)"
     class="form-control inputs_tipo_banco"
 
-    required
+    
     >
     
     </select>  
@@ -606,7 +606,7 @@ function Renderizar(){
         
         type="text"
         class="form-control"
-        required
+        
         placeholder=""
         value='${element[3]}'
         onchange="actualizarMetodoPago(${index},${3}, this.value)"
@@ -652,7 +652,6 @@ function Renderizar(){
           type="number"
           class="form-control"
         
-          required=""
           placeholder=""
           value='${element[4]}'
           onchange="actualizarMetodoPago(${index},${4}, this.value)"
