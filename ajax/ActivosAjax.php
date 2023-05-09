@@ -190,23 +190,26 @@ type="button"
         "3" => $reg->familia_activo,
         "4" => $reg->tipo_equipo,
         "5" => $reg->unidad,
-        "6" => '1',
-        "7" => $reg->marca,
-        "8" => $reg->modelo,
-        "9" => $reg->serie,
-        "10" => $reg->color,
-        "11" => $reg->caracteristica,
-        "12" => $reg->estado,
-        "13" => $reg->t_documento,
-        "14" => $reg->precio_compra,
-        "15" => $reg->proveedor,
-        "16" => $reg->area,
-        "17" => $reg->usado_por,
+        "6" => $reg->marca,
+        "7" => $reg->modelo,
+        "8" => $reg->serie,
+        "9" => $reg->color,
+        "10" => $reg->caracteristica,
+        "11" => $reg->estado,
+        "12" => $reg->t_documento,
+        "13" => $reg->precio_compra,
+        "14" => $reg->proveedor,
+        "15" => $reg->area,
+        "16" => $reg->usado_por,
 
+        
+        "17"=>$reg->tipo_activo,
+        "18"=>$reg->ubicacion==1?'Arequipa':'Lima',
+        "19"=>$reg->gestionado_por,
         // "18" => $reg->area,
 
         
-        "30" => '<button class="btn btn-success" data-toggle="tooltip" 
+        "20" => '<button class="btn btn-success" data-toggle="tooltip" 
 				type="button" 
 				onclick="verDetallesActivoUnidad(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
 				&nbsp
