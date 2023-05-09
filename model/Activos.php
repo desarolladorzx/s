@@ -197,6 +197,7 @@ class Activos
 		global $conexion;
 		$sql = "SELECT area,gestion_activo.idgestion_activos, activo.tipo_activo,CONCAT(emp_uso.nombre,' ',emp_uso.apellidos) usado_por , CONCAT(emp_jes.nombre,' ',emp_jes.apellidos) gestionado_por,activo.estado,activo.codigo etiqueta,activo.fecha_finvida,  activo.* 
 		,CAST(fecha_finvida  AS DATE) fecha_finvida
+		,ubicacion
 		FROM activo
 		left join gestion_activo on gestion_activo.idactivo = activo.idactivo
 		

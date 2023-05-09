@@ -1,8 +1,42 @@
 $(document).on("ready", init);
 var idgestionActivo = "";
+
+var visibleColumns = [
+  { value: "1", visible: true },
+  { value: "2", visible: true },
+  { value: "3", visible: true },
+  { value: "4", visible: true },
+  { value: "5", visible: true },
+  { value: "6", visible: true },
+  { value: "7", visible: true },
+  { value: "8", visible: true },
+
+  { value: "9", visible: true },
+  { value: "10", visible: true },
+  { value: "11", visible: true },
+  { value: "12", visible: true },
+  { value: "13", visible: true },
+  { value: "14", visible: true },
+  { value: "15", visible: true },
+  { value: "16", visible: true },
+  { value: "17", visible: true },
+  { value: "18", visible: true },
+  { value: "19", visible: true },
+  { value: "20", visible: true },
+  { value: "21", visible: true },
+  { value: "22", visible: true },
+];
 function init() {
+    var htmlVisibleColumns=''
 
+    visibleColumns.map(e=>{
 
+      visibleColumns+=`
+      
+      `
+    })
+
+  
   $("#boton_actualizar_ultimo_empleado").hide();
   $("#table_activos_anteriores").hide();
   $("#act_fecha_ingreso ").change(function () {
@@ -28,16 +62,14 @@ function init() {
   // $('.empleadosList').focus(function() {
   //   optionEmpleados();
   // })
- 
-
 
   $("#btn_asignar_a_empleado").hide();
 
   $("#actualizar_boton_asigacion_empleado").click(function () {
     let error = false;
-    
+
     var idValueObj = {};
-    
+
     var formData = new FormData();
 
     var gestion = document.querySelectorAll(".gestion_activo");
@@ -73,45 +105,43 @@ function init() {
           swal("Mensaje del Sistema", datos, "success");
 
           var tabla = $("#table_activos_anteriores")
-          .dataTable({
-            aProcessing: true,
-            aServerSide: true,
-            dom: "Bfrtip",
-            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
-            aoColumns: [
-              { mDataProp: "0" },
-              { mDataProp: "1" },
-              { mDataProp: "2" },
-              { mDataProp: "3" },
-              { mDataProp: "4" },
-              { mDataProp: "5" },
-            ],
-            ajax: {
-              url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
-              type: "get",
-              dataType: "json",
-              data: function (d) {
-                d.id = idActivo;
+            .dataTable({
+              aProcessing: true,
+              aServerSide: true,
+              dom: "Bfrtip",
+              buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+              aoColumns: [
+                { mDataProp: "0" },
+                { mDataProp: "1" },
+                { mDataProp: "2" },
+                { mDataProp: "3" },
+                { mDataProp: "4" },
+                { mDataProp: "5" },
+              ],
+              ajax: {
+                url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+                type: "get",
+                dataType: "json",
+                data: function (d) {
+                  d.id = idActivo;
+                },
+                error: function (e) {
+                  console.log(e.responseText);
+                },
               },
-              error: function (e) {
-                console.log(e.responseText);
+              bDestroy: true,
+              createdRow: function (row, data, index) {
+                if ($(row).find("td:eq(4)").html() == "A") {
+                  $(row).find("td").addClass("bg-success");
+                }
               },
-            },
-            bDestroy: true,
-            createdRow: function (row, data, index) {
-              if ($(row).find("td:eq(4)").html() == "A") {
-                $(row).find("td").addClass("bg-success");
-              }
-            },
-          })
-          .DataTable();
-
-
+            })
+            .DataTable();
         },
 
-        error:function (datos) {
-        console.log(datos)
-        }
+        error: function (datos) {
+          console.log(datos);
+        },
       });
     } else {
       alert("faltan llenar unos datos");
@@ -123,7 +153,7 @@ function init() {
   $("#btn_asignar_a_empleado").click(function () {
     $("#actualizar_nuevo_articulo_submit").hide();
 
-    $('#boton_actualizar_ultimo_empleado').hide()
+    $("#boton_actualizar_ultimo_empleado").hide();
 
     $(".gestion_activo").each(function () {
       $(this).attr("disabled", false);
@@ -160,7 +190,7 @@ function init() {
 
     $("#actualizar_nuevo_articulo_submit").hide();
   });
- 
+
   $("#frmActivo").submit(function (e) {
     e.preventDefault();
 
@@ -196,7 +226,6 @@ function init() {
       `<i class="fa fa-spinner fa-spin"></i>Registrando`
     );
 
-
     if (idValueObj.act_idactivo) {
       console.log("se esta actualizando un articulo");
       $.ajax({
@@ -208,18 +237,19 @@ function init() {
         processData: false,
         success: function (datos) {
           inputs.forEach(function (input) {
-            input.value=''
+            input.value = "";
           });
           textareas.forEach(function (textarea) {
-            textarea.value=''
+            textarea.value = "";
           });
           select.forEach(function (textarea) {
-           textarea.value=''
+            textarea.value = "";
           });
 
-
-               $("#registrar_nuevo_articulo_submit").html(`<i class="fa fa-floppy-o"></i>Registrar`);
-               $("#registrar_nuevo_articulo_submit").prop("disabled", false);
+          $("#registrar_nuevo_articulo_submit").html(
+            `<i class="fa fa-floppy-o"></i>Registrar`
+          );
+          $("#registrar_nuevo_articulo_submit").prop("disabled", false);
           swal("Mensaje del Sistema", datos, "success");
 
           $("#VerForm").hide(); // mostramos el formulario
@@ -227,11 +257,6 @@ function init() {
           $("#VerListado").show();
 
           ListadoActivo();
-
-   
-      
-        
-          
         },
       });
     } else {
@@ -243,24 +268,23 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
-
           console.log("se esta creando un nuevo activo");
 
           inputs.forEach(function (input) {
-            input.value=''
+            input.value = "";
           });
           textareas.forEach(function (textarea) {
-            textarea.value=''
+            textarea.value = "";
           });
           select.forEach(function (textarea) {
-           textarea.value=''
+            textarea.value = "";
           });
-    
-    
-               $("#registrar_nuevo_articulo_submit").html(`<i class="fa fa-floppy-o"></i>Registrar`);
-               $("#registrar_nuevo_articulo_submit").prop("disabled", false);
 
-               
+          $("#registrar_nuevo_articulo_submit").html(
+            `<i class="fa fa-floppy-o"></i>Registrar`
+          );
+          $("#registrar_nuevo_articulo_submit").prop("disabled", false);
+
           $("#VerForm").hide(); // mostramos el formulario
           $("#btnNuevo").show();
           $("#VerListado").show();
@@ -274,37 +298,45 @@ function init() {
   function ListadoActivo() {
     var tabla = $("#tblActivos")
       .dataTable({
-       
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", {
-          extend: "excelHtml5",
-          text: "Excel",
-          exportOptions: {
-                 columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
-          }
-          }, "csvHtml5", "pdfHtml5"],
+        buttons: [
+          "copyHtml5",
+          {
+            extend: "excelHtml5",
+            text: "Excel",
+            exportOptions: {
+              columns: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+              ],
+            },
+          },
+          "csvHtml5",
+          "pdfHtml5",
+        ],
         aoColumns: [
-          { mDataProp: "0" },
-          { mDataProp: "1" },
-          { mDataProp: "2" },
-          { mDataProp: "3" },
-          { mDataProp: "4" },
-          { mDataProp: "5" },
-          { mDataProp: "6" },
-          { mDataProp: "7" },
-          { mDataProp: "8" },
-          { mDataProp: "9" },
-          { mDataProp: "10" },
-          { mDataProp: "11" },
-          { mDataProp: "12" },
-          { mDataProp: "13" },
-          { mDataProp: "14" },
-          { mDataProp: "15" },
-          { mDataProp: "16" },
-          { mDataProp: "17" },
-          { mDataProp: "30" },
+          { mDataProp: "0", visible: true },
+          { mDataProp: "1", visible: false },
+          { mDataProp: "2", visible: false },
+          { mDataProp: "3", visible: false },
+          { mDataProp: "4", visible: true },
+          { mDataProp: "5", visible: false },
+          { mDataProp: "6", visible: false },
+          { mDataProp: "7", visible: false },
+          { mDataProp: "8", visible: false },
+          { mDataProp: "9", visible: false },
+          { mDataProp: "10", visible: false },
+          { mDataProp: "11", visible: false },
+          { mDataProp: "12", visible: false },
+          { mDataProp: "13", visible: false },
+          { mDataProp: "14", visible: false },
+          { mDataProp: "15", visible: false },
+          { mDataProp: "16", visible: true },
+          { mDataProp: "17", visible: true },
+          { mDataProp: "18", visible: false },
+          { mDataProp: "19", visible: false },
+          { mDataProp: "20", visible: true },
         ],
         ajax: {
           url: "./ajax/ActivosAjax.php?op=list",
@@ -331,21 +363,18 @@ function init() {
     };
     var formData = new FormData();
 
-   
-
-    formData.append('idempleado',$("#act_idempleado").val())
-    formData.append('idempleado_uso',$("#act_idempleado_uso").val())
-    formData.append('area',$("#act_area").val())
-    formData.append('fecha_asignacion',$("#act_fecha_asignacion").val())
-    formData.append('idubicacion',$("#act_ubicacion").val())
-    formData.append('idgestionActivo',idgestionActivo)
-
+    formData.append("idempleado", $("#act_idempleado").val());
+    formData.append("idempleado_uso", $("#act_idempleado_uso").val());
+    formData.append("area", $("#act_area").val());
+    formData.append("fecha_asignacion", $("#act_fecha_asignacion").val());
+    formData.append("idubicacion", $("#act_ubicacion").val());
+    formData.append("idgestionActivo", idgestionActivo);
 
     $.each($("#act_activo_archivo")[0].files, function (i, file) {
       // console.log(file);
       formData.append("fileupload[]", file);
     });
-    
+
     $.ajax({
       url: "./ajax/ActivosAjax.php?op=actualizar_ultimo_empleado",
       type: "POST",
@@ -357,44 +386,76 @@ function init() {
         console.log(datos);
 
 
-        swal("Mensaje del Sistema", 'actulizado correctamente', "success");
+        $.ajax({
+          url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
+          type: "get",
+          dataType: "json",
+          data: {
+            id: idgestionActivo,
+          },
+          success: function (dataArchivos) {
+            var htmldetalleArchivos = "";
+            dataArchivos.map(function (dataArchivo) {
+              htmldetalleArchivos += `<li>
+              <a href="./Files/Activos/${dataArchivo.ruta}" target="_blank">
+              <span class="mailbox-attachment-icon has-img">
+              <img src="https://img.freepik.com/vector-premium/simbolo-carpeta-icono-carpeta-documentos-ilustracion-vector-plano-aislado-sobre-fondo-blanco_97843-2848.jpg?w=2000">
+              </span>
+              </a>
+              <div class="mailbox-attachment-info">
+              <a href="./Files/Activos/${dataArchivo.ruta}" class="mailbox-attachment-name" target="_blank">${dataArchivo.ruta}</a>
+              </li>`;
+            });
+  
+            $("#detalleArchivoActivo").html(htmldetalleArchivos);
+          },
+          error: function (erro) {
+            console.log(erro);
+          },
+        });
+
+
+        swal("Mensaje del Sistema", "actulizado correctamente", "success");
         var tabla = $("#table_activos_anteriores")
-        .dataTable({
-          aProcessing: true,
-          aServerSide: true,
-          dom: "Bfrtip",
-          buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
-          aoColumns: [
-            { mDataProp: "0" },
-            { mDataProp: "1" },
-            { mDataProp: "2" },
-            { mDataProp: "3" },
-            { mDataProp: "4" },
-            { mDataProp: "5" },
-          ],
-          ajax: {
-            url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
-            type: "get",
-            dataType: "json",
-            data: function (d) {
-              d.id = idActivo;
+          .dataTable({
+            aProcessing: true,
+            aServerSide: true,
+            dom: "Bfrtip",
+            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            aoColumns: [
+              { mDataProp: "0" },
+              { mDataProp: "1" },
+              { mDataProp: "2" },
+              { mDataProp: "3" },
+              { mDataProp: "4" },
+              { mDataProp: "5" },
+            ],
+            ajax: {
+              url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
+              type: "get",
+              dataType: "json",
+              data: function (d) {
+                d.id = idActivo;
+              },
+              error: function (e) {
+                console.log(e.responseText);
+              },
             },
-            error: function (e) {
-              console.log(e.responseText);
+            bDestroy: true,
+            createdRow: function (row, data, index) {
+              if ($(row).find("td:eq(4)").html() == "A") {
+                $(row).find("td").addClass("bg-success");
+              }
             },
-          },
-          bDestroy: true,
-          createdRow: function (row, data, index) {
-            if ($(row).find("td:eq(4)").html() == "A") {
-              $(row).find("td").addClass("bg-success");
-            }
-          },
-        })
-        .DataTable();
+          })
+          .DataTable();
       },
       error: function (error) {
         console.log(error);
-        swal("Mensaje del Sistema", 'actulizado correctamente', "success");
+        swal("Mensaje del Sistema", "actulizado correctamente", "success");
+
+
+
 
 
         var tabla = $("#table_activos_anteriores")
@@ -435,10 +496,7 @@ function init() {
   });
 }
 
-
-function eliminarActivo(
-  id
-){
+function eliminarActivo(id) {
   $.ajax({
     url: "./ajax/ActivosAjax.php?op=EliminarActivo",
     type: "post",
@@ -446,11 +504,10 @@ function eliminarActivo(
     data: {
       id,
     },
-    success:function (data){
+    success: function (data) {
       console.log(data);
-    }
-  
-  })
+    },
+  });
 }
 function cargarDataEmpleadoActivos(
   id,
@@ -527,10 +584,7 @@ function cargarDataEmpleadoActivos(
   //$("#txtClaveOtro").show();
 }
 function modicarUltimoUsuarioAsignado(id) {
-
-
-  $('#actualizar_boton_asigacion_empleado').hide()
-
+  $("#actualizar_boton_asigacion_empleado").hide();
 
   $("#act_idempleado").prop("disabled", false);
   $("#act_idempleado_uso").prop("disabled", false);
@@ -540,8 +594,6 @@ function modicarUltimoUsuarioAsignado(id) {
 
   $("#act_activo_archivo").prop("disabled", false);
 
-
-
   idgestionActivo = id;
   console.log(id);
   $("#boton_actualizar_ultimo_empleado").show();
@@ -550,8 +602,7 @@ function modicarUltimoUsuarioAsignado(id) {
 function verDetallesActivoUnidad(id) {
   $("#btnNuevo").hide();
 
-
-  idActivo=id
+  idActivo = id;
 
   // ocultamos el contendedor asignar_activos para insertar una  tabla
   $("#container_asignar_activos").hide();
@@ -570,7 +621,7 @@ function verDetallesActivoUnidad(id) {
         { mDataProp: "2" },
         { mDataProp: "3" },
         { mDataProp: "4" },
-        { mDataProp: "5" ,visible:false},
+        { mDataProp: "5", visible: false },
       ],
       ajax: {
         url: "./ajax/ActivosAjax.php?op=listaDeEmpleadosPorActivos",
@@ -593,7 +644,6 @@ function verDetallesActivoUnidad(id) {
     .DataTable();
 
   //
-
 
   $('input[id^="act_"]').each(function () {
     $(this).val("");
@@ -665,12 +715,10 @@ function verDetallesActivoUnidad(id) {
     },
   });
 }
-var idActivo=''
+var idActivo = "";
 function ModificarDetallesActivosView(id) {
+  idActivo = id;
 
-  idActivo=id
-
-  
   $("#btnNuevo").hide();
   $("#table_activos_anteriores").show();
 
@@ -732,7 +780,6 @@ function ModificarDetallesActivosView(id) {
     },
 
     success: function (datos) {
-      
       console.log(datos);
 
       $.ajax({
@@ -762,7 +809,6 @@ function ModificarDetallesActivosView(id) {
           console.log(erro);
         },
       });
-
 
       $("#container_insertar_articulo").show();
       $('input[id^="act_"]').each(function () {
