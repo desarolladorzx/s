@@ -61,36 +61,47 @@ function AgregarPedCarritoTraslado(
 function verDetallesTraslados(val) {
   console.log(val);
 
-  var traslado = JSON.parse(val.replace(/\+/g, '"'));
+  // var traslado = JSON.parse(val.replace(/\+/g, '"'));
+  var traslado;
+  console.log(traslado);
 
-  $("#info_traslado_inicial").val(traslado.almacen_inicial);
-  $("#info_traslado_final").val(traslado.almacen_destino);
-  $("#info_traslado_motivo").val(traslado.motivo_del_traslado);
+  $.getJSON(
+    "./ajax/TrasladosAjax.php?op=TraerDatos",
+    {
+      idtraslado: val,
+    },
+    function (r) {
+      traslado = r;
+      $("#info_traslado_inicial").val(traslado.almacen_inicial);
+      $("#info_traslado_final").val(traslado.almacen_destino);
+      $("#info_traslado_motivo").val(traslado.motivo_del_traslado);
 
-  $("#container_descripcion_recepcion").show();
-  $("#info_descripcion_recepcion").val(traslado.descripcion_recepcion);
-  $("#info_descripcion_recepcion").prop("disabled", true);
+      $("#container_descripcion_recepcion").show();
+      $("#info_descripcion_recepcion").val(traslado.descripcion_recepcion);
+      $("#info_descripcion_recepcion").prop("disabled", true);
 
-  $("#VerFormTrasladosDetalles").show();
+      $("#VerFormTrasladosDetalles").show();
 
-  CargarDetalleTraslado(traslado.idtraslado);
+      CargarDetalleTraslado(traslado.idtraslado);
 
-  var htmlEstado = `<option value="SALIDA" >EN ESPERA</option>
-  <option value="EN TRANSITO">EN TRANSITO</option>
-  <option value="ALMACEN OPERADOR" >EN ALMACEN OPERADOR</option>
-  <option value="INGRESO" >ENTREGADO</option>`;
+      var htmlEstado = `<option value="SALIDA" >EN ESPERA</option>
+    <option value="EN TRANSITO">EN TRANSITO</option>
+    <option value="ALMACEN OPERADOR" >EN ALMACEN OPERADOR</option>
+    <option value="INGRESO" >ENTREGADO</option>`;
 
-  $("#info_fecha_registro").val(traslado.fecha_registro);
-  $("#info_fecha_modificado").val(traslado.fecha_modificado);
+      $("#info_fecha_registro").val(traslado.fecha_registro);
+      $("#info_fecha_modificado").val(traslado.fecha_modificado);
 
-  $("#info_usuario_registro").val(traslado.empleado_ingreso);
-  $("#info_usuario_recepcion").val(traslado.empleado_recepcion);
+      $("#info_usuario_registro").val(traslado.empleado_ingreso);
+      $("#info_usuario_recepcion").val(traslado.empleado_recepcion);
 
-  $("#estadoTraslado").append(htmlEstado);
-  $("#estadoTraslado").val(traslado.estado);
+      $("#estadoTraslado").append(htmlEstado);
+      $("#estadoTraslado").val(traslado.estado);
 
-  $("#estadoTraslado").prop("disabled", true);
-  $("#body_Traslados").hide();
+      $("#estadoTraslado").prop("disabled", true);
+      $("#body_Traslados").hide();
+    }
+  );
 }
 
 let dataTraslados;
@@ -186,8 +197,8 @@ function CargarDetalleTraslado(idtraslado) {
       idtraslado: idtraslado,
     },
     function (r) {
+      // console.log(r);
       arrayDatosRecibidos = JSON.parse(r);
-      console.log(arrayDatosRecibidos);
 
       for (var pos in arrayDatosRecibidos) {
         arrayDatosRecibidos[pos].cantidadRecibida = null;
@@ -414,6 +425,9 @@ function init() {
           { mDataProp: "4" },
           { mDataProp: "5" },
           { mDataProp: "6" },
+          { mDataProp: "7" },
+
+          { mDataProp: "8" },
         ],
         ajax: {
           url: "./ajax/TrasladosAjax.php?op=ListTipoTraslados",

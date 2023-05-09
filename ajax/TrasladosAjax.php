@@ -1,7 +1,22 @@
 <?php
 session_start();
 switch ($_GET["op"]) {
+    case 'TraerDatos':
 
+
+        require_once "../model/Traslados.php";
+        $objPedido = new Traslados();
+        $idtraslado = $_GET["idtraslado"];
+        $query_prov = $objPedido->TraerDatos($idtraslado);
+
+        $nuevo = array();
+        while ($reg = $query_prov->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo[0]);
+        break;
+
+        break;
     case 'modificarEstadoTraslado':
         require_once "../model/Traslados.php";
 
@@ -131,7 +146,9 @@ switch ($_GET["op"]) {
                 "3" => $reg->almacen_destino,
                 "4" => $reg->motivo_del_traslado,
                 "5" => $reg->cantidad_total_de_productos,
-                "6" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . str_replace('"', "+", json_encode($reg))  . '`)"  title="Ver Detalle" ><i class="fav fa-eye"></i> </button>
+                "6" => $reg->serie,
+                "7" => $reg->numero,
+                "8" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . $reg->idtraslado. '`)"  title="Ver Detalle" ><i class="fav fa-eye"></i> </button>
                     '.$htmlModificarDetalles.'
                 ' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 // "6" => $reg->estado,

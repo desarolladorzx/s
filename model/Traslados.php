@@ -6,6 +6,36 @@ require "Conexion.php";
 class Traslados
 {
 
+
+    public function TraerDatos($idtraslado){
+        global $conexion;
+        $sql = "SELECT
+           
+        idtraslado,
+        CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_ingreso,
+        CONCAT(emp2.nombre ,' ',emp2.apellidos) empleado_recepcion,
+        
+        traslados.fecha_registro fecha,
+        sucursal.razon_social almacen_inicial ,
+        sucu.razon_social almacen_destino,
+        descripcion motivo_del_traslado,
+        cantidad cantidad_total_de_productos,
+        cantidad cantidad_total_de_productos,
+        traslados.*
+         from traslados
+        left join sucursal on sucursal.idsucursal=traslados.sucursal_id 
+        left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id
+            LEFT JOIN usuario ON usuario.idusuario =traslados.id_empleado
+            LEFT JOIN empleado ON empleado.idempleado=usuario.idempleado
+            
+            left JOIN usuario usu2 ON usu2.idusuario =traslados.id_empleado_recepcion
+             left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado
+        where idtraslado=$idtraslado
+        ";
+        $query = $conexion->query($sql);
+        return $query;
+
+    }
     public function ModificarEstadoTraslado($idtraslado, $estado, $arrayDatos, $descripcion_recepcion, $sucursal_destino_id)
     {
         global $conexion;
@@ -142,16 +172,18 @@ class Traslados
 
             
             for ($i = 0; $i < count($detalle); $i++) {
+
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
 
+                // print_r($array);
                 $cantidad_de_traslado = $array[6];
 
                 $sql_select_detalle_ingreso = "SELECT * from  detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso";
 
                 $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();
 
-                $total = $total + $cantidad_de_traslado;
+                $total = $total + $cantidad_de_traslado*$array[8];
                 $totalTraslado = $totalTraslado + 1;
             }
 
@@ -503,7 +535,7 @@ class Traslados
        JOIN traslados ON  traslados.idtraslado=t1.idtraslado 
        
        JOIN (
-       SELECT stock_ingreso,iddetalle_ingreso,estado_detalle_ingreso ,idarticulo ,codigo,serie , ROW_NUMBER() OVER (ORDER BY iddetalle_ingreso) AS fila FROM detalle_ingreso  s
+       SELECT stock_ingreso,iddetalle_ingreso,estado_detalle_ingreso ,idarticulo ,codigo,traslados.serie , ROW_NUMBER() OVER (ORDER BY iddetalle_ingreso) AS fila FROM detalle_ingreso  s
        JOIN traslados ON traslados.idingreso=s.idingreso 
        WHERE traslados.idtraslado=$idtraslado
        ) AS t2
