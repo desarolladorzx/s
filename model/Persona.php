@@ -323,7 +323,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-		limit 10
+		-- limit 10
 ;
 		";
 		// $sql = "SELECT  
