@@ -575,6 +575,10 @@ function cargarDataIngreso(
   Proveedor,
   tipo_comprobante
 ) {
+
+
+
+
   bandera = 2;
   $("#VerForm").show();
   $("#btnNuevo").hide();
@@ -631,6 +635,8 @@ function CargarDetalleIngreso(idIngreso) {
     "./ajax/IngresoAjax.php?op=GetDetalleArticulo",
     { idIngreso: idIngreso },
     function (r) {
+
+      console.log(r);
       $("table#tblDetalleIngreso tbody").html(r);
     }
   );

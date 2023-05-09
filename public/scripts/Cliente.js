@@ -285,9 +285,16 @@ function init() {
   });
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
+    // console.log(valor)
+    if (valor.length== 0) {  // verifica si el valor es nulo
+ 
+      
 
-    tabla.column(11).search(`^${valor}$`, true, false).draw();
-
+      tabla.column(11).search('').draw();  
+    } else {
+      tabla.column(11).search(`^${valor}$`, true, false).draw();  // realiza la búsqueda normal
+    }
+  
     $("#cant_total_cliente").val(tabla.page.info().end);
     llenarCantidades();
   });
