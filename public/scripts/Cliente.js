@@ -307,7 +307,7 @@ function init() {
         console.log(s);
         var lista = s;
 
-        var html = `<option value=""></option>`;
+        var html = `<option value="" selected="selected">Todos ...</option>`;
         lista.map((e) => {
           html += `
           <option value="${e.nombre}">${e.r_prefijo} ${e.nombre}</option>`;

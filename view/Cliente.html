@@ -210,12 +210,12 @@
                         name="cboTipo_Persona"
                         id="cboTipo_Persona"
                       >
-                        <option value="FINAL">FINAL</option>
-                        <option value="DISTRIBUIDOR">DISTRIBUIDOR</option>
-                        <option value="SUPERDISTRIBUIDOR">
-                          SUPERDISTRIBUIDOR
-                        </option>
-                        <option value="REPRESENTANTE">REPRESENTANTE</option>
+                      <option value="FINAL">Final</option>
+                      <option value="DISTRIBUIDOR">Distribuidor</option>
+                      <option value="SUPERDISTRIBUIDOR">
+                        Superdistribuidor
+                      </option>
+                      <option value="REPRESENTANTE">Representante</option>
                       </select>
                     </div>
                   </div>
@@ -401,7 +401,7 @@
                     <div class="form-group has-success">
                       <label>Departamento (*):</label>
                       <input
-                        id="txtDireccion_Departamento"
+                        id="txtDirección_Departamento"
                         type="text"
                         maxlength="45"
                         name="txtDireccion_Departamento"
@@ -857,7 +857,7 @@
                     ></ol>
                   </div>
                   <div class="form-group has-success">
-                    <label>Cambiar el usuario responsable a :</label>
+                    <label>Cambiar el usuario responsable a:</label>
                     <select
                       id="select_personal_vendedor"
                       class="form-control"
@@ -880,8 +880,8 @@
 
         <div class="row">
           <div class="col col-lg-3">
-           <div class="form-group has-success">
-              <label>Cantidad Total de Clientes :</label>
+           <div class="form-group has-warning">
+              <label>Nº TOTAL DE RESULTADOS DE BÚSQUEDA</label>
               <input
                 id="cant_total_cliente"
                 type="number"
@@ -895,7 +895,7 @@
           <div class="col col-lg-9 container_info_filtro " >
             <div class="row">
               <div class="col col-lg-4">
-                <label for="">Ejecutivo de Ventas</label>
+                <label for="">Ejecutivos de Ventas:</label>
                 <select
                   name="ejecutivo_filtro"
                   id="ejecutivo_filtro"
@@ -903,33 +903,35 @@
                 ></select>
               </div>
               <div class="col col-lg-4">
-                <label for="">Tipo de cliente</label>
+                <label for="">Tipos de cliente:</label>
                 <select
                   name="cliente_filtro"
                   id="cliente_filtro"
                   class="form-control "
                 >
-                  <option value=""></option>
-                  <option value="final">Final</option>
-    
-                  <option value="Distribuidor">Distribuidor</option>
-                  <option value="Superdistribuidores">Superdistribuidores</option>
-                  <option value="Representantes">Representantes</option>
+                  <option value="">Todos ...</option>
+                  <option value="FINAL">Final</option>
+                  <option value="DISTRIBUIDOR">Distribuidor</option>
+                  <option value="SUPERDISTRIBUIDOR">
+                    Superdistribuidor
+                  </option>
+                  <option value="REPRESENTANTE">Representante</option>
+                </select>
             
                   <!-- <option value="proveedor">Proveedor</option> -->
                 </select>
               </div>
               <div class="col col-lg-4">
-                <label for="">Estado de Cliente</label>
+                <label for="">Estados de Clientes:</label>
                 <select
                   name="estado_filtro"
                   id="estado_filtro"
                   class="form-control"
                 >
-                  <option value=""></option>
-                  <option value="-ACTIVO"> ACTIVO</option>
-                  <option value="INACTIVO">INACTIVO</option>
-                  <option value="PERDIDO">PERDIDO</option>
+                  <option value="">Todos ...</option>
+                  <option value="-ACTIVO"> Activo</option>
+                  <option value="INACTIVO">Inactivo</option>
+                  <option value="PERDIDO">Perdido</option>
                 </select>
               </div>
             </div>
@@ -938,11 +940,14 @@
         <div class="row">
           <div class="col-12">
             
-        
+             
         <div class="row container_info_filtro" style="margin:10px 0 ;">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <H4><strong>SUBGRUPO SEGÚN TIPO DE CLIENTE</strong></H4>
+          </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente finales:</label>
+              <label>Cantidad de Clientes Finales:</label>
               <input
                 id="cant_clientes_finales"
                 type="number"
@@ -955,7 +960,7 @@
           </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente Distribuidores:</label>
+              <label>Cantidad de Clientes Distribuidores:</label>
               <input
                 id="cant_clientes_distribuidor"
                 type="number"
@@ -968,7 +973,7 @@
           </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente Superdistribuidores:</label>
+              <label>Cantidad de Clientes Superdistribuidores:</label>
               <input
                 id="cant_clientes_Superdistribuidores"
                 type="number"
@@ -981,7 +986,7 @@
           </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente Representantes :</label>
+              <label>Cantidad de Clientes Representantes:</label>
               <input
                 id="cant_clientes_Representantes"
                 type="number"
@@ -992,9 +997,13 @@
               />
             </div>
           </div>
+        
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <H4><strong>SUBGRUPO SEGÚN ESTADO DEL CLIENTE</strong></H4>
+          </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label> Cantidad de Clientes Activos :</label>
+              <label> Cantidad de Clientes Activos:</label>
               <input
                 id="cant_clientes_activos"
                 type="number"
@@ -1007,7 +1016,7 @@
           </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente Inactivo :</label>
+              <label>Cantidad de Clientes Inactivos:</label>
               <input
                 id="cant_clientes_inactivos"
                 type="number"
@@ -1020,24 +1029,11 @@
           </div>
           <div class="col-lg-3">
             <div class="form-group has-success">
-              <label>Cantidad de Cliente Perdido :</label>
+              <label>Cantidad de Clientes Perdidos:</label>
               <input
                 id="cant_clientes_perdidos"
                 type="number"
                 placeholder="Cantidad de Cliente Perdido"
-                maxlength="40"
-                class="form-control"
-                disabled
-              />
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad Total de Clientes :</label>
-              <input
-                id="cant_total_cliente"
-                type="number"
-                placeholder="Cantidad Total de Clientes"
                 maxlength="40"
                 class="form-control"
                 disabled
@@ -1069,7 +1065,7 @@
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
-                <th>Direccion</th>
+                <th>Dirección</th>
                 <th>Correo Electronico</th>
                 <!-- <th>Creado por</th> -->
                 <th>Fecha de creación</th>
@@ -1094,7 +1090,7 @@
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
-                <th>Direccion</th>
+                <th>Dirección</th>
                 <th>Correo Electronico</th>
                 <!-- <th>Creado por</th> -->
                 <th>Fecha de creación</th>
