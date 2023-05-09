@@ -300,10 +300,6 @@ iddistrito_factura='$iddistrito_factura'
 		INNER JOIN empleado e2 ON p.idempleado_modificado = e2.idempleado 
 		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
 		t2 ON t2.num_documento = p.num_documento AND p.idpersona = t2.max_fecha
-		
-		
-
-			
 		LEFT JOIN distrito ON distrito.iddistrito=p.direccion_distrito
 		left JOIN provincia ON provincia.idprovincia=p.direccion_provincia
 		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
@@ -327,10 +323,27 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-		
+		-- limit 10
 ;
 		";
+		// $sql = "SELECT  
+		// tipo_documento empleado ,
+		// tipo_documento empleado_modificado ,
+		// tipo_documento genero_txt ,
+		// tipo_documento ubicacion_factura ,
 
+		// tipo_documento  idubicacion ,
+		// tipo_documento  direccion_antigua ,
+		// tipo_documento  idempleado_asignado  ,
+		// tipo_documento  empleado_asignado  ,
+		// tipo_documento  ubicacion ,
+		// tipo_documento idubicacion_factura, 
+		// persona.* 
+	
+
+		// from persona
+		// limit 1000
+		// ";
 		// echo $sql;
 		//var_dump($sql);exit;
 
@@ -614,7 +627,7 @@ iddistrito_factura='$iddistrito_factura'
 		$sql = "	SELECT 
 				idpersona ,
 				tipo_persona,
-				venta.fecha,
+				max(venta.fecha) fecha,
 			CASE 
 				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
 					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 

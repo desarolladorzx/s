@@ -79,7 +79,7 @@ function ListadoSucursal(){
             url: './ajax/SucursalAjax.php?op=list',
             dataType: 'json',
             success: function(s){
-            //console.log(s);
+            // console.log(s);
                     tabla.fnClearTable();
                         for(var i = 0; i < s.length; i++) {
                          tabla.fnAddData([

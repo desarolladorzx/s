@@ -14,16 +14,14 @@ class Activos
 
 		$sql="UPDATE gestion_activo
 				 SET 
-				 
-				 area = '$data->area',
-				  fecha_asignacion =  '$data->fecha_asignacion',
-				   idempleado = '$data->idempleado',
-				    idempleado_uso =  '$data->idempleado_uso',
-				     ubicacion = '$data->idubicacion'
-				 
+				area = '$data->area',
+				fecha_asignacion =  '$data->fecha_asignacion',
+				idempleado = '$data->idempleado',
+				idempleado_uso =  '$data->idempleado_uso',
+				ubicacion = '$data->idubicacion'
 				 WHERE idgestion_activos='$data->idgestionActivo'
 		";
-	
+		
 		$query = $conexion->query($sql);
 		return  $query;
 		
@@ -116,10 +114,27 @@ class Activos
 			'A',
 			'$data->ubicacion'
 		)";
-
-
+			
+		// print_r($valor); 
 
 		$query = $conexion->query($sql);
+		$idgestion_activo=$conexion->insert_id;
+
+		// $sql = "INSERT INTO gestion_activo_archivo(
+		// 	idgestion_activo,
+		// 	ruta,
+		// 	fecha,
+		// 	estado
+		// 	)
+		// VALUES(
+		// 	$idgestion_activo, 
+		// 	'$new_file_name', 
+		// 	CURRENT_TIMESTAMP(), 
+		// 	'A'			
+		// 	)";
+
+		// $query = $conexion->query($sql);
+		return $idgestion_activo;
 	}
 	public function verDetallesActivoUnidad($id)
 	{
@@ -182,6 +197,7 @@ class Activos
 		global $conexion;
 		$sql = "SELECT area,gestion_activo.idgestion_activos, activo.tipo_activo,CONCAT(emp_uso.nombre,' ',emp_uso.apellidos) usado_por , CONCAT(emp_jes.nombre,' ',emp_jes.apellidos) gestionado_por,activo.estado,activo.codigo etiqueta,activo.fecha_finvida,  activo.* 
 		,CAST(fecha_finvida  AS DATE) fecha_finvida
+		,ubicacion
 		FROM activo
 		left join gestion_activo on gestion_activo.idactivo = activo.idactivo
 		

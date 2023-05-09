@@ -5,7 +5,6 @@ var detalleIngresos = new Array();
 var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
-
 function init() {
     VistaDevolucion()
   function VistaDevolucion(){

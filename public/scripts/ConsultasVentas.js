@@ -1,5 +1,5 @@
 $(document).on("ready", init); // Inciamos el jquery
-var objC = new init();
+// var objC = new init();
 function init() {
   $('#cerrar_formulario').click(function(e){
     console.log('hola')

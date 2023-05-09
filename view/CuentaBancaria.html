@@ -1,0 +1,248 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Cuenta Bancaria</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+
+      <button class="btn btn-box-tool" data-widget="remove">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!--Contenido-->
+
+        <div class="col-sm-14" id="VerForm">
+          <!--
+  <div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header">Categoria</h3>
+  </div>
+  </div>
+  -->
+          <form
+            role="form"
+            name="frmCuentaBancaria"
+            id="frmCuentaBancaria"
+            enctype="multipart/form-data"
+          >
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label>Los campos con (*) son obligatorios</label><br />
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <input
+                    id="txtIdcuenta_bancaria"
+                    type="hidden"
+                    maxlength="50"
+                    class="form-control"
+                    name="txtIdcuenta_bancaria"
+                    required=""
+                    placeholder=""
+                    autofocus=""
+                  />
+                  <label>Tipo de Moneda(*):</label>
+                  <select
+                    id="cboModTipo_Moneda"
+                    name="cboModTipo_Moneda"
+                    class="form-control tipo_divisa_select_all"
+                    required=""
+                  ></select>
+                </div>
+              </div>
+             
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Tipo de Cuenta(*):</label>
+
+                  <select
+                    id="cboModTipo_de_Cuenta"
+                    name="cboModTipo_de_Cuenta"
+                    class="form-control tipo_cuenta_select_all"
+                    required=""
+                  ></select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Banco(*):</label>
+                  <select
+                    id="cboModIdBanco"
+                    name="cboModIdBanco"
+                    placeholder="Banco"
+                    class="form-control banco_select_all"
+                    required=""
+                  ></select>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nombre del Titular (*):</label>
+                  <input
+                    id="txtModNombreTitular"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtModNombreTitular"
+                    required=""
+                    placeholder="Nombre del Titular"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nombre de Cuenta (*):</label>
+                  <input
+                    id="txtNombreCuentaBancaria"
+                    name="txtNombreCuentaBancaria"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="Nombre de Cuenta"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Numero de Cuenta (*):</label>
+                  <input
+                    id="txtNumero"
+                    name="txtNumero"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="Numero de Cuenta "
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>CCI (*):</label>
+                  <input
+                    id="txtNumeroCCI"
+                    name="txtNumeroCCI"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="CCI"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Descripcion (*):</label>
+                  <input
+                    id="txtDescripcion"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtDescripcion"
+                    required=""
+                    placeholder="Descripcion"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>saldo inicial(*):</label>
+                  <input
+                    id="txtSaldoInicial"
+                    type="number"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtSaldoInicial"
+                    required=""
+                    placeholder="Numero"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 left">
+                <h5></h5>
+                <button class="btn btn-success" type="submit">
+                  <i class="fa fa-floppy-o"></i> Registrar
+                </button>
+                <a href="CuentaBancaria.php" class="btn btn-primary"
+                  ><i class="fa fa-remove"></i> Cancelar</a
+                >
+                <hr />
+                <span class="lead text-primary"></span>
+              </div>
+            </div>
+          </form>
+        </div>
+        <button class="btn btn-primary" id="btnNuevo">
+          <i class="fa fa-file"></i> Nuevo
+        </button>
+
+        <br /><br />
+        <div id="VerListado" class="table-responsive">
+          <table
+            id="tblCuentaBancario"
+            class="table table-striped table-bordered table-condensed table-hover"
+            cellspacing="0"
+            cellpadding="0"
+            width="100%"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo de Cuenta</th>
+                <th>Estado</th>
+                <th>Nombre del Banco</th>
+                <th>Cuenta Bancaria</th>
+                <th>Nº de cuenta</th>
+                <th>CCI</th>
+                <th>saldo inicial</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Tipo de Cuenta</th>
+                <th>Estado</th>
+                <th>Nombre del Banco</th>
+                <th>Cuenta Bancaria</th>
+                <th>Nº de cuenta</th>
+                <th>CCI</th>
+                <th>saldo inicial</th>
+                <th>Opciones</th>
+              </tr>
+            </tfoot>
+
+            <tbody id="sucursal"></tbody>
+          </table>
+        </div>
+        <!--Fin-Contenido-->
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+<script type="text/javascript">
+  $("#liSeguridad").addClass("treeview active");
+  $("#liConfiguraCuentaBancaria").addClass("active");
+</script>

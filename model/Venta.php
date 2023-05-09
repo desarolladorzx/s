@@ -3,6 +3,7 @@ require "Conexion.php";
 
 class Venta
 {	
+	
 	public function VerificarStockMinimo($idpedido){
 		global $conexion;
 		$sql=
@@ -39,7 +40,9 @@ class Venta
 		return $query;
 
 	}
-	public function Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_documento_sucursal, $detalle, $tipo_promocion, $metodo_pago, $agencia_envio)
+	public function Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_documento_sucursal, $detalle, $tipo_promocion, $metodo_pago, $agencia_envio,
+	$arrayMetodosPago
+	)
 	{
 		global $conexion;
 		$sw = true;
@@ -53,6 +56,26 @@ class Venta
 			$conexion->query($sql);
 
 
+			$idVenta=$conexion->insert_id;
+
+
+			foreach ($arrayMetodosPago as $subarray) {
+				$subarray[1];
+
+				$sql="INSERT  INTO venta_pago(idventa,fecha_pago,idtipo_metodo_pago,idbanco_cuenta,referencia,pago)
+				VALUES(
+					$idVenta,
+				'$subarray[0]',
+				'$subarray[1]'
+				,'$subarray[2]',
+				'$subarray[3]',
+				$subarray[4])";
+
+			// echo $sql;
+				$conexion->query($sql);
+			  }
+
+			
 
 			$sql_detalle_doc = "UPDATE detalle_documento_sucursal set ultimo_numero = '$numero' where iddetalle_documento_sucursal = $iddetalle_documento_sucursal";
 			//var_dump($sql);

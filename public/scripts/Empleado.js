@@ -128,7 +128,17 @@ function eliminarEmpleado(id){// funcion que llamamos del archivo ajax/Categoria
 	})
 }
 
-function cargarDataEmpleado(id,apellidos, nombre,tipo_documento,num_documento,direccion,telefono,email,fecha_nacimiento,foto, login, clave,estado){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+function cargarDataEmpleado(id,apellidos, nombre,tipo_documento,num_documento,direccion,telefono,email,fecha_nacimiento,foto, login, clave,estado
+	,cargo
+	,fecha_ingreso
+	,sexo
+	){// funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+		// console.log(fecha_ingreso.split(' ')[0])
+		$("#txtCargo").val(cargo);
+ 		$("#txtfecha_ingreso").val(fecha_ingreso?fecha_ingreso.split(' ')[0]:Date);
+ 		$("#txtsexo").val(sexo);
+
+
 		$("#VerForm").show();// mostramos el formulario
 		$("#btnNuevo").hide();
 		$("#VerListado").hide();// ocultamos el listado

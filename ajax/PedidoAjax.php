@@ -1,6 +1,87 @@
 <?php
 session_start();
 switch ($_GET["op"]) {
+
+
+    case 'buscarCliente':
+        $q = $_GET["q"];
+        require_once "../model/Pedido.php";
+
+		$obj = new Pedido();
+
+        $query = $obj->buscarCliente($q);
+
+        // $reg = $query->fetch_object();
+
+        $data=[];
+
+
+        $nuevo = array();
+
+        while ($value = $query->fetch_object()) {
+            $d=(object)[
+                "id" => $value->idpersona,
+                "texto" => $value->texto,
+                "nombre_completo" => $value->nombre.' '.$value->apellido,
+                "documento" => $value->tipo_documento.' '.$value->num_documento,
+                "telefonos" => $value->telefono.' '.$value->telefono_2,
+                "ubicacion" => $value->ubicacion,
+                "direccion" => $value->direccion_calle,
+                "tipo_persona" => $value->tipo_persona,
+
+
+            ];
+            array_push($data,$d);
+        }
+        // echo  json_encode($nuevo);
+
+        // foreach ($reg as $indice => $valor) {
+            
+        //     $d=(object)[
+        //         "id" => $valor[0],
+        //         "texto" => $valor[1]
+        //     ];
+        //     array_push($data,$d);
+        // }
+
+      
+        $return = array(
+            'items' => $data
+        );
+
+        echo json_encode($return);
+        break;
+    case 'TraerMetodosPago':
+        $idventa = $_GET["idventa"];
+
+        
+        require_once "../model/Pedido.php";
+
+		$obj = new Pedido();
+
+		$query= $obj->TraerMetodoPago($idventa);
+
+		$nuevo = array();
+		while ($reg = $query->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo json_encode($nuevo);
+        break;
+    case 'traerDatosTransporte':
+        require_once "../model/Pedido.php";
+
+		$objPersona = new Pedido();
+
+		$query_Tipo = $objPersona->traerPersonalTransporte();
+
+		$nuevo = array();
+		while ($reg = $query_Tipo->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo  json_encode($nuevo);
+
+ 
+        break;
     case 'SaveImagesEmpaquetado':
         require_once "../model/Pedido.php";
         $obj = new Pedido();

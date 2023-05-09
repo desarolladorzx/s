@@ -5,7 +5,7 @@ $objCategoria = new ConsultasVentas();
 switch ($_GET["op"]) {
 
      case 'listaEjecutivoComercial':
-          $query_Tipo = $objCategoria->listaDeRoles();
+          $query_Tipo = $objCategoria->listaDePersonasVendedor();
 
           $nuevo = array();
           while ($reg = $query_Tipo->fetch_object()) {

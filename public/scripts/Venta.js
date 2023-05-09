@@ -1,8 +1,16 @@
 $(document).on("ready", init); // Inciamos el jquery
 var email = "";
 /* var clicando= false; */
+
+
+let arraryTipoMetodoPago=[]
 function init() {
   //Ver();
+  // $('#buttonAgregarNuevoCuentaAbonada').click(function(){
+  //   console.log('hola')
+  //   AnadirMetodoPago()
+  // })
+
   $("#tblVentaPedido").dataTable({
     dom: "Bfrtip",
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
@@ -28,7 +36,27 @@ function init() {
   ComboTipo_Documento();
   $("#VerFormPed").hide();
   $("#VerForm").hide(); // Ocultamos el formulario
-  $("form#frmVentas").submit(SaveOrUpdate); //VerificarStockProductos  // Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
+  $("form#frmVentas").submit(SaveOrUpdate); //
+  // $("form#frmVentas").submit(function(e){
+  //   e.preventDefault()
+  //   console.log(arrayMetodosPago)
+
+  //   let suma=0
+  //   arrayMetodosPago.map(e=>{
+  //     suma+=Number(e[4])
+  //   })
+  //   if(suma==Number($("#txtTotalVent").val())){
+
+  //   }else{
+  //     alert(
+  //       "el Total debe ser Igual al monto acumulado en las cuentas abonadas "
+  //     );
+  //   }
+  // });
+
+  //
+
+  // Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
   $("#cboTipoComprobante").change(VerNumSerie);
   $("#btnNuevo").click(VerForm); // evento click de jquery que llamamos al metodo VerForm
   $("#btnNuevoPedido").click(VerFormPedido);
@@ -121,6 +149,8 @@ function init() {
             //idCliente : $("#hdn_idcliente").val(),
             // detalle: detalle,
             detalle: newDetalle,
+
+            arrayMetodosPago: arrayMetodosPago,
           };
 
           $.get(
@@ -130,145 +160,153 @@ function init() {
               var obj = jQuery.parseJSON(r);
 
               if (obj.length == 0) {
-                $.post(
-                  "./ajax/VentaAjax.php?op=SaveOrUpdate",
-                  data,
-                  function (r) {
-                    // llamamos la url por post. function(r). r-> llamada del callback
+                let suma = 0;
+                arrayMetodosPago.map((e) => {
+                  suma += Number(e[4]);
+                });
+                if (suma == Number($("#txtTotalVent").val())) {
+                  $.post(
+                    "./ajax/VentaAjax.php?op=SaveOrUpdate",
+                    data,
+                    function (r) {
+                      // llamamos la url por post. function(r). r-> llamada del callback
 
-                    if ($("#cboTipoComprobante").val() == "TICKET") {
-                      //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
-                      // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
-                      //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
-                      //EN LA WEB
-                      //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
-                      window.open(
-                        "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(),
-                        "_blank"
-                      );
-                    }
+                      if ($("#cboTipoComprobante").val() == "TICKET") {
+                        //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val() , "TICKET" , "width=396,height=430,scrollbars=NO");
+                        // window.open("localhostReportes/exTicket.php?id=" + $("#txtIdPedido").val());
+                        //location.href = "/Reportes/exTicket.php?id=" + $("#txtIdPedido").val();
+                        //EN LA WEB
+                        //window.open("/Reportes/exTicket.php?id=" + $("#txtIdPedido").val(), '_blank');
+                        window.open(
+                          "/Reportes/exTicket.php?id=" +
+                            $("#txtIdPedido").val(),
+                          "_blank"
+                        );
+                      }
 
-                    if ($("#cboTipoVenta").val() == "Contado") {
-                      swal("Mensaje del Sistema", r, "success");
+                      if ($("#cboTipoVenta").val() == "Contado") {
+                        swal("Mensaje del Sistema", r, "success");
 
-                      $.get(
-                        "./ajax/VentaAjax.php?op=VerificarStockMinimo",
-                        "idPedido=" + data.idPedido,
-                        function (r) {
-                          var obj = jQuery.parseJSON(r);
-                          console.log(obj);
-                          obj.map((articulo) => {
-                            console.log(
-                              articulo.stock_min,
-                              articulo.stock_actual_total
-                            );
-                            // if([7 , 21 , 22 ].includes(idempleado)){
-                            if (
-                              Number(articulo.stock_min) >=
-                              Number(articulo.stock_actual_total)
-                            ) {
-
-                              $.post(
-                                "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
-                                articulo
-                                ,
-                                function (r) {
-                                  console.log(r)
-                                  // bootbox.alert(r);
-                                }
+                        $.get(
+                          "./ajax/VentaAjax.php?op=VerificarStockMinimo",
+                          "idPedido=" + data.idPedido,
+                          function (r) {
+                            var obj = jQuery.parseJSON(r);
+                            console.log(obj);
+                            obj.map((articulo) => {
+                              console.log(
+                                articulo.stock_min,
+                                articulo.stock_actual_total
                               );
-
-
-                              if ((Notification.permission = "grantFd")) {
-                                const notification = new Notification(
-                                  "Producto Stock ",
-                                  {
-                                    icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                                    body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                              // if([7 , 21 , 22 ].includes(idempleado)){
+                              if (
+                                Number(articulo.stock_min) >=
+                                Number(articulo.stock_actual_total)
+                              ) {
+                                $.post(
+                                  "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
+                                  articulo,
+                                  function (r) {
+                                    console.log(r);
+                                    // bootbox.alert(r);
                                   }
                                 );
-                                notification.onclick = function () {
-                                  window.open(
-                                    "https://medicfit.grupopuma.pe/Venta.php"
+
+                                if ((Notification.permission = "grantFd")) {
+                                  const notification = new Notification(
+                                    "Producto Stock ",
+                                    {
+                                      icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                                      body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                                    }
                                   );
-                                };
+                                  notification.onclick = function () {
+                                    window.open(
+                                      "https://medicfit.grupopuma.pe/Venta.php"
+                                    );
+                                  };
+                                }
+                                // }
                               }
-                              // }
+                            });
+                          }
+                        );
+                        idPedido;
+
+                        $("#btnNuevoPedido").show();
+                        OcultarForm();
+                        ListadoVenta();
+                        ListadoPedidos();
+                        LimpiarPedido();
+                        VerNumSerie();
+
+                        bootbox.prompt({
+                          title:
+                            "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
+                          value: email,
+                          callback: function (result) {
+                            if (result !== null) {
+                              $.post(
+                                "./ajax/VentaAjax.php?op=EnviarCorreo",
+                                {
+                                  result: result,
+                                  idPedido: $("#txtIdPedido").val(),
+                                },
+                                function (r) {
+                                  console.log(result);
+                                  console.log("aqui");
+                                  bootbox.alert(r);
+                                }
+                              );
                             }
-                          });
-                        }
-                      );
-                      idPedido;
+                          },
+                        });
+                        //location.reload();
+                      } else {
+                        $("#btnNuevoPedido").show();
 
-                      $("#btnNuevoPedido").show();
-                      OcultarForm();
-                      ListadoVenta();
-                      ListadoPedidos();
-                      LimpiarPedido();
-                      VerNumSerie();
-
-                      bootbox.prompt({
-                        title:
-                          "Solo si el cliente lo solicita,ingrese el correo para enviar el detalle de la compra",
-                        value: email,
-                        callback: function (result) {
-                          if (result !== null) {
-                            $.post(
-                              "./ajax/VentaAjax.php?op=EnviarCorreo",
-                              {
-                                result: result,
-                                idPedido: $("#txtIdPedido").val(),
-                              },
-                              function (r) {
-                                console.log(result)
-                                console.log('aqui')
-                                bootbox.alert(r);
-                              }
-                            );
-                          }
-                        },
-                      });
-                      //location.reload();
-                    } else {
-                      $("#btnNuevoPedido").show();
-
-                      bootbox.prompt({
-                        title:
-                          "Ingrese el correo para enviar el detalle de la compra",
-                        value: email,
-                        callback: function (result) {
-                          if (result !== null) {
-                            $.post(
-                              "./ajax/VentaAjax.php?op=EnviarCorreo",
-                              {
-                                result: result,
-                                idPedido: $("#txtIdPedido").val(),
-                              },
-                              function (r) {
-                                bootbox.alert(r);
-                              }
-                            );
-                            bootbox.alert(
-                              r + ", Pasaremos a Registrar el Credito",
-                              function () {
-                                $("#modalCredito").modal("show");
-                                GetIdVenta();
-                              }
-                            );
-                          } else {
-                            bootbox.alert(
-                              r + ", Pasaremos a Registrar el Credito",
-                              function () {
-                                $("#modalCredito").modal("show");
-                                GetIdVenta();
-                              }
-                            );
-                          }
-                        },
-                      });
+                        bootbox.prompt({
+                          title:
+                            "Ingrese el correo para enviar el detalle de la compra",
+                          value: email,
+                          callback: function (result) {
+                            if (result !== null) {
+                              $.post(
+                                "./ajax/VentaAjax.php?op=EnviarCorreo",
+                                {
+                                  result: result,
+                                  idPedido: $("#txtIdPedido").val(),
+                                },
+                                function (r) {
+                                  bootbox.alert(r);
+                                }
+                              );
+                              bootbox.alert(
+                                r + ", Pasaremos a Registrar el Credito",
+                                function () {
+                                  $("#modalCredito").modal("show");
+                                  GetIdVenta();
+                                }
+                              );
+                            } else {
+                              bootbox.alert(
+                                r + ", Pasaremos a Registrar el Credito",
+                                function () {
+                                  $("#modalCredito").modal("show");
+                                  GetIdVenta();
+                                }
+                              );
+                            }
+                          },
+                        });
+                      }
                     }
-                  }
-                );
+                  );
+                } else {
+                  alert(
+                    "el Total debe ser Igual al monto acumulado en las cuentas abonadas "
+                  );
+                }
               } else {
                 var arr = obj;
                 alert(
@@ -398,7 +436,6 @@ function ListadoPedidos() {
         { mDataProp: "7" },
         { mDataProp: "8" },
         { mDataProp: "9" },
-     
       ],
       ajax: {
         url: "./ajax/VentaAjax.php?op=list",
@@ -462,6 +499,196 @@ function eliminarVenta(id) {
   );
 }
 
+const arrayMetodosPago = [];
+
+function actualizarMetodoPago(index, sub, val) {
+  console.log(index, sub, val);
+
+  arrayMetodosPago[index][sub] = val;
+
+  console.log(sub == 1 && val == "1");
+
+  if(sub == 1){
+
+    let efectivo=[]
+
+
+    arraryTipoMetodoPago.map(e=>{
+      if(e.es_efectivo=='1'){
+        efectivo.push(e.idtipo_metodo_pago)
+      }
+    })
+
+    console.log(efectivo)
+    if (sub == 1 && efectivo.includes(val)) {
+      arrayMetodosPago[index][5] = false;
+      arrayMetodosPago[index][2] = '0';
+      arrayMetodosPago[index][3] = '';
+      Renderizar()
+    } else {
+      let MetodosPagohtml = "";
+  
+      arrayMetodosPago[index][5] = true;
+
+      Renderizar()
+    }
+  }
+ 
+}
+
+function EliminarMetodoPago(index) {
+  console.log(index);
+
+  if (index == 0) {
+  } else {
+    arrayMetodosPago.splice(index, 1);
+
+    Renderizar()
+  }
+}
+
+function Renderizar(){
+  let MetodosPagohtml = "";
+  arrayMetodosPago.map((element, index) => {
+    MetodosPagohtml += ` 
+    <div class="row">
+
+    <div class="col-lg-2 ">
+      <label for="inputInscripcion">Fecha de Pago</label>
+      <div class="form-group has-success">
+      <input
+      type="datetime-local"
+      class="form-control"
+      placeholder=""
+      value='${element[0]}'
+      
+      onchange="actualizarMetodoPago(${index},${0}, this.value)"
+    />
+      </div>
+    </div>
+    <div class="col-lg-2 ">
+      <label for="inputInscripcion">Metodo de pago</label>
+      <div class="form-group has-success">
+      <select  
+      value='${element[1]}'
+      onchange="actualizarMetodoPago(${index},${1}, this.value)"
+      class="form-control inputs_tipo_metodo_pago"
+
+      
+      >
+      
+      </select>  
+      
+
+      </div>
+    </div>
+
+    ${element[5]==true?`<div class="col-lg-2 ">
+    <label for="inputInscripcion">Cuenta Bancaria</label>
+    <div class="form-group has-success">
+
+
+      <select  
+    value='${element[2]}'
+    onchange="actualizarMetodoPago(${index},${2}, this.value)"
+    class="form-control inputs_tipo_banco"
+
+    
+    >
+    
+    </select>  
+    </div>
+  </div>
+  <div class="col-lg-2 ">
+    <label for="inputInscripcion">Referencia</label>
+    <div class="form-group has-success">
+      <input
+        
+        type="text"
+        class="form-control"
+        
+        placeholder=""
+        value='${element[3]}'
+        onchange="actualizarMetodoPago(${index},${3}, this.value)"
+      />
+    </div>
+  </div>`:`<div class="col-lg-2 " style='display:none'>
+  <label for="inputInscripcion">Cuenta Bancaria</label>
+  <div class="form-group has-success">
+
+
+    <select  
+  value='${element[2]}'
+
+  onchange="actualizarMetodoPago(${index},${2}, this.value)"
+  class="form-control inputs_tipo_banco"
+  type="hidden"
+  
+  >
+  
+  </select>  
+  </div>
+</div>
+<div class="col-lg-2 " style='display:none'>
+  <label for="inputInscripcion">Referencia</label>
+  <div class="form-group has-success">
+    <input
+      
+    type="hidden"
+      class="form-control"
+      
+      placeholder=""
+      value='${element[3]}'
+      onchange="actualizarMetodoPago(${index},${3}, this.value)"
+    />
+  </div>
+</div>`}
+    
+    <div class="col-lg-2 ">
+      <label for="inputInscripcion">Monto</label>
+      <div class="form-group has-success">
+        <input
+         
+          type="number"
+          class="form-control"
+        
+          placeholder=""
+          value='${element[4]}'
+          onchange="actualizarMetodoPago(${index},${4}, this.value)"
+        />
+    </div>
+  
+  </div>
+  
+  <div class="col-lg-2 " style:'display:flex'>
+  <label for="inputInscripcion" style='opacity:0'>asdas</label>
+  <div>
+  <button class="btn btn-danger"  ${
+    index == 0 ? "disabled" : ""
+  }  type='button' onclick='EliminarMetodoPago(${index})'>
+  <i class="fa fa-trash"></i>
+  </button>
+  </div>
+  </div>
+  </div>
+  `;
+  });
+
+  // arrayMetodosPago.map(()=>{
+
+  // })
+
+  $("#container_metodos_pago").html(MetodosPagohtml);
+
+  TraerMetodoPago();
+
+  TraerBanco();
+
+}
+function AnadirMetodoPago() {
+  arrayMetodosPago.push(["", "", "", "", "", true]);
+ Renderizar()
+}
 function pasarIdPedido(
   idPedido,
   total,
@@ -508,6 +735,21 @@ function pasarIdPedido(
   $("#cboModTipo_EntregaDetalles").val(tipo_entrega);
   /*  $("#txtRutaImgVoucher").val(imagen);
  $("#txtRutaImgVoucher").show(); */
+
+  //
+  let button_aumentar = `
+  <label for="inputInscripcion" style='opacity:0'>asdas</label>
+  <div>
+  <button class="btn btn-warning" type="button" id="buttonAgregarNuevoCuentaAbonada" onclick="AnadirMetodoPago()">Agregar cuenta abonada</button>
+</div>`;
+
+  $("#container_buttonMmetodos_pago").append(button_aumentar);
+
+  AnadirMetodoPago();
+
+  // $("#container_metodos_pago").append(html);
+
+  //
 
   $("#txtTotalVent").val(total);
   email = correo;

@@ -26,6 +26,19 @@
                 <div class="row">
                   <div class="col-lg-10 left">
                     <label id="inputCliente">Cliente:</label>
+
+                     <select
+                      class="form-control form-control-select2 form-control-lg"
+                      name="slc_select_cliente"
+                      id="slc_select_cliente"
+                      required
+                      style="width: 100%"
+                    >
+                      <option value="- Elegir opción -">
+                        - Seleccione un Cliente -
+                      </option>
+                    </select>
+
                     <div class="form-group has-success">
                       <input id="txtIdTipoUsuario" type="hidden" value="<?php echo $_SESSION["tipo_usuario"] ?>"
                       maxlength="50" class="form-control" name="txtIdUsuario"
@@ -33,6 +46,12 @@
                       <input id="txtIdEmpleado" type="hidden" value="<?php echo $_SESSION["idempleado"] ?>"
                       maxlength="50" class="form-control" name="txtIdUsuario"
                       required="" placeholder="" autofocus="" />
+
+
+                      <input
+                      id="txtSucursal" type="hidden" value="<?php echo $_SESSION["sucursal"] ?>"
+                      maxlength="50" class="form-control" name="txtSucursal"
+                      required="" placeholder="" autofocus="" /> 
 
                       
                       <input
@@ -51,7 +70,7 @@
                         placeholder=""
                         autofocus=""
                       />
-                      <div class="input-group">
+                      <!-- <div class="input-group">
                         <input
                           id="txtCliente"
                           type="text"
@@ -71,7 +90,10 @@
                             <i class="fa fa-search"></i> Buscar Cliente
                           </button>
                         </span>
-                      </div>
+                      </div> -->
+
+                     
+
                     </div>
                   </div>
                   <div class="col-lg-4 left" style="display: none;">
@@ -119,7 +141,79 @@
                     </div>
                   </div>
                 </div>
+                <div class="row" id="container_datos_cliente_seleccionado">
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Nombre y Apellido:</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        id="txtNuevoNombre"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        name="txtNuevoNombre"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Documento :</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        name="txtNuevoDocumento"
+                        id="txtNuevoDocumento"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 left" >
+                    <label id="inputNumero">Celulares :</label>
+                    <div class="form-group has-success">
+                      <input
+                      name="txtNuevoCelulares"
+                      id="txtNuevoCelulares"
+                      type="text"
+                      class="form-control"
+                      style="text-align: center"
+                      required readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left" >
+                    <label id="inputNumero">ubicacion:</label>
+                    <div class="form-group has-success">
+                      <input
+                       name="txtNuevoUbicacion"
+                        id="txtNuevoUbicacion"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 left" >
+                    <label id="inputNumero">Dirección :</label>
+                    <div class="form-group has-success">
+                      <input
+                      readonly
+                        id="txtNuevoDireccion"
+                        name="txtNuevoDireccion"
+                        type="text"
+                        class="form-control"
+                        style="text-align: center"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
 
+                </div>
                 <div class="row">
                   <div class="col-lg-4 left">
                     <label for="inputMarca">Cuenta Abonada / Medio de Pago:</label>
@@ -150,7 +244,7 @@
                  <div class="col-lg-2 left">
                   <label for="inputMarca">Transportes / Agencia de envio:</label>
                   <div class="form-group has-success">
-                    <select id="cboAgenEnvio" name="cboAgenEnvio" class="form-control" required="">
+                    <select id="cboAgenEnvio"  name="cboAgenEnvio" class="form-control Transportes_select" required="">
                       <option value=""></option>
                       <option value="RECOJO EN OFICINA-AREQUIPA">RECOJO EN OFICINA-AREQUIPA</option>
                       <option value="DELIVERY-AREQUIPA">DELIVERY-AREQUIPA</option>
@@ -324,6 +418,7 @@
                       </div>
                     </div>
                   </div>
+
 
                   <div class="row">
                     <div class="col-lg-12 left">
@@ -649,7 +744,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
               <div class="col-lg-12 left">
                 <div class="row">
                   <div class="col-lg-2 left">
@@ -721,6 +816,19 @@
                 </div>
               </div>
 
+             
+
+                <div class="col-lg-10 left" id="container_metodos_pago">
+                  
+
+                 
+                </div>
+                <div class="col-lg-2 left" id="container_buttonMmetodos_pago">
+                  
+
+                 
+                </div>
+        
               <div class="col-lg-12 left">
                 <div class="form-group">
                   <label>Observaciones</label>
@@ -1110,8 +1218,201 @@
     </div>
   </div>
 </div>
+<link
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+  rel="stylesheet"
+/>
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
+
+$('#container_datos_cliente_seleccionado').hide();
+ $("#slc_select_cliente").on("select2:select", function (e) {
+      // tabla.ajax.reload();
+      // console.log($("#slc_select_cliente").data('nombre'))
+
+      var opcionSeleccionada = e.params.data;
+      
+
+
+      elementos=[]
+
+      ConsultarDetallesPed()
+      tipo_persona = opcionSeleccionada.tipo_persona;
+
+    console.log(opcionSeleccionada.ubicacion)
+      $('#container_datos_cliente_seleccionado').show();
+      $('#txtNuevoNombre').val(opcionSeleccionada.nombre_completo)
+      $('#txtNuevoDocumento').val(opcionSeleccionada.documento)
+      $('#txtNuevoCelulares').val(opcionSeleccionada.telefonos)
+      $('#txtNuevoUbicacion').val(opcionSeleccionada.ubicacion)
+      $('#txtNuevoDireccion').val(opcionSeleccionada.direccion)
+      
+
+      // $("#slc_select_cliente").prop("disabled", true);
+
+      $("#txtIdCliente").val($('#slc_select_cliente').val());
+    });
+
+
+function formatRepo(repo) {
+      if (repo.loading) return repo.texto;
+
+
+      var markup =
+        `<option value='${repo.id}'
+        
+        data-tipo_persona='${repo.tipo_persona}' 
+        data-nombre_completo='${repo.nombre_completo}' data-documento='${repo.documento}' data-telefonos='${repo.telefonos}' data-ubicacion='${repo.ubicacion}' data-direccion='${repo.direccion}' >${repo.texto}</option>`;
+      
+     
+        return markup;
+    }
+
+    function formatRepoSelection(repo) {
+      return repo.texto || repo.id;
+    }
+
+$("#slc_select_cliente").select2({
+      ajax: {
+        url: "./ajax/PedidoAjax.php?op=buscarCliente",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            q: params.term,
+            page: params.page,
+          };
+        },
+        processResults: function (data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data.items,
+            pagination: {
+              more: params.page * 30 < data.total_count,
+            },
+          };
+        },
+        cache: true,
+      },
+      escapeMarkup: function (markup) {
+        return markup;
+      },
+      // minimumInputLength: 1,
+
+      language: {
+        inputTooShort: function () {
+          return "Ingresar 3 caracteres para buscar...";
+        },
+      },
+      templateResult: formatRepo,
+      templateSelection: formatRepoSelection,
+  });
+
+
+
+
+
   $("#liVentas").addClass("treeview active");
   $("#liPedido").addClass("active");
+
+
+
+
+
+  function TraerBanco() {
+    console.log('se trajeron los bancos')
+    $.ajax({
+      url: "./ajax/BancoAjax.php?op=listSelect",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+       
+        
+        let data=rpta
+
+        console.log(data)
+        var ubicacion_containe_options_html = '<option value=""></option>';
+
+        data.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idbanco_cuenta}' value='${e.idbanco_cuenta}'>${e.descripcion} </option>`;
+        });
+
+        $(".inputs_tipo_banco").html(ubicacion_containe_options_html)
+
+
+
+        $(".inputs_tipo_banco").each(function(index, select) {
+  // Obtenemos el valor almacenado en el array
+        var valorSeleccionado = arrayMetodosPago[index][2];
+        // Seleccionamos la opción correspondiente
+        $(select).val(valorSeleccionado);
+      })
+
+
+      },
+      error: function (e) {
+
+        console.log(e)
+      },
+    });
+  }
+
+  
+
+  function TraerMetodoPago() {
+    console.log('se trajeron los metodos de pago')
+    $.ajax({
+      url: "./ajax/Metodo_PagoAjax.php?op=listSelect",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        arraryTipoMetodoPago=[...rpta]
+        let data=rpta
+        var ubicacion_containe_options_html = '<option value="" ></option>';
+        
+        data.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idtipo_metodo_pago}' value='${e.idtipo_metodo_pago}'>${e.descripcion} </option>`;
+        });
+
+        $(".inputs_tipo_metodo_pago").html(ubicacion_containe_options_html);
+
+
+        $(".inputs_tipo_metodo_pago").each(function(index, select) {
+  // Obtenemos el valor almacenado en el array
+  var valorSeleccionado = arrayMetodosPago[index][1];
+  // Seleccionamos la opción correspondiente
+  $(select).val(valorSeleccionado);
+})
+
+      },
+      error: function (e) {},
+    });
+  }
+
+  traerUbicacion();
+  function traerUbicacion() {
+    $.ajax({
+      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        var ubicacion_containe_options_html = "";
+
+        rpta.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+        });
+        // console.log(rpta);
+
+        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+
+
+
+
+
+      },
+      error: function (e) {},
+    });
+  }
+  
 </script>

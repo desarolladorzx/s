@@ -3,7 +3,6 @@ $(document).on("ready", init);
 function init(){
 
 	if ($("#txtMnuAlmacen").val() == "0") {
-
 		$("#liAlmacen").hide();
 	}
 	if ($("#txtMnuCompras").val() == "0") {
@@ -46,4 +45,43 @@ function init(){
 
 		$("#liDocsJL").hide();
 	};
+
+	// documentacion 
+
+	if ($("#doc-txtMnuDocumentacion").val() == "0") {
+
+		$("#liDocumentacion").hide();
+	};
+	if ($("#doc-txtMnuDocVentas").val() == "0") {
+
+		$("#liDocVentas").hide();
+	};
+	if ($("#doc-txtMnuDocMarketing").val() == "0") {
+
+		$("#liDocMarketing").hide();
+	};
+	if ($("#doc-txtMnuDocLogistica").val() == "0") {
+
+		$("#liDocLogistica").hide();
+	};
+	if ($("#doc-txtMnuDocFinanzas").val() == "0") {
+
+		$("#liDocFinanzas").hide();
+	};
+	if ($("#doc-txtMnuDocRRHH").val() == "0") {
+
+		$("#liDocRRHH").hide();
+	};
+	if ($("#doc-txtMnuDocIT").val() == "0") {
+
+		$("#liDocIT").hide();
+	};
+	if ($("#doc-txtMnuDoProduccion").val() == "0") {
+
+		$("#liDoProduccion").hide();
+	};
+
+	//documentacion
+	
+	
 }

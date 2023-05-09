@@ -3,6 +3,85 @@
 require "Conexion.php";
 class Pedido
 {
+
+	public function  buscarCliente($q)
+	{
+		global $conexion;
+		$exepcion = "";
+		$join = "
+			 JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
+			 
+			JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+			";
+
+		if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+		} else {
+			$exepcion = "AND cartera_cliente.idempleado=" . $_SESSION["idempleado"] .  " 
+		
+				";
+
+			$join = " JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona
+				AND cartera_cliente.estado='A'
+	
+				JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado";
+		}
+
+
+		// $sql = "SELECT * from persona where tipo_persona='Cliente' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and estado = 'A' order by idpersona desc ";
+
+		// se modifico el sql para que los iddocumentos no se repita
+		$sql = "SELECT *,CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ', persona.telefono,' - ', persona.telefono_2 )  texto ,
+		CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion,
+		
+		persona.tipo_persona,persona.num_documento,persona.nombre,persona.apellido,persona.telefono,persona.direccion_calle ,persona.email from persona 
+	
+		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
+		
+		LEFT JOIN distrito ON distrito.iddistrito=persona.direccion_distrito
+		left JOIN provincia ON provincia.idprovincia=persona.direccion_provincia
+		left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+		
+		$join
+	where   
+	 persona.estado = 'A'  
+	
+	 AND (
+			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
+			$exepcion
+		 and CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ', persona.telefono,' - ', persona.telefono_2 )  like '%$q%'
+	GROUP BY persona.num_documento
+	order by idpersona DESC ;";
+
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+	public function TraerMetodoPago($idventa)
+	{
+		global $conexion;
+		$sql = "SELECT * ,tipo_metodo_pago.descripcion tipo_metodo_pago ,banco_cuenta.descripcion banco_cuenta
+
+		FROM venta_pago
+		
+		left JOIN banco_cuenta ON banco_cuenta.idbanco_cuenta=venta_pago.idbanco_cuenta
+		left JOIN tipo_metodo_pago ON tipo_metodo_pago.idtipo_metodo_pago=venta_pago.idtipo_metodo_pago
+		where  
+		 idventa='$idventa'
+		";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+	public function traerPersonalTransporte()
+	{
+		global $conexion;
+		$sql = "SELECT * from transporte where estado='A'";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function DatosUsuario($id_usuario)
 	{
 		global $conexion;
@@ -22,7 +101,7 @@ class Pedido
 			//exit;
 			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega')";
-			$sql="INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
+			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
 
 
 			SELECT $idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(), concat(10,max(idpedido)+1),'A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega'
@@ -110,9 +189,9 @@ class Pedido
 						inner join usuario uva on p.idusuario_est=uva.idusuario
 						inner join empleado eva on uva.idempleado=eva.idempleado
 
-						JOIN rol r_e ON r_e.r_id=e.idrol
-						JOIN rol r_eva ON r_eva.r_id=eva.idrol
-						JOIN rol r_ev ON r_ev.r_id=ev.idrol
+						LEFT JOIN rol r_e ON r_e.r_id=e.idrol
+						LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
+						LEFT JOIN rol r_ev ON r_ev.r_id=ev.idrol
 						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
@@ -470,7 +549,7 @@ where
 GROUP BY persona.num_documento
 order by idpersona DESC ;";
 
-		// echo $sql;
+		echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -501,7 +580,7 @@ order by idpersona DESC ;";
 						-- and i.idsucursal =$idsucursal 
 						and di.stock_actual > 0 order by fecha asc;";
 
-		
+
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -630,8 +709,8 @@ order by idpersona DESC ;";
 		global $conexion;
 		$sql = "INSERT INTO detalle_pedido_img(idpedido, idusuario, imagen, estado,tipo_imagen)
 		VALUES($idpedido, $idusuario, '$imagen', 1,'VOUCHER')";
-		
-		
+
+
 		$query = $conexion->query($sql);
 
 		/*
@@ -737,7 +816,7 @@ order by idpersona DESC ;";
 	{
 		global $conexion;
 		// $sql = "SELECT * FROM pedido ORDER	BY  fecha desc LIMIT 1 ";
-		$sql="SELECT pedido.*,empleado.nombre,empleado.apellidos ,emp_est.nombre nombre_estado,emp_est.apellidos apellidos_estado FROM pedido 
+		$sql = "SELECT pedido.*,empleado.nombre,empleado.apellidos ,emp_est.nombre nombre_estado,emp_est.apellidos apellidos_estado FROM pedido 
 
 JOIN usuario ON usuario.idusuario=pedido.idusuario
 JOIN empleado ON empleado.idempleado=usuario.idempleado

@@ -575,6 +575,10 @@ function cargarDataIngreso(
   Proveedor,
   tipo_comprobante
 ) {
+
+
+
+
   bandera = 2;
   $("#VerForm").show();
   $("#btnNuevo").hide();
@@ -631,6 +635,8 @@ function CargarDetalleIngreso(idIngreso) {
     "./ajax/IngresoAjax.php?op=GetDetalleArticulo",
     { idIngreso: idIngreso },
     function (r) {
+
+      console.log(r);
       $("table#tblDetalleIngreso tbody").html(r);
     }
   );
@@ -829,10 +835,18 @@ function AgregarDetalleCarrito(
   ConsultarDetalles();
 }
 
-function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante) {
-  console.log('hola qu hace')
+function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante
+  
+  ,lote
+	,barcode
+	,descripcion
+
+  ) {
 
   console.log( art,precio_compra,precio_final,precio_distribuidor,precio_superdistribuidor,precio_representante)
+
+  let nuevoLote=Number(lote)+1
+
  let error 
   elementos.map(e=>{
     if(e[0]==id){ 
@@ -841,7 +855,7 @@ function Agregar(id, art,precio_compra,precio_final,precio_distribuidor,precio_s
   })
   if(!error){
     // AgregarDetalleCarrito(id, art, "", "", "", "1", "1", "0.0", "0.0", "0.0", "" ,"0.0", "0.0");
-    AgregarDetalleCarrito(id, art, "", "", "", "1", precio_compra, precio_distribuidor,precio_final,' ' ,'  ' ,precio_superdistribuidor, precio_representante);
+    AgregarDetalleCarrito(id, art, barcode, " ", descripcion, "1", precio_compra, precio_distribuidor,precio_final,' ' ,nuevoLote ,precio_superdistribuidor, precio_representante);
   }else{
     alert("El producto elegido ya se encuentra ingresado en la lista...");
   }

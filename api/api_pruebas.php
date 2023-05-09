@@ -1,6 +1,7 @@
 <?php
-
+/* 
 include_once 'prueba.php';
+
 
 
 class ApiPrueba
@@ -52,4 +53,4 @@ class ApiPrueba
     }
 }
 $pru=new ApiPrueba ;
-$pru->getAll();
+$pru->getAll(); */
