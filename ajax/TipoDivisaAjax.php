@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once "../model/Tarjeta.php";
-$obj = new Tarjeta();
+require_once "../model/TipoDivisa.php";
+$obj = new TipoDivisa();
 
 switch ($_GET["op"]) {
 
@@ -15,11 +15,12 @@ switch ($_GET["op"]) {
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->descripcion,
-                "2" => $reg->codigo,
-                "3" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataTarjeta('.$reg->idtarjeta.',\''.$reg->descripcion.'\'
-                ,\''.$reg->codigo.'\'
+                "2" => $reg->simbolo,
+                "3" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataTipoDivisa('.$reg->idtipo_divisa.'
+                ,\''.$reg->descripcion.'\'
+                ,\''.$reg->simbolo.'\'
                 )"><i class="fa fa-pencil"></i> </button>&nbsp;'.
-                '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarTarjeta('.$reg->idtarjeta.')"><i class="fa fa-trash"></i> </button>',
+                '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarTipoDivisa('.$reg->idtipo_divisa.')"><i class="fa fa-trash"></i> </button>',
             );
             $i++;
         }
@@ -33,17 +34,18 @@ switch ($_GET["op"]) {
 
         break;
     case 'SaveOrUpdate':
-        if (empty($_POST["txtIdtargeta"])) {
-            if ($obj->Registrar($_POST["txtDescripcion"]
-            ,$_POST["txtCodigo"]
+        
+        if (empty($_POST["txtIdtipoDivisa"])) {
+            if ($obj->Registrar($_POST["txtDescripcionTipoDivisa"]
+            ,$_POST["txtCodigoTipoDivisa"]
             )) {
                 echo "Registrado Exitosamente";
             } else {
                 echo "Usuario no ha podido ser registado.";
             }
         } else {
-            if ($obj->Modificar($_POST["txtIdtargeta"],$_POST["txtDescripcion"],
-            $_POST["txtCodigo"]
+            if ($obj->Modificar($_POST["txtIdtipoDivisa"],$_POST["txtDescripcionTipoDivisa"],
+            $_POST["txtCodigoTipoDivisa"]
             )) {
                 echo "Registrado Exitosamente";
             } else {

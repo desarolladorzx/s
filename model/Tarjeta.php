@@ -5,7 +5,7 @@
 	class Tarjeta{
 		public function listar(){
 			global $conexion;
-			$sql = "SELECT * from tarjeta where estado='A'";
+			$sql = "SELECT * from tarjeta where estado='1'";
 			$query = $conexion->query($sql);
 
 			return $query;
@@ -13,14 +13,14 @@
 
 		public function Eliminar($idtarjeta){
 			global $conexion;
-			$sql = "UPDATE tarjeta set estado='C' WHERE idtarjeta = $idtarjeta";
+			$sql = "UPDATE tarjeta set estado='0' WHERE idtarjeta = $idtarjeta";
 			$query = $conexion->query($sql);
 
 			return $query;
 		}
 		public function Registrar($descripcion,$numero){
 			global $conexion;
-			$sql = "INSERT INTO tarjeta(descripcion,estado,codigo)values('$descripcion','A','$numero') ";
+			$sql = "INSERT INTO tarjeta(descripcion,estado,codigo)values('$descripcion','1','$numero') ";
 			$query = $conexion->query($sql);
 
 			// echo $sql;
