@@ -23,7 +23,7 @@ switch ($_GET["op"]) {
                 "id" => $value->idpersona,
                 "texto" => $value->texto,
                 "nombre_completo" => $value->nombre.' '.$value->apellido,
-                "documento" => $value->tipo_documento.' '.$value->num_documento,
+                "documento" => $value->documento_as,
                 "telefonos" => $value->telefono.' '.$value->telefono_2,
                 "ubicacion" => $value->ubicacion,
                 "direccion" => $value->direccion_calle,

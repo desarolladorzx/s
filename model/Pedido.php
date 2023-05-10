@@ -33,7 +33,9 @@ class Pedido
 		$sql = "SELECT *,CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ', persona.telefono,' - ', persona.telefono_2 )  texto ,
 		CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion,
 		
-		persona.tipo_persona,persona.num_documento,persona.nombre,persona.apellido,persona.telefono,persona.direccion_calle ,persona.email from persona 
+		persona.tipo_persona,persona.num_documento,persona.nombre,persona.apellido,persona.telefono,persona.direccion_calle ,persona.email 
+		,CONCAT(persona.tipo_documento,' - ',persona.num_documento) documento_as
+		from persona 
 	
 		INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)	t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
 		

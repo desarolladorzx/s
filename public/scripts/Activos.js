@@ -29,13 +29,13 @@ var visibleColumns = [
 function init() {
   var htmlVisibleColumns = `
     <option value="- Elegir opción -">
-    - Seleccione un Cliente -
+    -  -
     </option>`;
 
   visibleColumns.map((e) => {
     htmlVisibleColumns += `
-      <option value="- Elegir opción -">
-    - Seleccione un Cliente -
+      <option value="${e.value}">
+      column ${e.value}
     </option>
       `;
   });
