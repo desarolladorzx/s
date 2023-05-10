@@ -142,13 +142,15 @@ switch ($_GET["op"]) {
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->fecha,
-                "2" => $reg->almacen_inicial,
-                "3" => $reg->almacen_destino,
-                "4" => $reg->motivo_del_traslado,
-                "5" => $reg->cantidad_total_de_productos,
-                "6" => $reg->serie,
-                "7" => $reg->numero,
-                "8" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . $reg->idtraslado. '`)"  title="Ver Detalle" ><i class="fav fa-eye"></i> </button>
+                "2" => $reg->serie.' / '.$reg->numero,
+                "3" => $reg->empleado_ingreso,
+                
+                "4" => $reg->almacen_inicial,
+                "5" => $reg->almacen_destino,
+                "6" => $reg->motivo_del_traslado,
+                "7" => $reg->monto_total,
+                "8" => $reg->cantidad_total_de_productos,
+                "9" => '<button class="btn btn-success" data-toggle="tooltip" onclick="verDetallesTraslados(`' . $reg->idtraslado. '`)"  title="Ver Detalle" ><i class="fav fa-eye"></i> </button>
                     '.$htmlModificarDetalles.'
                 ' //SE O//SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
                 // "6" => $reg->estado,

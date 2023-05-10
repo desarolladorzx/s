@@ -172,22 +172,19 @@ class Traslados
 
             
             for ($i = 0; $i < count($detalle); $i++) {
-
                 $array = explode(",", $detalle[$i]);
                 $iddetalle_ingreso = $array[0];
-
-                // print_r($array);
                 $cantidad_de_traslado = $array[6];
 
                 $sql_select_detalle_ingreso = "SELECT * from  detalle_ingreso where iddetalle_ingreso=$iddetalle_ingreso";
 
-                $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();
+                $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();   
 
-                $total = $total + $cantidad_de_traslado*$array[8];
+                $total = $total + $cantidad_de_traslado*$detalle_ingreso->precio_compra;
                 $totalTraslado = $totalTraslado + 1;
+
             }
-
-
+           
             $sql = "INSERT into ingreso(
                 idusuario,
                 idsucursal,
@@ -388,6 +385,14 @@ class Traslados
                 $conexion->autocommit(true);
             }
 
+            $serie=$almacenInicial==1?'NT-AQP':'NT-LIMA';
+
+
+            $sql='SELECT max(numero)+1 numero from traslados ';
+            $numero= $conexion->query($sql)->fetch_object()->numero;
+
+            // echo $numero;
+
             $sql = "INSERT into traslados
             (
             descripcion,
@@ -398,9 +403,12 @@ class Traslados
             fecha_modificado,
             id_empleado,
             estado,
-            idingreso
+            idingreso,
+            serie,
+            numero,
+            monto_total
             )
-            VALUES (
+            VALUES(
             '$motivoDeTraslado',
             $almacenInicial,
             $almacenFinal,
@@ -409,8 +417,14 @@ class Traslados
             CURRENT_TIMESTAMP(),
             $idUsuario,
             'SALIDA',
-            '$idingreso'
-            )";
+            '$idingreso',
+            '$serie',
+            '$numero',
+            '$total'
+            )
+            ";
+
+            // echo $sql;
             $conexion->query($sql);
             $traslado_id = $conexion->insert_id;
             $conexion->autocommit(true);
