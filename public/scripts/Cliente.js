@@ -401,6 +401,9 @@ function init() {
     $("#txtDireccion_Distrito").val("");
     $("#txtDireccion_Calle").val("");
 
+    $("#cboTipo_Persona").val("");
+
+    
     $("#txtDireccion_Referencia").val("");
     $("#txtTelefono").val("");
     $("#txtTelefono_2").val("");

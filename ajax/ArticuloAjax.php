@@ -27,7 +27,7 @@
 
 			$lote = $_POST["txtLote"];
 			$bar_code = $_POST["txtCodigoBarra"];
-			$interno_id = $_POST["txtprecio_representante"];
+			$interno_id = $_POST["txtCodigoInterno"];
 			// $precio_compra,$precio_final,$precio_distribuidor,$precio_superdistribuidor ,$precio_representante
 
 			$imagen = $_FILES["imagenArt"]["tmp_name"];
