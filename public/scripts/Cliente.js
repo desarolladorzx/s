@@ -284,7 +284,15 @@ function init() {
 
   $("#cliente_filtro").change(function () {
     var valor = $(this).val();
-    tabla.column(2).search(valor).draw();
+    // tabla.column(13).search(valor).draw();
+
+
+    // console.log(tabla.column(13).data())
+    if (valor.length== 0) {  // verifica si el valor es nulo
+      tabla.column(13).search('').draw();  
+    } else {
+      tabla.column(13).search(`^${valor}$`, true, false).draw();  // realiza la búsqueda normal
+    }
 
     llenarCantidades();
   });
@@ -292,9 +300,6 @@ function init() {
     var valor = $(this).val();
     // console.log(valor)
     if (valor.length== 0) {  // verifica si el valor es nulo
- 
-      
-
       tabla.column(11).search('').draw();  
     } else {
       tabla.column(11).search(`^${valor}$`, true, false).draw();  // realiza la búsqueda normal
@@ -570,11 +575,14 @@ function ListadoCliente() {
       { mDataProp: "6" },
       // { mDataProp: "7" },
       { mDataProp: "8" },
-      // { mDataProp: "9" },
+
+      
+
       // { mDataProp: "10" },
       { mDataProp: "vendedor_asignado" },
 
       { mDataProp: "12", visible: false },
+      {mDataProp:"30",visible: false },
       { mDataProp: "11" },
     ],
 

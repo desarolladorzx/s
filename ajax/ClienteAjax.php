@@ -271,7 +271,7 @@ switch ($_GET["op"]) {
 				"9" => $reg->empleado_modificado,
 				"10" => $reg->fecha_modificado,
 				'13'=>$clasificacion,
-
+				"30"=>$reg->tipo_persona,
 				'14'=>$ultima_venta,
 				
 				"11" => $boton_editar . ' ' . $boton_eliminar.''.'
@@ -290,6 +290,7 @@ switch ($_GET["op"]) {
 				,\'' . $reg->empleado_asignado . '\'
 				,\'disabled\'
 				)"><i class="fa fa-eye"></i> </button>'
+				,
 				
 				
 			);
