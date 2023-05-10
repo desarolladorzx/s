@@ -1,47 +1,168 @@
 $(document).on("ready", init);
 var idgestionActivo = "";
+//  $(document).ready(function() {
 
+//         });
 var visibleColumns = [
-  { value: "1", visible: true },
-  { value: "2", visible: true },
-  { value: "3", visible: true },
+  { value: "0", visible: true },
+  { value: "1", visible: false },
+  { value: "2", visible: false },
+  { value: "3", visible: false },
   { value: "4", visible: true },
-  { value: "5", visible: true },
-  { value: "6", visible: true },
-  { value: "7", visible: true },
-  { value: "8", visible: true },
-
-  { value: "9", visible: true },
-  { value: "10", visible: true },
-  { value: "11", visible: true },
-  { value: "12", visible: true },
-  { value: "13", visible: true },
-  { value: "14", visible: true },
-  { value: "15", visible: true },
+  { value: "5", visible: false },
+  { value: "6", visible: false },
+  { value: "7", visible: false },
+  { value: "8", visible: false },
+  { value: "9", visible: false },
+  { value: "10", visible: false },
+  { value: "11", visible: false },
+  { value: "12", visible: false },
+  { value: "13", visible: false },
+  { value: "14", visible: false },
+  { value: "15", visible: false },
   { value: "16", visible: true },
   { value: "17", visible: true },
   { value: "18", visible: true },
   { value: "19", visible: true },
-  { value: "20", visible: true },
-  { value: "21", visible: true },
-  { value: "22", visible: true },
+  { value: "20", visible:   true },
 ];
-function init() {
-  var htmlVisibleColumns = `
-    <option value="- Elegir opción -">
-    -  -
-    </option>`;
+var tabla;
 
+var ArrayExport;
+function init() {
+  function ListadoActivo() {
+    let Array = visibleColumns.map((e) => {
+      response = {
+        mDataProp: e.value,
+        visible: e.visible,
+      };
+      return response;
+    });
+
+    ArrayExport = visibleColumns
+      .filter((e) => e.visible == true)
+      .map((e) => Number(e.value));
+
+    tabla = $("#tblActivos")
+      .dataTable({
+        aProcessing: true,
+        aServerSide: true,
+        dom: "Bfrtip",
+        buttons: [
+          "copyHtml5",
+          {
+            extend: "excelHtml5",
+            text: "Excel",
+            exportOptions: {
+              columns: ArrayExport,
+            },
+          },
+          "csvHtml5",
+          "pdfHtml5",
+        ],
+        aoColumns: Array,
+        ajax: {
+          url: "./ajax/ActivosAjax.php?op=list",
+          type: "get",
+          dataType: "json",
+          error: function (e) {
+            console.log(e.responseText);
+          },
+        },
+        bDestroy: true,
+      })
+      .DataTable();
+  }
+
+  var htmlVisibleColumns = `
+  <select
+  multiple="multiple"
+  name="select_contaimner_select_visible"
+  id="select_contaimner_select_visible"
+>
+    `;
   visibleColumns.map((e) => {
     htmlVisibleColumns += `
-      <option value="${e.value}">
-      column ${e.value}
+    <option   ${e.visible ? "selected" : ""} value="${e.value}">
+      columna ${e.value}
     </option>
       `;
   });
+  htmlVisibleColumns += `</select>`;
+  $("#container_select_visible").html(htmlVisibleColumns);
 
-  $('#contaimner_select_visible').html(htmlVisibleColumns)
-  
+  if($('#select_contaimner_select_visible').val()){
+      $("#select_contaimner_select_visible").multiselect();
+  }
+
+  $("#select_contaimner_select_visible").change(function () {
+    let valor = $(this).val();
+
+    visibleColumns.map((e) => {
+      if (valor.includes(e.value)) {
+        e.visible = true;
+      } else {
+        e.visible = false;
+      }
+    });
+
+    var data = $("#tblActivos").DataTable();
+
+    visibleColumns.forEach(function (columna) {
+      if (columna.visible == true) {
+        data.column(columna.value).visible(true);
+      } else {
+        data.column(columna.value).visible(false);
+      }
+    });
+
+    ArrayExport = visibleColumns
+      .filter((e) => e.visible == true)
+      .map((e) => Number(e.value));
+
+    // Actualizar el botón de Excel con las columnas seleccionadas
+
+    // console.log(tabla.buttons(1))
+    let Array = visibleColumns.map((e) => {
+      response = {
+        mDataProp: e.value,
+        visible: e.visible,
+      };
+      return response;
+    });
+
+    tabla = $("#tblActivos")
+      .dataTable({
+        aProcessing: true,
+        aServerSide: true,
+        dom: "Bfrtip",
+        buttons: [
+          "copyHtml5",
+          {
+            extend: "excelHtml5",
+            text: "Excel",
+            exportOptions: {
+              columns: ArrayExport,
+            },
+          },
+          "csvHtml5",
+          "pdfHtml5",
+        ],
+        aoColumns: Array,
+        ajax: {
+          url: "./ajax/ActivosAjax.php?op=list",
+          type: "get",
+          dataType: "json",
+          error: function (e) {
+            console.log(e.responseText);
+          },
+        },
+        bDestroy: true,
+      })
+      .DataTable();
+
+
+  });
 
   $("#boton_actualizar_ultimo_empleado").hide();
   $("#table_activos_anteriores").hide();
@@ -300,62 +421,6 @@ function init() {
       });
     }
   });
-
-  function ListadoActivo() {
-    var tabla = $("#tblActivos")
-      .dataTable({
-        aProcessing: true,
-        aServerSide: true,
-        dom: "Bfrtip",
-        buttons: [
-          "copyHtml5",
-          {
-            extend: "excelHtml5",
-            text: "Excel",
-            exportOptions: {
-              columns: [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-              ],
-            },
-          },
-          "csvHtml5",
-          "pdfHtml5",
-        ],
-        aoColumns: [
-          { mDataProp: "0", visible: true },
-          { mDataProp: "1", visible: false },
-          { mDataProp: "2", visible: false },
-          { mDataProp: "3", visible: false },
-          { mDataProp: "4", visible: true },
-          { mDataProp: "5", visible: false },
-          { mDataProp: "6", visible: false },
-          { mDataProp: "7", visible: false },
-          { mDataProp: "8", visible: false },
-          { mDataProp: "9", visible: false },
-          { mDataProp: "10", visible: false },
-          { mDataProp: "11", visible: false },
-          { mDataProp: "12", visible: false },
-          { mDataProp: "13", visible: false },
-          { mDataProp: "14", visible: false },
-          { mDataProp: "15", visible: false },
-          { mDataProp: "16", visible: true },
-          { mDataProp: "17", visible: true },
-          { mDataProp: "18", visible: false },
-          { mDataProp: "19", visible: false },
-          { mDataProp: "20", visible: true },
-        ],
-        ajax: {
-          url: "./ajax/ActivosAjax.php?op=list",
-          type: "get",
-          dataType: "json",
-          error: function (e) {
-            console.log(e.responseText);
-          },
-        },
-        bDestroy: true,
-      })
-      .DataTable();
-  }
 
   $("#submit_boton_actualizar_ultimo_empleado").click(function (e) {
     var objet = {
