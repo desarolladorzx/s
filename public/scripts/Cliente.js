@@ -819,6 +819,9 @@ function cargarDataCliente(
   }
 
   $(".container_info_filtro").hide();
+
+
+  
   if (disabled == "disabled") {
     $("#button_registrar_nuevo_cliente").hide();
     $("input").prop("disabled", true);
