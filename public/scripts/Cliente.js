@@ -183,11 +183,16 @@ function init() {
   });
 
   $("#txt_ubicacion_nuevo").on("blur", function () {
+
+    console.log($(this).val())
     var optionValues = $(".ubicacion_containe_options option")
       .map(function () {
         return $(this).val();
       })
       .get();
+
+    console.log(optionValues)
+
     if ($.inArray($(this).val(), optionValues) === -1) {
       $(this).val("");
     }

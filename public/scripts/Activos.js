@@ -27,16 +27,22 @@ var visibleColumns = [
   { value: "22", visible: true },
 ];
 function init() {
-    var htmlVisibleColumns=''
+  var htmlVisibleColumns = `
+    <option value="- Elegir opción -">
+    - Seleccione un Cliente -
+    </option>`;
 
-    visibleColumns.map(e=>{
+  visibleColumns.map((e) => {
+    htmlVisibleColumns += `
+      <option value="- Elegir opción -">
+    - Seleccione un Cliente -
+    </option>
+      `;
+  });
 
-      visibleColumns+=`
-      
-      `
-    })
-
+  $('#contaimner_select_visible').html(htmlVisibleColumns)
   
+
   $("#boton_actualizar_ultimo_empleado").hide();
   $("#table_activos_anteriores").hide();
   $("#act_fecha_ingreso ").change(function () {
@@ -385,7 +391,6 @@ function init() {
       success: function (datos) {
         console.log(datos);
 
-
         $.ajax({
           url: "./ajax/ActivosAjax.php?op=verArchivosActivos",
           type: "get",
@@ -406,14 +411,13 @@ function init() {
               <a href="./Files/Activos/${dataArchivo.ruta}" class="mailbox-attachment-name" target="_blank">${dataArchivo.ruta}</a>
               </li>`;
             });
-  
+
             $("#detalleArchivoActivo").html(htmldetalleArchivos);
           },
           error: function (erro) {
             console.log(erro);
           },
         });
-
 
         swal("Mensaje del Sistema", "actulizado correctamente", "success");
         var tabla = $("#table_activos_anteriores")
@@ -453,10 +457,6 @@ function init() {
       error: function (error) {
         console.log(error);
         swal("Mensaje del Sistema", "actulizado correctamente", "success");
-
-
-
-
 
         var tabla = $("#table_activos_anteriores")
           .dataTable({
