@@ -4,27 +4,27 @@ var idgestionActivo = "";
 
 //         });
 var visibleColumns = [
-  { value: "0", visible: true },
-  { value: "1", visible: false },
-  { value: "2", visible: false },
-  { value: "3", visible: false },
-  { value: "4", visible: true },
-  { value: "5", visible: false },
-  { value: "6", visible: false },
-  { value: "7", visible: false },
-  { value: "8", visible: false },
-  { value: "9", visible: false },
-  { value: "10", visible: false },
-  { value: "11", visible: false },
-  { value: "12", visible: false },
-  { value: "13", visible: false },
-  { value: "14", visible: false },
-  { value: "15", visible: false },
-  { value: "16", visible: true },
-  { value: "17", visible: true },
-  { value: "18", visible: true },
-  { value: "19", visible: true },
-  { value: "20", visible:   true },
+  { value: "0", visible: true ,nombre:'#'},
+  { value: "1", visible: false ,nombre:'cogido'},
+  { value: "2", visible: false ,nombre:'fecha  de ingreso'},
+  { value: "3", visible: false ,nombre:'familia  de activos '},
+  { value: "4", visible: true ,nombre:'tipo de Equipo'},
+  { value: "5", visible: false ,nombre:'Cantidad'},
+  { value: "6", visible: false ,nombre:'Marca'},
+  { value: "7", visible: false ,nombre:'Modelo'},
+  { value: "8", visible: false ,nombre:'Nro Serie'},
+  { value: "9", visible: false ,nombre:'Color'},
+  { value: "10", visible: false ,nombre:'Caracteristicas'},
+  { value: "11", visible: false ,nombre:'Estado'},
+  { value: "12", visible: false ,nombre:'Tipo/Nro. de Documento'},
+  { value: "13", visible: false ,nombre:'Precio de Compra'},
+  { value: "14", visible: false ,nombre:'Proveedor'},
+  { value: "15", visible: false ,nombre:'Area'},
+  { value: "16", visible: true ,nombre:'Usuario'},
+  { value: "17", visible: true ,nombre:'Tipo de Activo'},
+  { value: "18", visible: true ,nombre:'ubicacion'},
+  { value: "19", visible: true ,nombre:'Gestionado Por'},
+  { value: "20", visible: true ,nombre:'Opciones'},
 ];
 var tabla;
 
@@ -84,7 +84,7 @@ function init() {
   visibleColumns.map((e) => {
     htmlVisibleColumns += `
     <option   ${e.visible ? "selected" : ""} value="${e.value}">
-      columna ${e.value}
+      ${e.nombre}
     </option>
       `;
   });
