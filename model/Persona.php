@@ -625,41 +625,41 @@ iddistrito_factura='$iddistrito_factura'
 		global $conexion;
 
 		$sql = "	SELECT 
-				idpersona ,
-				tipo_persona,
-				max(venta.fecha) fecha,
-			CASE 
-				  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
-					 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
-			   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
+		idpersona ,
+		tipo_persona,
+		max(venta.fecha) fecha,
+	CASE 
+		  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<2 THEN 'ACTIVO' 
+			 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<4   THEN 'INACTIVO' 
+	   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=4 THEN 'PERDIDO' 
 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-			    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-					 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-			   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-			   
-					 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
-					 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
-					 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
-			   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
-				   
-					WHEN venta.fecha IS NULL then 'PERDIDO'
-				   
-			END  as clasificacion,
-			 persona.nombre
-			
-			FROM persona 
-			left join pedido on pedido.idcliente=persona.idpersona
-			left JOIN venta ON venta.idpedido=pedido.idpedido
-			WHERE persona.idpersona=$id_cliente
-			GROUP by (idpersona)
+	   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<1 THEN 'ACTIVO' 
+			 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=1 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<2   THEN 'INACTIVO' 
+	   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 THEN 'PERDIDO' 
+	   
+		WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<1 THEN 'ACTIVO' 
+			 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=1 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<2   THEN 'INACTIVO' 
+	   WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 THEN 'PERDIDO' 
+	   
+			 
+			 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<3 THEN 'ACTIVO' 
+			 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=3 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<=5   THEN 'INACTIVO' 
+	   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=5 THEN 'PERDIDO' 
+		   
+			WHEN max(venta.fecha) IS NULL then 'PERDIDO'
+		   
+	END  as clasificacion,
+	 persona.nombre
+	
+	FROM persona 
+	left join pedido on pedido.idcliente=persona.idpersona
+	left JOIN venta ON venta.idpedido=pedido.idpedido
+	WHERE persona.idpersona=$id_cliente
+	GROUP by (idpersona)
 			";
 		$query = $conexion->query($sql);
 		return $query;
