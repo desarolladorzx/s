@@ -498,7 +498,7 @@ function init() {
             success: function (data) {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
-              // location.href = "Traslados.php";
+              location.href = "Traslados.php";
               //$("#tblDetallePedido tbody").html("");
               // $("#txtIgvPed").val("");
               // $("#txtTotalPed").val("");
