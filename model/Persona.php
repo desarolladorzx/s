@@ -96,8 +96,7 @@ class Persona
 		$direccion_referencia_factura,
 		$idprovincia_factura,
 		$iddistrito_factura
-
-
+		,$empleado_asignado
 	) {
 		global $conexion;
 		$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia
@@ -115,6 +114,7 @@ class Persona
 	
 					)";
 
+
 		$query = $conexion->query($sql);
 
 		$idpersona= $conexion->insert_id;
@@ -128,13 +128,17 @@ class Persona
 		fecha_modificado,
 		estado
 		) VALUES (
-		$idempleado,
+		$empleado_asignado,
 		$idpersona,
 		CURRENT_TIMESTAMP(),
 		CURRENT_TIMESTAMP(),
 		'A'
 		);";
 		$query = $conexion->query($sql);
+		
+
+		echo $sql;
+
 		
 		return $query;
 	}
@@ -164,9 +168,36 @@ class Persona
 		$direccion_referencia_factura,
 		$idprovincia_factura,
 		$iddistrito_factura
-
+		,$empleado_asignado
 	) {
 		global $conexion;
+
+		$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';";
+		$query = $conexion->query($sql);
+
+
+		$sql="INSERT  INTO cartera_cliente
+		(
+		idempleado,
+		idcliente,
+		fecha_registro,
+		fecha_modificado,
+		estado
+		) VALUES (
+		$empleado_asignado,
+		$idpersona,
+		CURRENT_TIMESTAMP(),
+		CURRENT_TIMESTAMP(),
+		'A'
+		);";
+
+		echo $sql;
+		$query = $conexion->query($sql);
+
+
+
+
+
 		$sql = "UPDATE persona set tipo_persona = '$tipo_persona',nombre = '$nombre',apellido='$apellido',tipo_documento='$tipo_documento',num_documento='$num_documento',genero='$genero', direccion_departamento = '$direccion_departamento',direccion_provincia='$direccion_provincia',direccion_distrito='$direccion_distrito',
 			direccion_calle='$direccion_calle' ,telefono='$telefono',telefono_2='$telefono_2',email='$email',numero_cuenta='$numero_cuenta',idempleado_modificado='$idempleado',estado='$estado',fecha_modificado=CURRENT_TIMESTAMP(),direccion_referencia='$direccion_referencia',
 

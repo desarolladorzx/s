@@ -223,12 +223,24 @@
                   <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label>EV Responsable:</label>
-                      <input
+                      <!-- <input
                         class="form-control"
                         type="text"
                         disabled
                         id="txt_empleado_asignado"
-                      />
+                      /> -->
+                      <select  
+                      
+                      <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+                        
+                        echo $_SESSION["idempleado"];
+                      }else{
+                        echo 'disabled'; 
+                      }
+                      ?>
+                      id="txt_empleado_asignado" name='txt_empleado_asignado' class="form-control">
+
+                      </select>
 
                       <input
                         class="form-control"
@@ -899,7 +911,7 @@
                 <select
                   name="ejecutivo_filtro"
                   id="ejecutivo_filtro"
-                  class="form-control"
+                  class="form-control "
                 ></select>
               </div>
               <div class="col col-lg-4">

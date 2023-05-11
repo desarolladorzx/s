@@ -98,8 +98,13 @@ switch ($_GET["op"]) {
 
 
 
+		$empleado_asignado= isset($_POST["txt_empleado_asignado"]) ? $_POST["txt_empleado_asignado"] : 
+		$_SESSION['idempleado']
+		;
+		
 
 		$direccion_calle = isset($_POST["txtDireccion_Calle"]) ? $_POST["txtDireccion_Calle"] : "";
+
 		$telefono = isset($_POST["txtTelefono"]) ? $_POST["txtTelefono"] : "";
 		$telefono_2 = isset($_POST["txtTelefono_2"]) ? $_POST["txtTelefono_2"] : "";
 		$email = isset($_POST["txtEmail"]) ? $_POST["txtEmail"] : "";
@@ -112,7 +117,7 @@ switch ($_GET["op"]) {
 
 		$dni_existente = $objCliente->ConsultarDni($num_documento)->num_rows > 0;
 
-
+		
 		if (empty($_POST["txtIdPersona"]) && !$dni_existente) {
 			if ($objCliente->Registrar(
 				$tipo_persona,
@@ -138,6 +143,7 @@ switch ($_GET["op"]) {
 				$direccion_referencia_factura,
 				$idprovincia_factura,
 				$iddistrito_factura
+				,$empleado_asignado
 
 			)) {
 				echo "Cliente registrado correctamente";
@@ -172,6 +178,7 @@ switch ($_GET["op"]) {
 				$direccion_referencia_factura,
 				$idprovincia_factura,
 				$iddistrito_factura
+				,$empleado_asignado
 
 
 			)) {

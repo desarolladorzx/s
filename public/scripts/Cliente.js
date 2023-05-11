@@ -132,7 +132,7 @@ function init() {
         buttons: [
             'copyHtml5',
             'excelHtml5',
-            'csvHtml5',
+            'csvHtml5
             'pdfHtml5'
         ]
     }); */
@@ -324,11 +324,16 @@ function init() {
         var lista = s;
 
         var html = `<option value="" selected="selected">Todos ...</option>`;
+        var htmlEVresponsable = `<option value="" selected="selected"></option>`;
         lista.map((e) => {
-          html += `
-          <option value="${e.nombre}">${e.r_prefijo} ${e.nombre}</option>`;
+          html += `<option value="${e.nombre}">${e.r_prefijo} ${e.nombre}</option>`;
+
+          htmlEVresponsable += `<option value="${e.idempleado}">${e.r_prefijo} ${e.nombre}</option>`;
         });
 
+        
+
+        $("#txt_empleado_asignado").html(htmlEVresponsable);
         $("#ejecutivo_filtro").html(html);
       },
       error: function (e) {},
@@ -715,7 +720,7 @@ function cargarDataCliente(
 
 
   
-  $("#txt_empleado_asignado").val(empleado_asignado);
+  $("#txt_empleado_asignado").val(idempleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
   // si tiene la direccion antigua es true , se muestra la direccion antigua
@@ -728,7 +733,6 @@ function cargarDataCliente(
       $("#ubicacion_antigua").html(direccion_antigua);
     }
   }
-
   //
 
   $("#btnExtraerClientes").hide();
@@ -805,6 +809,7 @@ function cargarDataCliente(
 
   if ($("#hdn_rol_usuario").val() == "S") {
     // SUPERADMIN
+    
 
     $("#panel_rbg_habilitado").show(200);
     $("#panel_rbg_desabilitado").hide(200);
@@ -819,6 +824,8 @@ function cargarDataCliente(
 
     // $('#cboTipo_Documento').prop('disabled',true)
     // $('#cboTipo_Persona').prop('disabled',true)
+    
+    // $('#txt_empleado_asignado').prop("disabled", true);
 
     $("#panel_rbg_habilitado").hide(200);
     $("#panel_rbg_desabilitado").show(200);
@@ -827,6 +834,18 @@ function cargarDataCliente(
     $("#optionsRadios_id_edit").val(genero);
 
     $("input[name=optionsRadios]").prop("disabled", true);
+
+
+    if (tipo_documento == "DNI" || tipo_documento == "RUC") {
+      $("#txtNombre").prop("readonly", true);
+      $("#txtApellido").prop("readonly", true);
+      $("#txtNum_Documento").prop("readonly", true);
+    } else if (tipo_documento == "PASAPORTE" || tipo_documento == "CE") {
+      $("#txtNombre").prop("readonly", false);
+      $("#txtApellido").prop("readonly", false);
+      $("#txtNum_Documento").prop("readonly", true);
+    }
+
   }
 
   $(".container_info_filtro").hide();
@@ -840,27 +859,19 @@ function cargarDataCliente(
   }
 
   //PROBLEMA CUANDO SE EDITA UN CLIENTE
-  if (tipo_documento == "DNI" || tipo_documento == "RUC") {
-    $("#txtNombre").prop("readonly", true);
-    $("#txtApellido").prop("readonly", true);
-    $("#txtNum_Documento").prop("readonly", true);
-  } else if (tipo_documento == "PASAPORTE" || tipo_documento == "CE") {
-    $("#txtNombre").prop("readonly", false);
-    $("#txtApellido").prop("readonly", false);
-    $("#txtNum_Documento").prop("readonly", true);
-  }
 
-  $("#cboTipo_Documento").change(function () {
-    if ($(this).val() == "DNI" || $(this).val() == "RUC") {
-      $("#txtNombre").prop("readonly", true);
-      $("#txtApellido").prop("readonly", true);
-      $("#txtNum_Documento").prop("readonly", true);
-    } else if ($(this).val() == "PASAPORTE" || $(this).val() == "CE") {
-      $("#txtNombre").prop("readonly", false);
-      $("#txtApellido").prop("readonly", false);
-      $("#txtNum_Documento").prop("readonly", true);
-    }
-  });
+
+  // $("#cboTipo_Documento").change(function () {
+  //   if ($(this).val() == "DNI" || $(this).val() == "RUC") {
+  //     $("#txtNombre").prop("readonly", true);
+  //     $("#txtApellido").prop("readonly", true);
+  //     $("#txtNum_Documento").prop("readonly", true);
+  //   } else if ($(this).val() == "PASAPORTE" || $(this).val() == "CE") {
+  //     $("#txtNombre").prop("readonly", false);
+  //     $("#txtApellido").prop("readonly", false);
+  //     $("#txtNum_Documento").prop("readonly", true);
+  //   }
+  // });
 
   if ($("#hdn_rol_usuario").val() == "S") {
     // SUPERADMIN
@@ -1028,7 +1039,9 @@ function buscarPorNumeroDocumento() {
 
             $("#txt_ubicacion_envio").val(rpta["ubicacion_factura"]);
 
-            $("#txt_empleado_asignado").val(rpta["empleado_asignado"]);
+
+            console.log(rpta["idempleado_asignado"])
+            $("#txt_empleado_asignado").val(rpta["idempleado_asignado"]);
 
             $("#txt_idempleado_asignado").val(rpta["idempleado_asignado"]);
 
