@@ -18,7 +18,6 @@ function demostrarTelefono(value, text) {
 
   $(`#${text}`).html("");
 
-  console.log(value);
   if (value) {
     $.post(
       "./ajax/ClienteAjax.php?op=comprobar_telefono",
@@ -401,7 +400,7 @@ function init() {
     $("#txtDireccion_Distrito").val("");
     $("#txtDireccion_Calle").val("");
 
-    $("#cboTipo_Persona").val("");
+    $("#cboTipo_Persona").val("FINAL");
 
     
     $("#txtDireccion_Referencia").val("");
@@ -702,7 +701,6 @@ function cargarDataCliente(
   genero_txt,
   newClasifiacion,
   direccion_referencia,
-
   ubicacion_factura,
   ubicacion,
   idubicacion_factura,
@@ -710,11 +708,13 @@ function cargarDataCliente(
   direccion_referencia_factura,
   direccion_calle_factura,
   direccion_antigua,
-
   idempleado_asignado,
   empleado_asignado,
   disabled
 ) {
+
+
+  
   $("#txt_empleado_asignado").val(empleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
@@ -740,7 +740,7 @@ function cargarDataCliente(
   $("#VerListado").hide();
 
   $("#txtIdPersona").val(id); // recibimos la variable id a la caja de texto
-  $("#cboTipoPersona").val(tipo_persona);
+  $("#cboTipo_Persona").val(tipo_persona);
   $("#txtNombre").val(nombre); // recibimos la variable nombre a la caja de texto txtNombre
   $("#txtApellido").val(apellido); // recibimos la variable apellido a la caja de texto txtApellido
   $("#cboTipo_Documento").val(tipo_documento); // recibimos la variale tipo_documento de sucursal

@@ -229,8 +229,8 @@ switch ($_GET["op"]) {
 
 				,\'' . $reg->idempleado_asignado . '\'
 				,\'' . $reg->empleado_asignado . '\'
-
-
+				,\'NotDisabled\'
+				,
 				)"><i class="fa fa-pencil"></i> </button>';
 			} else {
 				$boton_editar = '<button class="btn btn-warning"  data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
@@ -246,7 +246,7 @@ switch ($_GET["op"]) {
 
 				,\'' . $reg->idempleado_asignado . '\'
 				,\'' . $reg->empleado_asignado . '\'
-
+				,\'NotDisabled\'
 				)"><i class="fa fa-pencil"></i> </button>';
 			}
 
