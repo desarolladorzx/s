@@ -647,7 +647,7 @@ iddistrito_factura='$iddistrito_factura'
 			 
 			 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<3 THEN 'ACTIVO' 
 			 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=3 
-			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<=5   THEN 'INACTIVO' 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<5   THEN 'INACTIVO' 
 	   WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=5 THEN 'PERDIDO' 
 		   
 			WHEN max(venta.fecha) IS NULL then 'PERDIDO'
