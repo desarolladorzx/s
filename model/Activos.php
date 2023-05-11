@@ -3,7 +3,6 @@ require "Conexion.php";
 
 class Activos
 {
-
 	public function __construct()
 	{
 	}
@@ -32,7 +31,6 @@ class Activos
 		global $conexion;
 
 		$sql = " SELECT * FROM gestion_activo_archivo where idgestion_activo=$idgestion_activo";
-
 		$query = $conexion->query($sql);
 		return  $query;
 	}
