@@ -767,6 +767,9 @@ function init() {
             mDataProp: "6",
           },
           {
+            mDataProp: "13",
+          },
+          {
             mDataProp: "7",
           },
           {
@@ -970,12 +973,21 @@ function ConsultarDetallesPed() {
         " <input class='form-control' type='hidden' name='txtIdDetIng' id='txtIdDetIng[]' value='" +
         data[pos][0] +
         "' /></td><td> " +
-        data[pos][6] +
-        "</td><td> " +
-        data[pos][7] +
-        "</td><td> " +
+     
+        
         data[pos][9] +
         "</td><td>" +
+        data[pos][10] +
+        "</td><td>" +
+        data[pos][6] +
+        "</td><td> " +
+
+        data[pos][7] +
+        "</td><td> " +
+        data[pos][11] +
+        "</td><td> " +
+
+        
         data[pos][5] +
         "</td><td><input class='form-control' type='text' name='txtPrecioVentPed' id='txtPrecioVentPed[]' value='" +
         data[pos][2] +
@@ -989,7 +1001,13 @@ function ConsultarDetallesPed() {
         data[pos][4] +
         "' onchange='calcularTotalPed(" +
         pos +
-        ")' /></td><td><button type='button' onclick='eliminarDetallePed(" +
+        ")' /></td>"+
+        "<td> " +
+        "<input class='form-control totalPorProducto' disabled type='number'   value='"+
+        data[pos][12] +"' onchange='calcularTotalPed(" +
+        pos +
+        ")' />"+"</td> " 
+        +"<td><button type='button' onclick='eliminarDetallePed(" +
         pos +
         ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button></td></tr>"
     );
@@ -1031,7 +1049,24 @@ function calcularTotalPed(posi) {
     //Modificar(posi);
   }
   var suma = 0;
+  var suma_producto=0;
+
+
   var data = JSON.parse(objinit.consultar());
+
+
+
+
+  if (posi != null) {
+ 
+    $('.totalPorProducto').each(function(index, element){
+
+      console.log(index,posi)
+      if (index==posi)element.value=parseFloat(elementos[posi][3] * (elementos[posi][2] - elementos[posi][4]))
+     })
+   
+  }
+  
   for (var pos in data) {
     suma += parseFloat(data[pos][3] * (data[pos][2] - data[pos][4]));
   }
@@ -1712,7 +1747,9 @@ function AgregarPedCarrito(
   marca,
   precio_ventadistribuidor,
   precio_ventarepresentante,
-  precio_ventasuperdistribuidor
+  precio_ventasuperdistribuidor,
+  lote,
+  vigencia
 ) {
   if (stock_actual > 0) {
     let confirmarElProducto = true;
@@ -1764,7 +1801,10 @@ function AgregarPedCarrito(
         cod,
         serie,
         idart,
-        marca
+        marca,
+        lote,
+        vigencia,
+        0
       );
       // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
       if (data.length >= 1) {

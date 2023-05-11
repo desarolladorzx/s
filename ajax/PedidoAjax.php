@@ -550,7 +550,10 @@ switch ($_GET["op"]) {
                         \'' . $reg->precio_ventarepresentante . '\'
                         ,
                         \'' . $reg->precio_ventasuperdistribuidor . '\'
-                        )" >
+                        ,
+                        \'' . $reg->lote . '\'
+                        ,
+                        \'' . $reg->vigencia . '\',)" >
                     <i class="fa fa-check" ></i> </button>',
                 "1" => $reg->razon_social,
                 "2" => $reg->estado_n,
@@ -564,7 +567,7 @@ switch ($_GET["op"]) {
                 "10" => $reg->precio_ventadistribuidor,
                 "11" => $reg->precio_ventasuperdistribuidor ,
                 "12" => $reg->precio_ventarepresentante,
-
+                "13" => $reg->vigencia,
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;

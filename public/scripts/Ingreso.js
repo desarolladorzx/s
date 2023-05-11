@@ -429,7 +429,7 @@ function ConsultarDetalles() {
   var data = JSON.parse(objinit.consultar());
   //alert(pos)
   for (var pos in data) {
-    console.log(data)
+   
     /*
             detalle = "<tr><td>" + data[pos][1] + " <input class='form-control' type='hidden' name='txtIdArticulo' id='txtIdArticulo[]' value='" + data[pos][0] + "' /></td>";
             detalle += "<td><input class='form-control' type='text' onkeyup='ModificarIngreso(" + pos + ");' name='txtCodgo' id='txtCodgo[]' value='" + data[pos][2] + "' /></td>";

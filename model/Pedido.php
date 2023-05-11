@@ -569,9 +569,22 @@ order by idpersona DESC ;";
 	END	
 		AS estado_n
 		
-	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo,di.precio_ventadistribuidor,di.precio_ventarepresentante,di.precio_ventasuperdistribuidor,
+	,di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo, di.serie, di.precio_ventapublico
+	,a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo
+	,di.precio_ventadistribuidor,di.precio_ventarepresentante,di.precio_ventasuperdistribuidor,
 			i.idsucursal,razon_social  
-						from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
+
+			,di.lote,
+			serie,
+			TIMESTAMPDIFF(MONTH,CURDATE(),serie ),
+			CASE 
+		 	WHEN TIMESTAMPDIFF(MONTH,CURDATE(),serie )<1 THEN 'VENCIDO' 
+			WHEN TIMESTAMPDIFF(MONTH,CURDATE(),serie)>=1 and TIMESTAMPDIFF(month,CURDATE(),serie)<=3   THEN 'POR VENCER' 
+	   	WHEN TIMESTAMPDIFF(month,CURDATE(),serie)>=4 THEN 'VIGENTE' 
+	   	END  AS vigencia
+			
+						from ingreso i 
+						inner join detalle_ingreso di on di.idingreso = i.idingreso
 						inner join articulo a on di.idarticulo = a.idarticulo
 						inner join categoria c on a.idcategoria = c.idcategoria
 						inner JOIN sucursal ON sucursal.idsucursal=i.idsucursal
