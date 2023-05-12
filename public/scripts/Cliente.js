@@ -355,7 +355,7 @@ function init() {
     //   $("#txt_direccion_envio").val($("#txtDireccion_Referencia").val());
     //   $("#txt_ubicacion_envio").val($("#txtDireccion_Referencia").val());
     // }
-
+    
     console.log($(this).serialize());
 
     $.post(
@@ -811,7 +811,7 @@ function cargarDataCliente(
   // }
 
 
-  $("#txtNum_Documento").prop("readonly", true);
+  // $("#txtNum_Documento").prop("readonly", true);
 
   
   if ($("#hdn_rol_usuario").val() == "S") {

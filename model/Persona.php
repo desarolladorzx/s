@@ -219,7 +219,7 @@ direccion_referencia_factura='$direccion_referencia_factura',
 idprovincia_factura='$idprovincia_factura',
 iddistrito_factura='$iddistrito_factura'
 
-			WHERE num_documento ='$num_documento' and 
+ 				WHERE idpersona = $idpersona and 
 			idpersona=$idpersona";
 
 		// echo ($sql);
@@ -354,7 +354,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-		-- limit 10
+		limit 10
 ;
 		";
 		// $sql = "SELECT  

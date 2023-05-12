@@ -356,8 +356,13 @@ function init() {
       `<i class="fa fa-spinner fa-spin"></i>Registrando`
     );
 
+
+
+    $('#registrar_nuevo_articulo_submit').prop('disabled', true);
+
     if (idValueObj.act_idactivo) {
       console.log("se esta actualizando un articulo");
+
       $.ajax({
         url: "./ajax/ActivosAjax.php?op=guardarActivo",
         type: "POST",
@@ -366,6 +371,10 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+
+          $('#registrar_nuevo_articulo_submit').prop('disabled', false);
+
+
           inputs.forEach(function (input) {
             input.value = "";
           });
@@ -398,6 +407,11 @@ function init() {
         contentType: false,
         processData: false,
         success: function (datos) {
+
+
+          $('#registrar_nuevo_articulo_submit').prop('disabled', false);
+
+          
           console.log("se esta creando un nuevo activo");
 
           inputs.forEach(function (input) {
