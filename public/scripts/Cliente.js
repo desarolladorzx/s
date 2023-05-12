@@ -343,6 +343,9 @@ function init() {
   function SaveOrUpdate(e) {
     e.preventDefault(); // para que no se recargue la pagina
 
+    $('#txtTelefono_span').html('')
+    $('#txtTelefono_2_span').html('')
+
     console.log($("#idIgualAdirecionEnvio").val());
 
     // if ($("#idIgualAdirecionEnvio").val() == "True") {
@@ -807,6 +810,10 @@ function cargarDataCliente(
 
   // }
 
+
+  $("#txtNum_Documento").prop("readonly", true);
+
+  
   if ($("#hdn_rol_usuario").val() == "S") {
     // SUPERADMIN
     
