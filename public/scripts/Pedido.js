@@ -307,6 +307,9 @@ function init() {
             "el Campo de Direccion es requerido , por favor actualize los datos del cliente para realizar la venta "
           );
         } else {
+
+          $('#btn_registrar_cotizacion').prop('disabled',true)
+
           $.ajax({
             url: "./ajax/PedidoAjax.php?op=Save",
             data: formData,
@@ -315,6 +318,13 @@ function init() {
             type: "POST",
 
             success: function (data) {
+
+
+
+
+              $('#btn_registrar_cotizacion').prop('disabled',false)
+
+
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
               $("#container_datos_cliente_seleccionado").hide();

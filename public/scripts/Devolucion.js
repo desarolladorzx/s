@@ -150,6 +150,8 @@ function init() {
         if ($("#iddevolucion_motivo").val() != "") {
           if (elementos.length > 0) {
             if ($("#motivo_de_devolucion").val() != "") {
+              
+              $('#guardar_devolucion_button').prop('disabled', true);
               $.ajax({
                 url: "./ajax/DevolucionAjax.php?op=Save",
                 data: formData,
@@ -162,6 +164,9 @@ function init() {
                   swal("Mensaje del Sistema", data, "success");
                   // delete this.elementos;
                   // location.href="Traslados.php"
+
+              $('#guardar_devolucion_button').prop('disabled', false);
+
                   //$("#tblDetallePedido tbody").html("");
                   // $("#txtIgvPed").val("");
                   // $("#txtTotalPed").val("");

@@ -161,12 +161,15 @@ function init() {
             total: $("#txtTotal").val(),
             detalle: detalle,
           };
+          $('#btnRegistrarIng').prop('disabled',true)
 
           $.post("./ajax/IngresoAjax.php?op=Save", data, function (r) {
             swal("Mensaje del Sistema", r, "success");
             //alert(r);
             Limpiar();
             OcultarForm();
+
+            $('#btnRegistrarIng').prop('disabled',false)
             ListadoIngresos();
           });
         } else {
