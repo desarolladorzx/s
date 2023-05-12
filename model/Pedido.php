@@ -581,6 +581,9 @@ order by idpersona DESC ;";
 		 	WHEN TIMESTAMPDIFF(MONTH,CURDATE(),serie )<1 THEN 'VENCIDO' 
 			WHEN TIMESTAMPDIFF(MONTH,CURDATE(),serie)>=1 and TIMESTAMPDIFF(month,CURDATE(),serie)<=3   THEN 'POR VENCER' 
 	   	WHEN TIMESTAMPDIFF(month,CURDATE(),serie)>=4 THEN 'VIGENTE' 
+
+
+		   WHEN TIMESTAMPDIFF(MONTH,CURDATE(),serie) is null then 'SIN CADUCIDAD'
 	   	END  AS vigencia
 			
 						from ingreso i 

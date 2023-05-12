@@ -530,6 +530,22 @@ switch ($_GET["op"]) {
             } else {
                 $disabledButton = 'disabled';
             }
+
+
+            $colorVigencia='text-success';
+            if($reg->vigencia=='VIGENTE'){
+                $colorVigencia='text-success';
+            }else if($reg->vigencia=='POR VENCER'){
+                $colorVigencia='text-warning';
+            }else if($reg->vigencia=='VENCIDO '){
+                $colorVigencia='text-danger';
+            }
+
+
+            else if($reg->vigencia=='SIN CADUCIDAD'){
+                $colorVigencia='text-primary';
+            }
+
             $data[] = array(
                 "0" => '<button type="button" ' . $disabledButton . '  class="btn btn-warning" name="optDetIngBusqueda[]" data-codigo="' . $reg->codigo . '"
                     data-serie="' . $reg->serie . '" data-nombre="' . $reg->Articulo . '" data-precio-venta="' . $reg->precio_ventapublico . '"
@@ -567,7 +583,12 @@ switch ($_GET["op"]) {
                 "10" => $reg->precio_ventadistribuidor,
                 "11" => $reg->precio_ventasuperdistribuidor ,
                 "12" => $reg->precio_ventarepresentante,
-                "13" => $reg->vigencia,
+                "13" => 
+                " <div class='$colorVigencia' >
+                $reg->vigencia
+                </div>
+                "
+                ,
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
