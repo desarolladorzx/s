@@ -395,7 +395,7 @@ function init() {
           $("#btnNuevo").show();
           $("#VerListado").show();
 
-          ListadoActivo();
+          ListadoActivo(); 
         },
       });
     } else {
