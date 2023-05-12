@@ -181,10 +181,23 @@ class Traslados
                 $detalle_ingreso = $conexion->query($sql_select_detalle_ingreso)->fetch_object();   
 
                 $total = $total + $cantidad_de_traslado*$detalle_ingreso->precio_compra;
-                $totalTraslado = $totalTraslado + 1;
+                
+                // print_r($array);
+                $totalTraslado = $totalTraslado + $array[6];
 
             }
-           
+
+            
+
+            $serie=$almacenInicial==1?'NT-AQP':'NT-LIMA';
+
+
+            $sql='SELECT CAST(MAX(CAST(numero AS INT)) + 1 AS VARCHAR(50)) AS numero
+            FROM traslados';
+            $numero= $conexion->query($sql)->fetch_object()->numero;
+
+        
+
             $sql = "INSERT into ingreso(
                 idusuario,
                 idsucursal,
@@ -204,8 +217,8 @@ class Traslados
                 'A',
                 $idproveedor,
                 'TRASLADO',
-                'NT',
-                1,
+                '$serie',
+                $numero,
                 $impuesto,
                 $total
         )";
@@ -385,11 +398,7 @@ class Traslados
                 $conexion->autocommit(true);
             }
 
-            $serie=$almacenInicial==1?'NT-AQP':'NT-LIMA';
-
-
-            $sql='SELECT max(numero)+1 numero from traslados ';
-            $numero= $conexion->query($sql)->fetch_object()->numero;
+          
 
             // echo $numero;
 
@@ -504,7 +513,11 @@ class Traslados
             LEFT JOIN empleado ON empleado.idempleado=usuario.idempleado
             
             left JOIN usuario usu2 ON usu2.idusuario =traslados.id_empleado_recepcion
-             left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado";
+             left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado
+             
+
+             order by idtraslado desc
+             ";
 
         $query = $conexion->query($sql);
         return $query;

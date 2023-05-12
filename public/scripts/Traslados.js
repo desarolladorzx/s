@@ -488,6 +488,8 @@ function init() {
     if ($("#almacenFinal").val() != $("#idtxtSucursalTraslado").val()) {
       if (elementos.length > 0) {
         if ($("#motivo_de_traslado").val() != "") {
+          $('#btn_guardar_traslados').prop('disabled', false);
+
           $.ajax({
             url: "./ajax/TrasladosAjax.php?op=Save",
             data: formData,
@@ -498,7 +500,10 @@ function init() {
             success: function (data) {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
+
               location.href = "Traslados.php";
+
+              $('#btn_guardar_traslados').prop('disabled', true);
               //$("#tblDetallePedido tbody").html("");
               // $("#txtIgvPed").val("");
               // $("#txtTotalPed").val("");
