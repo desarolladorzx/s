@@ -196,8 +196,6 @@ class Traslados
             FROM traslados';
             $numero= $conexion->query($sql)->fetch_object()->numero;
 
-        
-
             $sql = "INSERT into ingreso(
                 idusuario,
                 idsucursal,
@@ -217,12 +215,15 @@ class Traslados
                 'A',
                 $idproveedor,
                 'TRASLADO',
-                '$serie',
-                $numero,
+                '$serie ',
+                YEAR(NOW()),
                 $impuesto,
                 $total
         )";
 
+
+
+        // echo $sql;
 
             $conexion->query($sql);
             $idingreso = $conexion->insert_id;

@@ -987,14 +987,18 @@ function ConsultarDetallesPed() {
         data[pos][11] +
         "</td><td> " +
 
+
+
+       
+
         
         data[pos][5] +
-        "</td><td><input class='form-control' type='text' name='txtPrecioVentPed' id='txtPrecioVentPed[]' value='" +
-        data[pos][2] +
+        "</td><td> <input class='form-control' type='text' name='txtCantidaPed' id='txtCantidaPed[]'  value='" +
+        data[pos][3] +
         "' onchange='calcularTotalPed(" +
         pos +
-        ")' /></td><td><input class='form-control' type='text' name='txtCantidaPed' id='txtCantidaPed[]'  value='" +
-        data[pos][3] +
+        ")' /></td><td><input class='form-control' type='text' name='txtPrecioVentPed' id='txtPrecioVentPed[]' value='" +
+        data[pos][2] +
         "' onchange='calcularTotalPed(" +
         pos +
         ")' /></td><td><input class='form-control' type='text' name='txtDescuentoPed' id='txtDescuentoPed[]' value='" +

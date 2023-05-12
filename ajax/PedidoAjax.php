@@ -28,8 +28,6 @@ switch ($_GET["op"]) {
                 "ubicacion" => $value->ubicacion,
                 "direccion" => $value->direccion_calle,
                 "tipo_persona" => $value->tipo_persona,
-
-
             ];
             array_push($data,$d);
         }
@@ -532,18 +530,18 @@ switch ($_GET["op"]) {
             }
 
 
-            $colorVigencia='text-success';
+            $colorVigencia='';
             if($reg->vigencia=='VIGENTE'){
-                $colorVigencia='text-success';
+                $colorVigencia='label pull-right bg-green';
             }else if($reg->vigencia=='POR VENCER'){
-                $colorVigencia='text-warning';
-            }else if($reg->vigencia=='VENCIDO '){
-                $colorVigencia='text-danger';
+                $colorVigencia='label pull-right bg-yellow';
+            }else if($reg->vigencia=='VENCIDO'){
+                $colorVigencia='label pull-right bg-red';
             }
 
 
             else if($reg->vigencia=='SIN CADUCIDAD'){
-                $colorVigencia='text-primary';
+                $colorVigencia='label pull-right bg-primary';
             }
 
             $data[] = array(
@@ -584,9 +582,9 @@ switch ($_GET["op"]) {
                 "11" => $reg->precio_ventasuperdistribuidor ,
                 "12" => $reg->precio_ventarepresentante,
                 "13" => 
-                " <div class='$colorVigencia' >
+                " <span class='  $colorVigencia' >
                 $reg->vigencia
-                </div>
+                </span>
                 "
                 ,
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
