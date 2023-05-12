@@ -532,16 +532,16 @@ switch ($_GET["op"]) {
 
             $colorVigencia='';
             if($reg->vigencia=='VIGENTE'){
-                $colorVigencia='label pull-right bg-green';
+                $colorVigencia='badge bg-green';
             }else if($reg->vigencia=='POR VENCER'){
-                $colorVigencia='label pull-right bg-yellow';
+                $colorVigencia='badge bg-yellow';
             }else if($reg->vigencia=='VENCIDO'){
-                $colorVigencia='label pull-right bg-red';
+                $colorVigencia='badge bg-red';
             }
 
 
             else if($reg->vigencia=='SIN CADUCIDAD'){
-                $colorVigencia='label pull-right bg-primary';
+                $colorVigencia='badge bg-blue';
             }
 
             $data[] = array(
