@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,13 +20,6 @@
   <link rel="stylesheet" type="text/css" href="public/js/swat/sweet/lib/sweet-alert.css">
   <link rel="stylesheet" type="text/css" href="public/css/buttons.dataTables.min.css">
 
-
-
-
-
-
-
-
   <!-- jQuery 2.1.4 -->
   <script type="text/javascript" src="public/js/jquery.min.js"></script>
   <script type="text/javascript" src="public/js/jquery.numeric.min.js"></script>
@@ -36,20 +28,14 @@
   <!-- AdminLTE App -->
   <script type="text/javascript" src="public/js/app.min.js"></script>
   <script type="text/javascript" src="public/js/bootbox.min.js"></script>
-
   <script type="text/javascript" src="public/js/dataTables.js"></script>
-
   <script type="text/javascript" src="public/js/swat/sweet/lib/sweet-alert.min.js"></script>
-
 
   <!-- 
   insertando neuvo codigo
  -->
  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
- <script type="text/javascript" src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
-
- 
-
+  <script type="text/javascript" src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
   <script type="text/javascript" src="public/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript" src="public/js/dataTables.buttons.min.js"></script>
   <script type="text/javascript" src="public/js/jszip.min.js"></script>
@@ -83,22 +69,13 @@
   <script type="text/javascript" src="public/scripts/ConsultasVentas.js"></script>
   <script type="text/javascript" src="public/scripts/jquery.toaster.js"></script>
 
-
-  <!-- nuevo modulos -->
+  <!-- Nuevos Modulos -->
   <script type="text/javascript" src="public/scripts/Banco.js"></script>
-
   <script type="text/javascript" src="public/scripts/CuentaBancaria.js"></script>
-
   <script type="text/javascript" src="public/scripts/Transporte.js"></script>
-
-
   <script type="text/javascript" src="public/scripts/Tarjeta.js"></script>
-
   <script type="text/javascript" src="public/scripts/Metodo_Pago.js"></script>
-
-
   <script type="text/javascript" src="public/scripts/Plataforma.js"></script>
-
   <script type="text/javascript" src="public/scripts/MotivoTraslado.js"></script>
 
 <!--  -->
@@ -107,15 +84,11 @@
       text-align: center;
     }
   </style>
-
 </head>
 
 <body class="hold-transition skin-red sidebar-mini">
-
   <div class="wrapper">
-
     <header class="main-header">
-
       <!-- Logo -->
       <a href="index2.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -165,7 +138,6 @@
                       <a href="#">
                         <i class="fa fa-warning text-yellow"></i> Total Compras <?php echo $moneda." ".$totalingreso;?>
                       </a>
-
                     </li>
                     <li>
                       <a href="#">
@@ -173,10 +145,6 @@
                         <?php echo $moneda." ".$totalcontado;?>
                       </a>
                     </li>
-
-
-
-
                   </ul>
                 </li>
                 <li class="footer"><a href="#">Ver todo</a></li>
@@ -201,7 +169,6 @@
 
                 <li class="" id="container_button_sucursal_container" style="padding:5px; display: flex;justify-content: space-between;">
                  
-                  
                 <?php
                 if($_SESSION["idempleado"]!=7){
                   echo '<button class="btn btn-primary" onclick="NuevoAcceder(1,`Arequipa - AREQUIPA - AREQUIPA`)">
@@ -214,11 +181,7 @@
                 }
                 ?>
                  
-                    
-
-                
                 </li>
-
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
@@ -230,10 +193,8 @@
                 </li>
               </ul>
             </li>
-
           </ul>
         </div>
-
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -262,22 +223,22 @@
               <li id="liEscritorioEmp"><a href="EscritorioEmp.php"><i class="fa fa-circle-o"></i> Estadísticas</a></li>
             </ul>
           </li>
+
           <li class="treeview" id="liMantenimiento">
             <a href="#">
-              <i class="fa fa-laptop"></i>
-              <span>Mantenimiento</span>
+              <i class="fa fa-laptop"></i><span>Mantenimiento</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
               <li id="liGeneral"><a href="Global.php" accesskey="a"><i class="fa fa-circle-o"></i> General</a></li>
               <li id="liSucursal"><a href="Sucursal.php" accesskey="b"><i class="fa fa-circle-o"></i> Sucursal</a></li>
-              <li id="liEmpleados"><a href="Empleado.php" accesskey="c"><i class="fa fa-circle-o"></i> Empleados</a>
-              </li>
+              <li id="liEmpleados"><a href="Empleado.php" accesskey="c"><i class="fa fa-circle-o"></i> Empleados</a></li>
               <li id="liUsuarios"><a href="Usuario.php" accesskey="d"><i class="fa fa-circle-o"></i> Usuarios</a></li>
               <li id="liTipoDoc"><a href="Tipo_Documento.php" accesskey="e"><i class="fa fa-circle-o"></i> Tipo
                   Documento</a></li>
             </ul>
           </li>
+
           <li class="treeview" id="liAlmacen">
             <a href="#">
               <i class="fa fa-edit"></i> <span>Almacén</span>
@@ -290,94 +251,67 @@
               <li id="liUM"><a href="Unidad_Medida.php"><i class="fa fa-circle-o"></i> Unidades de Medida</a></li>
             </ul>
           </li>
+
           <li class="treeview" id="liCompras">
             <a href="#">
-              <i class="fa fa-th"></i>
-              <span>Compras</span>
+              <i class="fa fa-th"></i><span>Compras</span>
               <span class="label label-primary pull-right">C</span>
             </a>
             <ul class="treeview-menu">
-
               <li id="liIng"><a href="Ingreso.php"><i class="fa fa-circle-o"></i> Ingresos</a></li>
               <li id="liProveedores"><a href="Proveedor.php"><i class="fa fa-circle-o"></i> Proveedores</a></li>
-
             </ul>
           </li>
+
           <li class="treeview" id="liVentas">
             <a href="#">
-              <i class="fa fa-shopping-cart"></i>
-              <span>Ventas – EV</span>
+              <i class="fa fa-shopping-cart"></i><span>Ventas – EV</span>
               <span class="label label-primary pull-right bg-green">V</span>
             </a>
             <ul class="treeview-menu">
               <li id="liVenta"><a href="Venta.php"><i class="fa fa-circle-o"></i> Tickets de venta</a></li>
               <li id="liPedido"><a href="Pedido.php"><i class="fa fa-circle-o"></i> Notas de Venta</a></li>
               <li id="liClientes"><a href="Cliente.php"><i class="fa fa-circle-o"></i> Clientes</a></li>
-              <!-- -->
               <li id="liCreditos"><a href="Credito.php"><i class="fa fa-circle-o"></i> Créditos</a></li>
-              <!-- -->
-              <li id="liVentasCliente"><a href="VentasCliente.php"><i class="fa fa-circle-o"></i> Ventas Por Cliente</a>
-              </li>
-              <li id="liVentasEmpleado"><a href="VentaEmpleado.php"><i class="fa fa-circle-o"></i> Ventas Por
-                  Asesora</a></li>
-              <li id="liVentasEmpleadoDet"><a href="VentaEmpleadoDet.php"><i class="fa fa-circle-o"></i> Ventas Por Ase.
-                  Detalladas</a></li>
+              <li id="liVentasCliente"><a href="VentasCliente.php"><i class="fa fa-circle-o"></i> Ventas Por Cliente</a></li>
+              <li id="liVentasEmpleado"><a href="VentaEmpleado.php"><i class="fa fa-circle-o"></i> Ventas Por Asesora</a></li>
+              <li id="liVentasEmpleadoDet"><a href="VentaEmpleadoDet.php"><i class="fa fa-circle-o"></i> Ventas Por Ase. Detalladas</a></li>
             </ul>
           </li>
 
           <li class="treeview" id="liConsultaCompras">
             <a href="#">
-              <i class="fa fa-pie-chart"></i>
-              <span>Consultas Compras</span>
+              <i class="fa fa-pie-chart"></i><span>Consultas Compras</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li id="liCompraFechas"><a href="ComprasFechas.php"><i class="fa fa-circle-o"></i> Compras Generales</a>
-              </li>
-              <li id="liCompraDetalladas"><a href="ComprasDetalladas.php"><i class="fa fa-circle-o"></i> Compras
-                  Detalladas</a></li>
-              <!-- <li id="liCompraProveedor"><a href="ComprasProveedor.php"><i class="fa fa-circle-o"></i> C. Gen.
-                  Proveedor</a></li>
-              <li id="liComprasDetProveedor"><a href="ComprasDetProveedor.php"><i class="fa fa-circle-o"></i> C. Det.
-                  Proveedor</a></li> -->
- 
-                  <li id="liProductosVencimientos"><a href="ProductosPorVencimiento.php"><i class="fa fa-circle-o"></i> Productos por Vencimiento</a></li>
-
-              <li id="liKardexValorizado"><a href="KardexValorizado.php"><i class="fa fa-circle-o"></i> Kardex
-                  Valorizado</a></li>
-              <li id="liStockArticulos"><a href="StockArticulos.php"><i class="fa fa-circle-o"></i> Stock de
-                  Productos</a></li>
+              <li id="liCompraFechas"><a href="ComprasFechas.php"><i class="fa fa-circle-o"></i> Compras Generales</a></li>
+              <li id="liCompraDetalladas"><a href="ComprasDetalladas.php"><i class="fa fa-circle-o"></i> Compras Detalladas</a></li>
+              <li id="liProductosVencimientos"><a href="ProductosPorVencimiento.php"><i class="fa fa-circle-o"></i> Productos por Vencimiento</a></li>
+              <li id="liKardexValorizado"><a href="KardexValorizado.php"><i class="fa fa-circle-o"></i> Kardex Valorizado</a></li>
+              <li id="liStockArticulos"><a href="StockArticulos.php"><i class="fa fa-circle-o"></i> Stock de Productos</a></li>
               <li id="liKardex"><a href="Kardex.php"><i class="fa fa-circle-o"></i> Kardex </a></li>
               <li id="liTraslados"><a href="Traslados.php"><i class="fa fa-circle-o"></i> Traslados </a></li>
               <li id="liDevolucion"><a href="Devolucion.php"><i class="fa fa-circle-o"></i> Devolucion </a></li>
-              <li id="liSalidaArticulos"><a href="SalidaArticulos.php"><i class="fa fa-circle-o"></i> Salidas de
-                  Productos</a></li>
+              <li id="liSalidaArticulos"><a href="SalidaArticulos.php"><i class="fa fa-circle-o"></i> Salidas de Productos</a></li>
               <li id="liGestionActivos"><a href="Activos.php"><i class="fa fa-circle-o"></i> Gestion de Activos </a></li>
             </ul>
           </li>
 
           <li class="treeview" id="liConsultaVentas">
             <a href="#">
-              <i class="fa fa-pie-chart"></i>
-              <span>Ventas – JV</span>
+              <i class="fa fa-pie-chart"></i><span>Ventas – JV</span>
               <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-              <li id="liVentasFechas"><a href="VentasFechas.php"><i class="fa fa-circle-o"></i> Ventas Generales</a>
-              </li>
-              <li id="liVentasDetalladas"><a href="VentasDetalladas.php"><i class="fa fa-circle-o"></i> Ventas
-                  Detalladas</a></li>
-              <li id="liVentasAnuladas"><a href="VentasAnuladas.php"><i class="fa fa-circle-o"></i> Ventas Anuladas</a>
-              </li>
-              <!-- -->
+              <li id="liVentasFechas"><a href="VentasFechas.php"><i class="fa fa-circle-o"></i> Ventas Generales</a></li>
+              <li id="liVentasDetalladas"><a href="VentasDetalladas.php"><i class="fa fa-circle-o"></i> Ventas Detalladas</a></li>
+              <li id="liVentasAnuladas"><a href="VentasAnuladas.php"><i class="fa fa-circle-o"></i> Ventas Anuladas</a></li>
               <li id="liVentaPend"><a href="VentaPend.php"><i class="fa fa-circle-o"></i> Ventas Pendientes</a></li>
-              <li id="liVentasContado"><a href="VentasContado.php"><i class="fa fa-circle-o"></i> Ventas Contado</a>
-              </li>
-              <li id="liVentasCredito"><a href="VentasCredito.php"><i class="fa fa-circle-o"></i> Ventas Crédito</a>
-              </li>
+              <li id="liVentasContado"><a href="VentasContado.php"><i class="fa fa-circle-o"></i> Ventas Contado</a></li>
+              <li id="liVentasCredito"><a href="VentasCredito.php"><i class="fa fa-circle-o"></i> Ventas Crédito</a></li>
               <li id="liDeudasPendientes"><a href="Deuda.php"><i class="fa fa-circle-o"></i> Deudas Pendientes</a></li>
-              <li id="liEscritorio"><a href="Escritorio.php"><i class="fa fa-circle-o"></i> Estadísticas Por Asesora</a>
-              </li>
+              <li id="liEscritorio"><a href="Escritorio.php"><i class="fa fa-circle-o"></i> Estadísticas Por Asesora</a></li>
             </ul>
           </li>
           <li class="treeview" id="liSeguridad">
@@ -387,45 +321,15 @@
             </a>
             <ul class="treeview-menu">
               <li id="liCopia"><a href="CopiaSeguridad.php"><i class="fa fa-circle-o"></i> Copia de Seguridad</a></li>
-              <li id="liAnulacionVenta"><a href="AnulacionVenta.php"><i class="fa fa-circle-o"></i> Anulacion Admin</a>
-              </li>
-              <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a>
-              </li>
-
-              <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i>Banco</a>
-              </li>
-
-
-              <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i>Cuenta Bancaria</a>
-              </li>
-
-              <li id="liConfiguraTransporte"><a href="Transporte.php"><i class="fa fa-circle-o"></i>Transporte</a>
-              </li>
-
-
-              <li id="liConfiguraTarjeta"><a href="Tarjeta.php"><i class="fa fa-circle-o"></i>Tarjeta</a>
-              </li>
-
-              <li id="liConfiguraPlataforma"><a href="Plataforma.php"><i class="fa fa-circle-o"></i>Plataforma</a>
-              </li>
-
-
-              <li id="liConfiguraMetodo_Pago"><a href="Metodo_Pago.php"><i class="fa fa-circle-o"></i>Metodo de Pago</a>
-              </li>
-
-
-
-
-              <li id="liConfiguraMotivoTraslado"><a href="MotivoTraslado.php"><i class="fa fa-circle-o"></i>Motivo de traslado</a>
-              </li>
-
-
-
-
-
-
-
-
+              <li id="liAnulacionVenta"><a href="AnulacionVenta.php"><i class="fa fa-circle-o"></i> Anulacion Admin</a></li>
+              <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a></li>
+              <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i>Banco</a></li>
+              <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i>Cuenta Bancaria</a></li>
+              <li id="liConfiguraTransporte"><a href="Transporte.php"><i class="fa fa-circle-o"></i>Transporte</a></li>
+              <li id="liConfiguraTarjeta"><a href="Tarjeta.php"><i class="fa fa-circle-o"></i>Tarjeta</a></li>
+              <li id="liConfiguraPlataforma"><a href="Plataforma.php"><i class="fa fa-circle-o"></i>Plataforma</a></li>
+              <li id="liConfiguraMetodo_Pago"><a href="Metodo_Pago.php"><i class="fa fa-circle-o"></i>Metodo de Pago</a></li>
+              <li id="liConfiguraMotivoTraslado"><a href="MotivoTraslado.php"><i class="fa fa-circle-o"></i>Motivo de traslado</a></li>
             </ul>
           </li>
 
@@ -434,7 +338,6 @@
               <i class="fa fa-book"></i> <span> Documentacion</span>
               <small class="label pull-right bg-green">Ayuda</small>
             </a>
-
             <ul class="treeview-menu">
               <li class="treeview" id="liDocVentas">
                 <a href="#">
@@ -448,10 +351,12 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
+                      <li id="liCronogramaReportesTotalesOVT"><a href="CronogramaReportesTotalesOVT.php"><i class="fa fa-circle-o"></i> Cronograma de <br/>Reportes Totales de OVT</a></li>
                       <li id="liFlujogramaChat"><a href="FlujogramaChat.php"><i class="fa fa-circle-o"></i> Flujograma Chat</a></li>
-                      <li id="liInventarioPlantillas"><a href="InventarioPlantillas.php"><i class="fa fa-circle-o"></i> Inventario de Plantillas</a>
-                      </li>
+                      <li id="liInventarioPlantillas"><a href="InventarioPlantillas.php"><i class="fa fa-circle-o"></i> Inventario de Plantillas</a></li>
                       <li id="liListaPrecios"><a href="ListaPrecios.php"><i class="fa fa-circle-o"></i> Listas de Precios</a></li>
+                      <li id="liSpeechCompraWebFarmacosLlamada"><a href="SpeechCompraWebFarmacosLlamada.php"><i class="fa fa-circle-o"></i> Speech de <br/>Compra Web Farmacos<br/>-Llamada</a></li>
+                      <li id="liSpeechCompraWebFarmacosWhatsApp"><a href="SpeechCompraWebFarmacosWhatsApp.php"><i class="fa fa-circle-o"></i> Speech de <br/>Compra Web Farmacos<br/>-Mensaje WhatsApp</a></li>
                     </ul>
                   </li>
     
@@ -462,10 +367,13 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
+                      <li id="liInventarioFormatosOVT"><a href="InventarioFormatosOVT.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OVT</a></li>
                       <li id="liFOOVTGVT001"><a href="FOOVTGVT001.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-001</a></li>
                       <li id="liFOOVTGVT002"><a href="FOOVTGVT002.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-002</a></li>
                       <li id="liFOOVTGVT003"><a href="FOOVTGVT003.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-003</a></li>
                       <li id="liFOOVTGVT004"><a href="FOOVTGVT004.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-004</a></li>
+                      <li id="liFOOVTGVT005"><a href="FOOVTGVT005.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-005</a></li>
+                      <li id="liFOOVTGVT006"><a href="FOOVTGVT006.php"><i class="fa fa-circle-o"></i> FO-OVT-GVT-006</a></li>
                     </ul>
                   </li>
     
@@ -476,10 +384,7 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li id="liInventarioManualesOVT"><a href="InventarioManualesOVT.php"><i class="fa fa-circle-o"></i>
-                        Inventario de <br/>
-                        manuales OVT
-                         </a></li>
+                      <li id="liInventarioManualesOVT"><a href="InventarioManualesOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales OVT</a></li>
                       <li id="liMAOVTGVT001"><a href="MAOVTGVT001.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-001</a></li>
                       <li id="liMAOVTGVT002"><a href="MAOVTGVT002.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-002</a></li>
                       <li id="liMAOVTGVT003"><a href="MAOVTGVT003.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-003</a></li>
@@ -493,6 +398,7 @@
                       <li id="liMAOVTGVT011"><a href="MAOVTGVT011.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-011</a></li>
                       <li id="liMAOVTGVT012"><a href="MAOVTGVT012.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-012</a></li>
                       <li id="liMAOVTGVT013"><a href="MAOVTGVT013.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-013</a></li>
+                      <li id="liMAOVTGVT014"><a href="MAOVTGVT014.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-014</a></li>
                     </ul>
                   </li>
     
@@ -503,14 +409,7 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li id="liInventarioProcedimientosOVT"><a
-                        
-                        style="
-                        inline-size: 150px;
-                        overflow-wrap: break-word;
-                        "
-                        href="InventarioProcedimientosOVT.php"><i class="fa fa-circle-o">
-                          </i>Inventario de <br/>procedimientos OVT</a></li>
+                      <li id="liInventarioProcedimientosOVT"><a href="InventarioProcedimientosOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos OVT</a></li>
                       <li id="liPROVTGVT001"><a href="PROVTGVT001.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-001</a></li>
                       <li id="liPROVTGVT002"><a href="PROVTGVT002.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-002</a></li>
                       <li id="liPROVTGVT003"><a href="PROVTGVT003.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-003</a></li>
@@ -525,14 +424,88 @@
                   </li>
                 </ul>
               </li>
+            
               <li class="treeview" id="liDocMarketing">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. Marketing</span>
                 </a>
                 <ul class="treeview-menu">
 
+                  <li class="treeview" id="liAnexosMkt">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosMkt">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioFormatosOMK"><a href="InventarioFormatosOMK.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OMK</a></li>
+                        <li id="liFOOMKGMK001"><a href="FOOMKGMK001.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-001</a></li>
+                        <li id="liFOOMKGMK002"><a href="FOOMKGMK002.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-002</a></li>
+                        <li id="liFOOMKGMK003"><a href="FOOMKGMK003.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-003</a></li>
+                        <li id="liFOOMKGMK004"><a href="FOOMKGMK004.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-004</a></li>
+                        <li id="liFOOMKGMK005"><a href="FOOMKGMK005.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-005</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManual">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioManualesOVT"><a href="InventarioManualesOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales OVT</a></li>
+                        <li id="liMAOVTGVT001"><a href="MAOVTGVT001.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-001</a></li>
+                        <li id="liMAOVTGVT002"><a href="MAOVTGVT002.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-002</a></li>
+                        <li id="liMAOVTGVT003"><a href="MAOVTGVT003.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-003</a></li>
+                        <li id="liMAOVTGVT004"><a href="MAOVTGVT004.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-004</a></li> 
+                        <li id="liMAOVTGVT005"><a href="MAOVTGVT005.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-005</a></li>
+                        <li id="liMAOVTGVT006"><a href="MAOVTGVT006.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-006</a></li>
+                        <li id="liMAOVTGVT007"><a href="MAOVTGVT007.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-007</a></li>
+                        <li id="liMAOVTGVT008"><a href="MAOVTGVT008.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-008</a></li>
+                        <li id="liMAOVTGVT009"><a href="MAOVTGVT009.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-009</a></li>
+                        <li id="liMAOVTGVT010"><a href="MAOVTGVT010.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-010</a></li>
+                        <li id="liMAOVTGVT011"><a href="MAOVTGVT011.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-011</a></li>
+                        <li id="liMAOVTGVT012"><a href="MAOVTGVT012.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-012</a></li>
+                        <li id="liMAOVTGVT013"><a href="MAOVTGVT013.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-013</a></li>
+                        <li id="liMAOVTGVT014"><a href="MAOVTGVT014.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-014</a></li>
+                      </ul>
+                    </li>
+    
+                  <li class="treeview" id="liProcedimientos">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      <li id="liInventarioProcedimientosOVT"><a href="InventarioProcedimientosOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos OVT</a></li>
+                      <li id="liPROVTGVT001"><a href="PROVTGVT001.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-001</a></li>
+                      <li id="liPROVTGVT002"><a href="PROVTGVT002.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-002</a></li>
+                      <li id="liPROVTGVT003"><a href="PROVTGVT003.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-003</a></li>
+                      <li id="liPROVTGVT004"><a href="PROVTGVT004.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-004</a></li>
+                      <li id="liPROVTGVT005"><a href="PROVTGVT005.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-005</a></li>
+                      <li id="liPROVTGVT006"><a href="PROVTGVT006.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-006</a></li>
+                      <li id="liPROVTGVT007"><a href="PROVTGVT007.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-007</a></li>
+                      <li id="liPROVTGVT008"><a href="PROVTGVT008.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-008</a></li>
+                      <li id="liPROVTGVT009"><a href="PROVTGVT009.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-009</a></li>
+                      <li id="liPROVTGVT010"><a href="PROVTGVT010.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-010</a></li>
+                    </ul>
+                  </li>
                 </ul>
               </li>
+
               <li class="treeview" id="liDocLogistica">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. Logistica</span>
@@ -541,6 +514,7 @@
 
                 </ul>
               </li>
+
               <li class="treeview" id="liDocFinanzas">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. Finanzas</span>
