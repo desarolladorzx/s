@@ -364,8 +364,8 @@ switch ($_GET["op"]) {
 		$stock_min=$_POST['stock_min'];
 
 		$result1 = 'logistica@grupopuma.pe';
-		$result2 = 'almacen@grupopuma.pe';
-		$result3 = 'ventas@grupopuma.pe';
+		$result2 = 'almacesn@grupopuma.pe2';
+		$result3 = 'asdasdas@grupopuma.pe2';
 
 
 		$sucursal = $_SESSION["sucursal"];
