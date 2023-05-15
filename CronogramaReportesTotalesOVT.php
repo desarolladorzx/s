@@ -6,13 +6,15 @@
 
 		if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
-			include "view/FOOVTGVT001.html";
+			include "view/CronogramaReportesTotalesOVT.html";
 		} else {
 			include "view/headeradmin.html";
-			include "view/FOOVTGVT001.html";
+			include "view/CronogramaReportesTotalesOVT.html";
 		}
 
 		include "view/footer.html";
 	} else {
 		header("Location:index.html");
 	}
+		
+
