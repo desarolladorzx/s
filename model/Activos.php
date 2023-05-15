@@ -7,6 +7,16 @@ class Activos
 	{
 	}
 
+
+	public function traerTipoActivo()
+	{
+		global $conexion;
+		$sql = "SELECT * from tipo_activo where activo='1'";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function actualizar_ultimo_empleado($valor){
 		global $conexion;
 		$data = (object) $valor;
@@ -196,10 +206,16 @@ class Activos
 		$sql = "SELECT area,gestion_activo.idgestion_activos, activo.tipo_activo,CONCAT(emp_uso.nombre,' ',emp_uso.apellidos) usado_por , CONCAT(emp_jes.nombre,' ',emp_jes.apellidos) gestionado_por,activo.estado,activo.codigo etiqueta,activo.fecha_finvida,  activo.* 
 		,CAST(fecha_finvida  AS DATE) fecha_finvida
 		,ubicacion
+
+		,tipo_activo.descripcion tipo_activo
+
+		
 		FROM activo
 		left join gestion_activo on gestion_activo.idactivo = activo.idactivo
 		
 		LEFT JOIN empleado emp_uso ON emp_uso.idempleado =gestion_activo.idempleado_uso
+		
+		LEFT join tipo_activo ON tipo_activo.id=activo.tipo_activo
 		
 		
 			LEFT JOIN empleado emp_jes ON emp_jes.idempleado=gestion_activo.idempleado_registro

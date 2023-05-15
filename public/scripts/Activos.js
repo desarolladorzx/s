@@ -32,7 +32,34 @@ var visibleColumns = [
 var tabla;
 
 var ArrayExport;
+
 function init() {
+  getTipoActivo()
+
+  function getTipoActivo() {
+
+    $.ajax({
+      url: "./ajax/ActivosAjax.php?op=traerTipoActivo",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        console.log(rpta);
+        var options_html = '<option value=""></option>';
+
+        rpta.map((e) => {
+          options_html += `<option data-id='${e.id}' value='${e.id}'> ${e.descripcion} </option>`;
+        });
+
+        $(".tipo_activo_select").html(options_html);
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  }
+
+
+  
   function ListadoActivo() {
     let Array = visibleColumns.map((e) => {
       response = {

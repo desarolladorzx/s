@@ -9,10 +9,28 @@ $objActivos = new Activos();
 switch ($_GET["op"]) {
 
 
+
+  case 'traerTipoActivo':
+    require_once "../model/Pedido.php";
+
+    $objActivos = new Activos();
+
+    $query_Tipo = $objActivos->traerTipoActivo();
+
+    $nuevo = array();
+    while ($reg = $query_Tipo->fetch_object()) {
+      $nuevo[] = $reg;
+    }
+
+    echo json_encode($nuevo);
+    
+    break;
+
+
   case 'actualizar_ultimo_empleado':
 
     // print_r($_POST);
-    $idgestion_activo=$_POST["idgestionActivo"];
+    $idgestion_activo = $_POST["idgestionActivo"];
 
     // echo $idgestionActivo;
     $query_Tipo = $objActivos->actualizar_ultimo_empleado($_POST);
@@ -40,10 +58,10 @@ switch ($_GET["op"]) {
 
 
     echo  json_encode($query_Tipo);
-   
+
     return 'se ha modificado exitosamente';
 
-    
+
     break;
   case 'listaDeEmpleadosPorActivos':
     $id = $_GET["id"];
@@ -101,14 +119,14 @@ type="button"
 
   case 'EliminarActivo':
 
-     $query_Tipo = $objActivos->EliminarActivo($_POST['id']);
+    $query_Tipo = $objActivos->EliminarActivo($_POST['id']);
 
     break;
   case 'TrasferirActivo':
 
-     $idgestion_activo = $objActivos->transferirActivo($_POST);
+    $idgestion_activo = $objActivos->transferirActivo($_POST);
 
-     if (!empty($_FILES["fileupload"])) {
+    if (!empty($_FILES["fileupload"])) {
       $file_names = $_FILES['fileupload']['name'];
 
       for ($i = 0; $i < count($file_names); $i++) {
@@ -127,8 +145,8 @@ type="button"
         move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/Activos/" . $new_file_name);
       }
     }
-     echo  json_encode($idgestion_activo);
-    
+    echo  json_encode($idgestion_activo);
+
     break;
   case 'listPorEmpelado':
     // $id=24;
@@ -189,9 +207,9 @@ type="button"
         "2" => $reg->fecha_ingreso,
         "3" => $reg->familia_activo,
         "4" => $reg->tipo_equipo,
-        
-        "5"=>$reg->tipo_activo,
-        "6"=>$reg->ubicacion==1?'Arequipa':'Lima',
+
+        "5" => $reg->tipo_activo,
+        "6" => $reg->ubicacion == 1 ? 'Arequipa' : 'Lima',
         "7" => $reg->unidad,
         "8" => $reg->marca,
         "9" => $reg->modelo,
@@ -205,12 +223,12 @@ type="button"
         "17" => $reg->usado_por,
         "18" => $reg->area,
 
-        
-       
-        "19"=>$reg->gestionado_por,
+
+
+        "19" => $reg->gestionado_por,
         // "18" => $reg->area,
 
-        
+
         "20" => '<button class="btn btn-success" data-toggle="tooltip" 
 				type="button" 
 				onclick="verDetallesActivoUnidad(`' . $reg->idactivo . '`)"  title="Ver Detalle" ><i class="fa fa-eye"></i> </button>
