@@ -41,10 +41,10 @@ switch ($_GET["op"]) {
 
 		//var_dump($genero);exit;
 
-		if ($_POST["cboTipo_Documento"] != "") {
+		if (isset($_POST["cboTipo_Documento"])) {
 			$tipo_documento = $_POST["cboTipo_Documento"];
 		} else {
-			$tipo_documento = $_POST["cboTipo_Documento"];
+			$tipo_documento = $_POST["cboTipo_Documento_edit"];
 		}
 
 		//var_dump($tipo_documento);

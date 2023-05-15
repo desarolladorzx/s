@@ -947,6 +947,13 @@ function buscarPorNumeroDocumento() {
           case "encontrado":
             //$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
 
+          if($('#txtIdEmpleado').val()==17){
+
+            $('#txt_empleado_asignado').prop('disabled', false);
+            
+          }
+
+
             if (rpta["direccion_antigua"]) {
               if (rpta["direccion_antigua"].length > 0) {
                 $("#container_ubicacion_antigua").show();
