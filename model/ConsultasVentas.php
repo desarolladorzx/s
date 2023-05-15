@@ -119,6 +119,10 @@
 				if(pe.direccion_distrito>0,departamento.descripcion,pe.direccion_distrito)departamento 
 				,
 				pe.direccion_distrito as distrito,p.metodo_pago as banco_abono
+				,idpersona
+				,provincia.descripcion provincia
+				,distrito.descripcion distrito
+
 				from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso=di.iddetalle_ingreso
 				inner join articulo a on di.idarticulo=a.idarticulo
 				inner join categoria c on a.idcategoria=c.idcategoria

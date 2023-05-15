@@ -207,7 +207,9 @@ function ListadoVentasDetalladas() {
           { mDataProp: "3" },
           { mDataProp: "4" },
           { mDataProp: "5" },
+
           { mDataProp: "6" },
+
           { mDataProp: "7" },
           { mDataProp: "8" },
           { mDataProp: "9" },
@@ -225,6 +227,9 @@ function ListadoVentasDetalladas() {
           { mDataProp: "21" },
           { mDataProp: "22" },
           { mDataProp: "23" },
+          { mDataProp: "24" },
+          { mDataProp: "25" },
+          
         ],
         ajax: {
           url: "./ajax/ConsultasVentasAjax.php?op=listVentasDetalladas",

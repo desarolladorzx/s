@@ -74,33 +74,47 @@ switch ($_GET["op"]) {
            
           while ($reg = $query_Tipo->fetch_object()) {
 
+
+
+               require_once "../model/Persona.php";
+               $objCliente = new Persona();
+
+               $clasificacion = $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->clasificacion;
+               
+			$ultima_venta= $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->fecha;
+
+
+
                $data[] = array(
                     "0" => $reg->sucursal,
                     "1" => $reg->fecha,
                     "2" => $reg->empleado,
                     "3" => $reg->tipo_cliente,
                     "4" => $reg->antiguedad,
-                    "5" => $reg->cliente,
+                    '5'=>$clasificacion,
+                    "6" => $reg->cliente,
+                    
                     //"3"=>$reg->serie,                         
-                    "6" => $reg->serie . '-' . $reg->numero,
+                    "7" => $reg->serie . '-' . $reg->numero,
                     //"5"=>$reg->impuesto,
-                    "7" => $reg->categoria,
-                    "8" => $reg->articulo,
-                    "9" => $reg->marca,
-                    "10" => $reg->codigo,
-                    "11" => $reg->serie_art,
-                    "12" => $reg->cantidad,
-                    "13" => $reg->precio_venta,
-                    "14" => $reg->descuento,
-                    "15" => $reg->venta_unitario,
-                    "16" => $reg->total,
-                    "17" => $reg->costo,
-                    "18" => $reg->costo_total,
-                    "19" => $reg->ganancia,
-                    "20" => $reg->promocion,
-                    "21" => $reg->departamento,
-                    "22" => $reg->distrito,
-                    "23" => $reg->banco_abono,
+                    "8" => $reg->categoria,
+                    "9" => $reg->articulo,
+                    "10" => $reg->marca,
+                    "11" => $reg->codigo,
+                    "12" => $reg->serie_art,
+                    "13" => $reg->cantidad,
+                    "14" => $reg->precio_venta,
+                    "15" => $reg->descuento,
+                    "16" => $reg->venta_unitario,
+                    "17" => $reg->total,
+                    "18" => $reg->costo,
+                    "19" => $reg->costo_total,
+                    "20" => $reg->ganancia,
+                    "21" => $reg->promocion,
+                    "22" => $reg->departamento,
+                    "23" => $reg->provincia,
+                    "24" => $reg->distrito,
+                    "25" => $reg->banco_abono,
                );
           }
 
