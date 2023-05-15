@@ -364,8 +364,10 @@ switch ($_GET["op"]) {
 		$stock_min=$_POST['stock_min'];
 
 		$result1 = 'logistica@grupopuma.pe';
-		$result2 = 'almacesn@grupopuma.pe2';
-		$result3 = 'asdasdas@grupopuma.pe2';
+		// $result2 = 'almacesn@grupopuma.pe2';
+		// $result2 = 'almacesn@grupopuma.pe2';
+		// $result2 = 'almacesn@grupopuma.pe2';
+		// $result3 = 'asdasdas@grupopuma.pe2';
 
 
 		$sucursal = $_SESSION["sucursal"];
@@ -386,32 +388,32 @@ switch ($_GET["op"]) {
 			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
 		}
 		
-		$mail->Host = "$server";
-		$mail->From = "$email";
-		$mail->FromName = "$sucursal - Almacen";
-		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
-		$mail->addAddress("$result2", "Almacen");
-		$mail->MsgHTML($mensaje);
-		if ($mail->Send()) {
-			echo "Enviado con éxito";
-		} else {
-			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
-		}
+		// $mail->Host = "$server";
+		// $mail->From = "$email";
+		// $mail->FromName = "$sucursal - Almacen";
+		// $mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		// $mail->addAddress("$result2", "Almacen");
+		// $mail->MsgHTML($mensaje);
+		// if ($mail->Send()) {
+		// 	echo "Enviado con éxito";
+		// } else {
+		// 	echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		// }
 
 
-		$mail->Host = "$server";
-		$mail->From = "$email";
-		$mail->FromName = "$sucursal - Ventas";
-		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
-		$mail->addAddress("$result3", "Ventas");
+		// $mail->Host = "$server";
+		// $mail->From = "$email";
+		// $mail->FromName = "$sucursal - Ventas";
+		// $mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		// $mail->addAddress("$result3", "Ventas");
 
-		$mail->MsgHTML($mensaje);
+		// $mail->MsgHTML($mensaje);
 
-		if ($mail->Send()) {
-			echo "Enviado con éxito";
-		} else {
-			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
-		}
+		// if ($mail->Send()) {
+		// 	echo "Enviado con éxito";
+		// } else {
+		// 	echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		// }
 		break;
 
 
