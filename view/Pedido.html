@@ -362,7 +362,7 @@
                             autofocus=""
                           />
                         </div>
-                      </div>
+                    </div>
 
                   <style>
                     .image-preview-container {
@@ -392,6 +392,8 @@
                     }
                   </style>
 
+                   
+
                     <div class="col-lg-10 left">
                       <label style="opacity: 0">Observaciones:</label>
                       <div style="display: flex">
@@ -407,9 +409,43 @@
                         </button>
                       </div>
                     </div>
+
+                    </div>
+                  <div class="row" id="container_imagenes_chat">
+                    <div class="col-lg-2 left">
+                      <label for="inputInscripcion">Imagenes de Chat:</label>
+                      <div class="form-group has-success">
+                        <input
+                          id="imagenChats"
+                          type="file"
+                          class="form-control"
+                          name="imagenChats[]"
+                          autofocus=""
+                          multiple
+                        />
+                      </div>
+                     </div>
+                     <div class="col-lg-10 left">
+                      <label style="opacity: 0">Observaciones:</label>
+                      <div style="display: flex">
+                    
+                        <div class="col" id="image-preview-container_chat" style="
+                                                  display: flex;
+                                                  justify-content: center;
+                                                  align-items: center;
+                                                  flex-wrap: wrap;
+                                                  "></div>
+                        <button type="button" class="btn btn-danger" id="btn_todos_eliminar_imagen_chat">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
                     </div>
 
+
+                  </div>
+
                   <div class="row">
+                    
                     <div class="col-lg-12 left">
                       <div class="form-group">
                         <label>Observaciones: </label>
@@ -705,6 +741,7 @@
               <div class="col-lg-2 left">
                 <label for="inputMarca">Modo de Pago:</label>
                 <div class="form-group has-success">
+                  
                   <select
                     id="cboModPagoDetalles"
                     name="cboModPagoDetalles"
@@ -891,6 +928,16 @@
           </div>
 
           <br /><br />
+
+          <div class="col-sm-12 col-lg-12">
+            <h4 class="modal-title">Imágenes de Chat</h4>
+            <div class="box-footer">
+              <ul
+                class="mailbox-attachments clearfix"
+                id="detalleImagenesChat"
+              ></ul>
+            </div>
+          </div>
 
           <div class="col-sm-12 col-lg-12">
             <h4 class="modal-title">Imágenes</h4>

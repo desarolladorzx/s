@@ -122,6 +122,9 @@ switch ($_GET["op"]) {
         $name=$files['name'];
         */
 
+
+        // print_r($_FILES["fileupload"]);
+        // print_r($_FILES["fileuploadChat"]);
         //var_dump($_POST["metodo_pago"],' - ',$_POST["agencia_envio"],' - ',$_POST["tipo_promocion"]);
         //exit;
 
@@ -199,6 +202,35 @@ switch ($_GET["op"]) {
                         //var_dump($file_name);
                     }
                 }
+
+                if (!empty($_FILES["fileuploadChat"])) {
+
+                    $file_names = $_FILES['fileuploadChat']['name'];
+
+                    for ($i = 0; $i < count($file_names); $i++) {
+
+                        $file_name = $file_names[$i];
+
+                        $parte = explode(".", $file_name);
+                        // echo $parte[0]; // nombre del archivo
+                        // echo $parte[1]; // extension del archivo
+
+                        $codigoInterno = strtotime(date('Y-m-d H:i:s'));
+                        $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
+
+                        // GUARDAR IMAGENES CON EL NUMERO DE COTIZACION
+                        $obj->RegistrarDetalleImagenesChat($idpedido, $idCliente, $idUsuario, $idSucursal, $new_file_name);
+
+                        //$extension = end(explode(".", $file_name));
+                        //$original_file_name = pathinfo($file_name, PATHINFO_FILENAME);
+                        //$file_url = $original_file_name . "-" . date("YmdHis") . "." . $extension;
+                        move_uploaded_file($_FILES["fileuploadChat"]["tmp_name"][$i], "../Files/Chat/" . $new_file_name);
+
+
+                        //var_dump($file_name);
+                    }
+                }
+
             }
 
 
@@ -635,32 +667,31 @@ switch ($_GET["op"]) {
         $reg_total = $query_total->fetch_object();
         echo json_encode($reg_total);
         break;
+    
+        case "GetImagenesChat":
+            require_once "../model/Pedido.php";
+            $objPedido = new Pedido();
+            $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
+            while ($reg = $query_total->fetch_object()) {
+                echo '<li>
+                            <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank">
+                            <span class="mailbox-attachment-icon has-img">
+                            <img src="./Files/Empaquetado/' . $reg->imagen . '">
+                            </span>
+                            </a>
+                            <div class="mailbox-attachment-info">
+                            <a href="./Files/Empaquetado/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+                             
+                            </li>';
+            }
+            break;
+
+
     case "GetImagenesEmpaquetado":
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImagenesEmpaquetado($_REQUEST["idPedido"]);
-
-        //var_dump($query_total->fetch_object());
-        //exit;
-
         while ($reg = $query_total->fetch_object()) {
-
-            // echo '<li>
-            //         <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
-            //         <span class="mailbox-attachment-icon has-img">
-            //         <img src="./Files/Voucher/' . $reg->imagen . '">
-            //         </span>
-            //         </a>
-            //         <div class="mailbox-attachment-info">
-            //         <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-            //          <span class="mailbox-attachment-size"> -
-            //         <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"
-            //         ><i class="fa fa-trash"></i></a>
-            //         </span> */
-            //         </div>
-            //         </li>';
-
-
             echo '<li>
                         <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank">
                         <span class="mailbox-attachment-icon has-img">
@@ -670,11 +701,8 @@ switch ($_GET["op"]) {
                         <div class="mailbox-attachment-info">
                         <a href="./Files/Empaquetado/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
                          
-                        
                         </li>';
         }
-
-
         break;
 
     case "GetImagenes":

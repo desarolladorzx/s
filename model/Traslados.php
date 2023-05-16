@@ -39,11 +39,9 @@ class Traslados
     public function ModificarEstadoTraslado($idtraslado, $estado, $arrayDatos, $descripcion_recepcion, $sucursal_destino_id)
     {
         global $conexion;
-
+        
         $array = json_decode(json_decode($arrayDatos, true));
 
-
-        print_r($estado);
         if ($estado != 'INGRESO') {
             $sql = "UPDATE traslados  SET  estado='$estado',fecha_modificado=CURRENT_TIMESTAMP()
             WHERE idtraslado=$idtraslado";

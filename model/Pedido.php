@@ -721,6 +721,29 @@ order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+
+	public function  RegistrarDetalleImagenesChat($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
+	{
+		global $conexion;
+		$sql = "INSERT INTO detalle_pedido_img(
+			idpedido,
+			idusuario,
+			imagen,
+			estado,
+			tipo_imagen
+			)
+		VALUES(
+			$idpedido, 
+			$idusuario, 
+			'$imagen', 
+			1,
+			'CHAT')";
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 	public function RegistrarDetalleImagenes($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
 	{
 
@@ -770,16 +793,6 @@ order by idpersona DESC ;";
 	public function GetImagenesEmpaquetado($idpedido)
 	{
 		global $conexion;
-		// $sql = "SELECT
-		// 			iddetalle_img AS id,
-		// 			idpedido AS idpedido,
-		// 			idcliente AS idcliente,
-		// 			idusuario AS idusuario,
-		// 			idsucursal AS idsucursal,
-		// 			imagen AS imagen
-		// 	 		from detalle_pedido_img where idpedido = $idpedido AND estado = 1 and tipo_imagen='EMPAQUETADO'";
-
-
 		$sql = "SELECT
 		iddetalle_img AS id,
 		pedido.idpedido AS idpedido,
@@ -794,6 +807,25 @@ order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+
+	public function GetImagenesChat($idpedido)
+	{
+		global $conexion;
+		$sql = "SELECT
+		iddetalle_img AS id,
+		pedido.idpedido AS idpedido,
+		pedido.idcliente AS idcliente,
+		detalle_pedido_img.idusuario AS idusuario,
+		pedido.idsucursal AS idsucursal,
+		imagen AS imagen
+		from detalle_pedido_img 
+		JOIN pedido ON pedido.idpedido=detalle_pedido_img.idpedido
+		where detalle_pedido_img.idpedido = $idpedido AND detalle_pedido_img.estado = 1 and tipo_imagen='CHAT'
+		";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
 
 
 	public function DeleteImagenes($iddetalleimg)

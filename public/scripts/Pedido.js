@@ -9,8 +9,20 @@ var email = "";
 
 let tipo_persona = "";
 var tabla;
+
 function init() {
   // $('#idbtnRegistar').prop('disabled', true);
+
+  $("#container_imagenes_chat").hide();
+  $("#cboModPago").on("change", function () {
+    var selectedValue = $(this).val();
+
+    if (selectedValue == "PAGADO") {
+      $("#container_imagenes_chat").show();
+    } else {
+      $("#container_imagenes_chat").hide();
+    }
+  });
 
   $(".Transportes_select").focus(function () {
     traerDatosTransporte();
@@ -76,11 +88,22 @@ function init() {
 
   $("#btn_todos_eliminar_imagen").hide();
 
+  $("#btn_todos_eliminar_imagen_chat").hide();
+
+
   $("#btn_todos_eliminar_imagen").click(function () {
     $("#image-preview-container").html("");
     $("#image-preview-container-almacen").html("");
-    $("input[type='file']").val("");
+    // $("input[type='file']").val("");
   });
+
+  $("#btn_todos_eliminar_imagen_chat").click(function () {
+    $("#image-preview-container_chat").html("");
+    $("#image-preview-container-almacen").html("");
+    // $("input[type='file']").val("");
+  });
+
+
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
 
@@ -216,6 +239,37 @@ function init() {
     }
   });
 
+
+  $("#imagenChats").on("change", function (e) {
+    $("#btn_todos_eliminar_imagen_chat").show();
+    $("#image-preview-container_chat").html("");
+    const files = this.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        const image = new Image();
+        image.src = reader.result;
+
+        const imagePreview = document.createElement("div");
+        // imagePreview.style.add('width:100px');
+
+        image.classList.add("my-images_preview");
+        image.style.width = "30px";
+        // image.style.minWidth = '300px';
+        // image.style.height = '300px';
+        image.style.objectFit = "fixed";
+        imagePreview.appendChild(image);
+
+        $("#image-preview-container_chat").append(imagePreview);
+      });
+
+      reader.readAsDataURL(files[i]);
+    }
+  });
+
+
   $("#imagenVoucher").on("change", function (e) {
     $("#btn_todos_eliminar_imagen").show();
     $("#image-preview-container").html("");
@@ -248,6 +302,8 @@ function init() {
   function GuardarPedido(e) {
     e.preventDefault();
 
+
+
     if ($("#txtIdCliente").val() != "") {
       if (elementos.length > 0) {
         /*
@@ -270,7 +326,7 @@ function init() {
 
         // alert(detalle);
 
-        $.each($("input[type='file']")[0].files, function (i, file) {
+        $.each($("input[type='file']#imagenVoucher")[0].files, function (i, file) {
           //alert(file)
 
           formData.append("fileupload[]", file);
@@ -307,10 +363,17 @@ function init() {
             "el Campo de Direccion es requerido , por favor actualize los datos del cliente para realizar la venta "
           );
         } else {
+          $("#btn_registrar_cotizacion").prop("disabled", true);
 
-          $('#btn_registrar_cotizacion').prop('disabled',true)
+          if($('#cboModPago').val()=='PAGADO'){
+              
+            $.each($("input[type='file']#imagenChats")[0].files, function (i, file) {
+              formData.append("fileuploadChat[]", file);
+            });
 
-          $.ajax({
+          }else{
+          }
+           $.ajax({
             url: "./ajax/PedidoAjax.php?op=Save",
             data: formData,
             processData: false,
@@ -318,12 +381,7 @@ function init() {
             type: "POST",
 
             success: function (data) {
-
-
-
-
-              $('#btn_registrar_cotizacion').prop('disabled',false)
-
+              $("#btn_registrar_cotizacion").prop("disabled", false);
 
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
@@ -346,6 +404,7 @@ function init() {
               GetPrimerCliente();
             },
           });
+         
         }
 
         // alert(fileName);
@@ -526,6 +585,11 @@ function init() {
     $("#txtIdCliente").val("");
     $("#cboTipoPedido").val("Pedido");
     $("#txtNumeroPed").val("");
+
+
+    $("#imagenVoucher").val("");
+    $("#imagenChats").val("");
+
     // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
     $("#cboMetodoPago").val("");
     $("#cboAgenEnvio").val("");
@@ -983,25 +1047,16 @@ function ConsultarDetallesPed() {
         " <input class='form-control' type='hidden' name='txtIdDetIng' id='txtIdDetIng[]' value='" +
         data[pos][0] +
         "' /></td><td> " +
-     
-        
         data[pos][9] +
         "</td><td>" +
         data[pos][10] +
         "</td><td>" +
         data[pos][6] +
         "</td><td> " +
-
         data[pos][7] +
         "</td><td> " +
         data[pos][11] +
         "</td><td> " +
-
-
-
-       
-
-        
         data[pos][5] +
         "</td><td> <input class='form-control' type='text' name='txtCantidaPed' id='txtCantidaPed[]'  value='" +
         data[pos][3] +
@@ -1015,13 +1070,15 @@ function ConsultarDetallesPed() {
         data[pos][4] +
         "' onchange='calcularTotalPed(" +
         pos +
-        ")' /></td>"+
+        ")' /></td>" +
         "<td> " +
-        "<input class='form-control totalPorProducto' disabled type='number'   value='"+
-        data[pos][12] +"' onchange='calcularTotalPed(" +
+        "<input class='form-control totalPorProducto' disabled type='number'   value='" +
+        data[pos][12] +
+        "' onchange='calcularTotalPed(" +
         pos +
-        ")' />"+"</td> " 
-        +"<td><button type='button' onclick='eliminarDetallePed(" +
+        ")' />" +
+        "</td> " +
+        "<td><button type='button' onclick='eliminarDetallePed(" +
         pos +
         ")' class='btn btn-danger'><i class='fa fa-remove' ></i> </button></td></tr>"
     );
@@ -1063,24 +1120,20 @@ function calcularTotalPed(posi) {
     //Modificar(posi);
   }
   var suma = 0;
-  var suma_producto=0;
-
+  var suma_producto = 0;
 
   var data = JSON.parse(objinit.consultar());
 
-
-
-
   if (posi != null) {
- 
-    $('.totalPorProducto').each(function(index, element){
-
-      console.log(index,posi)
-      if (index==posi)element.value=parseFloat(elementos[posi][3] * (elementos[posi][2] - elementos[posi][4]))
-     })
-   
+    $(".totalPorProducto").each(function (index, element) {
+      console.log(index, posi);
+      if (index == posi)
+        element.value = parseFloat(
+          elementos[posi][3] * (elementos[posi][2] - elementos[posi][4])
+        );
+    });
   }
-  
+
   for (var pos in data) {
     suma += parseFloat(data[pos][3] * (data[pos][2] - data[pos][4]));
   }
@@ -1216,6 +1269,8 @@ function cargarDataPedido(
     $("#ContainerbuttonAgregarImagenAlmacen").show();
   }
   mostrarDetalleImagenesEmpaquetado(idPedido);
+
+  mostrarDetalleImagenesChat(idPedido);
 
   if (tipo_pedido == "Venta") {
     $.getJSON(
@@ -1447,6 +1502,27 @@ function mostrarDetalleImagenesEmpaquetado(idPedido) {
     }
   );
 }
+
+
+function mostrarDetalleImagenesChat(idPedido) {
+  $("#detalleImagenesChat").html("");
+
+  $.post(
+    "./ajax/PedidoAjax.php?op=GetImagenesChat",
+    {
+      idPedido: idPedido,
+    },
+    function (r) {
+      // console.log(r);
+      if (r != "") {
+        $("#detalleImagenesChat").html(r);
+      } else {
+        $("#detalleImagenesChat").html("Sin datos que mostrar...");
+      }
+    }
+  );
+}
+
 
 /*  function eliminarDetalleImagen(id,idpedido) {
 
@@ -1791,7 +1867,7 @@ function AgregarPedCarrito(
     if (confirmarElProducto) {
       let precio_a_vender = precio_venta;
 
-      console.log(tipo_persona == "DISTRIBUIDOR")
+      console.log(tipo_persona == "DISTRIBUIDOR");
       if (tipo_persona == "FINAL") {
         precio_a_vender = precio_venta;
       } else if (tipo_persona == "DISTRIBUIDOR") {
