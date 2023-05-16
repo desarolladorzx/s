@@ -364,22 +364,27 @@ switch ($_GET["op"]) {
 		$stock_min=$_POST['stock_min'];
 
 		$result1 = 'logistica@grupopuma.pe';
+<<<<<<< HEAD
 		// $result2 = 'almacesn@grupopuma.pe2';
 		// $result2 = 'almacesn@grupopuma.pe2';
 		// $result2 = 'almacesn@grupopuma.pe2';
 		// $result3 = 'asdasdas@grupopuma.pe2';
+=======
+/* 		$result2 = 'almacesn@grupopuma.pe2';
+		$result3 = 'asdasdas@grupopuma.pe2'; */
+>>>>>>> 52208b4d0d144c2f413881c0eeec82dc64073e01
 
 
 		$sucursal = $_SESSION["sucursal"];
 		$email = $_SESSION["email"];
 		$mail = new PHPMailer;
 
-		$mensaje="El producto $nombre de la marca $marca_nombre llego a su stock minimo de $stock_min Unidades ALERTA¡¡¡";
+		$mensaje="¡ALERTA! El $nombre de la marca $marca_nombre está volando de nuestros estantes! Solo quedan $stock_min unidades en stock. Esto significa que nuestros clientes podrían experimentar retrasos en la entrega o incluso quedarse sin el producto. ¡Necesitamos reabastecer nuestro inventario lo antes posible! Además, este producto es conocido por su alta calidad y características únicas que lo hacen destacar de otros productos similares en el mercado. ¡Ordene ahora para asegurarse de obtener su $nombre antes de que se agote! ";
 		$mail->Host = "$server";
 		$mail->From = "$email";
-		$mail->FromName = "$sucursal - Logistica";
-		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
-		$mail->addAddress("$result1", "Logistica");
+		$mail->FromName = "$sucursal - Área Logistica";
+		$mail->Subject = "$sucursal - Notificacion de Stock Mimino- Sistema ERP";
+		$mail->addAddress("$result1", "Jefe de Logistica");
 		$mail->MsgHTML($mensaje);
 
 		if ($mail->Send()) {
@@ -388,6 +393,7 @@ switch ($_GET["op"]) {
 			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
 		}
 		
+<<<<<<< HEAD
 		// $mail->Host = "$server";
 		// $mail->From = "$email";
 		// $mail->FromName = "$sucursal - Almacen";
@@ -406,14 +412,42 @@ switch ($_GET["op"]) {
 		// $mail->FromName = "$sucursal - Ventas";
 		// $mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
 		// $mail->addAddress("$result3", "Ventas");
+=======
+		/* $mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Almacen";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result2", "Almacen");
+		$mail->MsgHTML($mensaje);
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		}
+ */
+
+		/* $mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Ventas";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result3", "Ventas");
+>>>>>>> 52208b4d0d144c2f413881c0eeec82dc64073e01
 
 		// $mail->MsgHTML($mensaje);
 
+<<<<<<< HEAD
 		// if ($mail->Send()) {
 		// 	echo "Enviado con éxito";
 		// } else {
 		// 	echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
 		// }
+=======
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		} */
+>>>>>>> 52208b4d0d144c2f413881c0eeec82dc64073e01
 		break;
 
 

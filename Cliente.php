@@ -1,4 +1,4 @@
-ers<?php
+<?php
 
 	session_start();
 
@@ -16,5 +16,3 @@ ers<?php
 	} else {
 		header("Location:index.html");
 	}
-		
-
