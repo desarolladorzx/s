@@ -87,7 +87,7 @@ switch ($_GET["op"]) {
         );
         echo json_encode($results);
         break;
-    
+
     case 'cargarBotones':
         require_once "../model/Correccion_stock.php";
         $objCorreccion_stock = new Correccion_stock();
@@ -105,7 +105,10 @@ switch ($_GET["op"]) {
         $hosp = $objCorreccion_stock->Registrar($_POST);
 
         if (true) {
-            echo "Pedido Registrado";
+            $mensaje="Pedido Registrado";
+            echo $mensaje;
+            $query_prov = $objCorreccion_stock->EnviarMensaje($mensaje);
+
         } else {
             echo "No se ha podido registrar el Pedido";
         }
@@ -121,9 +124,12 @@ switch ($_GET["op"]) {
 
         $motivo_desaprobado = $_POST["descripcion_desaprobado"];
 
-        $query_prov = $objCorreccion_stock->desaprobarCorreccion($idcorreccion_stock,$motivo_desaprobado);
+        $query_prov = $objCorreccion_stock->desaprobarCorreccion($idcorreccion_stock, $motivo_desaprobado);
 
-        echo "se Desaprobo la Correccion de Stock";
+        $mensaje="se Desaprobo la Correccion de Stock";
+
+        echo  $mensaje;
+        $query_prov = $objCorreccion_stock->EnviarMensaje($mensaje);
 
         break;
 
@@ -136,8 +142,10 @@ switch ($_GET["op"]) {
         $idcorreccion_stock = $_POST["idcorreccion_stock"];
         $query_prov = $objCorreccion_stock->anularCorreccion($idcorreccion_stock);
 
-        echo "Se anulo la Correccion de Stock";
+        $mensaje= "Se anulo la Correccion de Stock";
+        echo $mensaje;
 
+        $query_prov = $objCorreccion_stock->EnviarMensaje($mensaje);
         break;
 
 
@@ -150,7 +158,12 @@ switch ($_GET["op"]) {
         $idcorreccion_stock = $_POST["idcorreccion_stock"];
         $query_prov = $objCorreccion_stock->cambiarEstadoConformidad($idcorreccion_stock);
 
-        echo "Se confirmo la Correccion de Stock , pendiente de ser  Aprobado";
+        $mensaje="Se confirmo la Correccion de Stock , pendiente de ser  Aprobado";
+
+        echo $mensaje;
+
+        $query_prov = $objCorreccion_stock->EnviarMensaje($mensaje);
+
 
         break;
     case 'cambiarEstadoAprobacion':
@@ -162,7 +175,10 @@ switch ($_GET["op"]) {
         $idcorreccion_stock = $_POST["idcorreccion_stock"];
         $query_prov = $objCorreccion_stock->cambiarEstadoAprobacion($idcorreccion_stock);
 
-       
+
+     
+
+
         break;
 
     case 'cambiarEstadoAprobacion':

@@ -5,6 +5,35 @@ require "Conexion.php";
 
 class Correccion_stock
 {   
+    public function EnviarMensaje($mensaje){
+        
+        require_once "../PHPMailer/class.phpmailer.php";
+        $server = $_SERVER["HTTP_HOST"];
+        // $idPedido = $_POST["idPedido"];
+
+        $result1 = 'almacen@grupopuma.pe';
+        $result2 = 'logistica@grupopuma.pe2';
+        $result3 = 'administracion@grupopuma.pe2';
+
+        $sucursal = $_SESSION["sucursal"];
+        $email = $_SESSION["email"];
+        $mail = new PHPMailer;
+
+        
+        $mail->Host = "$server";
+        $mail->From = "$email";
+        $mail->FromName = "$sucursal - Área Logistica";
+        $mail->Subject = "$sucursal - Notificacion de Correccion de Stock";
+        $mail->addAddress("$result1", "Almacen");
+        $mail->addAddress("$result2", "Jefe de Logistica");
+        $mail->addAddress("$result3", "Jefe de Administracion");
+        $mail->MsgHTML($mensaje);
+        if ($mail->Send()) {
+           
+        } else {
+            
+        }
+    }
     public function  cargarBotones($idcorreccion_stock){
         $sql='SELECT *  FROM correccion_stock';
     } 
@@ -617,6 +646,8 @@ case
         join unidad_medida  on articulo.idunidad_medida = unidad_medida.idunidad_medida
         
         WHERE detalle_ingreso.stock_actual>0 AND estado_detalle_ingreso='INGRESO'
+        AND ingreso.estado='A'
+        
         GROUP BY articulo.idarticulo ,ingreso.idsucursal
         
         ;";
