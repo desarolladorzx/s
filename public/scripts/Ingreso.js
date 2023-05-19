@@ -633,7 +633,7 @@ function cancelarIngreso(idIngreso) {
 }
 
 function CargarDetalleIngreso(idIngreso) {
-  $("th:nth-child(9)").hide();
+  // $("th:nth-child(9)").hide();
   $.post(
     "./ajax/IngresoAjax.php?op=GetDetalleArticulo",
     { idIngreso: idIngreso },

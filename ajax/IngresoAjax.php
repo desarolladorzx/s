@@ -92,8 +92,10 @@ switch ($_GET["op"]) {
                         <td>'.$reg->descripcion.'</td>
                         <td>'.$reg->stock_ingreso.'</td>
                         <td>'.$reg->precio_compra.'</td>
-                        <td>'.$reg->precio_ventadistribuidor.'</td>
+                        
                         <td>'.$reg->precio_ventapublico.'</td>
+                        <td>'.$reg->precio_ventadistribuidor.'</td>
+                        
 
                         <td>'.$reg->precio_ventasuperdistribuidor.'</td>
                         <td>'.$reg->precio_ventarepresentante.'</td>

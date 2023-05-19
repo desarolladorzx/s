@@ -674,13 +674,13 @@ switch ($_GET["op"]) {
             $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
             while ($reg = $query_total->fetch_object()) {
                 echo '<li>
-                            <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank">
+                            <a href="./Files/Chat/' . $reg->imagen . '" target="_blank">
                             <span class="mailbox-attachment-icon has-img">
-                            <img src="./Files/Empaquetado/' . $reg->imagen . '">
+                            <img src="./Files/Chat/' . $reg->imagen . '">
                             </span>
                             </a>
                             <div class="mailbox-attachment-info">
-                            <a href="./Files/Empaquetado/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+                            <a href="./Files/Chat/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
                              
                             </li>';
             }
