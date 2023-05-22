@@ -296,6 +296,49 @@
 				and pe.idpersona= $idcliente and v.estado='A'
 				order by v.fecha desc
 				";
+			$sql="SELECT *, concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		
+			IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
+		
+			,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+	
+	
+			,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta 
+			
+			,c.direccion_departamento as departamento
+			,v.agencia_envio as transporte
+			,v.metodo_pago as cuenta_abonada
+			,s.razon_social as sucursal
+			,c.num_documento as dni
+			,v.total
+				from pedido p
+							inner join persona c on p.idcliente = c.idpersona
+				inner join venta v on p.idpedido = v.idpedido
+							inner join usuario u on p.idusuario=u.idusuario
+							inner join empleado e on u.idempleado=e.idempleado
+							inner join usuario uv on v.idusuario=uv.idusuario
+							inner join empleado ev on uv.idempleado=ev.idempleado
+							inner join usuario uva on p.idusuario_est=uva.idusuario
+							inner join empleado eva on uva.idempleado=eva.idempleado
+			
+							inner join sucursal s on p.idsucursal=s.idsucursal
+							LEFT JOIN rol r_e ON r_e.r_id=e.idrol
+							LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
+							LEFT JOIN rol r_ev ON r_ev.r_id=ev.idrol
+							
+							LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
+							LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+	
+			left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
+			LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
+			left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+	
+					where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
+					and c.idpersona= $idcliente and v.estado='A'
+					order by v.fecha desc
+	
+
+			";
 			$query = $conexion->query($sql);
 			return $query;
 		}

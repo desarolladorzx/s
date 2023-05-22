@@ -268,10 +268,18 @@ switch ($_GET["op"]) {
           $idCliente = $_REQUEST["idCliente"];
           $fecha_desde = $_REQUEST["fecha_desde"];
           $fecha_hasta = $_REQUEST["fecha_hasta"];
-          $idsucursal = $_REQUEST["idsucursal"];
+          $idsucursal = $_REQUEST["idsucursal"];  
           $data = array();
           $query_Tipo = $objCategoria->ListarVentasCliente( $idCliente, $fecha_desde, $fecha_hasta);
+
+          require_once "../model/Pedido.php";
+          $objPedido = new Pedido();
           while ($reg = $query_Tipo->fetch_object()) {
+
+
+               $query_total = $objPedido->TotalPedido($reg->idpedido);
+			$reg_total = $query_total->fetch_object();
+
                $data[] = array(
                     "0" => $reg->fecha,
                     "1" => $reg->sucursal,
@@ -286,7 +294,9 @@ switch ($_GET["op"]) {
                     /*                          "10"=>$reg->num_ope,
                          "11"=>$reg->fecha_operacion, */
                     "10" => $reg->total,
-                    "11" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg->total . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+                    "11" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\'
+					
+                    )" ><i class="fa fa-eye"></i> </button>&nbsp' .
                          '<a href="./Reportes/exVenta.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                );
           }
