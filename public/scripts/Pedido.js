@@ -14,13 +14,24 @@ function init() {
   // $('#idbtnRegistar').prop('disabled', true);
 
   $("#container_imagenes_chat").hide();
+
   $("#cboModPago").on("change", function () {
     var selectedValue = $(this).val();
 
     if (selectedValue == "PAGADO") {
       $("#container_imagenes_chat").show();
+
+      $("#imagenChats").prop('required', true);
+      $("#imagenVoucher").prop('required', true);
+
+      
+
     } else {
       $("#container_imagenes_chat").hide();
+
+      $("#imagenChats").prop('required', false);
+      $("#imagenVoucher").prop('required', false);
+
     }
   });
 
