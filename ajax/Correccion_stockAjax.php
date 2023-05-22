@@ -140,7 +140,9 @@ switch ($_GET["op"]) {
 
 
         $idcorreccion_stock = $_POST["idcorreccion_stock"];
-        $query_prov = $objCorreccion_stock->anularCorreccion($idcorreccion_stock);
+        $descripcion_anulado= $_POST["descripcion_anulado"];
+        $query_prov = $objCorreccion_stock->anularCorreccion($idcorreccion_stock,$descripcion_anulado);
+
 
         $mensaje= "Se anulo la Correccion de Stock";
         echo $mensaje;

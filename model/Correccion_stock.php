@@ -1,8 +1,6 @@
 <?php
 
 require "Conexion.php";
-
-
 class Correccion_stock
 {   
     public function EnviarMensaje($mensaje){
@@ -53,12 +51,13 @@ class Correccion_stock
         $conexion->query($sql);
     }
 
-    public function anularCorreccion($idcorreccion_stock)
+    public function anularCorreccion($idcorreccion_stock,$motivo_cancelado_conformidad)
     {
         global $conexion;
 
         $sql = "UPDATE correccion_stock  SET  estado='CONFORMIDAD CANCELADA',
         idempleado_cancelado_conformidad='" . $_SESSION["idempleado"] . "',
+        motivo_cancelado_conformidad='$motivo_cancelado_conformidad',
         fecha_modificacion=CURRENT_TIMESTAMP(),
         fecha_cancelado_conformidad=CURRENT_TIMESTAMP()
 
@@ -94,14 +93,12 @@ class Correccion_stock
 
         $sql = "SELECT *  from correccion_stock_detalle where idcorreccion_stock=$idcorreccion_stock";
 
-
         $query_prov = $conexion->query($sql);
 
         $nuevo = array();
         while ($reg = $query_prov->fetch_object()) {
             $nuevo[] = $reg;
         }
-
 
         foreach ($nuevo as  $comprobacion_reducir) {
             if ($comprobacion_reducir->tipo == 'reducir') {
@@ -123,11 +120,6 @@ class Correccion_stock
                 }
             }
         }
-
-
-
-
-
 
         if ($error == false) {
            
@@ -165,18 +157,10 @@ class Correccion_stock
                 $arrayPorSucursalTipo[$sucursal][$tipo][] = $elemento;
             }
 
-
-
-
             $idproveedor = 7048;
             $impuesto = 18;
 
-
-
-
             foreach ($arrayPorSucursalTipo as $nombreSucursal => $sucursal) {
-
-
 
                 if (isset($sucursal['añadir'])) {
                     if (count($sucursal['añadir']) > 0) {
@@ -228,8 +212,6 @@ class Correccion_stock
                             $impuesto,
                             $total
                     )";
-
-
                         $conexion->query($sql);
                         $idingreso = $conexion->insert_id;
 
@@ -240,8 +222,6 @@ class Correccion_stock
 
                             $articulo = $conexion->query($sql)->fetch_object();
 
-
-
                             $sql = "SELECT SUM(stock_actual) stock from detalle_ingreso
                             join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
                             where idarticulo=$datosAnadir->idproducto and idsucursal=$idsucursal 
@@ -251,8 +231,6 @@ class Correccion_stock
                             $rpta_sql_suma_ingreso_sucursal_inicial = $conexion->query($sql)->fetch_object()->stock;
 
                             $rpta_sql_suma_ingreso_sucursal_inicial_not_null = ($rpta_sql_suma_ingreso_sucursal_inicial !== null) ? $rpta_sql_suma_ingreso_sucursal_inicial : 0;
-
-
 
                             $sql =
                                 "INSERT into detalle_ingreso(
@@ -331,13 +309,7 @@ class Correccion_stock
                 if (isset($sucursal['reducir'])) {
                     if (count($sucursal['reducir']) > 0) {
 
-
-
                         foreach ($sucursal['reducir'] as $tipo => $datosReducir) {
-
-
-
-
 
                             $idsucursal = $nombreSucursal;
 
@@ -350,14 +322,10 @@ class Correccion_stock
 
                             $stock = $conexion->query($sql)->fetch_object()->stock;
 
-
-
                             if ($stock >= $datosReducir->cantidad) {
 
                                 $valorTotal = $datosReducir->cantidad;
                                 $index = 0;
-
-
 
                                 $sql = "SELECT *  from articulo WHERE idarticulo =$datosReducir->idproducto";
                                 $articulo = $conexion->query($sql)->fetch_object();
@@ -407,11 +375,6 @@ class Correccion_stock
                                     $detallePedido = 0;
 
                                     $kardexValor = $stock_actual - $valorTotal > 0 ? $valorTotal : $stock_actual;
-
-
-                                    echo $stock . ' ' . $stock_actual . ' ' . $kardexValor . ' ';
-
-
 
                                     $sqlKardex = "INSERT INTO kardex(
                                         id_sucursal,
@@ -536,16 +499,12 @@ correccion_stock.estado correccion_stock_estado
 
                 $stock_anterior = $conexion->query($sql_stock_anterior)->fetch_object()->stock;
 
-
-
                 $stock_anterior_not_null = ($stock_anterior !== null) ? $stock_anterior : 0;
-
 
                 $sql = "UPDATE detalle_ingreso  SET stock_ingreso='$valor->cantidadRecibida' ,
                 stock_actual='$valor->cantidadRecibida' ,
                 estado_detalle_ingreso='$estado' WHERE iddetalle_ingreso=$valor->iddetalle_ingreso";
                 $conexion->query($sql);
-
 
                 $sql_stock_actual = "SELECT SUM(stock_actual) stock from detalle_ingreso
                 join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
@@ -553,17 +512,13 @@ correccion_stock.estado correccion_stock_estado
                 and ingreso.estado='A'
                 and detalle_ingreso.estado_detalle_ingreso='INGRESO'
                 ";
-
                 $stock_actual = $conexion->query($sql_stock_actual)->fetch_object()->stock;
 
                 $stock_actual_not_null = ($stock_actual !== null) ? $stock_actual : 0;
 
-
                 // SE ACTUALIZA EL KARDEX 
 
                 $detallePedido = 0;
-
-                print_r($valor);
                 $sqlKardex = "INSERT INTO kardex(
                     id_sucursal,
                     fecha_emision,
