@@ -1,6 +1,26 @@
 <?php
 session_start();
 switch ($_GET["op"]) {
+
+    case 'TraerUltimoCodigo':
+        require_once "../model/Correccion_stock.php";
+        
+        $objPedido = new Correccion_stock();
+
+        $query_prov = $objPedido->TraerUltimoCodigo();
+
+        if(isset($query_prov->fetch_object()->correlativo))
+        {
+            echo json_encode($query_prov->fetch_object()->correlativo);
+            
+        }else{
+            echo json_encode(
+                'FO-OLG-INV-16-2023'
+            );
+        }
+        ;
+
+        break;
     case 'TraerDatos':
         require_once "../model/Correccion_stock.php";
         $objPedido = new Correccion_stock();
@@ -199,11 +219,8 @@ switch ($_GET["op"]) {
         $objCorreccion_stock = new Correccion_stock();
         $query_Tipo = $objCorreccion_stock->TableCorreccionStock();
 
-
         $data = array();
         $i = 1;
-
-
         // echo $_SESSION["idempleado"];
 
         $idrol = $objCorreccion_stock->getEmpleado($_SESSION["idempleado"])->fetch_object()->idrol;

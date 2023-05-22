@@ -152,7 +152,7 @@ function verDetallesCorreccion_stock(val) {
       console.log(correccion_stock);
 
       let traslado;
-      console.log(correccion_stock);
+
       $("#info_fecha_registro").val(correccion_stock.fecha_ingreso);
       $("#info_fecha_conformidad").val(correccion_stock.fecha_conformidad);
       $("#info_fecha_aprobacion").val(correccion_stock.fecha_aprobacion);
@@ -484,7 +484,31 @@ function guardarcantidadPrecioCompra(pos, valor) {
   elementos[pos][6] = cantidadCorreccionStock[pos].value;
 }
 
+
+function getCodigoCorreccion_stock(){
+
+  $.getJSON(
+    "./ajax/Correccion_stockAjax.php?op=TraerUltimoCodigo",
+    function (r) {
+      
+      $('#codigo_correccion').val(r)
+    })
+}
+
 function init() {
+
+  $("#btnNuevoCorrecion_stock").click(VerFormPedido_Nuevo);
+
+  function VerFormPedido_Nuevo() {
+    $("#VerFormPed").show(); // Mostramos el formulario
+    $("#btnNuevoCorrecion_stock").hide(); // ocultamos el boton nuevo
+    $("#btnGenerarVenta").hide();
+    $("#VerListado").hide(); // ocultamos el listado
+    getCodigoCorreccion_stock();
+  }
+
+
+
   $("#containerGuardarCambiarEstado").hide();
   $("#container_descripcion_recepcion").hide();
   $("#estadoTraslado").change(function (e) {
