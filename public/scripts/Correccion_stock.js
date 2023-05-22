@@ -168,16 +168,29 @@ function verDetallesCorreccion_stock(val) {
 
       $("#VerFormCorreccion_stockDetalles").show();
 
-      $('#info_estado_correccion').val(correccion_stock.correccion_stock_estado)
-      $('#container_descripcion_correccion').hide()
+      $("#info_estado_correccion").val(
+        correccion_stock.correccion_stock_estado
+      );
+      $("#container_descripcion_desapruebo").hide();
 
-      if(correccion_stock.correccion_stock_estado=='DESAPROBADO'){
-        $('#info_descripcion_desaprobado').val(
+      if (correccion_stock.correccion_stock_estado == "DESAPROBADO") {
+        $("#info_descripcion_desaprobado").val(
           correccion_stock.motivo_desaprobado
-        )
+        );
 
-        $('#container_descripcion_correccion').show()
+        $("#container_descripcion_desapruebo").show();
       }
+
+      if (correccion_stock.correccion_stock_estado == "CONFORMIDAD CANCELADA") {
+        $("#info_descripcion_rechaso").val(
+          correccion_stock.motivo_cancelado_conformidad
+        );
+
+        $("#container_descripcion_correccion").show();
+      }
+
+
+      
       $(".btn_guardar_correccion_stock").hide();
       cargarBotones(
         correccion_stock.correccion_stock_estado,
@@ -192,70 +205,65 @@ function verDetallesCorreccion_stock(val) {
 let dataCorreccion_stock;
 
 function desaprobarCorreccion(idcorreccion_stock) {
-
   var result = window.confirm("¿Deseas confirmar la correccion de stock?");
   if (result) {
+    var descripcion_desaprobado = prompt(
+      "Ingrese el motivo por el cual Desea Desaprobar la Correccion"
+    );
 
-
-    var descripcion_desaprobado = prompt("Ingrese el motivo por el cual Desea Desaprobar la correccion");
-      
-    if(descripcion_desaprobado.length>20){
+    if (descripcion_desaprobado.length > 20) {
       $.post(
         "./ajax/Correccion_stockAjax.php?op=desaprobarCorreccion",
         {
           idcorreccion_stock: idcorreccion_stock,
-          descripcion_desaprobado:descripcion_desaprobado
+          descripcion_desaprobado: descripcion_desaprobado,
         },
         function (r) {
           $("#body_Correccion_stock").show();
           swal("Mensaje del Sistema", r, "success");
 
-          $(".container_butones_estado").html('')
+          $(".container_butones_estado").html("");
 
           $("#VerFormCorreccion_stockDetalles").hide();
           ListadoCorreccionStock();
-          $('#tblDetallePedidoStock_Elementos td').html('')
+          $("#tblDetallePedidoStock_Elementos td").html("");
         }
       );
-
-    }else{
-
-      alert('el motivo debe tener mas caracteres ')
+    } else {
+      alert("el motivo debe tener mas caracteres ");
     }
-
-
-   
-
-
   }
-  
 }
 
 function anularCorreccion(idcorreccion_stock) {
-
   var result = window.confirm("¿Deseas confirmar la correccion de stock?");
   if (result) {
-
-    $.post(
-      "./ajax/Correccion_stockAjax.php?op=anularCorreccion",
-      {
-        idcorreccion_stock: idcorreccion_stock,
-      },
-      function (r) {
-        $("#body_Correccion_stock").show();
-        $(".container_butones_estado").html('')
-
-        $("#VerFormCorreccion_stockDetalles").hide();
-        ListadoCorreccionStock();
-        $('#tblDetallePedidoStock_Elementos td').html('')
-        swal("Mensaje del Sistema", r, "success");
-      }
+    var descripcion_anulado = prompt(
+      "Ingrese el motivo por el cual Desea Anular la Correccion"
     );
 
-  }else{
+    if (descripcion_anulado.length > 20) {
+      $.post(
+        "./ajax/Correccion_stockAjax.php?op=anularCorreccion",
+        {
+          idcorreccion_stock: idcorreccion_stock,
+          descripcion_anulado: descripcion_anulado,
+        },
+        function (r) {
+          $("#body_Correccion_stock").show();
+          $(".container_butones_estado").html("");
 
+          $("#VerFormCorreccion_stockDetalles").hide();
+          ListadoCorreccionStock();
+          $("#tblDetallePedidoStock_Elementos td").html("");
+          swal("Mensaje del Sistema", r, "success");
+        }
+      );
+    } else {
+      alert("el motivo debe tener mas caracteres");
+    }
+  } else {
   }
- 
 }
 
 function cambiarEstadoConformidad(idcorreccion_stock) {
@@ -267,16 +275,14 @@ function cambiarEstadoConformidad(idcorreccion_stock) {
         idcorreccion_stock: idcorreccion_stock,
       },
       function (r) {
-       
-        $(".container_butones_estado").html('')
+        $(".container_butones_estado").html("");
 
         $("#body_Correccion_stock").show();
 
         $("#VerFormCorreccion_stockDetalles").hide();
         ListadoCorreccionStock();
 
-
-        $('#tblDetallePedidoStock_Elementos td').html('')
+        $("#tblDetallePedidoStock_Elementos td").html("");
 
         swal("Mensaje del Sistema", r, "success");
       }
@@ -293,11 +299,10 @@ function cambiarEstadoAprobacion(idcorreccion_stock) {
         idcorreccion_stock: idcorreccion_stock,
       },
       function (r) {
-
         swal("Mensaje del Sistema", r, "success");
-        $('#tblDetallePedidoStock_Elementos td').html('')
+        $("#tblDetallePedidoStock_Elementos td").html("");
 
-        $(".container_butones_estado").html('')
+        $(".container_butones_estado").html("");
 
         $("#body_Correccion_stock").show();
 
@@ -433,7 +438,6 @@ function guardarfechaVencimientoProducto(pos, valor) {
 
 function eliminarDetalleTraslado(pos) {
   pos > -1 && elementos.splice(parseInt(pos), 1);
-
   ConsultarDetalles();
   ConsultarDetallesTraslado();
 }
@@ -575,7 +579,7 @@ function init() {
 
           success: function (data) {
             console.log(data);
-           
+
             // delete this.elementos;
             location.href = "Correccion_stock.php";
             //$("#tblDetallePedido tbody").html("");
@@ -633,9 +637,7 @@ function init() {
 
     if (elementos.length > 0) {
       if ($("#motivo_de_Correccion_stock").val() != "") {
-        $("#btn_guardar_correccion_stock").prop("disabled", false);
-
-        console.log(detalle);
+        $(".btn_guardar_correccion_stock").prop("disabled", false);
 
         $.ajax({
           url: "./ajax/Correccion_stockAjax.php?op=Save",
@@ -649,7 +651,7 @@ function init() {
 
             location.href = "Correccion_stock.php";
 
-            $("#btn_guardar_correccion_stock").prop("disabled", true);
+            $(".btn_guardar_correccion_stock").prop("disabled", true);
           },
 
           error: function (data) {
