@@ -88,7 +88,6 @@ switch ($_GET["op"]) {
         $idSucursal = $_SESSION["idsucursal"];
         $idCliente = $_POST["idcliente"];
 
-
         $idUsuario = $_SESSION["idusuario"];
 
         if (!empty($_FILES["fileupload"])) {

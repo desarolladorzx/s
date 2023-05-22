@@ -1489,6 +1489,7 @@ function mostrarDetalleImagenes(idPedido) {
       idPedido: idPedido,
     },
     function (r) {
+  
       if (r != "") {
         $("#detalleImagenes").html(r);
       } else {

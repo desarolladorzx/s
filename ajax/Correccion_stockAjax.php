@@ -19,7 +19,7 @@ switch ($_GET["op"]) {
             
         }else{
             echo json_encode(
-                'FO-OLG-INV-16-2023'
+                'FO-OLG-INV-16-001-2023'
             );
         }
         ;
@@ -36,8 +36,27 @@ switch ($_GET["op"]) {
             $nuevo[] = $reg;
         }
         echo  json_encode($nuevo[0]);
+
         break;
 
+
+    case 'CargarImagenesCorreccionStock':
+        require_once "../model/Correccion_stock.php";
+
+        $objPedido = new Correccion_stock();
+        $query_total = $objPedido->GetImagenes($_REQUEST["idcorreccion_stock"]);
+
+        while ($reg = $query_total->fetch_object()) {
+            echo '<li>
+                    <a href="./Files/CorreccionStock/' . $reg->imagen . '" target="_blank">
+                    <span class="mailbox-attachment-icon has-img">
+                    <img src="./Files/CorreccionStock/' . $reg->imagen . '">
+                    </span>
+                    </a>
+                    <div class="mailbox-attachment-info">
+                    <a href="./Files/CorreccionStock/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+                    </li>';
+        }
         break;
     case 'modificarEstadoTraslado':
         require_once "../model/Correccion_stock.php";
@@ -126,7 +145,26 @@ switch ($_GET["op"]) {
 
         $objCorreccion_stock = new Correccion_stock();
 
-        $hosp = $objCorreccion_stock->Registrar($_POST);
+        $idcorreccion_stock = $objCorreccion_stock->Registrar($_POST);
+
+
+    
+        if(!empty($_FILES["fileupload"])) {
+            $file_names = $_FILES['fileupload']['name'];
+
+            for ($i = 0; $i < count($file_names); $i++) {
+                $file_name = $file_names[$i];
+
+                $parte = explode(".", $file_name);
+
+                $codigoInterno = strtotime(date('Y-m-d H:i:s'));
+                $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
+
+                $objCorreccion_stock->RegistrarDetalleImagenesCorreccion_stock($idcorreccion_stock, $new_file_name);
+
+                move_uploaded_file($_FILES["fileupload"]["tmp_name"][$i], "../Files/CorreccionStock/" . $new_file_name);
+            }
+        }
 
         if (true) {
             $mensaje="Pedido Registrado";
@@ -200,10 +238,6 @@ switch ($_GET["op"]) {
 
         $idcorreccion_stock = $_POST["idcorreccion_stock"];
         $query_prov = $objCorreccion_stock->cambiarEstadoAprobacion($idcorreccion_stock);
-
-
-     
-
 
         break;
 

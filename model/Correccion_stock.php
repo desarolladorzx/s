@@ -3,6 +3,38 @@
 require "Conexion.php";
 class Correccion_stock
 {   
+    public function GetImagenes($id){
+        global $conexion;
+        $sql="SELECT * from correccion_stock_img where idcorreccion_stock=$id ";
+
+
+        $query = $conexion->query($sql);
+		return $query;
+
+    }
+    public function  RegistrarDetalleImagenesCorreccion_stock($idcorreccion_stock, $new_file_name)
+	{
+		global $conexion;
+		$sql = "INSERT INTO correccion_stock_img(
+			idcorreccion_stock,
+			imagen,
+			fecha,
+			estado,
+			tipo_imagen
+			)
+		VALUES(
+			$idcorreccion_stock, 
+			'$new_file_name', 
+			current_date(), 
+			1,
+			'CORRECCION')";
+        
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
+    
     public function TraerUltimoCodigo(){
         global $conexion;
 
@@ -445,7 +477,7 @@ correccion_stock.estado correccion_stock_estado
         CONCAT(e3.nombre,' ',e3.apellidos) empleado_aprobacion ,
         COUNT(correccion_stock_detalle.idcorreccion_stock) cantidad
         ,
-        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) codigo_serie
+        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT),'-',YEAR(CURRENT_DATE())) codigo_serie
         FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
         left JOIN empleado e2 ON e2.idempleado=correccion_stock.idempleado_conformidad
@@ -645,11 +677,7 @@ case
             $correlativo='001';
         }else{
             $correlativo="00$response->idcorrelativo";
-
-
         };
-
-
         $sql =
             "INSERT into correccion_stock(
                     descripcion,
@@ -670,12 +698,16 @@ case
                     '16',
                     '$correlativo'
                 )";
-        echo $sql;
+ 
+         
         $conexion->query($sql);
 
         $idcorreccion_stock = $conexion->insert_id;
 
+        $value=$idcorreccion_stock;
         $conexion->autocommit(true);
+
+   
 
         $array =  $Vvalor->detalle;
       
@@ -683,8 +715,7 @@ case
 
             $elemento = explode(",", $string);
 
-      
-
+            
             $sql = "INSERT INTO correccion_stock_detalle(
                     idcorreccion_stock,
                     idproducto,
@@ -704,15 +735,10 @@ case
                 '$elemento[4]',
                 '$elemento[7]'
             )";
-
-            
-          
-
-
             $conexion->query($sql);
-            // $sql = "UPDATE detalle_ingreso  SET  estado_detalle_ingreso='$estado' WHERE iddetalle_ingreso=$valor->iddetalle_ingreso";
-            // $conexion->query($sql);
         }
+
+        return $value;
     }
 
 

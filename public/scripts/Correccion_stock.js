@@ -140,6 +140,24 @@ function cargarBotones(estado, id) {
     }
   );
 }
+
+
+function CargarImagenesCorreccionStock(idcorreccion_stock){
+  $.post(
+    "./ajax/Correccion_stockAjax.php?op=CargarImagenesCorreccionStock",
+    {
+      idcorreccion_stock: idcorreccion_stock,
+    },
+    function (r) {
+      console.log(r);
+      if (r != "") {
+        $("#detalleImagenesCorreccionStock").html(r);
+      } else {
+        $("#detalleImagenesCorreccionStock").html("Sin datos que mostrar...");
+      }
+    }
+    )
+}
 function verDetallesCorreccion_stock(val) {
   $.getJSON(
     "./ajax/Correccion_stockAjax.php?op=TraerDatos",
@@ -150,8 +168,6 @@ function verDetallesCorreccion_stock(val) {
       correccion_stock = r;
 
       console.log(correccion_stock);
-
-      let traslado;
 
       $("#info_fecha_registro").val(correccion_stock.fecha_ingreso);
       $("#info_fecha_conformidad").val(correccion_stock.fecha_conformidad);
@@ -195,7 +211,7 @@ function verDetallesCorreccion_stock(val) {
         $("#container_descripcion_correccion").show();
       }
 
-
+CargarImagenesCorreccionStock(correccion_stock.idcorreccion_stock)
       
       $(".btn_guardar_correccion_stock").hide();
       cargarBotones(
@@ -504,7 +520,6 @@ function getCodigoCorreccion_stock(){
 function init() {
 
   $("#btnNuevoCorrecion_stock").click(VerFormPedido_Nuevo);
-
   function VerFormPedido_Nuevo() {
     $("#VerFormPed").show(); // Mostramos el formulario
     $("#btnNuevoCorrecion_stock").hide(); // ocultamos el boton nuevo
@@ -655,6 +670,12 @@ function init() {
     for (var i = 0; i < detalle.length; i++) {
       formData.append("detalle[]", detalle[i]);
     }
+
+    $.each($("input[type='file']#archivos_correccion_stock")[0].files, function (i, file) {
+      //alert(file)
+
+      formData.append("fileupload[]", file);
+    });
 
     formData.append(
       "motivo_de_Correccion_stock",
