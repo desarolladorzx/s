@@ -9,10 +9,10 @@ class Correccion_stock
         $sql="SELECT *,CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) correlativo,
         
         correlativo idcorrelativo from correccion_stock ORDER BY idcorreccion_stock desc LIMIT 1;";
+        
+        return  $conexion->query($sql);
 
-        $correlativo= $conexion->query($sql);
 
-        return $correlativo;
     }
     public function EnviarMensaje($mensaje){
         
@@ -444,7 +444,8 @@ correccion_stock.estado correccion_stock_estado
         CONCAT(e2.nombre,' ',e2.apellidos) empleado_conformidad ,
         CONCAT(e3.nombre,' ',e3.apellidos) empleado_aprobacion ,
         COUNT(correccion_stock_detalle.idcorreccion_stock) cantidad
-
+        ,
+        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) codigo_serie
         FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
         left JOIN empleado e2 ON e2.idempleado=correccion_stock.idempleado_conformidad
