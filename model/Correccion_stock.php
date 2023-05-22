@@ -3,6 +3,17 @@
 require "Conexion.php";
 class Correccion_stock
 {   
+    public function TraerUltimoCodigo(){
+        global $conexion;
+
+        $sql="SELECT *,CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) correlativo,
+        
+        correlativo idcorrelativo from correccion_stock ORDER BY idcorreccion_stock desc LIMIT 1;";
+
+        $correlativo= $conexion->query($sql);
+
+        return $correlativo;
+    }
     public function EnviarMensaje($mensaje){
         
         require_once "../PHPMailer/class.phpmailer.php";
@@ -424,16 +435,17 @@ class Correccion_stock
 
     public function TraerDatos($idcorreccion_stock)
     {
+        // CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) correlativo
         global $conexion;
         $sql = "SELECT * ,
-
 correccion_stock.estado correccion_stock_estado
 ,
         CONCAT(e1.nombre,' ',e1.apellidos) empleado_creacion , 
         CONCAT(e2.nombre,' ',e2.apellidos) empleado_conformidad ,
         CONCAT(e3.nombre,' ',e3.apellidos) empleado_aprobacion ,
         COUNT(correccion_stock_detalle.idcorreccion_stock) cantidad
-         FROM correccion_stock
+
+        FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
         left JOIN empleado e2 ON e2.idempleado=correccion_stock.idempleado_conformidad
         left JOIN empleado e3 ON e3.idempleado=correccion_stock.idempleado_aprobacion
@@ -458,7 +470,7 @@ correccion_stock.estado correccion_stock_estado
         $sql = "SELECT * from empleado
         where idempleado=$idEmpleado
        ";
-
+        
         $query = $conexion->query($sql);
         return $query;
     }
@@ -615,17 +627,28 @@ case
 
     public function Registrar($val)
     {
-
-
-
+        global $conexion;
         $fechaActual = date("Ymd");
         $num1 = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
         $codigo = $fechaActual . $num1;
 
         $Vvalor = json_decode(json_encode($val));
-        global $conexion;
         $sw = true;
+
+
+        $correlativo='';
+        $response=$this->TraerUltimoCodigo()->fetch_object();
+
+        if(!$response){
+            $correlativo='001';
+        }else{
+            $correlativo="00$response->idcorrelativo";
+
+
+        };
+
+
         $sql =
             "INSERT into correccion_stock(
                     descripcion,
@@ -633,15 +656,20 @@ case
                     fecha_modificacion,
                     idempleado_creacion,
                     estado,
-                    codigo_inventario
-                ) values (
+                    codigo,
+                    registro_solicitud,
+                    correlativo
+                ) values( 
                     '$Vvalor->motivo_de_Correccion_stock',
                     CURRENT_TIMESTAMP(),
                     CURRENT_TIMESTAMP(),
                     '" . $_SESSION["idempleado"] . "',
                     'ESPERA',
-                     '$codigo'
+                    'FO-OLG-INV',
+                    '16',
+                    '$correlativo'
                 )";
+        echo $sql;
         $conexion->query($sql);
 
         $idcorreccion_stock = $conexion->insert_id;
@@ -697,6 +725,8 @@ case
         COUNT(correccion_stock_detalle.idcorreccion_stock) cantidad
 
         ,correccion_stock.idcorreccion_stock id
+        ,
+        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) codigo_inventario
 
          FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
@@ -730,15 +760,10 @@ case
     public function GetDetalleCorreccionStock($idcorreccion_stock)
     {
         global $conexion;
-
         $sql = "SELECT * ,articulo.nombre Articulo
-
         ,correccion_stock_detalle.cantidad Cantidad
-
         ,correccion_stock_detalle.precio_compra Precio_compra
-
         ,correccion_stock_detalle.fecha_vencimiento Fecha_vencimiento
-
         FROM  correccion_stock_detalle
         JOIN articulo ON articulo.idarticulo=correccion_stock_detalle.idproducto
         where idcorreccion_stock=$idcorreccion_stock
