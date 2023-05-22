@@ -1239,6 +1239,8 @@ function cargarDataPedido(
   $("#hdn_tipo_promocion").val(aproba_venta);
   $("#txtClientePed").val(metodo_pago);
 
+
+  $('.input-container_hidden').hide()
   $("#cboModPagoDetalles").val(empleado);
   $("#textObservacionesDetalles").val(aproba_pedido);
 
