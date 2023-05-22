@@ -9,8 +9,12 @@ switch ($_GET["op"]) {
 
         $query_prov = $objPedido->TraerUltimoCodigo();
 
+        
         if(isset($query_prov->fetch_object()->correlativo))
         {
+        $query_prov = $objPedido->TraerUltimoCodigo();
+
+
             echo json_encode($query_prov->fetch_object()->correlativo);
             
         }else{

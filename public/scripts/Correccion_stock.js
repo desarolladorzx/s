@@ -171,6 +171,12 @@ function verDetallesCorreccion_stock(val) {
       $("#info_estado_correccion").val(
         correccion_stock.correccion_stock_estado
       );
+
+      $("#info_codigo").val(
+        correccion_stock.codigo_serie
+      );
+
+
       $("#container_descripcion_desapruebo").hide();
 
       if (correccion_stock.correccion_stock_estado == "DESAPROBADO") {
