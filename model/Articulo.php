@@ -102,10 +102,19 @@ class articulo
 	public function Listar()
 	{
 		global $conexion;
-		$sql = "select a.*, c.nombre as categoria, um.nombre as unidadMedida , m.nombre as marca
-			from articulo a inner join categoria c on a.idcategoria = c.idcategoria
-			inner join marca m on a.idmarca = m.idmarca 
-			inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida where a.estado = 'A' order by idarticulo desc";
+		$sql = "SELECT a.*, c.nombre AS categoria, um.nombre AS unidadMedida, m.nombre AS marca,
+		SUM(detalle_ingreso.stock_actual) AS sumTotal,
+		SUM(CASE WHEN ingreso.idsucursal = 1 THEN detalle_ingreso.stock_actual ELSE 0 END) AS totalSucursal1,
+		SUM(CASE WHEN ingreso.idsucursal = 2 THEN detalle_ingreso.stock_actual ELSE 0 END) AS totalSucursal2
+	FROM articulo a
+	INNER JOIN categoria c ON a.idcategoria = c.idcategoria
+	INNER JOIN detalle_ingreso ON detalle_ingreso.idarticulo = a.idarticulo
+	INNER JOIN marca m ON a.idmarca = m.idmarca
+	INNER JOIN unidad_medida um ON a.idunidad_medida = um.idunidad_medida
+	INNER JOIN ingreso ON detalle_ingreso.idingreso = ingreso.idingreso
+	WHERE a.estado = 'A'
+	GROUP BY a.idarticulo
+	ORDER BY idarticulo DESC;";
 		$query = $conexion->query($sql);
 		return $query;
 	}

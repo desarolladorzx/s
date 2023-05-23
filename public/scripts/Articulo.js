@@ -103,6 +103,8 @@ function ListadoArticulos(){
                     {   "mDataProp": "6"},
 					{   "mDataProp": "7"},
 					{   "mDataProp": "8"},
+					{   "mDataProp": "9"},
+					{   "mDataProp": "10"},
 					
 
         	],"ajax": 

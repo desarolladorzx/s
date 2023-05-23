@@ -122,9 +122,11 @@
 					"3"=>$reg->unidadMedida,
 					"4"=>$reg->nombre,
 					"5"=>$reg->descripcion,
-					"7"=>$reg->stock_min,
-					"6"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
-					"8"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
+					"6"=>$reg->stock_min,
+					"7"=>$reg->totalSucursal1,
+					"8"=>$reg->totalSucursal2,
+					"9"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
+					"10"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
 					,\''.$reg->stock_min.'\'
 					,\''.$reg->precio_compra.'\'
 					,\''.$reg->precio_final.'\'
