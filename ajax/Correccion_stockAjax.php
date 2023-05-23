@@ -251,6 +251,8 @@ switch ($_GET["op"]) {
         $query_prov = $objCorreccion_stock->cambiarEstadoAprobacion($idcorreccion_stock);
 
         break;
+
+    
     case "ListTipoCorreccion_stock":
 
         require_once "../model/Correccion_stock.php";

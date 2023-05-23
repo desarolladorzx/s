@@ -6,6 +6,26 @@ var detalleIngresos = new Array();
 var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
+
+traerContainer_btn_nueva_correccion_stock()
+function traerContainer_btn_nueva_correccion_stock(){
+  $.getJSON(
+    "./ajax/Correccion_stockAjax.php?op=cargarBotones",
+    {
+      idcorreccion_stock: 1,
+    },
+    function(r){
+      console.log([4 ,6,2].includes(Number(r)))
+      if(true){
+        let html=`  <button class="btn btn-primary" id="btnNuevoCorrecion_stock">
+        <i class="fa fa-file"></i>Nueva Solicitud de Correccion de Stock
+      </button>`
+        $('#container_btn_nueva_correccion_stock').html(html)
+      }
+
+    }
+    )
+}
 function ListadoCorreccionStock() {
   var tabla = $("#tblCorreccion_stock")
     .dataTable({
@@ -57,7 +77,7 @@ function AgregarPedCarritoCorreccion_stock(
     );
     // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
 
-    if (data.length >= 1) {
+   
       let rptaSearch = data.find(
         (element) => element[0] == idarticulo && element[1] == idsucursal
       );
@@ -72,9 +92,7 @@ function AgregarPedCarritoCorreccion_stock(
     }
 
     ConsultarDetallesTraslado();
-  } else {
-    bootbox.alert("No se puede agregar al detalle. No tiene stock");
-  }
+  
 }
 function cargarBotones(estado, id) {
   $.getJSON(
@@ -141,8 +159,7 @@ function cargarBotones(estado, id) {
   );
 }
 
-
-function CargarImagenesCorreccionStock(idcorreccion_stock){
+function CargarImagenesCorreccionStock(idcorreccion_stock) {
   $.post(
     "./ajax/Correccion_stockAjax.php?op=CargarImagenesCorreccionStock",
     {
@@ -156,7 +173,7 @@ function CargarImagenesCorreccionStock(idcorreccion_stock){
         $("#detalleImagenesCorreccionStock").html("Sin datos que mostrar...");
       }
     }
-    )
+  );
 }
 function verDetallesCorreccion_stock(val) {
   $.getJSON(
@@ -188,10 +205,7 @@ function verDetallesCorreccion_stock(val) {
         correccion_stock.correccion_stock_estado
       );
 
-      $("#info_codigo").val(
-        correccion_stock.codigo_serie
-      );
-
+      $("#info_codigo").val(correccion_stock.codigo_serie);
 
       $("#container_descripcion_desapruebo").hide();
 
@@ -211,8 +225,8 @@ function verDetallesCorreccion_stock(val) {
         $("#container_descripcion_correccion").show();
       }
 
-CargarImagenesCorreccionStock(correccion_stock.idcorreccion_stock)
-      
+      CargarImagenesCorreccionStock(correccion_stock.idcorreccion_stock);
+
       $(".btn_guardar_correccion_stock").hide();
       cargarBotones(
         correccion_stock.correccion_stock_estado,
@@ -504,19 +518,16 @@ function guardarcantidadPrecioCompra(pos, valor) {
   elementos[pos][6] = cantidadCorreccionStock[pos].value;
 }
 
-
-function getCodigoCorreccion_stock(){
-
+function getCodigoCorreccion_stock() {
   $.getJSON(
     "./ajax/Correccion_stockAjax.php?op=TraerUltimoCodigo",
     function (r) {
-      
-      $('#codigo_correccion').val(r)
-    })
+      $("#codigo_correccion").val(r);
+    }
+  );
 }
 
 function init() {
-
   $("#btnNuevoCorrecion_stock").click(VerFormPedido_Nuevo);
   function VerFormPedido_Nuevo() {
     $("#VerFormPed").show(); // Mostramos el formulario
@@ -525,8 +536,6 @@ function init() {
     $("#VerListado").hide(); // ocultamos el listado
     getCodigoCorreccion_stock();
   }
-
-
 
   $("#containerGuardarCambiarEstado").hide();
   $("#container_descripcion_recepcion").hide();
@@ -669,11 +678,14 @@ function init() {
       formData.append("detalle[]", detalle[i]);
     }
 
-    $.each($("input[type='file']#archivos_correccion_stock")[0].files, function (i, file) {
-      //alert(file)
+    $.each(
+      $("input[type='file']#archivos_correccion_stock")[0].files,
+      function (i, file) {
+        //alert(file)
 
-      formData.append("fileupload[]", file);
-    });
+        formData.append("fileupload[]", file);
+      }
+    );
 
     formData.append(
       "motivo_de_Correccion_stock",
