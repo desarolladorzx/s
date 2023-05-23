@@ -335,10 +335,12 @@
 	
 					where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
 					and c.idpersona= $idcliente and v.estado='A'
-					order by v.fecha desc
+					order by v.fecha ASC
 	
 
 			";
+
+	
 			$query = $conexion->query($sql);
 			return $query;
 		}

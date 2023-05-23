@@ -459,6 +459,7 @@ function ListadoVentasCliente() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
+        "order": [[ 0, "desc" ]],
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         aoColumns: [
           { mDataProp: "0" },

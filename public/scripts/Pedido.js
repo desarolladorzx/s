@@ -128,7 +128,7 @@ function init() {
 
     tipo_persona = opt.attr("tipo_persona");
 
-    $("#btnBuscarCliente").prop("disabled", true);
+    // $("#btnBuscarCliente").prop("disabled", true);
 
     // $('#btnBuscarCliente').hide()
     // for (var i = 0; i < columnas.length; i++) {
