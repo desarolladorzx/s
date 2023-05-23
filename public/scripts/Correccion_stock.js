@@ -423,9 +423,7 @@ function ConsultarDetallesTraslado() {
         <option value="añadir">Añadir</option>
         <option value="reducir">Reducir</option>
     </select>` +
-        "</td><td><input class='form-control' type='number' name='cantidadCorreccionStock' required id='cantidadCorreccionStock[]' min='1' max='" +
-        data[pos][2] +
-        "' value='" +
+        "</td><td><input class='form-control' type='number' name='cantidadCorreccionStock' required id='cantidadCorreccionStock[]' min='1' value=" +
         data[pos][5] +
         "'  onchange='guardarcantidadCorreccionStock(" +
         pos +
@@ -465,16 +463,21 @@ function eliminarDetalleTraslado(pos) {
 }
 
 function guardartipoCorreccion_stock(pos, valor) {
-  var cantidadCorreccionStock = document.getElementsByName(
+  var tipoCorreccion_stock = document.getElementsByName(
     "tipoCorreccion_stock"
   );
 
-  elementos[pos][4] = cantidadCorreccionStock[pos].value;
+  elementos[pos][4] = tipoCorreccion_stock[pos].value;
 
   var cantidadPrecioCompra = document.getElementsByName("cantidadPrecioCompra");
   var fechaVencimientoProducto = document.getElementsByName(
     "fechaVencimientoProducto"
   );
+
+  var cantidadCorreccionStock = document.getElementsByName(
+    "cantidadCorreccionStock"
+  );
+
 
   if (elementos[pos][4] == "reducir") {
     cantidadPrecioCompra[pos].disabled = true;
@@ -482,10 +485,17 @@ function guardartipoCorreccion_stock(pos, valor) {
 
     cantidadPrecioCompra[pos].value = 0;
     elementos[pos][6] = 0;
+
+
+
+
   } else {
     cantidadPrecioCompra[pos].disabled = false;
     fechaVencimientoProducto[pos].disabled = false;
 
+ 
+    
+  
     cantidadPrecioCompra[pos].value = elementos[pos][6];
   }
 }
@@ -667,13 +677,19 @@ function init() {
 
     var detalle = JSON.parse(JSON.stringify(elementos));
 
+
+    console.log(detalle);
+    let error=false;
     for (var i = 0; i < detalle.length; i++) {
       formData.append("detalle[]", detalle[i]);
+
+   
     }
+
 
     $.each($("input[type='file']#archivos_correccion_stock")[0].files, function (i, file) {
       //alert(file)
-
+      
       formData.append("fileupload[]", file);
     });
 
@@ -700,7 +716,7 @@ function init() {
           success: function (data) {
             swal("Mensaje del Sistema", data, "success");
 
-            location.href = "Correccion_stock.php";
+            // location.href = "Correccion_stock.php";
 
             $(".btn_guardar_correccion_stock").prop("disabled", true);
           },
