@@ -286,7 +286,7 @@ switch ($_GET["op"]) {
                     "2" => $reg->empleado,
                     "3" => $reg->cliente,
                     "4" => $reg->dni,
-                    "5" => $reg->celular . ' - ' . $reg->telefono_2,
+                    "5" => $reg->celular.' - '.$reg->telefono_2,
                     "6" => $reg->ticket,
                     "7" => $reg->departamento,
                     "8" => $reg->transporte,
