@@ -6,6 +6,26 @@ var detalleIngresos = new Array();
 var detalleTraerCantidad = new Array();
 elementos = new Array();
 var email = "";
+
+traerContainer_btn_nueva_correccion_stock()
+function traerContainer_btn_nueva_correccion_stock(){
+  $.getJSON(
+    "./ajax/Correccion_stockAjax.php?op=cargarBotones",
+    {
+      idcorreccion_stock: 1,
+    },
+    function(r){
+      console.log([4 ,6,2].includes(Number(r)))
+      if(true){
+        let html=`  <button class="btn btn-primary" id="btnNuevoCorrecion_stock">
+        <i class="fa fa-file"></i>Nueva Solicitud de Correccion de Stock
+      </button>`
+        $('#container_btn_nueva_correccion_stock').html(html)
+      }
+
+    }
+    )
+}
 function ListadoCorreccionStock() {
   var tabla = $("#tblCorreccion_stock")
     .dataTable({

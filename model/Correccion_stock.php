@@ -596,6 +596,7 @@ correccion_stock.estado correccion_stock_estado
         }
     }
 
+
     public function ListarDetalleIngresos($sucursal)
     {
         global $conexion;
