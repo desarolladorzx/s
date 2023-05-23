@@ -169,6 +169,7 @@ class Correccion_stock
             echo "Se aprobo la correccion de Stock";
 
             $sql = "UPDATE correccion_stock  SET  estado='APROBADO',
+            registro_ajuste=17,
         idempleado_aprobacion='" . $_SESSION["idempleado"] . "',
         fecha_aprobacion=CURRENT_TIMESTAMP(),
         fecha_modificacion=CURRENT_TIMESTAMP()
@@ -477,7 +478,7 @@ correccion_stock.estado correccion_stock_estado
         CONCAT(e3.nombre,' ',e3.apellidos) empleado_aprobacion ,
         COUNT(correccion_stock_detalle.idcorreccion_stock) cantidad
         ,
-        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT),'-',YEAR(CURRENT_DATE())) codigo_serie
+        CONCAT(codigo,'-',IFNULL(registro_ajuste, registro_solicitud),'-','00',cast(correlativo as INT),'-',YEAR(CURRENT_DATE())) codigo_serie
         FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
         left JOIN empleado e2 ON e2.idempleado=correccion_stock.idempleado_conformidad
@@ -676,7 +677,9 @@ case
         if(!$response){
             $correlativo='001';
         }else{
-            $correlativo="00$response->idcorrelativo";
+            $vale=$response->idcorrelativo+1;
+
+            $correlativo="00$vale";
         };
         $sql =
             "INSERT into correccion_stock(
@@ -753,7 +756,7 @@ case
 
         ,correccion_stock.idcorreccion_stock id
         ,
-        CONCAT(codigo,'-',registro_solicitud,'-','00',cast(correlativo as INT)+1,'-',YEAR(CURRENT_DATE())) codigo_inventario
+        CONCAT(codigo,'-',IFNULL(registro_ajuste, registro_solicitud),'-','00',cast(correlativo as INT),'-',YEAR(CURRENT_DATE())) codigo_inventario
 
          FROM correccion_stock
         left JOIN empleado e1 ON e1.idempleado=correccion_stock.idempleado_creacion
