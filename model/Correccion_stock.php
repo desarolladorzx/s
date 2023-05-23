@@ -599,57 +599,37 @@ correccion_stock.estado correccion_stock_estado
     public function ListarDetalleIngresos($sucursal)
     {
         global $conexion;
-        $sql = "SELECT distinct di.iddetalle_ingreso,
-        case 
-		WHEN  di.estado_detalle_ingreso='SALIDA' THEN 'En transito'
-		WHEN  di.estado_detalle_ingreso='EN TRANSITO' THEN 'En transito'
-		WHEN  di.estado_detalle_ingreso='ALMACEN OPERADOR' THEN 'Almacen Transportista'
-		WHEN  di.estado_detalle_ingreso='INGRESO' THEN 'Disponible'		
-	END	
-		AS estado_n
-			,SUM(stock_actual) suma_total
-			,i.idsucursal
-		
-	,
         
-        di.estado_detalle_ingreso, di.stock_actual, a.nombre as Articulo, di.codigo,
-		   di.serie, di.precio_ventapublico, a.imagen, i.fecha,c.nombre as marca, um.nombre as presentacion,di.idarticulo AS idarticulo 
-			from ingreso i inner join detalle_ingreso di on di.idingreso = i.idingreso
-			inner join articulo a on di.idarticulo = a.idarticulo
-			inner join categoria c on a.idcategoria = c.idcategoria
-         inner join unidad_medida um on a.idunidad_medida = um.idunidad_medida
-			where i.estado = 'A'  and di.stock_actual > 0 
-			
-			GROUP BY idarticulo ,i.idsucursal
-			
-			order by fecha asc";
-        $sql="SELECT *,
+        $sql="	SELECT 		
+        'disponible' estado_n,
 
-case 
-		WHEN  detalle_ingreso.estado_detalle_ingreso='SALIDA' THEN 'En transito'
-		WHEN  detalle_ingreso.estado_detalle_ingreso='EN TRANSITO' THEN 'En transito'
-		WHEN  detalle_ingreso.estado_detalle_ingreso='ALMACEN OPERADOR' THEN 'Almacen Transportista'
-		WHEN  detalle_ingreso.estado_detalle_ingreso='INGRESO' THEN 'Disponible'		
-	END	
-		AS estado_n,
-        SUM(detalle_ingreso.stock_actual) suma_total
-                , unidad_medida.nombre as presentacion
-                , categoria.nombre as marca
-                , articulo.nombre as Articulo
-                ,ingreso.idsucursal 
-        FROM detalle_ingreso 
-        
-        
-        
-        inner join ingreso  on ingreso.idingreso = detalle_ingreso.idingreso
-        join articulo on detalle_ingreso.idarticulo = articulo.idarticulo 
-        join categoria  on articulo.idcategoria = categoria.idcategoria
-        join unidad_medida  on articulo.idunidad_medida = unidad_medida.idunidad_medida
-        
-        WHERE detalle_ingreso.stock_actual>0 AND estado_detalle_ingreso='INGRESO'
-        AND ingreso.estado='A'
-        
-        GROUP BY articulo.idarticulo ,ingreso.idsucursal
+        sum(di.stock_actual) as suma_total
+        , u.nombre as presentacion
+    , c.nombre as marca
+    , a.nombre as Articulo
+    ,i.idsucursal 
+    ,di.serie
+    ,a.imagen
+    ,di.codigo
+    ,a.nombre as Articulo
+    ,di.serie
+    ,di.precio_ventapublico
+    ,di.idarticulo
+    ,di.iddetalle_ingreso 
+    ,di.estado_detalle_ingreso
+        from articulo a 
+        inner join detalle_ingreso di on di.idarticulo=a.idarticulo
+        inner join marca m on a.idmarca=m.idmarca
+        inner join ingreso i on di.idingreso=i.idingreso
+        inner join sucursal s on i.idsucursal=s.idsucursal
+        inner join categoria c on a.idcategoria=c.idcategoria
+        inner join unidad_medida u on a.idunidad_medida=u.idunidad_medida
+        where  
+            -- s.idsucursal='2' and 
+        i.estado='A'
+        and di.estado_detalle_ingreso='INGRESO'
+        group by a.idarticulo ,i.idsucursal
+        order by a.nombre asc
         
         ;";
 
