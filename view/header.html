@@ -636,26 +636,47 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
 });
 }
 
-
-function NuevoAcceder(idsucursal,razon_social){
+function NuevoAcceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, superadmin, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl) {
 
 //alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
 
 var data = {
-  
-    idsucursal : idsucursal,
-    razon_social:razon_social
+  idusuario: idusuario,
+  idsucursal: idsucursal,
+  idempleado: idempleado,
+  empleado: empleado,
+  tipo_documento: tipo_documento,
+  tipo_usuario: tipo_usuario,
+  num_documento: num_documento,
+  direccion: direccion,
+  telefono: telefono,
+  foto: foto,
+  logo: logo,
+  email: email,
+  login: login,
+  razon_social: razon_social,
+  mnu_almacen: mnu_almacen,
+  mnu_compras: mnu_compras,
+  mnu_ventas: mnu_ventas,
+  mnu_mantenimiento: mnu_mantenimiento,
+  mnu_seguridad: mnu_seguridad,
+  mnu_consulta_compras: mnu_consulta_compras,
+  mnu_consulta_ventas: mnu_consulta_ventas,
+  mnu_admin: mnu_admin,
+  mnu_documentacion_ev: mnu_documentacion_ev,
+  mnu_documentacion_jv: mnu_documentacion_jv,
+  mnu_documentacion_ja: mnu_documentacion_ja,
+  mnu_documentacion_jl: mnu_documentacion_jl,
+  mnu_admin: mnu_admin,
+  superadmin: superadmin
 };
 
 //console.log(data)
 
-
-
-$.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
+$.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
   location.reload()
 });
 }
-
 
     var idempleado = JSON.parse('<?php echo json_encode($_SESSION["idempleado"]); ?>');
         
@@ -909,7 +930,7 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
 
             setTimeout(() => {
               notificacionEspera();
-            }, 15000);
+            }, 60000);
 
            
             let pedidosPendientes = JSON.parse(data);
@@ -919,15 +940,10 @@ $.post("ajax/UsuarioAjax.php?op=CambiarSucursal", data, function(r){
                 let fecha_pedido = new Date(e.fecha);
 
                 let fecha_aprovacion = new Date(e.fecha_apro_coti);
-
                 let msDifference = hora_actual - fecha_pedido;
                 let minutes = Math.floor(msDifference / 1000 / 60);
-
-
                 let msDifference_aprovacion = hora_actual - fecha_aprovacion;
-                let minutes_aprovacion = Math.floor(msDifference / 1000 / 60);
-
-              
+                let minutes_aprovacion = Math.floor(msDifference_aprovacion / 1000 / 60);
 
                 if(minutes_aprovacion > 5){
                   if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
