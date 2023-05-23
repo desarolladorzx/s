@@ -248,7 +248,7 @@ function desaprobarCorreccion(idcorreccion_stock) {
 
           $("#VerFormCorreccion_stockDetalles").hide();
           ListadoCorreccionStock();
-          $("#tblDetallePedidoStock_Elementos td").html("");
+          $("#tblDetallePedidoStock_Elementos tr:not(:first)").html("");
         }
       );
     } else {
@@ -277,7 +277,7 @@ function anularCorreccion(idcorreccion_stock) {
 
           $("#VerFormCorreccion_stockDetalles").hide();
           ListadoCorreccionStock();
-          $("#tblDetallePedidoStock_Elementos td").html("");
+          $("#tblDetallePedidoStock_Elementos tr:not(:first)").html("");
           swal("Mensaje del Sistema", r, "success");
         }
       );
@@ -304,7 +304,7 @@ function cambiarEstadoConformidad(idcorreccion_stock) {
         $("#VerFormCorreccion_stockDetalles").hide();
         ListadoCorreccionStock();
 
-        $("#tblDetallePedidoStock_Elementos td").html("");
+        $("#tblDetallePedidoStock_Elementos tr:not(:first)").html("");
 
         swal("Mensaje del Sistema", r, "success");
       }
@@ -322,7 +322,7 @@ function cambiarEstadoAprobacion(idcorreccion_stock) {
       },
       function (r) {
         swal("Mensaje del Sistema", r, "success");
-        $("#tblDetallePedidoStock_Elementos td").html("");
+        $("#tblDetallePedidoStock_Elementos tr:not(:first)").html("");
 
         $(".container_butones_estado").html("");
 

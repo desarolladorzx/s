@@ -1,7 +1,6 @@
 <?php
-
 	session_start();
-
+	
 	if(isset($_SESSION["idusuario"]) && $_SESSION["mnu_ventas"] == 1){
 		
 		if ($_SESSION["superadmin"] != "S") {
