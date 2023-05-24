@@ -650,18 +650,19 @@
                   <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="form-group has-success">
                       <label class="control-label" for="inputWarning">
-                        Teléfono (*):
+                        Teléfono (* 9 Digitos):
                       </label>
 
                       <input
                         id="txtTelefono"
-                        type="number"
-                        maxlength="20"
+                        type="text"
+                        maxlength="9"
                         name="txtTelefono"
                         required=""
                         class="form-control"
-                        placeholder="Ingrese el teléfono"
+                        placeholder="Ingrese el teléfono nacional"
                         autofocus=""
+                        pattern="[0-9]{9}"
                       />
                       <span
                         class="help-block containerListaTelefonoCoincidenciasText"
@@ -674,13 +675,14 @@
                       <label>Teléfono 2 (*):</label>
                       <input
                         id="txtTelefono_2"
-                        type="number"
-                        maxlength="20"
+                        type="text"
+                        maxlength="9"
                         name="txtTelefono_2"
                         class="form-control"
                         required=""
-                        placeholder="Ingrese el 2do teléfono - o colocar O"
+                        placeholder="Ingrese el 2do teléfono nacional,internacional o colocar O"
                         autofocus=""
+                        pattern="[0-9]{13}"
                       />
                       <span
                         class="help-block containerListaTelefonoCoincidenciasText"
@@ -1073,7 +1075,6 @@
                 <th>Tipo de Cliente</th>
                 <th>Estado de Cliente</th>
                 <th>Ultima Fecha de venta</th>
-
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
@@ -1086,7 +1087,6 @@
                 <th>EV Responsable</th>
                 <th>Estado de Cliente</th>
                 <th>12312</th>
-
                 <th>Opciones</th>
               </tr>
             </thead>
@@ -1099,7 +1099,6 @@
                 <th>Tipo de Cliente</th>
                 <th>Estado de Cliente</th>
                 <th>Ultima Fecha de venta</th>
-
                 <th>Nombre</th>
                 <th>Documento</th>
                 <th>Teléfono</th>
@@ -1116,9 +1115,33 @@
               </tr>
             </tfoot>
 
+
             <tbody id="cliente"></tbody>
           </table>
+
+          <div id="info">
+            <p><br/><strong>Para Cliente final:</strong></p>
+            <ul>
+              <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+              <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
+              <li><strong>Perdido:</strong> mayor igual que 120 días</li>
+            </ul>
+            <p><strong>Para Cliente distribuidor y superdistribuidor</strong>:</p>
+            <ul>
+              <li><strong>Activo:</strong> última compra, menor que 30 días</li>
+              <li><strong>Inactivo:</strong> última compra, mayor igual que 30 días y menor que 60 días.</li>
+              <li><strong>Perdido:</strong> última compra, mayor igual que 60 días</li>
+            </ul>
+            <p><strong>Para Cliente representante:</strong></p>
+            <ul>
+              <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+              <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 90 días.</li>
+              <li><strong>Perdido:</strong> última compra, mayor igual que 90 días.</li>
+            </ul>
+          </div>
+
         </div>
+
         <!--Fin-Contenido-->
       </div>
     </div>
