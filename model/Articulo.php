@@ -112,9 +112,10 @@ class articulo
 	INNER JOIN marca m ON a.idmarca = m.idmarca
 	INNER JOIN unidad_medida um ON a.idunidad_medida = um.idunidad_medida
 	INNER JOIN ingreso ON detalle_ingreso.idingreso = ingreso.idingreso
-	WHERE a.estado = 'A'
+	WHERE a.estado = 'A' AND ingreso.estado='A' AND detalle_ingreso.estado_detalle_ingreso='INGRESO'
 	GROUP BY a.idarticulo
-	ORDER BY idarticulo DESC;";
+	ORDER BY idarticulo DESC;
+	";
 		$query = $conexion->query($sql);
 		return $query;
 	}
