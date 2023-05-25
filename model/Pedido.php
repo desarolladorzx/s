@@ -4,6 +4,18 @@ require "Conexion.php";
 class Pedido
 {
 
+	public function  GetNombreFEFO($idpedido){
+		global $conexion;
+		
+		$sql="SELECT  *  from   detalle_pedido 
+		join articulo on articulo.idarticulo =detalle_pedido.idarticulo
+		 where idpedido=$idpedido and omision_fefo='true'";
+		
+
+		return 	$conexion->query($sql);
+
+
+	}
 	public function  buscarCliente($q)
 	{
 		global $conexion;
@@ -104,7 +116,7 @@ class Pedido
 			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
 						VALUES($idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(),'$numero','A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega')";
 			$sql = "INSERT INTO pedido(idcliente, idusuario, idsucursal, tipo_pedido, fecha,  numero, estado, metodo_pago, agencia_envio, tipo_promocion,modo_pago,observacion,tipo_entrega)
-
+	
 
 			SELECT $idcliente, $idusuario, $idsucursal, '$tipo_pedido', CURRENT_TIMESTAMP(), concat(10,max(idpedido)+1),'A','$metodo_pago','$agencia_envio','$tipo_promocion','$modo_pago','$observacion','$tipo_entrega'
 			 FROM pedido;";
@@ -122,8 +134,8 @@ class Pedido
 
 				// print_r($array);
 
-				$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo)
-											VALUES($idpedido, '" . $array[0] . "', '" . $array[3] . "', '" . $array[2] . "', '" . $array[4] . "', '" . $array[8] . "')";
+				$sql_detalle = "INSERT INTO detalle_pedido(idpedido, iddetalle_ingreso, cantidad, precio_venta, descuento, idarticulo ,omision_fefo)
+											VALUES($idpedido, '" . $array[0] . "', '" . $array[3] . "', '" . $array[2] . "', '" . $array[4] . "', '" . $array[8] . "', '" . $array[13] . "')";
 
 				$conexion->query($sql_detalle) or $sw = false;
 
@@ -723,6 +735,28 @@ order by idpersona DESC ;";
 	}
 
 
+	public function  RegistrarDetalleImagenesFEFO($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
+	{
+		global $conexion;
+		$sql = "INSERT INTO detalle_pedido_img(
+			idpedido,
+			idusuario,
+			imagen,
+			estado,
+			tipo_imagen
+			)
+		VALUES(
+			$idpedido, 
+			$idusuario, 
+			'$imagen', 
+			1,
+			'FEFO')";
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function  RegistrarDetalleImagenesChat($idpedido, $idcliente, $idusuario, $idsucursal, $imagen)
 	{
 		global $conexion;
@@ -803,6 +837,25 @@ order by idpersona DESC ;";
 		from detalle_pedido_img 
 		JOIN pedido ON pedido.idpedido=detalle_pedido_img.idpedido
 		where detalle_pedido_img.idpedido = $idpedido AND detalle_pedido_img.estado = 1 and tipo_imagen='EMPAQUETADO'
+		";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
+	public function GetImageneFEFO($idpedido)
+	{
+		global $conexion;
+		$sql = "SELECT
+		iddetalle_img AS id,
+		pedido.idpedido AS idpedido,
+		pedido.idcliente AS idcliente,
+		detalle_pedido_img.idusuario AS idusuario,
+		pedido.idsucursal AS idsucursal,
+		imagen AS imagen
+		from detalle_pedido_img 
+		JOIN pedido ON pedido.idpedido=detalle_pedido_img.idpedido
+		where detalle_pedido_img.idpedido = $idpedido AND detalle_pedido_img.estado = 1 and tipo_imagen='FEFO'
 		";
 		$query = $conexion->query($sql);
 		return $query;

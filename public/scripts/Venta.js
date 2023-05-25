@@ -2,8 +2,7 @@ $(document).on("ready", init); // Inciamos el jquery
 var email = "";
 /* var clicando= false; */
 
-
-let arraryTipoMetodoPago=[]
+let arraryTipoMetodoPago = [];
 function init() {
   //Ver();
   // $('#buttonAgregarNuevoCuentaAbonada').click(function(){
@@ -194,38 +193,33 @@ function init() {
                             var obj = jQuery.parseJSON(r);
                             console.log(obj);
                             obj.map((articulo) => {
-                              console.log(
-                                articulo.stock_min,
-                                articulo.stock_actual_total
-                              );
-                              if([7 , 21 , 22 ].includes(idempleado)){
-                              if (
-                                Number(articulo.stock_min) >=
-                                Number(articulo.stock_actual_total)
-                              ) {
-                                $.post(
-                                  "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
-                                  articulo,
-                                  function (r) {
-                                    console.log(r);
-                                    // bootbox.alert(r);
-                                  }
-                                );
-
-                                if ((Notification.permission = "grantFd")) {
-                                  const notification = new Notification(
-                                    "Producto Stock ",
-                                    {
-                                      icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                                      body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                              if ([7, 21, 22].includes(idempleado)) {
+                                if (
+                                  Number(articulo.stock_min) >=
+                                  Number(articulo.stock_actual_total)
+                                ) {
+                                  $.post(
+                                    "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
+                                    articulo,
+                                    function (r) {
+                                    
                                     }
                                   );
-                                  notification.onclick = function () {
-                                    window.open(
-                                      "https://medicfit.grupopuma.pe/Venta.php"
+                                      
+                                  if ((Notification.permission = "grantFd")) {
+                                    const notification = new Notification(
+                                      "Producto Stock ",
+                                      {
+                                        icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
+                                        body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                                      }
                                     );
-                                  };
-                                }
+                                    notification.onclick = function () {
+                                      window.open(
+                                        "https://medicfit.grupopuma.pe/Venta.php"
+                                      );
+                                    };
+                                  }
                                 }
                               }
                             });
@@ -508,32 +502,29 @@ function actualizarMetodoPago(index, sub, val) {
 
   console.log(sub == 1 && val == "1");
 
-  if(sub == 1){
+  if (sub == 1) {
+    let efectivo = [];
 
-    let efectivo=[]
-
-
-    arraryTipoMetodoPago.map(e=>{
-      if(e.es_efectivo=='1'){
-        efectivo.push(e.idtipo_metodo_pago)
+    arraryTipoMetodoPago.map((e) => {
+      if (e.es_efectivo == "1") {
+        efectivo.push(e.idtipo_metodo_pago);
       }
-    })
+    });
 
-    console.log(efectivo)
+    console.log(efectivo);
     if (sub == 1 && efectivo.includes(val)) {
       arrayMetodosPago[index][5] = false;
-      arrayMetodosPago[index][2] = '0';
-      arrayMetodosPago[index][3] = '';
-      Renderizar()
+      arrayMetodosPago[index][2] = "0";
+      arrayMetodosPago[index][3] = "";
+      Renderizar();
     } else {
       let MetodosPagohtml = "";
-  
+
       arrayMetodosPago[index][5] = true;
 
-      Renderizar()
+      Renderizar();
     }
   }
- 
 }
 
 function EliminarMetodoPago(index) {
@@ -543,11 +534,11 @@ function EliminarMetodoPago(index) {
   } else {
     arrayMetodosPago.splice(index, 1);
 
-    Renderizar()
+    Renderizar();
   }
 }
 
-function Renderizar(){
+function Renderizar() {
   let MetodosPagohtml = "";
   arrayMetodosPago.map((element, index) => {
     MetodosPagohtml += ` 
@@ -583,7 +574,9 @@ function Renderizar(){
       </div>
     </div>
 
-    ${element[5]==true?`<div class="col-lg-2 ">
+    ${
+      element[5] == true
+        ? `<div class="col-lg-2 ">
     <label for="inputInscripcion">Cuenta Bancaria</label>
     <div class="form-group has-success">
 
@@ -612,7 +605,8 @@ function Renderizar(){
         onchange="actualizarMetodoPago(${index},${3}, this.value)"
       />
     </div>
-  </div>`:`<div class="col-lg-2 " style='display:none'>
+  </div>`
+        : `<div class="col-lg-2 " style='display:none'>
   <label for="inputInscripcion">Cuenta Bancaria</label>
   <div class="form-group has-success">
 
@@ -642,7 +636,8 @@ function Renderizar(){
       onchange="actualizarMetodoPago(${index},${3}, this.value)"
     />
   </div>
-</div>`}
+</div>`
+    }
     
     <div class="col-lg-2 ">
       <label for="inputInscripcion">Monto</label>
@@ -683,11 +678,10 @@ function Renderizar(){
   TraerMetodoPago();
 
   TraerBanco();
-
 }
 function AnadirMetodoPago() {
   arrayMetodosPago.push(["", "", "", "", "", true]);
- Renderizar()
+  Renderizar();
 }
 function pasarIdPedido(
   idPedido,

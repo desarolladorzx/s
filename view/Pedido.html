@@ -70,29 +70,6 @@
                         placeholder=""
                         autofocus=""
                       />
-                      <!-- <div class="input-group">
-                        <input
-                          id="txtCliente"
-                          type="text"
-                          class="form-control"
-                          name="txtCliente"
-                          required
-                          placeholder="Seleccione un Cliente"
-                          autofocus=""
-                          disabled
-                        />
-                        <span class="input-group-btn">
-                          <button
-                            type="button"
-                            class="btn btn-success"
-                            id="btnBuscarCliente"
-                          >
-                            <i class="fa fa-search"></i> Buscar Cliente
-                          </button>
-                        </span>
-                      </div> -->
-
-                     
 
                     </div>
                   </div>
@@ -353,6 +330,7 @@
                             name="imagenVoucher[]"
                             autofocus=""
                             multiple
+                            required
                           />
                           <input
                             id="txtRutaImgVoucher"
@@ -391,8 +369,6 @@
                       /* height: 100% !important; */
                     }
                   </style>
-
-                   
 
                     <div class="col-lg-10 left">
                       <label style="opacity: 0">Observaciones:</label>
@@ -443,7 +419,13 @@
 
 
                   </div>
+                  <div class="row"
+                  id="container_imput_magenes_omision_fefo"
+                  >
 
+                  
+
+                  </div>
                   <div class="row">
                     
                     <div class="col-lg-12 left">
@@ -564,9 +546,11 @@
                   <a href="Pedido.php" class="btn btn-primary"
                     ><i class="fa fa-remove"></i> Cancelar</a
                   >
+
                   <hr />
                   <span class="lead text-primary"></span>
                 </div>
+             
               </div>
               <div class="row d-flex flex-wrap"></div>
 
@@ -885,7 +869,7 @@
                 </div>
               </div>
 
-              <div class="col-lg-12 left">
+              <div class="col-lg-12 left" style="display: flex;">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                 <button class="btn btn-success buttonload" type="submit" id="idbtnRegistar">
                   <i class="fa fa-floppy-o"></i>Registrar
@@ -893,6 +877,11 @@
                 <a href="Pedido.php" class="btn btn-primary"
                   ><i class="fa fa-remove"></i> Cancelar</a
                 >
+
+                <div id="container_button_estado_pedido" style="margin: 0 10px;">
+                  
+                </div>
+
                 <hr />
                 <span class="lead text-primary"></span>
               </div>
@@ -928,7 +917,7 @@
           </div>
 
           <br /><br />
-
+          
           <div class="col-sm-12 col-lg-12">
             <h4 class="modal-title">Imágenes de Chat</h4>
             <div class="box-footer">
@@ -948,6 +937,20 @@
               ></ul>
             </div>
           </div>
+          <div class="col-sm-12 col-lg-12" >
+            <div style="display: flex;">
+
+              <h4 class="modal-title">Registro de Omisión FEFO</h4>
+              <span class="productos_omision_fefo">  </span>
+            </div>
+            <div class="box-footer">
+              <ul
+                class="mailbox-attachments clearfix"
+                id="detalleImagenesFEFO"
+              ></ul>
+            </div>
+          </div>
+
         </div>
          <?php 
        if($_SESSION["idempleado"]==14 ||$_SESSION["idempleado"]==15 ||$_SESSION["idempleado"]==16 ||$_SESSION["idempleado"]==18||$_SESSION["idempleado"]==19||$_SESSION["idempleado"]==20||$_SESSION["idempleado"]==17||$_SESSION["idempleado"]==6 )

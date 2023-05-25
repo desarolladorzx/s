@@ -10,6 +10,29 @@ var email = "";
 let tipo_persona = "";
 var tabla;
 
+function Limpiar() {
+  $("#cboModPago").val("");
+  $("#textObservaciones").val("");
+
+  $("#txtIdCliente").val("");
+  $("#cboTipoPedido").val("Pedido");
+  $("#txtNumeroPed").val("");
+
+  $("#imagenVoucher").val("");
+  $("#imagenChats").val("");
+
+  // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
+  $("#cboMetodoPago").val("");
+  $("#cboAgenEnvio").val("");
+  $("#cboTipoPromocion").val("");
+  $("#imagenVoucher").val("");
+  //$("#txtRutaImgVoucher").val("");
+  elementos.length = 0;
+  $("#tblDetallePedido tbody").html("");
+  //GetNextNumero();
+  //getCodigoAleatorio();
+}
+
 function init() {
   // $('#idbtnRegistar').prop('disabled', true);
 
@@ -21,17 +44,13 @@ function init() {
     if (selectedValue == "PAGADO") {
       $("#container_imagenes_chat").show();
 
-      $("#imagenChats").prop('required', true);
-      $("#imagenVoucher").prop('required', true);
-
-      
-
+      $("#imagenChats").prop("required", true);
+      $("#imagenVoucher").prop("required", true);
     } else {
       $("#container_imagenes_chat").hide();
 
-      $("#imagenChats").prop('required', false);
-      $("#imagenVoucher").prop('required', false);
-
+      $("#imagenChats").prop("required", false);
+      $("#imagenVoucher").prop("required", false);
     }
   });
 
@@ -101,7 +120,6 @@ function init() {
 
   $("#btn_todos_eliminar_imagen_chat").hide();
 
-
   $("#btn_todos_eliminar_imagen").click(function () {
     $("#image-preview-container").html("");
     $("#image-preview-container-almacen").html("");
@@ -113,7 +131,6 @@ function init() {
     $("#image-preview-container-almacen").html("");
     // $("input[type='file']").val("");
   });
-
 
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
@@ -250,7 +267,6 @@ function init() {
     }
   });
 
-
   $("#imagenChats").on("change", function (e) {
     $("#btn_todos_eliminar_imagen_chat").show();
     $("#image-preview-container_chat").html("");
@@ -279,7 +295,6 @@ function init() {
       reader.readAsDataURL(files[i]);
     }
   });
-
 
   $("#imagenVoucher").on("change", function (e) {
     $("#btn_todos_eliminar_imagen").show();
@@ -313,8 +328,6 @@ function init() {
   function GuardarPedido(e) {
     e.preventDefault();
 
-
-
     if ($("#txtIdCliente").val() != "") {
       if (elementos.length > 0) {
         /*
@@ -337,11 +350,23 @@ function init() {
 
         // alert(detalle);
 
-        $.each($("input[type='file']#imagenVoucher")[0].files, function (i, file) {
-          //alert(file)
+        if (omision_fefo) {
+          $.each(
+            $("input[type='file']#imagenFEFO")[0].files,
+            function (i, file) {
+              formData.append("fileuploadFEFO[]", file);
+            }
+          );
+        }
 
-          formData.append("fileupload[]", file);
-        });
+        $.each(
+          $("input[type='file']#imagenVoucher")[0].files,
+          function (i, file) {
+            //alert(file)
+
+            formData.append("fileupload[]", file);
+          }
+        );
 
         formData.append("idUsuario", $("#txtIdUsuario").val());
         formData.append("idCliente", $("#txtIdCliente").val());
@@ -376,15 +401,16 @@ function init() {
         } else {
           $("#btn_registrar_cotizacion").prop("disabled", true);
 
-          if($('#cboModPago').val()=='PAGADO'){
-              
-            $.each($("input[type='file']#imagenChats")[0].files, function (i, file) {
-              formData.append("fileuploadChat[]", file);
-            });
-
-          }else{
+          if ($("#cboModPago").val() == "PAGADO") {
+            $.each(
+              $("input[type='file']#imagenChats")[0].files,
+              function (i, file) {
+                formData.append("fileuploadChat[]", file);
+              }
+            );
+          } else {
           }
-           $.ajax({
+          $.ajax({
             url: "./ajax/PedidoAjax.php?op=Save",
             data: formData,
             processData: false,
@@ -397,7 +423,13 @@ function init() {
               swal("Mensaje del Sistema", data, "success");
               // delete this.elementos;
               $("#container_datos_cliente_seleccionado").hide();
-              // $("#slc_select_cliente").prop("disabled", false);
+              $("#btnNuevoPedido_nuevo").show();
+
+              $("#VerFormPed").hide(); // Mostramos el formulario
+
+              $("#btn_todos_eliminar_imagen").hide();
+              $("#btn_todos_eliminar_imagen_chat").hide();
+
               $("#slc_select_cliente").val(null);
 
               $("#slc_select_cliente").trigger("change");
@@ -408,21 +440,15 @@ function init() {
               $("#txtSubTotalPed").val("");
               OcultarForm();
               $("#VerFormPed").hide(); // Mostramos el formulario
-              $("#btnNuevoPedido_nuevo").show();
-              Limpiar();
               $("#txtCliente").val("");
+              Limpiar();
               ListadoVenta();
               GetPrimerCliente();
 
-              $('#image-preview-container_chat').html('')
-              $('#image-preview-container').html('')
-              $("#btn_todos_eliminar_imagen").hide();
-              $("#btn_todos_eliminar_imagen_chat").hide();
-
-              
+              $("#image-preview-container_chat").html("");
+              $("#image-preview-container").html("");
             },
           });
-         
         }
 
         // alert(fileName);
@@ -596,29 +622,6 @@ function init() {
     }
   }
   // Limpia los campos de nueva cotizacion
-  function Limpiar() {
-    $("#cboModPago").val("");
-    $("#textObservaciones").val("");
-
-    $("#txtIdCliente").val("");
-    $("#cboTipoPedido").val("Pedido");
-    $("#txtNumeroPed").val("");
-
-
-    $("#imagenVoucher").val("");
-    $("#imagenChats").val("");
-
-    // $("#cboTipoComprobante").val("--Seleccione Comprobante--");
-    $("#cboMetodoPago").val("");
-    $("#cboAgenEnvio").val("");
-    $("#cboTipoPromocion").val("");
-    $("#imagenVoucher").val("");
-    //$("#txtRutaImgVoucher").val("");
-    elementos.length = 0;
-    $("#tblDetallePedido tbody").html("");
-    //GetNextNumero();
-    //getCodigoAleatorio();
-  }
 
   function GetTotal(idPedido) {
     $.getJSON(
@@ -1186,33 +1189,6 @@ function cargarDataPedido(
   estado,
   ubicacion
 ) {
-  console.log(
-    idPedido,
-    tipo_pedido,
-    numero,
-    cliente,
-    total,
-    correo,
-    num_documento,
-    celular,
-    tipo_cliente,
-    destino,
-    ticket,
-    aproba_venta,
-    aproba_pedido,
-    empleado,
-    metodo_pago,
-    agencia_envio,
-    tipo_promocion,
-    observaciones,
-    modo_pago,
-    ultimo,
-    modificar_detalle,
-    idcliente,
-    estado,
-    ubicacion
-  );
-
   $(".ventasFechasOcultar").hide();
 
   if (modificar_detalle === "C") {
@@ -1246,8 +1222,7 @@ function cargarDataPedido(
   $("#hdn_tipo_promocion").val(aproba_venta);
   $("#txtClientePed").val(metodo_pago);
 
-
-  $('.input-container_hidden').hide()
+  $(".input-container_hidden").hide();
   $("#cboModPagoDetalles").val(empleado);
   $("#textObservacionesDetalles").val(aproba_pedido);
 
@@ -1291,6 +1266,8 @@ function cargarDataPedido(
   mostrarDetalleImagenesEmpaquetado(idPedido);
 
   mostrarDetalleImagenesChat(idPedido);
+
+  mostrarDetalleImagenesFEFO(idPedido);
 
   if (tipo_pedido == "Venta") {
     $.getJSON(
@@ -1496,7 +1473,6 @@ function mostrarDetalleImagenes(idPedido) {
       idPedido: idPedido,
     },
     function (r) {
-  
       if (r != "") {
         $("#detalleImagenes").html(r);
       } else {
@@ -1524,6 +1500,52 @@ function mostrarDetalleImagenesEmpaquetado(idPedido) {
   );
 }
 
+function mostrarDetalleImagenesFEFO(idPedido) {
+  $("#detalleImagenesChat").html("");
+
+  $.post(
+    "./ajax/PedidoAjax.php?op=GetImagenesFEFO",
+    {
+      idPedido: idPedido,
+    },
+    function (r) {
+      // console.log(r);
+      if (r != "") {
+        $("#detalleImagenesFEFO").html(r);
+      } else {
+        $("#detalleImagenesFEFO").html("Sin datos que mostrar...");
+      }
+    }
+  );
+  $.post(
+    "./ajax/PedidoAjax.php?op=GetNombreFEFO",
+    {
+      idPedido: idPedido,
+    },
+    function (r) {
+      if (r != "") {
+        // console.log(r);
+        let ARRY = JSON.parse(r);
+
+        console.log(ARRY);
+        ARRY.map((dp) => {
+          console.log(dp);
+          $(".productos_omision_fefo").append(dp.nombre, " - ");
+        });
+      } else {
+        // $("#detalleImagenesFEFO").html("Sin datos que mostrar...");
+      }
+    }
+  );
+}
+
+$("#btn_cancelar_imagen").click(function (e) {
+  e.preventDefault();
+
+  $("#modal-eliminar-imagen").modal("hide");
+  $("#hdn_iddetalleimagen").val("");
+  $("#hdn_numerdetalleimagen").val("");
+});
 
 function mostrarDetalleImagenesChat(idPedido) {
   $("#detalleImagenesChat").html("");
@@ -1543,7 +1565,6 @@ function mostrarDetalleImagenesChat(idPedido) {
     }
   );
 }
-
 
 /*  function eliminarDetalleImagen(id,idpedido) {
 
@@ -1696,8 +1717,10 @@ function cambiarEstadoPedido(idPedido) {
                 },
                 function (e) {
                   swal("Mensaje del Sistema", e, "success");
-                  ListadoPedidos();
-                  ListadoVenta();
+
+                  
+                  location.reload();
+
                 }
               );
             }
@@ -1712,6 +1735,317 @@ function cambiarEstadoPedido(idPedido) {
       }
     }
   );
+}
+
+function cambiarEstadoPedidoVer(
+  idPedido,
+  tipo_pedido,
+  numero,
+  cliente,
+  total,
+  correo,
+  num_documento,
+  celular,
+  tipo_cliente,
+  destino,
+  ticket,
+  aproba_venta,
+  aproba_pedido,
+  empleado,
+  metodo_pago,
+  agencia_envio,
+  tipo_promocion,
+  observaciones,
+  modo_pago,
+  ultimo,
+  modificar_detalle,
+  idcliente,
+  estado,
+  ubicacion
+) {
+  $("#container_button_estado_pedido").html(`
+      <button
+        type="button"
+        id="button_canbiar_estado"
+        class="btn btn-warning"
+        onclick="cambiarEstadoPedido(${idPedido})"
+      >
+        <i class="fa fa-refresh"></i> 
+        Cambiar Estado
+      </button>
+    `);
+
+  $(".ventasFechasOcultar").hide();
+
+  if (modificar_detalle === "C") {
+    // console.log(idcliente);
+    $("#cancelado_por_container").show();
+    $("#empleado_anulador").val(idcliente);
+  }
+  // el numero crea el espacio en la celda - , celular,num_documento, celular, destino, date, agencia_envio
+  bandera = 2;
+
+  $("#txtIdCliente").val(idcliente);
+  $("#VerForm").show();
+  //$("#btnNuevoVent").hide();
+  $("#VerListado").hide();
+
+  $("#txtIdPedido").val(idPedido);
+
+  $("#txtCliente").hide();
+  $("#cboTipoPedido").hide();
+
+  $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
+  $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
+  $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+  $("#txtClienteCel").val(celular);
+  $("#txtClienteEmail").val(correo); // MUESTRA DETALLE DE VENTA
+  $("#txtClienteDir").val(tipo_cliente); // MUESTRA DETALLE DE VENTA
+
+  // $("#hdn_idClientePedido").val(idcliente);
+  $("#hdn_metodo_pago").val(destino);
+  $("#hdn_agencia_envio").val(ticket);
+  $("#hdn_tipo_promocion").val(aproba_venta);
+  $("#txtClientePed").val(metodo_pago);
+
+  $(".input-container_hidden").hide();
+  $("#cboModPagoDetalles").val(empleado);
+  $("#textObservacionesDetalles").val(aproba_pedido);
+
+  $("#hdn_tipo_entrega").val(observaciones);
+  $("#hdn_modo_pago").val(ultimo);
+  $("#hdn_observacion").val(modo_pago);
+
+  $("#cboModTipo_EntregaDetalles").val(metodo_pago);
+
+  $("#txtTotalVent").val(tipo_pedido);
+
+  //$("#hdn_agencia_envio").val(agencia_envio);
+  //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
+  /* $("#txtRutaImgVoucher").val(imagen);
+      $("#txtRutaImgVoucher").show(); */
+
+  //$("#txtRutaImgArt").prop("disabled", true);
+  email = correo;
+  //destino = direccion;
+  //num_documento = dni;
+  //celular = celular;
+  //fecha = date;
+  //hora_operacion = hora_operacion;
+
+  var igvPed =
+    (total * parseInt($("#txtImpuesto").val())) /
+    (100 + parseInt($("#txtImpuesto").val()));
+  $("#txtIgvPed").val(Math.round(igvPed * 100) / 100);
+
+  var subTotalPed =
+    total -
+    (total * parseInt($("#txtImpuesto").val())) /
+      (100 + parseInt($("#txtImpuesto").val()));
+  $("#txtSubTotalPed").val(Math.round(subTotalPed * 100) / 100);
+
+  $("#txtTotalPed").val(Math.round(total * 100) / 100);
+
+  if (modificar_detalle == "modificarDetalles") {
+    $("#ContainerbuttonAgregarImagenAlmacen").show();
+  }
+  mostrarDetalleImagenesEmpaquetado(idPedido);
+  mostrarDetalleImagenesFEFO(idPedido);
+  mostrarDetalleImagenesChat(idPedido);
+
+  if (tipo_pedido == "Venta") {
+    $.getJSON(
+      "./ajax/PedidoAjax.php?op=GetVenta",
+      {
+        idPedido: idPedido,
+      },
+      function (r) {
+        if (r) {
+          console.log(r.idventa);
+          $.getJSON(
+            "./ajax/PedidoAjax.php?op=TraerMetodosPago",
+            {
+              idventa: r.idventa,
+            },
+            function (r) {
+              console.log(r);
+              r.map((element, index) => {
+                $("#container_metodo_pago_visual").append(`
+                  <div class="row">
+  
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Fecha de Pago</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="datetime-local"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.fecha_pago}'
+                        disabled
+  
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Metodo de Pago</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.tipo_metodo_pago}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                    
+                    ${
+                      element.es_efectivo != "1"
+                        ? `
+                      <div class="col-lg-2 ">
+                      
+                      <label for="inputInscripcion">Cuenta Bancaria</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.banco_cuenta}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Referencia</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.referencia}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                
+                    `
+                        : ``
+                    }
+                    
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Monto</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.pago}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                </div>
+                
+                  
+                  
+                  `);
+              });
+            }
+          );
+
+          $("#VerFormVentaPed").show();
+          $("#VerDetallePedido").hide();
+          $("#VerTotalesDetPedido").hide();
+          $("#inputTotal").hide();
+          $("#txtTotalVent").hide();
+          $("#VerRegPedido").hide();
+          $("#txtClienteVent").val(cliente); //.val(cliente);
+          $("#txtSerieVent").val(r.serie_comprobante);
+          $("#txtNumeroVent").val(r.num_comprobante);
+          $("#cboTipoVenta").val(r.tipo_venta); //$("#txtClienteFech").val(date);
+          $("#cboTipoComprobante").html(
+            "<option>" + r.tipo_comprobante + "</option>"
+          );
+          $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
+          $("#txtClienteCel").val(celular);
+          $("#txtTipoCliente").val(tipo_cliente);
+          $("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA
+          $("#txtNotaVenta").val(ticket);
+          $("#txtAprobaCuenAbo").val(aproba_venta);
+          $("#txtAprobaVenta").val(aproba_pedido);
+          $("#txtEmpleadoVent").val(empleado);
+          $("#hdn_metodo_pago").val(metodo_pago);
+          $("#hdn_agencia_envio").val(agencia_envio);
+          $("#hdn_tipo_promocion").val(tipo_promocion);
+
+          /* $("#txtNumeroOpe").val(r.num_operacion);
+  
+                  //$("#cboTipo_documento").val(documento_per);
+                  
+                  //$("#cboTipoPromocion").val(r.tipo_promocion);
+                  //$("#cboMetodoPago").val(r.metodo_pago);
+                  //$("#hdn_agencia_envio").val(agencia_envio);
+                  //$("#hdn_idcliente").val(r.metodo_pago);
+                  /* $("#txtNumeroOpe").val(r.num_operacion);
+                  $("#txtHoraOpe").val(r.hora_operacion); */
+          //$("#cboAgenEnvio").val(r.agencia_envio);
+
+          var igvPed =
+            (r.total * parseInt($("#txtImpuesto").val())) /
+            (100 + parseInt($("#txtImpuesto").val()));
+          $("#txtIgvPedVer").val(Math.round(igvPed * 100) / 100);
+
+          var subTotalPed =
+            r.total -
+            (r.total * parseInt($("#txtImpuesto").val())) /
+              (100 + parseInt($("#txtImpuesto").val()));
+          $("#txtSubTotalPedVer").val(Math.round(subTotalPed * 100) / 100);
+
+          $("#txtTotalPedVer").val(Math.round(r.total * 100) / 100);
+          $("#txtVenta").html("Datos de la Venta");
+          $("#OcultaBR1").hide();
+          $("#OcultaBR2").hide();
+          $('button[type="submit"]').hide();
+          $("#btnGenerarVenta").hide();
+          $("#btnEnviarCorreo").show();
+        }
+      }
+    );
+  }
+  $("#txtNumeroPed").hide();
+
+  $("#txtImpuestoPed").hide();
+  $("#Porcentaje").hide();
+  $("#btnBuscarCliente").hide();
+  $("#btnBuscarDetIng").hide();
+
+  $("#inputCliente").hide();
+  $("#inputImpuesto").hide();
+  $("#inputTipoPed").hide();
+  $("#inputNumero").hide();
+
+  CargarDetallePedido(idPedido);
+  $("#cboTipoPedido").prop("disabled", true);
+  $("#txtNumeroPed").prop("disabled", true);
+  $("#txtCliente").prop("disabled", true);
+  $("#labelFecha").hide(); //Se oculta la hora de registro de operacion
+  //$("#txtHoraOpe").hide(); //Se oculta la hora de registro de operacion
+
+  $('button[type="submit"]').hide();
+  $("#btnGenerarVenta").hide();
+  //$('button[type="submit"]').attr('disabled','disabled');
+  $("#btnBuscarDetIng").prop("disabled", true);
+  $("#btnBuscarCliente").prop("disabled", true);
+
+  $("#cboFechaDesdeVent").hide();
+  $("#cboFechaHastaVent").hide();
+  $("#lblDesde").hide();
+  $("#lblHasta").hide();
+  $("#btnNuevoPedido_nuevo").hide();
+
+  // CARGA DETALLE DE IMAGENES
+
+  mostrarDetalleImagenes(idPedido);
 }
 
 function VerMsj() {
@@ -1847,6 +2181,9 @@ function ComboTipoDoc() {
 }
 
 //Consulta de stock menor a 0 Unidades
+
+let omision_fefo = false;
+
 function AgregarPedCarrito(
   iddet_ing,
   stock_actual,
@@ -1864,6 +2201,7 @@ function AgregarPedCarrito(
 ) {
   if (stock_actual > 0) {
     let confirmarElProducto = true;
+
     var datos = tabla.rows().data();
 
     datos.map((element) => {
@@ -1876,6 +2214,7 @@ function AgregarPedCarrito(
           confirmarElProducto = confirm(
             "existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto"
           );
+          omision_fefo = confirmarElProducto == true ? true : false;
         }
       }
     });
@@ -1885,10 +2224,30 @@ function AgregarPedCarrito(
 
     //let elementosSearch = [];
 
+    if (omision_fefo) {
+      $("#container_imput_magenes_omision_fefo").html(`
+            <div class="col-lg-2 left">
+                    <label for="inputInscripcion">Registro de Omisión FEFO:</label>
+                    <div class="form-group has-success">
+                      <input
+                        id="imagenFEFO"
+                        type="file"
+                        class="form-control"
+                        name="imagenFEFO[]"
+                        autofocus=""
+                        multiple
+                        required
+                      />
+                    </div>
+                  </div>
+      `);
+    }
+
     if (confirmarElProducto) {
       let precio_a_vender = precio_venta;
 
-      console.log(tipo_persona == "DISTRIBUIDOR");
+      // console.log(tipo_persona == "DISTRIBUIDOR");
+
       if (tipo_persona == "FINAL") {
         precio_a_vender = precio_venta;
       } else if (tipo_persona == "DISTRIBUIDOR") {
@@ -1902,6 +2261,7 @@ function AgregarPedCarrito(
       }
 
       var data = JSON.parse(objinit.consultar());
+
       var detalles = new Array(
         iddet_ing,
         art,
@@ -1915,7 +2275,8 @@ function AgregarPedCarrito(
         marca,
         lote,
         vigencia,
-        0
+        0,
+        omision_fefo
       );
       // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
       if (data.length >= 1) {
@@ -1930,11 +2291,11 @@ function AgregarPedCarrito(
         elementos.push(detalles);
       }
 
-      //console.log(data);
-
       ConsultarDetallesPed();
 
       confirmarElProducto = false;
+
+      omision_fefo = false;
     }
   } else {
     bootbox.alert("No se puede agregar al detalle. No tiene stock");

@@ -37,7 +37,7 @@ function init(){
 	                success: function(datos)
 
 	                {
-
+							
 	                    swal("Mensaje del Sistema", datos, "success");
 						  ListadoArticulos();
 						  OcultarForm();

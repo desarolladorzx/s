@@ -3,6 +3,20 @@ session_start();
 switch ($_GET["op"]) {
 
 
+    case 'GetNombreFEFO':
+        require_once "../model/Pedido.php";
+
+        $obj = new Pedido();
+
+        $query = $obj->GetNombreFEFO($_POST['idPedido']);
+
+        $nuevo = array();
+
+        while ($reg = $query->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+    break;
     case 'buscarCliente':
         $q = $_GET["q"];
         require_once "../model/Pedido.php";
@@ -31,17 +45,6 @@ switch ($_GET["op"]) {
             ];
             array_push($data, $d);
         }
-        // echo  json_encode($nuevo);
-
-        // foreach ($reg as $indice => $valor) {
-
-        //     $d=(object)[
-        //         "id" => $valor[0],
-        //         "texto" => $valor[1]
-        //     ];
-        //     array_push($data,$d);
-        // }
-
 
         $return = array(
             'items' => $data
@@ -229,6 +232,35 @@ switch ($_GET["op"]) {
                         //var_dump($file_name);
                     }
                 }
+
+
+                if (!empty($_FILES["fileuploadFEFO"])) {
+
+                    $file_names = $_FILES['fileuploadFEFO']['name'];
+
+                    for ($i = 0; $i < count($file_names); $i++) {
+
+                        $file_name = $file_names[$i];
+
+                        $parte = explode(".", $file_name);
+                        // echo $parte[0]; // nombre del archivo
+                        // echo $parte[1]; // extension del archivo
+
+                        $codigoInterno = strtotime(date('Y-m-d H:i:s'));
+                        $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
+
+                        // GUARDAR IMAGENES CON EL NUMERO DE COTIZACION
+                        $obj->RegistrarDetalleImagenesFEFO($idpedido, $idCliente, $idUsuario, $idSucursal, $new_file_name);
+
+                        //$extension = end(explode(".", $file_name));
+                        //$original_file_name = pathinfo($file_name, PATHINFO_FILENAME);
+                        //$file_url = $original_file_name . "-" . date("YmdHis") . "." . $extension;
+                        move_uploaded_file($_FILES["fileuploadFEFO"]["tmp_name"][$i], "../Files/FEFO/" . $new_file_name);
+
+
+                        //var_dump($file_name);
+                    }
+                }
             }
 
 
@@ -360,6 +392,7 @@ switch ($_GET["op"]) {
             // } else {ig
             //     $botonEliminar = '';
             // }
+
             $botonCambiarEstado = '';
             if ($reg->estadoId !== "D") {
                 // if (true) { 
@@ -367,6 +400,13 @@ switch ($_GET["op"]) {
                     // if (true) { 
 
                     $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Cambiar estado" onclick="cambiarEstadoPedido(' . $reg->idpedido . ')" ><i class="fa fa-refresh"></i> </button>&nbsp';
+
+
+
+                    $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Ver Detalle" onclick="cambiarEstadoPedidoVer(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
+                    ,\'' . $reg->tipo_entrega . '\'
+                    
+                    )" ><i class="fa fa-refresh"></i> </button>';
                 } else {
                     $botonCambiarEstado = '';
                 }
@@ -395,7 +435,6 @@ switch ($_GET["op"]) {
                 "8" => $reg->estado,
                 "9" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
                 ,\'' . $reg->tipo_entrega . '\'
-
                 
                 )" ><i class="fa fa-eye"></i> </button>&nbsp' .
                     $botonPasarAVenta .
@@ -658,6 +697,23 @@ switch ($_GET["op"]) {
         $query_total = $objPedido->TotalPedido($_REQUEST["idPedido"]);
         $reg_total = $query_total->fetch_object();
         echo json_encode($reg_total);
+        break;
+    case "GetImagenesFEFO":
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_total = $objPedido->GetImageneFEFO($_REQUEST["idPedido"]);
+        while ($reg = $query_total->fetch_object()) {
+            echo '<li>
+                                <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank">
+                                <span class="mailbox-attachment-icon has-img">
+                                <img src="./Files/FEFO/' . $reg->imagen . '">
+                                </span>
+                                </a>
+                                <div class="mailbox-attachment-info">
+                                <a href="./Files/FEFO/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
+                                 
+                                </li>';
+        }
         break;
 
     case "GetImagenesChat":
