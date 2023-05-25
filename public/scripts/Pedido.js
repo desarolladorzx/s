@@ -413,6 +413,13 @@ function init() {
               $("#txtCliente").val("");
               ListadoVenta();
               GetPrimerCliente();
+
+              $('#image-preview-container_chat').html('')
+              $('#image-preview-container').html('')
+              $("#btn_todos_eliminar_imagen").hide();
+              $("#btn_todos_eliminar_imagen_chat").hide();
+
+              
             },
           });
          

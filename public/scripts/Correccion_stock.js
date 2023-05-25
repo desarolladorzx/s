@@ -18,7 +18,7 @@ function traerContainer_btn_nueva_correccion_stock(){
       console.log([4 ,6,2].includes(Number(r)))
       if(true){
         let html=`  <button class="btn btn-primary" id="btnNuevoCorrecion_stock">
-        <i class="fa fa-file"></i>Nueva Solicitud de Correccion de Stock
+        <i class="fa fa-file"></i>  Nueva Solicitud de Correccion de Stock
       </button>`
         $('#container_btn_nueva_correccion_stock').html(html)
       }

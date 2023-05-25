@@ -198,7 +198,7 @@ function init() {
                                 articulo.stock_min,
                                 articulo.stock_actual_total
                               );
-                              // if([7 , 21 , 22 ].includes(idempleado)){
+                              if([7 , 21 , 22 ].includes(idempleado)){
                               if (
                                 Number(articulo.stock_min) >=
                                 Number(articulo.stock_actual_total)
@@ -226,7 +226,7 @@ function init() {
                                     );
                                   };
                                 }
-                                // }
+                                }
                               }
                             });
                           }

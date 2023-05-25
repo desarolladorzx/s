@@ -15,7 +15,7 @@ switch ($_GET["op"]) {
 		$query_Tipo = $objSucursal->ListarSucursalesEmp($_SESSION["idempleado"]);
 
 		while ($reg = $query_Tipo->fetch_object()) {
-			echo '<button type="button" onclick="NuevoAcceder('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_documento.'\',\''.$reg->tipo_usuario.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->foto.'\',\''.$reg->logo.'\',\''.$reg->email.'\',\''.$reg->login.'\',\''.$reg->razon_social.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\',\''.$reg->superadmin.'\')" class="btn btn-info pull-left">'.explode("-", $reg->razon_social)[0].'</button>
+			echo '<button type="button" onclick="NuevoAcceder('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_documento.'\',\''.$reg->tipo_usuario.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->foto.'\',\''.$reg->logo.'\',\''.$reg->email.'\',\''.$reg->login.'\',\''.$reg->razon_social.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\',\''.$reg->superadmin.'\',\''.$reg->idrol.'\')" class="btn btn-info pull-left">'.explode("-", $reg->razon_social)[0].'</button>
 		  ';
 		}
 		// echo 'hola';
@@ -391,6 +391,10 @@ $chkMnuDoProduccion
 		$_SESSION["mnu_documentacion_ja"] = $_POST["mnu_documentacion_ja"];
 		$_SESSION["mnu_documentacion_jl"] = $_POST["mnu_documentacion_jl"];
 		$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
+
+		$_SESSION["idrol"] = $_POST["idrol"];
+
+
 		/*$_SESSION["rol"] = $fetch->rol_id;*/
 		$_SESSION["rol_usuario"] = $_POST["superadmin"];
 		break;
