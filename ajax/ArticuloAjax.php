@@ -126,7 +126,7 @@
 					"10"=>$reg->totalSucursal1,
 					"9"=>$reg->totalSucursal2,
 					"8"=>$reg->sumTotal,
-					
+
 					"6"=>'<img width=100px height=100px src="./'.$reg->imagen.'" />',
 					"11"=>'<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataArticulo('.$reg->idarticulo.',\''.$reg->idcategoria.'\',\''.$reg->idmarca.'\',\''.$reg->idunidad_medida.'\',\''.$reg->nombre.'\',\''.$reg->descripcion.'\',\''.$reg->imagen.'\'
 					,\''.$reg->stock_min.'\'

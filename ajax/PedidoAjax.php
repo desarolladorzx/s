@@ -7,34 +7,34 @@ switch ($_GET["op"]) {
         $q = $_GET["q"];
         require_once "../model/Pedido.php";
 
-		$obj = new Pedido();
+        $obj = new Pedido();
 
         $query = $obj->buscarCliente($q);
 
         // $reg = $query->fetch_object();
 
-        $data=[];
+        $data = [];
 
 
         $nuevo = array();
 
         while ($value = $query->fetch_object()) {
-            $d=(object)[
+            $d = (object)[
                 "id" => $value->idpersona,
                 "texto" => $value->texto,
-                "nombre_completo" => $value->nombre.' '.$value->apellido,
+                "nombre_completo" => $value->nombre . ' ' . $value->apellido,
                 "documento" => $value->documento_as,
-                "telefonos" => $value->telefono.' '.$value->telefono_2,
+                "telefonos" => $value->telefono . ' ' . $value->telefono_2,
                 "ubicacion" => $value->ubicacion,
                 "direccion" => $value->direccion_calle,
                 "tipo_persona" => $value->tipo_persona,
             ];
-            array_push($data,$d);
+            array_push($data, $d);
         }
         // echo  json_encode($nuevo);
 
         // foreach ($reg as $indice => $valor) {
-            
+
         //     $d=(object)[
         //         "id" => $valor[0],
         //         "texto" => $valor[1]
@@ -42,7 +42,7 @@ switch ($_GET["op"]) {
         //     array_push($data,$d);
         // }
 
-      
+
         $return = array(
             'items' => $data
         );
@@ -52,33 +52,33 @@ switch ($_GET["op"]) {
     case 'TraerMetodosPago':
         $idventa = $_GET["idventa"];
 
-        
+
         require_once "../model/Pedido.php";
 
-		$obj = new Pedido();
+        $obj = new Pedido();
 
-		$query= $obj->TraerMetodoPago($idventa);
+        $query = $obj->TraerMetodoPago($idventa);
 
-		$nuevo = array();
-		while ($reg = $query->fetch_object()) {
-			$nuevo[] = $reg;
-		}
-		echo json_encode($nuevo);
+        $nuevo = array();
+        while ($reg = $query->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo json_encode($nuevo);
         break;
     case 'traerDatosTransporte':
         require_once "../model/Pedido.php";
 
-		$objPersona = new Pedido();
+        $objPersona = new Pedido();
 
-		$query_Tipo = $objPersona->traerPersonalTransporte();
+        $query_Tipo = $objPersona->traerPersonalTransporte();
 
-		$nuevo = array();
-		while ($reg = $query_Tipo->fetch_object()) {
-			$nuevo[] = $reg;
-		}
-		echo  json_encode($nuevo);
+        $nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
 
- 
+
         break;
     case 'SaveImagesEmpaquetado':
         require_once "../model/Pedido.php";
@@ -229,7 +229,6 @@ switch ($_GET["op"]) {
                         //var_dump($file_name);
                     }
                 }
-
             }
 
 
@@ -293,15 +292,15 @@ switch ($_GET["op"]) {
 
         echo json_encode($reg);
         break;
-    
-        case "informarVentaLima":
-            require_once "../model/Pedido.php";
-            $objPedi = new Pedido();
-            $query = $objPedi->traerUltimaVentaLima();
-            $reg = $query->fetch_object();
-    
-            echo json_encode($reg);
-            break;
+
+    case "informarVentaLima":
+        require_once "../model/Pedido.php";
+        $objPedi = new Pedido();
+        $query = $objPedi->traerUltimaVentaLima();
+        $reg = $query->fetch_object();
+
+        echo json_encode($reg);
+        break;
 
 
     case "informarVentaCancelada":
@@ -373,23 +372,21 @@ switch ($_GET["op"]) {
                 }
             }
 
-            $fecha_cotizacion='';
-            if(strlen($reg->fecha)>0){
-                $fecha_cotizacion="<p>$reg->fecha <b>| $reg->prefijo_pedido</b></p><p>";
+            $fecha_cotizacion = '';
+            if (strlen($reg->fecha) > 0) {
+                $fecha_cotizacion = "<p>$reg->fecha <b>| $reg->prefijo_pedido</b></p><p>";
             }
-            $fecha_aprobacion='';
-            if(strlen($reg->fecha_apro_coti)>0){
-                $fecha_aprobacion="<p>$reg->fecha_apro_coti <b>| $reg->prefijo_estado</b></p><p>";
+            $fecha_aprobacion = '';
+            if (strlen($reg->fecha_apro_coti) > 0) {
+                $fecha_aprobacion = "<p>$reg->fecha_apro_coti <b>| $reg->prefijo_estado</b></p><p>";
             }
 
 
 
             $data[] = array(
                 "0" => $i,
-                "1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
-                "2" =>"$fecha_cotizacion $fecha_aprobacion  "
-              
-                ,
+                "1" => $reg->idsucursal == 1 ? 'Arequipa' : 'Lima',
+                "2" => "$fecha_cotizacion $fecha_aprobacion  ",
                 "3" => $reg->numero,
                 "4" =>  explode("|", $reg->empleado)[0],
                 "5" => $reg->cliente,
@@ -531,7 +528,7 @@ switch ($_GET["op"]) {
         while ($reg = $query_cli->fetch_object()) {
             echo '<tr>
                         <td><input type="radio" name="optClienteBusqueda" data-nombre="' . $reg->nombre . ' ' . $reg->apellido . ' | ' . $reg->tipo_persona . '" data-email="' . $reg->email . '" id="' . $reg->idpersona . '" value="' . $reg->idpersona . '"
-                        tipo_persona="' .$reg->tipo_persona . '"
+                        tipo_persona="' . $reg->tipo_persona . '"
                         data-cliente="' . $reg->tipo_persona . '" data-telefono="' . $reg->telefono . '-' . $reg->telefono_2 . '" data-direccion="' . $reg->direccion_departamento . '" /></td>
                         <td>' . $i . '</td>
                         <td>' . $reg->tipo_persona . '</td>
@@ -561,18 +558,15 @@ switch ($_GET["op"]) {
             }
 
 
-            $colorVigencia='';
-            if($reg->vigencia=='VIGENTE'){
-                $colorVigencia='badge bg-green';
-            }else if($reg->vigencia=='POR VENCER'){
-                $colorVigencia='badge bg-yellow';
-            }else if($reg->vigencia=='VENCIDO'){
-                $colorVigencia='badge bg-red';
-            }
-
-
-            else if($reg->vigencia=='SIN CADUCIDAD'){
-                $colorVigencia='badge bg-blue';
+            $colorVigencia = '';
+            if ($reg->vigencia == 'VIGENTE') {
+                $colorVigencia = 'badge bg-green';
+            } else if ($reg->vigencia == 'POR VENCER') {
+                $colorVigencia = 'badge bg-yellow';
+            } else if ($reg->vigencia == 'VENCIDO') {
+                $colorVigencia = 'badge bg-red';
+            } else if ($reg->vigencia == 'SIN CADUCIDAD') {
+                $colorVigencia = 'badge bg-blue';
             }
 
             $data[] = array(
@@ -610,14 +604,13 @@ switch ($_GET["op"]) {
                 "7" => $reg->stock_actual,
                 "8" => $reg->precio_ventapublico,
                 "10" => $reg->precio_ventadistribuidor,
-                "11" => $reg->precio_ventasuperdistribuidor ,
+                "11" => $reg->precio_ventasuperdistribuidor,
                 "12" => $reg->precio_ventarepresentante,
-                "13" => 
+                "13" =>
                 " <span class='  $colorVigencia' >
                 $reg->vigencia
                 </span>
-                "
-                ,
+                ",
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
             );
             $i++;
@@ -666,13 +659,13 @@ switch ($_GET["op"]) {
         $reg_total = $query_total->fetch_object();
         echo json_encode($reg_total);
         break;
-    
-        case "GetImagenesChat":
-            require_once "../model/Pedido.php";
-            $objPedido = new Pedido();
-            $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
-            while ($reg = $query_total->fetch_object()) {
-                echo '<li>
+
+    case "GetImagenesChat":
+        require_once "../model/Pedido.php";
+        $objPedido = new Pedido();
+        $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
+        while ($reg = $query_total->fetch_object()) {
+            echo '<li>
                             <a href="./Files/Chat/' . $reg->imagen . '" target="_blank">
                             <span class="mailbox-attachment-icon has-img">
                             <img src="./Files/Chat/' . $reg->imagen . '">
@@ -682,8 +675,8 @@ switch ($_GET["op"]) {
                             <a href="./Files/Chat/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
                              
                             </li>';
-            }
-            break;
+        }
+        break;
 
 
     case "GetImagenesEmpaquetado":
@@ -713,23 +706,6 @@ switch ($_GET["op"]) {
         //exit;
 
         while ($reg = $query_total->fetch_object()) {
-
-            // echo '<li>
-            //         <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
-            //         <span class="mailbox-attachment-icon has-img">
-            //         <img src="./Files/Voucher/' . $reg->imagen . '">
-            //         </span>
-            //         </a>
-            //         <div class="mailbox-attachment-info">
-            //         <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-            //          <span class="mailbox-attachment-size"> -
-            //         <a href="#" class="btn btn-default btn-xs pull-right"  onclick="eliminarDetalleImagen(' . $reg->id . ',' . $reg->idpedido . ')"
-            //         ><i class="fa fa-trash"></i></a>
-            //         </span> */
-            //         </div>
-            //         </li>';
-
-
             echo '<li>
                     <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
                     <span class="mailbox-attachment-icon has-img">
@@ -738,8 +714,6 @@ switch ($_GET["op"]) {
                     </a>
                     <div class="mailbox-attachment-info">
                     <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                     
-                    
                     </li>';
         }
 

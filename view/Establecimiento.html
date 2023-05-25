@@ -1,0 +1,368 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Establecimientos</h3>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse">
+        <i class="fa fa-minus"></i>
+      </button>
+
+      <button class="btn btn-box-tool" data-widget="remove">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!--Contenido-->
+        <div class="col-sm-14" id="VerForm">
+          <form
+            role="form"
+            name="frmEstablecimiento"
+            id="frmEstablecimiento"
+            enctype="multipart/form-data"
+          >
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label>Informacion de Establecimiento</label><br />
+
+
+               
+                <input
+                  type="hidden"
+                  class="form-control"
+                  required
+                  placeholder="Ubicacion de Envio"
+                  
+                  id="idEstablecimiento"
+                  name="idEstablecimiento"
+                  style="text-transform: uppercase"
+                />
+
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Departamento - Provincia - Distrito (*):</label>
+
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    required
+                    placeholder="Ubicacion de Envio"
+                    list="ubicacions"
+                    id="id_ubicacion_envio_array"
+                    name="id_ubicacion_envio_array"
+                    style="text-transform: uppercase"
+                  />
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    required
+                    placeholder="Ubicacion de Envio"
+                    list="ubicacion"
+                    id="txt_ubicacion_establecimiento"
+                    name="txt_ubicacion_establecimiento"
+                    style="text-transform: uppercase"
+                  />
+                  <datalist id="ubicacion" class="ubicacion_containe_options">
+                  </datalist>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Tipo de Establecimiento (*):</label>
+                  <input
+                    id="txtTipoEstablecimiento"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtTipoEstablecimiento"
+                    required=""
+                    placeholder="Tipo de Establecimiento (*)"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nombre de Establecimiento (*):</label>
+                  <input
+                    id="txtNombreEstablecimiento"
+                    name="txtNombreEstablecimiento"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    required=""
+                    placeholder="Nombre de Establecimiento (*)"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Dirección Establecimiento (*):</label>
+                  <input
+                    id="txtDireccionEstablecimiento"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtDireccionEstablecimiento"
+                    required=""
+                    placeholder="Dirección Establecimiento (*)"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Horario de Atención (*):</label>
+                  <input
+                    id="txtHorario"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtHorario"
+                    required=""
+                    placeholder="Horario de Atención (*)"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label> Informacion del Dueño</label><br />
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Dueño o Administrador(*):</label>
+                  <input
+                    id="txtNombre"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtNombre"
+                    required=""
+                    placeholder="Dueño o Administrador"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Nº Celular del Dueño(*):</label>
+                  <input
+                    id="txtTelefono"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtTelefono"
+                    required=""
+                    placeholder="Nº Celular del Dueño"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label>Fotografías Establecimiento </label><br />
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>Fotografías Fachada(*):</label>
+
+                  <input
+                    id="txtFileFotografia"
+                    type="file"
+                    class="form-control"
+                    name="txtFileFotografia"
+                    multiple
+                    
+                    placeholder="Fotografías Fachada"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <label style="opacity: 0">Observaciones:</label>
+                <div style="display: flex">
+                  <div
+                    class="col"
+                    id="image-preview-container"
+                    style="
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      flex-wrap: wrap;
+                    "
+                  ></div>
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="btn_todos_eliminar_imagen"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <style>
+                .image-preview-container {
+                  /* display: flex;
+          flex-wrap: wrap;
+          margin: 0 2px !important; */
+                }
+                .my-images_preview {
+                  /* transition: all 0.2s ease; */
+                  /* box-shadow: 1px 1px 1px 1px #31b0d3; */
+                  margin: 0 10px;
+                  border: solid 1px gray;
+                  border-radius: 4px;
+                }
+                .my-images_preview:active {
+                  /* background-color: red !important; */
+                  width: 700px !important;
+                  position: fixed;
+
+                  top: 50%;
+                  left: 50%;
+
+                  transform: translate(-50%, -50%);
+                  z-index: 100000;
+
+                  /* height: 100% !important; */
+                }
+              </style>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label> Sección Mapas</label><br />
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
+                <div class="form-group has-success">
+                  <label>ubigeo (*):</label>
+                  <input
+                    id="txtUbicacion"
+                    type="text"
+                    maxlength="150"
+                    class="form-control"
+                    name="txtUbicacion"
+                    
+                    placeholder="ubigeo "
+                    autofocus=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <label> Imagens de Empresas</label><br />
+              </div>
+              <ul
+                class="col-lg-12 left mailbox-attachments clearfix"
+                id="container_img_empresa"
+              ></ul>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 left">
+                <h5></h5>
+                <button
+                  class="btn btn-success"
+                  type="submit"
+                  id="btnRegistrar_Establecimiento"
+                >
+                  <i class="fa fa-floppy-o"></i> Registrar
+                </button>
+                <a href="Establecimiento.php" class="btn btn-primary"
+                  ><i class="fa fa-remove"></i> Cancelar</a
+                >
+                <hr />
+                <span class="lead text-primary"></span>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <?php if($_SESSION["idrol"]==2 || $_SESSION["idrol"]==7  || $_SESSION["idrol"]==3){
+          
+          echo '
+          <button class="btn btn-primary" id="btnNuevo">
+            <i class="fa fa-file"></i> Nuevo
+          </button>
+          ';
+        } ?>
+
+        <br /><br />
+        <div id="VerListado" class="table-responsive">
+          <table
+            id="tblEstablecimientos"
+            class="table table-striped table-bordered table-condensed table-hover"
+            cellspacing="0"
+            cellpadding="0"
+            width="100%"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Departamento</th>
+                <th>Tipo de Establecimiento</th>
+                <th>Dirección de Establecimiento</th>
+                <th>Dueño o administrador</th>
+                <th>EVC Responsable</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Departamento</th>
+                <th>Tipo de Establecimiento</th>
+                <th>Dirección de Establecimiento</th>
+                <th>Dueño o administrador</th>
+                <th>EVC Responsable</th>
+                <th>Opciones</th>
+              </tr>
+            </tfoot>
+
+            <tbody id="sucursal"></tbody>
+          </table>
+        </div>
+        <!--Fin-Contenido-->
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+<script type="text/javascript">
+  $("#liSeguridad").addClass("treeview active");
+  $("#liConfiguraEstablecimiento").addClass("active");
+
+  traerUbicacion();
+  function traerUbicacion() {
+    $.ajax({
+      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+        var ubicacion_containe_options_html = "";
+
+        rpta.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+        });
+        // console.log(rpta);
+
+        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+      },
+      error: function (e) {},
+    });
+  }
+</script>
