@@ -2,12 +2,13 @@
 require "Conexion.php";
 
 class Venta
-{	
-	
-	public function VerificarStockMinimo($idpedido){
+{
+
+	public function VerificarStockMinimo($idpedido)
+	{
 		global $conexion;
-		$sql=
-		"SELECT stock_min , detalle_ingreso.* ,sum(detalle_ingreso.stock_actual) stock_actual_total,articulo.* ,categoria.nombre marca_nombre  FROM detalle_pedido 
+		$sql =
+			"SELECT stock_min , detalle_ingreso.* ,sum(detalle_ingreso.stock_actual) stock_actual_total,articulo.* ,categoria.nombre marca_nombre  FROM detalle_pedido 
 		JOIN detalle_ingreso ON detalle_ingreso.iddetalle_ingreso=detalle_pedido.iddetalle_ingreso
 		JOIN articulo ON articulo.idarticulo=detalle_ingreso.idarticulo
 		JOIN categoria ON categoria.idcategoria=articulo.idcategoria
@@ -15,13 +16,27 @@ class Venta
 		GROUP BY detalle_ingreso.idarticulo
 		;
 		;";
+		$sql = "SELECT stock_min,detalle_ingreso.*,  a.*, c.nombre AS categoria, um.nombre AS unidadMedida, m.nombre AS marca,
+		categoria.nombre marca_nombre,
+		SUM(detalle_ingreso.stock_actual) AS stock_actual_total,
+
+	FROM articulo a
+	left JOIN categoria c ON a.idcategoria = c.idcategoria
+	left JOIN detalle_ingreso ON detalle_ingreso.idarticulo = a.idarticulo  AND detalle_ingreso.estado_detalle_ingreso='INGRESO'
+	left JOIN marca m ON a.idmarca = m.idmarca
+	left JOIN unidad_medida um ON a.idunidad_medida = um.idunidad_medida
+	left JOIN ingreso ON detalle_ingreso.idingreso = ingreso.idingreso AND ingreso.estado='A'
+	WHERE a.estado = 'A'  AND idpedido=
+	GROUP BY a.idarticulo
+	ORDER BY idarticulo DESC;
+	";
 		$query = $conexion->query($sql);
 		return $query;
 	}
 	public function __construct()
 	{
 	}
-	
+
 	/* public function Registrar($idpedido,$idusuario,$tipo_venta,$tipo_comprobante,$serie_comprobante,$num_comprobante,$impuesto,$total,$estado, $numero, $iddetalle_documento_sucursal, $detalle){
 		global $conexion;
 		$sw = true;
@@ -31,19 +46,33 @@ class Venta
 			VALUES('$idpedido','$idusuario','$tipo_venta','$tipo_comprobante','$serie_comprobante','$num_comprobante', curdate(),'$impuesto','$total','$estado')";
 			//var_dump($sql);
 			$conexion->query($sql);	 */
-			
-	public function SaveImprimir($idventa){
+
+	public function SaveImprimir($idventa)
+	{
 		global $conexion;
-		$sql="INSERT INTO impresion(idventa, idusuario,fecha_registro) VALUES ($idventa,".$_SESSION["idusuario"].",CURRENT_TIMESTAMP())";
+		$sql = "INSERT INTO impresion(idventa, idusuario,fecha_registro) VALUES ($idventa," . $_SESSION["idusuario"] . ",CURRENT_TIMESTAMP())";
 
 		$query = $conexion->query($sql);
 		return $query;
-
 	}
-	public function Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_documento_sucursal, $detalle, $tipo_promocion, $metodo_pago, $agencia_envio,
-	$arrayMetodosPago
-	)
-	{
+	public function Registrar(
+		$idpedido,
+		$idusuario,
+		$tipo_venta,
+		$tipo_comprobante,
+		$serie_comprobante,
+		$num_comprobante,
+		$impuesto,
+		$total,
+		$estado,
+		$numero,
+		$iddetalle_documento_sucursal,
+		$detalle,
+		$tipo_promocion,
+		$metodo_pago,
+		$agencia_envio,
+		$arrayMetodosPago
+	) {
 		global $conexion;
 		$sw = true;
 		try {
@@ -56,13 +85,13 @@ class Venta
 			$conexion->query($sql);
 
 
-			$idVenta=$conexion->insert_id;
+			$idVenta = $conexion->insert_id;
 
 
 			foreach ($arrayMetodosPago as $subarray) {
 				$subarray[1];
 
-				$sql="INSERT  INTO venta_pago(idventa,fecha_pago,idtipo_metodo_pago,idbanco_cuenta,referencia,pago)
+				$sql = "INSERT  INTO venta_pago(idventa,fecha_pago,idtipo_metodo_pago,idbanco_cuenta,referencia,pago)
 				VALUES(
 					$idVenta,
 				'$subarray[0]',
@@ -71,11 +100,11 @@ class Venta
 				'$subarray[3]',
 				$subarray[4])";
 
-			// echo $sql;
+				// echo $sql;
 				$conexion->query($sql);
-			  }
+			}
 
-			
+
 
 			$sql_detalle_doc = "UPDATE detalle_documento_sucursal set ultimo_numero = '$numero' where iddetalle_documento_sucursal = $iddetalle_documento_sucursal";
 			//var_dump($sql);
@@ -95,7 +124,7 @@ class Venta
 				//2DA VERSION 
 
 
-				$sql_detalle_ingreso ="SELECT idarticulo from detalle_ingreso WHERE iddetalle_ingreso=" . $valor[0] . " ";
+				$sql_detalle_ingreso = "SELECT idarticulo from detalle_ingreso WHERE iddetalle_ingreso=" . $valor[0] . " ";
 
 				$idarticulo = $conexion->query($sql_detalle_ingreso)->fetch_object()->idarticulo;
 
@@ -106,11 +135,11 @@ class Venta
 				 and ingreso.estado='A'
                     and detalle_ingreso.estado_detalle_ingreso='INGRESO'
 					
-				  and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
+				  and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 				$rpta_sql_suma_anterior = $conexion->query($suma_anterior)->fetch_object();
 
-				
+
 				$stock_anterior = $rpta_sql_suma_anterior->stock;
 
 				$stockNuevo = $valor[1] - $valor[2];
@@ -121,28 +150,28 @@ class Venta
 
 				$conexion->query($sql_detalle) or $sw = false;
 
-			
+
 
 
 				global $conexion;
 				$sql = "SELECT * from detalle_ingreso where iddetalle_ingreso =" . $valor[0] . " ";
-				$query = $conexion->query($sql)->fetch_object()->idarticulo;	
-				
-				
+				$query = $conexion->query($sql)->fetch_object()->idarticulo;
+
+
 				// $sql = "SELECT iddetalle_pedido from detalle_pedido where idpedido =" . $idpedido." and iddetalle_ingreso=$valor[0] limit 1";
 
 				// print_r($valor);
 				// $detalle_pedido = $conexion->query($sql)->fetch_object()->iddetalle_pedido;
 
 
-				$suma_ingreso="SELECT sum(stock_actual) as stock
+				$suma_ingreso = "SELECT sum(stock_actual) as stock
 				from detalle_ingreso  
 				inner join ingreso on ingreso.idingreso=detalle_ingreso.idingreso
 				 where idarticulo=$idarticulo 
 				 and ingreso.estado='A'
                     and detalle_ingreso.estado_detalle_ingreso='INGRESO'
 
-				  and ingreso.idsucursal=".$_SESSION["idsucursal"]."";
+				  and ingreso.idsucursal=" . $_SESSION["idsucursal"] . "";
 
 				$rpta_sql_suma_ingreso = $conexion->query($suma_ingreso)->fetch_object();
 				$stock_actual = $rpta_sql_suma_ingreso->stock;
@@ -150,8 +179,8 @@ class Venta
 				$detale_ingreso = 0;
 
 
-				$stock_anterior_not_null=($stock_anterior !== null) ? $stock_anterior: 0 ; 
-				$stock_actual_not_null=($stock_actual !== null) ? $stock_actual: 0 ;
+				$stock_anterior_not_null = ($stock_anterior !== null) ? $stock_anterior : 0;
+				$stock_actual_not_null = ($stock_actual !== null) ? $stock_actual : 0;
 
 
 				$sqlKardex = "INSERT INTO 
@@ -172,7 +201,7 @@ class Venta
 						'" . $_SESSION['idsucursal'] . "',
 						CURRENT_TIMESTAMP(),
 						'venta',
-						'" . $query. "',
+						'" . $query . "',
 						'" . $detale_ingreso . "',
 						'" . $valor[3] . "', 
 						'" . $valor[2] . "',
