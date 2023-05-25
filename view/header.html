@@ -298,7 +298,7 @@
 
           <li class="treeview" id="liVentas">
             <a href="#">
-              <i class="fa fa-shopping-cart"></i><span>Ventas – EV</span>
+              <i class="fa fa-shopping-cart"></i><span>Ventas EV</span>
               <span class="label label-primary pull-right bg-green">V</span>
             </a>
             <ul class="treeview-menu">
@@ -365,9 +365,6 @@
               <li id="liAnulacionVenta"><a href="AnulacionVenta.php"><i class="fa fa-circle-o"></i> Anulacion Admin</a></li>
               <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a></li>
               <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i>Banco</a></li>
-
-              <li id="liConfiguracategoria_empresa"><a href="CategoriaEmpresa.php"><i class="fa fa-circle-o"></i>Categoria Empresa</a></li>
-
               <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i>Cuenta Bancaria</a></li>
               <li id="liConfiguraTransporte"><a href="Transporte.php"><i class="fa fa-circle-o"></i>Transporte</a></li>
               <li id="liConfiguraTarjeta"><a href="Tarjeta.php"><i class="fa fa-circle-o"></i>Tarjeta</a></li>
@@ -493,6 +490,7 @@
                         </span>
                       </a>
                       <ul class="treeview-menu">
+                        <li id="liInventarioFormatosOMK"><a href="InventarioFormatosOMK.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OMK</a></li> 
                         <li id="liInventarioFormatosOMK"><a href="InventarioFormatosOMK.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OMK</a></li>
                         <li id="liFOOMKGMK001"><a href="FOOMKGMK001.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-001</a></li>
                         <li id="liFOOMKGMK002"><a href="FOOMKGMK002.php"><i class="fa fa-circle-o"></i> FO-OMK-GMK-002</a></li>
@@ -502,51 +500,29 @@
                       </ul>
                   </li>
 
-                  <li class="treeview" id="liManual">
+                  <li class="treeview" id="liManualMkt">
                       <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                       </a>
                       <ul class="treeview-menu">
-                        <li id="liInventarioManualesOVT"><a href="InventarioManualesOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales OVT</a></li>
-                        <li id="liMAOVTGVT001"><a href="MAOVTGVT001.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-001</a></li>
-                        <li id="liMAOVTGVT002"><a href="MAOVTGVT002.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-002</a></li>
-                        <li id="liMAOVTGVT003"><a href="MAOVTGVT003.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-003</a></li>
-                        <li id="liMAOVTGVT004"><a href="MAOVTGVT004.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-004</a></li> 
-                        <li id="liMAOVTGVT005"><a href="MAOVTGVT005.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-005</a></li>
-                        <li id="liMAOVTGVT006"><a href="MAOVTGVT006.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-006</a></li>
-                        <li id="liMAOVTGVT007"><a href="MAOVTGVT007.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-007</a></li>
-                        <li id="liMAOVTGVT008"><a href="MAOVTGVT008.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-008</a></li>
-                        <li id="liMAOVTGVT009"><a href="MAOVTGVT009.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-009</a></li>
-                        <li id="liMAOVTGVT010"><a href="MAOVTGVT010.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-010</a></li>
-                        <li id="liMAOVTGVT011"><a href="MAOVTGVT011.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-011</a></li>
-                        <li id="liMAOVTGVT012"><a href="MAOVTGVT012.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-012</a></li>
-                        <li id="liMAOVTGVT013"><a href="MAOVTGVT013.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-013</a></li>
-                        <li id="liMAOVTGVT014"><a href="MAOVTGVT014.php"><i class="fa fa-circle-o"></i> MA-OVT-GVT-014</a></li>
+                        <li id="liInventarioManualesOMK"><a href="InventarioManualesOMK.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales OMK</a></li>
                       </ul>
                     </li>
     
-                  <li class="treeview" id="liProcedimientos">
+                  <li class="treeview" id="liProcedimientosMkt">
                     <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
                       <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li id="liInventarioProcedimientosOVT"><a href="InventarioProcedimientosOVT.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos OVT</a></li>
-                      <li id="liPROVTGVT001"><a href="PROVTGVT001.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-001</a></li>
-                      <li id="liPROVTGVT002"><a href="PROVTGVT002.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-002</a></li>
-                      <li id="liPROVTGVT003"><a href="PROVTGVT003.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-003</a></li>
-                      <li id="liPROVTGVT004"><a href="PROVTGVT004.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-004</a></li>
-                      <li id="liPROVTGVT005"><a href="PROVTGVT005.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-005</a></li>
-                      <li id="liPROVTGVT006"><a href="PROVTGVT006.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-006</a></li>
-                      <li id="liPROVTGVT007"><a href="PROVTGVT007.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-007</a></li>
-                      <li id="liPROVTGVT008"><a href="PROVTGVT008.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-008</a></li>
-                      <li id="liPROVTGVT009"><a href="PROVTGVT009.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-009</a></li>
-                      <li id="liPROVTGVT010"><a href="PROVTGVT010.php"><i class="fa fa-circle-o"></i> PR-OVT-GVT-010</a></li>
+                      <li id="liInventarioProcedimientosOMK"><a href="InventarioProcedimientosOMK.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos OMK</a></li>
+                      <li id="liPROMKGMK001"><a href="PROMKGMK001.php"><i class="fa fa-circle-o"></i> PR-OMK-GMK-001</a></li>
                     </ul>
                   </li>
+
                 </ul>
               </li>
 
@@ -555,6 +531,124 @@
                   <i class="fa fa-book"></i> <span> Doc. Logistica</span>
                 </a>
                 <ul class="treeview-menu">
+
+                  <li class="treeview" id="liAnexosLog">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosLog">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+
+                          <li class="treeview" id="lialm_almacenamiento">
+                            <a href="#"><i class="fa fa-circle-o"></i>ALM<br/>- Almacenamiento
+                              <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                            </a>
+                            <ul class="treeview-menu">
+                              <li id="liFOOLGALM001"><a href="FOOLGALM001.php"><i class="fa fa-circle-o"></i>FO-OLG-ALM-001</a></li>
+                              <!-- <li id="liFOOLGALM002"><a href="FOOLGALM002.php"><i class="fa fa-circle-o"></i>FO-OLG-ALM-002</a></li> -->
+                              <li id="liFOOLGALM003"><a href="FOOLGALM003.php"><i class="fa fa-circle-o"></i>FO-OLG-ALM-003</a></li>
+                              <li id="liFOOLGALM004"><a href="FOOLGALM004.php"><i class="fa fa-circle-o"></i>FO-OLG-ALM-004</a></li>
+                              <li id="liFOOLGALM005"><a href="FOOLGALM005.php"><i class="fa fa-circle-o"></i>FO-OLG-ALM-005</a></li>
+                            </ul>
+                          </li>
+
+                          <li class="treeview" id="liinv_gestion_inventario">
+                            <a href="#"><i class="fa fa-circle-o"></i>INV<br/>- Gestion de inventario
+                              <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                            </a>
+                            <ul class="treeview-menu">
+                              <li id="liFOOLINVM016"><a href="FOOLINVM016.php"><i class="fa fa-circle-o"></i>FO-OLG-INV-016</a></li>
+                              <li id="liFOOLINVM017"><a href="FOOLINVM017.php"><i class="fa fa-circle-o"></i>FO-OLG-INV-017</a></li>
+                            </ul>
+                          </li>
+
+                        <li class="treeview" id="lipreparacion_envio_pedido">
+                          <a href="#"><i class="fa fa-circle-o"></i>PEP<br/>- Preparacion y Envio<br/> de Pedidos
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                          </a>
+                          <ul class="treeview-menu">
+                            <li id="liFOOLGPEPM008"><a href="FOOLGPEPM008.php"><i class="fa fa-circle-o"></i>FO-OLG-PEP-008</a></li>
+                          </ul>
+                        </li>
+
+                        <li id="liInventarioFormatosOLG"><a href="InventarioFormatosOLG.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OLG</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManualLog">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioManualesOLG"><a href="InventarioManualesOLG.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales OLG</a></li>
+                      </ul>
+                  </li>
+    
+                  <li class="treeview" id="liProcedimientosLog">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      
+                      <li class="treeview" id="lialm_almacenamiento">
+                        <a href="#"><i class="fa fa-circle-o"></i>ALM<br/>- Proceso de <br/> Almacenamiento
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                        </ul>
+                      </li>
+                      
+                      <li class="treeview" id="lidis_proceso_distribucion">
+                        <a href="#"><i class="fa fa-circle-o"></i>DIS<br/>- Proceso de <br/> Distribucion
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                        </ul>
+                      </li>
+
+                      <li class="treeview" id="liinv_proceso_gestion_inventario">
+                        <a href="#"><i class="fa fa-circle-o"></i>INV<br/>- Proceso de <br/> Gestion de Inventarios
+                          <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+                          <li id="liPROLGINV001"><a href="PROLGINV001.php"><i class="fa fa-circle-o"></i>PR-OLG-INV-001</a></li>
+                        </ul>
+                      </li>
+
+                      <li id="liInventarioProcedimientosOLG"><a href="InventarioProcedimientosOLG.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Procedimientos OLG</a></li>
+                      <li id="liPROLGGLG001"><a href="PROLGGLG001.php"><i class="fa fa-circle-o"></i>PR-OLG-GLG-001</a></li>
+                    </ul>
+                  </li>
 
                 </ul>
               </li>
@@ -565,32 +659,263 @@
                 </a>
                 <ul class="treeview-menu">
 
+                  <li class="treeview" id="liAnexosFz">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosFz">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioFormatosOFZ"><a href="InventarioFormatosOFZ.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos OFZ</a></li> 
+                        <li id="liFOOFZGFZ001"><a href="FOOFZGFZ001.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-001</a></li>
+                        <li id="liFOOFZGFZ002"><a href="FOOFZGFZ002.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-002</a></li>
+                        <li id="liFOOFZGFZ003"><a href="FOOFZGFZ003.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-003</a></li>
+                        <li id="liFOOFZGFZ004"><a href="FOOFZGFZ004.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-004</a></li>
+                        <li id="liFOOFZGFZ005"><a href="FOOFZGFZ005.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-005</a></li>
+                        <li id="liFOOFZGFZ006"><a href="FOOFZGFZ006.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-006</a></li>
+                        <li id="liFOOFZGFZ007"><a href="FOOFZGFZ007.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-007</a></li>
+                        <li id="liFOOFZGFZ008"><a href="FOOFZGFZ008.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-008</a></li>
+                        <li id="liFOOFZGFZ009"><a href="FOOFZGFZ009.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-009</a></li>
+                        <li id="liFOOFZGFZ010"><a href="FOOFZGFZ010.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-010</a></li>
+                        <li id="liFOOFZGFZ011"><a href="FOOFZGFZ011.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-011</a></li>
+                        <li id="liFOOFZGFZ012"><a href="FOOFZGFZ012.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-012</a></li>
+                        <li id="liFOOFZGFZ013"><a href="FOOFZGFZ013.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-013</a></li>
+                        <li id="liFOOFZGFZ014"><a href="FOOFZGFZ014.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-014</a></li>
+                        <li id="liFOOFZGFZ015"><a href="FOOFZGFZ015.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-015</a></li>
+                        <li id="liFOOFZGFZ016"><a href="FOOFZGFZ016.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-016</a></li>
+                        <!-- <li id="liFOOFZGFZ017"><a href="FOOFZGFZ017.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-017</a></li> -->
+                        <li id="liFOOFZGFZ018"><a href="FOOFZGFZ018.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-018</a></li>
+                        <!-- <li id="liFOOFZGFZ019"><a href="FOOFZGFZ019.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-019</a></li> -->
+                        <li id="liFOOFZGFZ020"><a href="FOOFZGFZ020.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-020</a></li>
+                        <li id="liFOOFZGFZ021"><a href="FOOFZGFZ021.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-021</a></li>
+                        <li id="liFOOFZGFZ022"><a href="FOOFZGFZ022.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-022</a></li>
+                        <!-- <li id="liFOOFZGFZ023"><a href="FOOFZGFZ023.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-023</a></li>
+                        <li id="liFOOFZGFZ024"><a href="FOOFZGFZ024.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-024</a></li> -->
+                        <li id="liFOOFZGFZ025"><a href="FOOFZGFZ025.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-025</a></li>
+                        <li id="liFOOFZGFZ026"><a href="FOOFZGFZ026.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-026</a></li>
+                        <li id="liFOOFZGFZ027"><a href="FOOFZGFZ027.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-027</a></li>
+                        <li id="liFOOFZGFZ028"><a href="FOOFZGFZ028.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-028</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManualFz">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioManualesFz"><a href="InventarioManualesFz.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales Fz</a></li>
+                      </ul>
+                  </li>
+    
+                  <li class="treeview" id="liProcedimientosFz">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      <li id="liInventarioProcedimientosOFZ"><a href="InventarioProcedimientosOFZ.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos OFZ</a></li>
+                      <li id="liPROFZGFZ001"><a href="PROFZGFZ001.php"><i class="fa fa-circle-o"></i> PR-OFZ-GFZ-001</a></li>
+                    </ul>
+                  </li>
+
                 </ul>
               </li>
+
               <li class="treeview" id="liDocRRHH">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. R.R.H.H</span>
                 </a>
                 <ul class="treeview-menu">
 
+                  <li class="treeview" id="liAnexosRRHH">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosRRHH">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioFormatosORH"><a href="InventarioFormatosORH.php"><i class="fa fa-circle-o"></i> Inventario de <br/>Formatos ORH</a></li>
+                        <li id="liFOORHGRH001"><a href="FOORHGRH001.php"><i class="fa fa-circle-o"></i> FO-ORH-GRH-001</a></li>
+                        <li id="liFOORHGRH002"><a href="FOORHGRH002.php"><i class="fa fa-circle-o"></i> FO-ORH-GRH-002</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManualRRHH">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        <li id="liInventarioManualesORH"><a href="InventarioManualesORH.php"><i class="fa fa-circle-o"></i>Inventario de <br/>Manuales ORH</a></li>
+                      </ul>
+                  </li>
+    
+                  <li class="treeview" id="liProcedimientosRRHH">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                      <li id="liInventarioProcedimientosORH"><a href="InventarioProcedimientosORH.php"><i class="fa fa-circle-o"></i>Inventario de <br/>procedimientos ORH</a></li>
+                      <li id="liPRORHGRH001"><a href="PRORHGRH001.php"><i class="fa fa-circle-o"></i> PR-ORH-GRH-001</a></li>
+                    </ul>
+                  </li>
+
                 </ul>
               </li>
+
               <li class="treeview" id="liDocIT">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. IT</span>
                 </a>
                 <ul class="treeview-menu">
 
+                  <li class="treeview" id="liAnexosIT">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosIT">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManualIT">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        
+                      </ul>
+                  </li>
+    
+                  <li class="treeview" id="liProcedimientosIT">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                     
+                    </ul>
+                  </li>
+
                 </ul>
               </li>
-              <li class="treeview" id="liDoProduccion">
+
+              <li class="treeview" id="liDocProduccion">
                 <a href="#">
                   <i class="fa fa-book"></i> <span> Doc. Produccion</span>
                 </a>
                 <ul class="treeview-menu">
 
+
+                  <li class="treeview" id="liAnexosProduccion">
+                    <a href="#"><i class="fa fa-circle-o"></i> Anexos
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                    </ul>
+                  </li>
+    
+                  <li class="treeview" id="liFormatosProduccion">
+                      <a href="#"><i class="fa fa-circle-o"></i> Formato-FO
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+
+                      </ul>
+                  </li>
+
+                  <li class="treeview" id="liManualProduccion">
+                      <a href="#"><i class="fa fa-circle-o"></i> Manual-MA
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      <ul class="treeview-menu">
+                        
+                      </ul>
+                  </li>
+    
+                  <li class="treeview" id="liProcedimientosProduccion">
+                    <a href="#"><i class="fa fa-circle-o"></i> Procedimientos-PR
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                     
+                    </ul>
+                  </li>
+
                 </ul>
               </li>
+
+            </ul>
+          </li>
+
+          <li class="treeview" id="liSeguridad">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>Configuracion</span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+              <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a></li>
+              <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i> Conf. Banco</a></li>
+              <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i> Conf. Cuenta Bancaria</a></li>
+              <li id="liConfiguraTransporte"><a href="Transporte.php"><i class="fa fa-circle-o"></i> Conf. Transporte</a></li>
+              <li id="liConfiguraTarjeta"><a href="Tarjeta.php"><i class="fa fa-circle-o"></i> Conf. Tarjeta</a></li>
+              <li id="liConfiguraPlataforma"><a href="Plataforma.php"><i class="fa fa-circle-o"></i> Conf. Plataforma</a></li>
+              <li id="liConfiguraMetodo_Pago"><a href="Metodo_Pago.php"><i class="fa fa-circle-o"></i> Conf. Metodo de Pago</a></li>
+              <li id="liConfiguraMotivoTraslado"><a href="MotivoTraslado.php"><i class="fa fa-circle-o"></i> Conf. Motivo de traslado</a></li>
+              <li id="liCopia"><a href="CopiaSeguridad.php"><i class="fa fa-circle-o"></i> Copia de Seguridad</a></li>
             </ul>
           </li>
 

@@ -388,32 +388,32 @@ switch ($_GET["op"]) {
 			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
 		}
 		
-		// $mail->Host = "$server";
-		// $mail->From = "$email";
-		// $mail->FromName = "$sucursal - Almacen";
-		// $mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
-		// $mail->addAddress("$result2", "Almacen");
+		/* $mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Almacen";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result2", "Almacen");
+		$mail->MsgHTML($mensaje);
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		}
+ */
+
+		/* $mail->Host = "$server";
+		$mail->From = "$email";
+		$mail->FromName = "$sucursal - Ventas";
+		$mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
+		$mail->addAddress("$result3", "Ventas");
+
 		// $mail->MsgHTML($mensaje);
-		// if ($mail->Send()) {
-		// 	echo "Enviado con éxito";
-		// } else {
-		// 	echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
-		// }
 
-
-		// $mail->Host = "$server";
-		// $mail->From = "$email";
-		// $mail->FromName = "$sucursal - Ventas";
-		// $mail->Subject = "$sucursal - Stock Mimino Productos -ERP Medicfif";
-		// $mail->addAddress("$result3", "Ventas");
-
-		// $mail->MsgHTML($mensaje);
-
-		// if ($mail->Send()) {
-		// 	echo "Enviado con éxito";
-		// } else {
-		// 	echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
-		// }
+		if ($mail->Send()) {
+			echo "Enviado con éxito";
+		} else {
+			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
+		} */
 		break;
 
 
