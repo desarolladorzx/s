@@ -362,6 +362,7 @@ switch ($_GET["op"]) {
 		$nombre=$_POST['nombre'];
 		$marca_nombre=$_POST['marca_nombre'];
 		$stock_min=$_POST['stock_min'];
+		$stock_actual_total=$_POST['stock_actual_total'];
 
 		$result1 = 'logistica@grupopuma.pe';
 		// $result2 = 'almacesn@grupopuma.pe2';
@@ -374,12 +375,12 @@ switch ($_GET["op"]) {
 		$email = $_SESSION["email"];
 		$mail = new PHPMailer;
 
-		$mensaje="¡ALERTA! El $nombre de la marca $marca_nombre está volando de nuestros estantes! Solo quedan $stock_min unidades en stock. Esto significa que nuestros clientes podrían experimentar retrasos en la entrega o incluso quedarse sin el producto. ¡Necesitamos reabastecer nuestro inventario lo antes posible! Además, este producto es conocido por su alta calidad y características únicas que lo hacen destacar de otros productos similares en el mercado. ¡Ordene ahora para asegurarse de obtener su $nombre antes de que se agote! ";
+		$mensaje=" ¡ALERTA! El $nombre de la marca $marca_nombre esta volando de nuestros estantes! Solo quedan $$stock_actual_total unidades en stock. Esto significa que nuestros clientes podrian experimentar retrasos en la entrega o incluso quedarse sin el producto. ¡Necesitamos reabastecer nuestro inventario lo antes posible! Ademas, este producto tienen un Stocke minomo de $stock_min Unidades y es conocido por su alta calidad y caracteristicas unicas que lo hacen destacar de otros productos similares en el mercado. ¡Ordene ahora para asegurarse de obtener su $nombre antes de que se agote! https://medicfit.grupopuma.pe/Articulo.php ";
 		$mail->Host = "$server";
 		$mail->From = "$email";
-		$mail->FromName = "$sucursal - Área Logistica";
-		$mail->Subject = "$sucursal - Notificacion de Stock Mimino- Sistema ERP";
-		$mail->addAddress("$result1", "Jefe de Logistica");
+		$mail->FromName = "$sucursal - AREA LOGISTICA";
+		$mail->Subject = "$sucursal - NOTIFICACION DE STOCK MINIMO - SISTEMA ERP";
+		$mail->addAddress("$result1", "JEFE DE LOGISTICA");
 		$mail->MsgHTML($mensaje);
 
 		if ($mail->Send()) {
