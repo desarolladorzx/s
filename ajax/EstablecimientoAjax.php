@@ -4,6 +4,24 @@ require_once "../model/Establecimiento.php";
 $obj = new Establecimiento();
 
 switch ($_GET["op"]) {
+
+
+    case 'TraerDatosCategoria_empresa':
+
+
+      
+
+        $query_Tipo = $obj->TraerDatosCategoria_empresa();
+
+        $nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+
+
+
+        break;
     case 'GetImagenes':
 
         $query_total = $obj->GetImagenes($_REQUEST["idempresa"]);
@@ -70,7 +88,7 @@ switch ($_GET["op"]) {
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->ubicacion,
-                "2" => $reg->categoria_empresa,
+                "2" => $reg->categoria_empresa_descripcion,
 
                 "3" => $reg->direccion,
 

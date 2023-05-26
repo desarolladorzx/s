@@ -4,7 +4,13 @@
 
 	class Establecimiento{
 
-		
+	public function TraerDatosCategoria_empresa(){
+		global $conexion;
+		$sql = "SELECT * from categoria_empresa where estado='1'";
+		$query = $conexion->query($sql);
+		return $query;
+
+	}
 	public function GetImagenes($idempresa)
 	{
 		global $conexion;
@@ -79,6 +85,7 @@
 			,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
 			,empresa.nombre,empresa.direccion	,empresa.telefono
 			
+			, categoria_empresa.descripcion categoria_empresa_descripcion
 			 from empresa 
 			
 			left JOIN empleado ON empleado.idempleado =empresa.idempleado
@@ -86,6 +93,8 @@
 			
 			LEFT JOIN distrito  ON distrito.iddistrito=empresa.distrito
 			left JOIN provincia  ON provincia.idprovincia=empresa.provincia
+
+			left join categoria_empresa on categoria_empresa.idcategoria_empresa=empresa.categoria_empresa
 			left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
 					
 			where empresa.estado='1'

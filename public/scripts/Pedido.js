@@ -44,11 +44,11 @@ function init() {
     if (selectedValue == "PAGADO") {
       // $("#container_imagenes_chat").show();
       // $("#imagenChats").prop("required", true);
-      // $("#imagenVoucher").prop("required", true);
+      $("#imagenVoucher").prop("required", true);
     } else {
       // $("#container_imagenes_chat").hide();
       // $("#imagenChats").prop("required", false);
-      // $("#imagenVoucher").prop("required", false);
+      $("#imagenVoucher").prop("required", false);
     }
   });
 

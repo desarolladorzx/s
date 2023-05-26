@@ -1,20 +1,44 @@
 $(document).on("ready", init); // Inciamos el jquery
 
+
+
+
+function traerDatosTipoEstablecimiento() {
+
+  console.log('asdsadasd')
+  $.ajax({
+    url: "./ajax/EstablecimientoAjax.php?op=TraerDatosCategoria_empresa",
+    dataType: "json",
+    type: "get",
+    success: function (rpta) {
+      console.log(rpta);
+      var options_html = '<option value=""></option>';
+
+      rpta.map((e) => {
+        options_html += `<option data-id='${e.idcategoria_empresa}'value='${e.idcategoria_empresa}'> ${e.descripcion} </option>`;
+      });
+
+      $("#txtTipoEstablecimiento").html(options_html);
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+}
+
+
 function init() {
+
+  traerDatosTipoEstablecimiento();
+  
+
+
   $("#tblEstablecimientos").dataTable({
     dom: "Bfrtip",
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
   });
 
   ListadoEstablecimientos(); // Ni bien carga la pagina que cargue el metodo
-
-
-
-
-
-
-  
-
 
   ComboTipo_Documento();
   $("#VerForm").hide(); // Ocultamos el formulario
@@ -31,9 +55,6 @@ function init() {
     $("#btn_todos_eliminar_imagen").show();
     $("#image-preview-container").html("");
     const files = this.files;
-
-
-    
 
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
@@ -85,7 +106,6 @@ function init() {
 
     var formData = new FormData($("#frmEstablecimiento")[0]);
 
-
     $.each($("#txtFileFotografia")[0].files, function (i, file) {
       formData.append("fileupload[]", file);
     });
@@ -103,8 +123,11 @@ function init() {
 
       success: function (datos) {
         swal("Mensaje del Sistema", datos, "success");
-        // ListadoEstablecimientos();
-        // OcultarForm();
+        ListadoEstablecimientos();
+        OcultarForm();
+        $('input').val('')
+        $('select').val('')
+        $('#image-preview-container').html('')
       },
     });
   }
@@ -198,28 +221,24 @@ function mostrarImagenes(idempresa) {
 
 
 
-function cargarDataEstablecimiento(id,editable) {
 
-
+function cargarDataEstablecimiento(id, editable) {
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=cargarDatos",
     data: {
-      id
+      id,
     },
     dataType: "json",
 
     type: "GET",
-    success:function(empresa){
+    success: function (empresa) {
     
-      console.log(empresa.idempresa);
-      
+   
       $("#idEstablecimiento").val(empresa.idempresa);
-
 
       $("#id_ubicacion_envio_array").val(empresa.idubicacion);
 
       $("#txt_ubicacion_establecimiento").val(empresa.ubicacion);
-
 
       $("#txtTipoEstablecimiento").val(empresa.categoria_empresa);
 
@@ -231,22 +250,18 @@ function cargarDataEstablecimiento(id,editable) {
       $("#txtNombre").val(empresa.nombre);
       $("#txtTelefono").val(empresa.telefono);
 
-
       mostrarImagenes(empresa.idempresa);
 
-
-      if(editable==0){
-        $("input").prop('disabled',true)
-        $('#btnRegistrar_Establecimiento').hide()
+      if (editable == 0) {
+        $("input").prop("disabled", true);
+        $("select").prop("disabled", true);
+        $("#btnRegistrar_Establecimiento").hide();
       }
-      
-    }
-    })
+    },
+  });
 
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
   $("#VerForm").show(); // mostramos el formulario
   $("#btnNuevo").hide(); // ocultamos el boton nuevo
   $("#VerListado").hide(); // ocultamos el listado
-
-
 }
