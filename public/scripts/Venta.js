@@ -765,6 +765,9 @@ function pasarIdPedido(
   // CARGA DETALLE DE IMAGENES
   mostrarDetalleImagenes(idPedido);
   mostrarDetalleImagenesChat(idPedido);
+  
+  mostrarDetalleImagenesFEFO(idPedido);
+
   $("#cboModPagoDetalles").val(PAGO_DETALLE);
   $("#textObservacionesDetalles").val(OBSERVACIONES);
 }

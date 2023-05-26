@@ -36,21 +36,19 @@ function Limpiar() {
 function init() {
   // $('#idbtnRegistar').prop('disabled', true);
 
-  $("#container_imagenes_chat").hide();
+  // $("#container_imagenes_chat").hide();
 
   $("#cboModPago").on("change", function () {
     var selectedValue = $(this).val();
 
     if (selectedValue == "PAGADO") {
-      $("#container_imagenes_chat").show();
-
-      $("#imagenChats").prop("required", true);
-      $("#imagenVoucher").prop("required", true);
+      // $("#container_imagenes_chat").show();
+      // $("#imagenChats").prop("required", true);
+      // $("#imagenVoucher").prop("required", true);
     } else {
-      $("#container_imagenes_chat").hide();
-
-      $("#imagenChats").prop("required", false);
-      $("#imagenVoucher").prop("required", false);
+      // $("#container_imagenes_chat").hide();
+      // $("#imagenChats").prop("required", false);
+      // $("#imagenVoucher").prop("required", false);
     }
   });
 
@@ -350,7 +348,9 @@ function init() {
 
         // alert(detalle);
 
-        if (omision_fefo) {
+        var inputFile = $('input[type="file"]#imagenFEFO').get(0);
+        if (inputFile && inputFile.files && inputFile.files.length > 0) {
+          
           $.each(
             $("input[type='file']#imagenFEFO")[0].files,
             function (i, file) {
@@ -401,15 +401,15 @@ function init() {
         } else {
           $("#btn_registrar_cotizacion").prop("disabled", true);
 
-          if ($("#cboModPago").val() == "PAGADO") {
-            $.each(
-              $("input[type='file']#imagenChats")[0].files,
-              function (i, file) {
-                formData.append("fileuploadChat[]", file);
-              }
-            );
-          } else {
-          }
+          // if ($("#cboModPago").val() == "PAGADO") {
+          $.each(
+            $("input[type='file']#imagenChats")[0].files,
+            function (i, file) {
+              formData.append("fileuploadChat[]", file);
+            }
+          );
+          // } else {
+          // }
           $.ajax({
             url: "./ajax/PedidoAjax.php?op=Save",
             data: formData,
@@ -1718,9 +1718,7 @@ function cambiarEstadoPedido(idPedido) {
                 function (e) {
                   swal("Mensaje del Sistema", e, "success");
 
-                  
                   location.reload();
-
                 }
               );
             }
@@ -2204,6 +2202,7 @@ function AgregarPedCarrito(
 
     var datos = tabla.rows().data();
 
+    let mu = false;
     datos.map((element) => {
       if (element[4] == art && $("#txtSucursal").val() == element[1]) {
         var fechaselecionada = new Date(serie + "T00:00:00");
@@ -2211,13 +2210,18 @@ function AgregarPedCarrito(
         var fecha1 = new Date(element[6] + "T00:00:00");
 
         if (fecha1.getTime() < fechaselecionada.getTime()) {
-          confirmarElProducto = confirm(
-            "existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto"
-          );
-          omision_fefo = confirmarElProducto == true ? true : false;
+          mu = true;
         }
       }
     });
+
+    if (mu) {
+      confirmarElProducto = confirm(
+        "existen productos con una fecha de vencimiento mas proxima , aun quieres guardar este producto"
+      );
+      omision_fefo = confirmarElProducto == true ? true : false;
+    }
+
     //var detalles = new Array(iddet_ing, art, precio_venta, "1", "0.0", stock_actual, cod, serie);
     //elementos.push(detalles);
     //console.log(detalles);
@@ -2239,7 +2243,7 @@ function AgregarPedCarrito(
                         required
                       />
                     </div>
-                  </div>
+            </div>
       `);
     }
 

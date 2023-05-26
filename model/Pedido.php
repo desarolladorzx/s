@@ -751,7 +751,7 @@ order by idpersona DESC ;";
 			'$imagen', 
 			1,
 			'FEFO')";
-		// echo $sql;
+			
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -858,6 +858,7 @@ order by idpersona DESC ;";
 		where detalle_pedido_img.idpedido = $idpedido AND detalle_pedido_img.estado = 1 and tipo_imagen='FEFO'
 		";
 		$query = $conexion->query($sql);
+		
 		return $query;
 	}
 
