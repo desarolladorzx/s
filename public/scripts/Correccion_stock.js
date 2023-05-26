@@ -91,7 +91,7 @@ function AgregarPedCarritoCorreccion_stock(
       elementos.push(detalles);
     }
 
-    ConsultarDetallesTraslado();
+    ConsultarDetallesCorreccionStock();
   
 }
 function cargarBotones(estado, id) {
@@ -415,7 +415,7 @@ function guardarCantidadRecibida(pos) {
   arrayDatosRecibidos[pos].cantidadRecibida = cantidadRecibida[pos].value;
 }
 
-function ConsultarDetallesTraslado() {
+function ConsultarDetallesCorreccionStock() {
   $("table#tblDetallePedidoCorrreccion_stockRecibido tbody").html("");
 
   var data = JSON.parse(JSON.stringify(elementos));
@@ -473,7 +473,7 @@ function guardarfechaVencimientoProducto(pos, valor) {
 function eliminarDetalleTraslado(pos) {
   pos > -1 && elementos.splice(parseInt(pos), 1);
   ConsultarDetalles();
-  ConsultarDetallesTraslado();
+  ConsultarDetallesCorreccionStock();
 }
 
 function guardartipoCorreccion_stock(pos, valor) {

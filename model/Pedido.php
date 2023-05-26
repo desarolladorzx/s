@@ -62,7 +62,10 @@ class Pedido
 	 AND (
 			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' )
 			$exepcion
-		 and CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ', persona.telefono,' - ', persona.telefono_2 )  like '%$q%'
+		 and CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ' )  like '%$q%'
+
+
+
 	GROUP BY persona.num_documento
 	order by idpersona DESC ;";
 

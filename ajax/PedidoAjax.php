@@ -704,16 +704,16 @@ switch ($_GET["op"]) {
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImageneFEFO($_REQUEST["idPedido"]);
         while ($reg = $query_total->fetch_object()) {
-            echo '<li>
-                                <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank">
+            echo '
+                                <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank"
+                                class="col-lg-6 "
+
+                                >
                                 <span class="mailbox-attachment-icon has-img">
-                                <img src="./Files/FEFO/' . $reg->imagen . '">
+                                <img src="./Files/FEFO/' . $reg->imagen . '" class="margin">
                                 </span>
                                 </a>
-                                <div class="mailbox-attachment-info">
-                                <a href="./Files/FEFO/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                                 
-                                </li>';
+                               ';
         }
         break;
 
@@ -722,16 +722,16 @@ switch ($_GET["op"]) {
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
         while ($reg = $query_total->fetch_object()) {
-            echo '<li>
-                            <a href="./Files/Chat/' . $reg->imagen . '" target="_blank">
+            echo '  
+                            <a href="./Files/Chat/' . $reg->imagen . '" target="_blank"
+                            class="col-lg-6 "
+                             
+                            >
                             <span class="mailbox-attachment-icon has-img">
                             <img src="./Files/Chat/' . $reg->imagen . '">
                             </span>
                             </a>
-                            <div class="mailbox-attachment-info">
-                            <a href="./Files/Chat/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                             
-                            </li>';
+                            ';
         }
         break;
 
@@ -741,16 +741,17 @@ switch ($_GET["op"]) {
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImagenesEmpaquetado($_REQUEST["idPedido"]);
         while ($reg = $query_total->fetch_object()) {
-            echo '<li>
-                        <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank">
+            echo '
+                        <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank"
+                        class="col-lg-6" 
+
+                        >
                         <span class="mailbox-attachment-icon has-img">
-                        <img src="./Files/Empaquetado/' . $reg->imagen . '">
+                        <img src="./Files/Empaquetado/' . $reg->imagen . '" 
+                        >
                         </span>
                         </a>
-                        <div class="mailbox-attachment-info">
-                        <a href="./Files/Empaquetado/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                         
-                        </li>';
+                        ';
         }
         break;
 
@@ -763,15 +764,15 @@ switch ($_GET["op"]) {
         //exit;
 
         while ($reg = $query_total->fetch_object()) {
-            echo '<li>
-                    <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank">
+            echo '
+                    <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank"
+                    class="col-lg-6 "
+                    >
                     <span class="mailbox-attachment-icon has-img">
-                    <img src="./Files/Voucher/' . $reg->imagen . '">
+                    <img src="./Files/Voucher/' . $reg->imagen . '" >
                     </span>
                     </a>
-                    <div class="mailbox-attachment-info">
-                    <a href="./Files/Voucher/' . $reg->imagen . '" class="mailbox-attachment-name" target="_blank">' . $reg->imagen . '</a>
-                    </li>';
+                    ';
         }
 
 

@@ -39,7 +39,7 @@ function AgregarPedCarritoTraslado(
     );
     // COMPRUBA SI HAY PRODUCTOS AGREGADOS - SI NO, NO BUSCA NADA
 
-    console.log(detalles);
+   
     if (data.length >= 1) {
       let rptaSearch = data.find((element) => element[0] == iddet_ing);
 
@@ -242,6 +242,8 @@ function ConsultarDetallesTraslado() {
 
   var data = JSON.parse(JSON.stringify(elementos));
 
+
+  
   for (var pos in data) {
     $("table#tblDetallePedidoTraslado").append(
       "<tr><td>" +
