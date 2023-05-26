@@ -15,20 +15,22 @@ class Venta
 		WHERE idpedido =$idpedido 
 		GROUP BY detalle_ingreso.idarticulo
 		;
-		;";
+		";
 		$sql = "SELECT stock_min,detalle_ingreso.*,  a.*, c.nombre AS categoria, um.nombre AS unidadMedida, m.nombre AS marca,
-		categoria.nombre marca_nombre,
-		SUM(detalle_ingreso.stock_actual) AS stock_actual_total,
-
-	FROM articulo a
-	left JOIN categoria c ON a.idcategoria = c.idcategoria
-	left JOIN detalle_ingreso ON detalle_ingreso.idarticulo = a.idarticulo  AND detalle_ingreso.estado_detalle_ingreso='INGRESO'
-	left JOIN marca m ON a.idmarca = m.idmarca
-	left JOIN unidad_medida um ON a.idunidad_medida = um.idunidad_medida
-	left JOIN ingreso ON detalle_ingreso.idingreso = ingreso.idingreso AND ingreso.estado='A'
-	WHERE a.estado = 'A'  AND idpedido=
-	GROUP BY a.idarticulo
-	ORDER BY idarticulo DESC;
+			c.nombre marca_nombre,
+			SUM(detalle_ingreso.stock_actual) AS stock_actual_total
+	
+		FROM articulo a
+		left JOIN categoria c ON a.idcategoria = c.idcategoria
+		left JOIN detalle_ingreso ON detalle_ingreso.idarticulo = a.idarticulo  AND detalle_ingreso.estado_detalle_ingreso='INGRESO'
+		left JOIN marca m ON a.idmarca = m.idmarca
+		
+		LEFT JOIN detalle_pedido ON detalle_pedido.iddetalle_ingreso=detalle_ingreso.iddetalle_ingreso
+		left JOIN unidad_medida um ON a.idunidad_medida = um.idunidad_medida
+		left JOIN ingreso ON detalle_ingreso.idingreso = ingreso.idingreso AND ingreso.estado='A'
+		WHERE a.estado = 'A'  AND detalle_pedido.idpedido=$idpedido 
+		GROUP BY a.idarticulo
+		ORDER BY a.idarticulo DESC;
 	";
 		$query = $conexion->query($sql);
 		return $query;

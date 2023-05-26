@@ -193,7 +193,9 @@ function init() {
                             var obj = jQuery.parseJSON(r);
                             console.log(obj);
                             obj.map((articulo) => {
+                              console.log(articulo.stock_min,articulo.stock_actual_total)
                               if ([7, 21, 22].includes(idempleado)) {
+
                                 if (
                                   Number(articulo.stock_min) >=
                                   Number(articulo.stock_actual_total)
