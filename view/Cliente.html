@@ -1,1205 +1,1212 @@
 <style>
-  select option:disabled {
-    color: #858585;
-    /* font-weight: bold; */
-    background: #e2e2e2;
-  }
-</style>
-<input
-  type="hidden"
-  id="hdn_rol_usuario"
-  name="hdn_rol_usuario"
-  value="<?php echo $_SESSION['rol_usuario'];?>"
-/>
-
-<div
-  class="row"
-  id="container_alerta_telefono"
-  style="
-    position: fixed;
-    z-index: 100000000;
-    top: 10px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  "
->
-  <div class="alert col-md-4 alert-info alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-      ×
-    </button>
-    <h6>
-      <i class="icon fa fa-info"></i> Se encontraron coincidencias con las
-      siguientes personas:
-    </h6>
-
-    <ul id="containerListaTelefonoCoincidencias"></ul>
-  </div>
-</div>
-<div class="box">
-  <div class="box-header with-border" style="display:flex">
-    <p class="box-title">Clientes</p>
-
-    <!-- <label for="" style="opacity: 0">Ejecutivo de Ventas</label> -->
-    <div style="display: flex">
-      <button
-        class="btn btn-primary"
-        style="margin: 0 5px"
-        id="btnNuevo"
-      >
-        <i class="fa fa-file"></i> Nuevo
+    select option:disabled {
+      color: #858585;
+      /* font-weight: bold; */
+      background: #e2e2e2;
+    }
+  </style>
+  <input
+    type="hidden"
+    id="hdn_rol_usuario"
+    name="hdn_rol_usuario"
+    value="<?php echo $_SESSION['rol_usuario'];?>"
+  />
+  
+  <div
+    class="row"
+    id="container_alerta_telefono"
+    style="
+      position: fixed;
+      z-index: 100000000;
+      top: 10px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div class="alert col-md-4 alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        ×
       </button>
-      <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
-        echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
-          Reasignar EV
-        </button> ';
-      }
-      ?>
-
-    </div>
-
-    <div class="box-tools pull-right">
-      <button class="btn btn-box-tool" data-widget="collapse">
-        <i class="fa fa-minus"></i>
-      </button>
-
-      <button class="btn btn-box-tool" data-widget="remove">
-        <i class="fa fa-times"></i>
-      </button>
+      <h6>
+        <i class="icon fa fa-info"></i> Se encontraron coincidencias con las
+        siguientes personas:
+      </h6>
+  
+      <ul id="containerListaTelefonoCoincidencias"></ul>
     </div>
   </div>
-  <!-- /.box-header -->
-  <div class="box-body">
-    <div class="row">
-      <div class="col-md-12">
-        <!--Contenido-->
-
-        <div class="col-sm-14" id="VerForm">
-          <!--
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header">Categoria</h3>
-            </div>
-        </div>
-      -->
-          <form
-            role="form"
-            name="frmCliente"
-            id="frmCliente"
-            enctype="multipart/form-data"
-          >
-            <div class="row">
-              <div class="col-lg-12 left">
-                <div class="row">
-                  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                    <label>Extraer los Datos con Numero de Documento</label>
-                    <label> - Los campos con (*) son obligatorios</label>
-                    <input
-                      id="txtIdEmpleado"
-                      type="hidden"
-                      value="<?php echo $_SESSION['idempleado'] ?>"
-                      maxlength="50"
-                      class="form-control"
-                      name="txtIdEmpleado"
-                      required=""
-                      placeholder=""
-                      autofocus=""
-                    />
-
-                    <input
-                      id="txtEmpleadoNuevo"
-                      type="hidden"
-                      value="<?php echo $_SESSION['empleado'] ?>"
-                      maxlength="50"
-                      class="form-control"
-                      name="txtEmpleadoNuevo"
-                      required=""
-                      placeholder=""
-                      autofocus=""
-                    />
-
-                    <input
-                      id="txtIdEmpleado_modificado"
-                      type="hidden"
-                      value="<?php echo $_SESSION['idempleado'] ?>"
-                      maxlength="50"
-                      class="form-control"
-                      name="txtIdEmpleado_modificado"
-                      required=""
-                      placeholder=""
-                      autofocus=""
-                    />
-                    <input
-                      id="txtIdPersona"
-                      type="hidden"
-                      maxlength="50"
-                      class="form-control"
-                      name="txtIdPersona"
-                      placeholder=""
-                      autofocus=""
-                    />
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Creado por :</label>
+  <div class="box">
+    <div class="box-header with-border" style="display:flex">
+      <p class="box-title">Clientes</p>
+  
+      <!-- <label for="" style="opacity: 0">Ejecutivo de Ventas</label> -->
+      <div style="display: flex">
+        <button
+          class="btn btn-primary"
+          style="margin: 0 5px"
+          id="btnNuevo"
+        >
+          <i class="fa fa-file"></i> Nuevo
+        </button>
+        <?php if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
+          echo '<button onclick="guardarSelects()" class="btn btn-success" id="btn_asignar_vendedor">
+            Reasignar EV
+          </button> ';
+        }
+        ?>
+  
+      </div>
+  
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+  
+        <button class="btn btn-box-tool" data-widget="remove">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-12">
+          <!--Contenido-->
+  
+          <div class="col-sm-14" id="VerForm">
+            <!--
+          <div class="row">
+              <div class="col-lg-12">
+                  <h3 class="page-header">Categoria</h3>
+              </div>
+          </div>
+        -->
+            <form
+              role="form"
+              name="frmCliente"
+              id="frmCliente"
+              enctype="multipart/form-data"
+            >
+              <div class="row">
+                <div class="col-lg-12 left">
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                      <label>Extraer los Datos con Numero de Documento</label>
+                      <label> - Los campos con (*) son obligatorios</label>
                       <input
-                        id="txtEmpleado"
-                        type="text"
-                        maxlength="40"
-                        name="txtEmpleado"
-                        required=""
-                        class="form-control"
-                        placeholder="Sin Modificaciones"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Fecha de Creacion :</label>
-                      <input
-                        id="txtFecha_registro"
-                        type="text"
-                        maxlength="40"
-                        name="txtFecha_registro"
-                        required=""
-                        class="form-control"
-                        placeholder="Sin Modificaciones"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Modificado por :</label>
-                      <input
-                        id="txtEmpleado_modificado"
-                        type="text"
-                        maxlength="40"
-                        name="txtEmpleado_modificado"
-                        required=""
-                        class="form-control"
-                        placeholder="Sin Modificaciones"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Fecha de Modificacion :</label>
-                      <input
-                        id="txtFecha_modificado"
-                        type="text"
-                        maxlength="40"
-                        name="txtFecha_modificado"
-                        required=""
-                        class="form-control"
-                        placeholder="Sin fecha de Modificacion"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Tipo de Cliente:</label>
-                      <select
-                        required=""
-                        class="form-control"
-                        name="cboTipo_Persona"
-                        id="cboTipo_Persona"
-                      >
-                      <option value="FINAL">Final</option>
-                      <option value="DISTRIBUIDOR">Distribuidor</option>
-                      <option value="SUPERDISTRIBUIDOR">
-                        Superdistribuidor
-                      </option>
-                      <option value="REPRESENTANTE">Representante</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>EV Responsable:</label>
-                      <!-- <input
-                        class="form-control"
-                        type="text"
-                        disabled
-                        id="txt_empleado_asignado"
-                      /> -->
-                      <select  
-                      
-                      <?php if ( $_SESSION["idempleado"] == 6) {
-                        
-                        echo $_SESSION["idempleado"];
-                      }else{
-                        echo 'disabled'; 
-                      }
-                      ?>
-                      id="txt_empleado_asignado" name='txt_empleado_asignado' class="form-control">
-
-                      </select>
-
-                      <input
-                        class="form-control"
+                        id="txtIdEmpleado"
                         type="hidden"
-                        disabled
-                        id="txt_idempleado_asignado"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Antigüedad de Cliente :</label>
-                      <input
-                        id="txtNumero_Cuenta"
-                        type="text"
-                        maxlength="40"
-                        name="txtNumero_Cuenta"
-                        required=""
+                        value="<?php echo $_SESSION['idempleado'] ?>"
+                        maxlength="50"
                         class="form-control"
-                        placeholder="Antigüedad de Cliente"
-                        readonly
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Nombres (*):</label>
-                      <input
-                        id="txtNombre"
-                        type="text"
-                        maxlength="40"
-                        name="txtNombre"
+                        name="txtIdEmpleado"
                         required=""
-                        class="form-control"
-                        placeholder="Nombres Completos"
+                        placeholder=""
                         autofocus=""
-                        style="text-transform: uppercase"
-                        value=""
-                        onkeyup="javascript:this.value=this.value.toUpperCase();"
+                      />
+  
+                      <input
+                        id="txtEmpleadoNuevo"
+                        type="hidden"
+                        value="<?php echo $_SESSION['empleado'] ?>"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtEmpleadoNuevo"
+                        required=""
+                        placeholder=""
+                        autofocus=""
+                      />
+  
+                      <input
+                        id="txtIdEmpleado_modificado"
+                        type="hidden"
+                        value="<?php echo $_SESSION['idempleado'] ?>"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdEmpleado_modificado"
+                        required=""
+                        placeholder=""
+                        autofocus=""
+                      />
+                      <input
+                        id="txtIdPersona"
+                        type="hidden"
+                        maxlength="50"
+                        class="form-control"
+                        name="txtIdPersona"
+                        placeholder=""
+                        autofocus=""
                       />
                     </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Creado por :</label>
+                        <input
+                          id="txtEmpleado"
+                          type="text"
+                          maxlength="40"
+                          name="txtEmpleado"
+                          required=""
+                          class="form-control"
+                          placeholder="Sin Modificaciones"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Fecha de Creacion :</label>
+                        <input
+                          id="txtFecha_registro"
+                          type="text"
+                          maxlength="40"
+                          name="txtFecha_registro"
+                          required=""
+                          class="form-control"
+                          placeholder="Sin Modificaciones"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Modificado por :</label>
+                        <input
+                          id="txtEmpleado_modificado"
+                          type="text"
+                          maxlength="40"
+                          name="txtEmpleado_modificado"
+                          required=""
+                          class="form-control"
+                          placeholder="Sin Modificaciones"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Fecha de Modificacion :</label>
+                        <input
+                          id="txtFecha_modificado"
+                          type="text"
+                          maxlength="40"
+                          name="txtFecha_modificado"
+                          required=""
+                          class="form-control"
+                          placeholder="Sin fecha de Modificacion"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Tipo de Cliente:</label>
+                        <select
+                          required=""
+                          class="form-control"
+                          name="cboTipo_Persona"
+                          id="cboTipo_Persona"
+                        >
+                        <option value="FINAL">Final</option>
+                        <option value="DISTRIBUIDOR">Distribuidor</option>
+                        <option value="SUPERDISTRIBUIDOR">
+                          Superdistribuidor
+                        </option>
+                        <option value="REPRESENTANTE">Representante</option>
+                        </select>
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>EV Responsable:</label>
+                        <!-- <input
+                          class="form-control"
+                          type="text"
+                          disabled
+                          id="txt_empleado_asignado"
+                        /> -->
+                        <select  
+                        
+                        <?php if ( $_SESSION["idempleado"] == 6) {
+                          
+                          echo $_SESSION["idempleado"];
+                        }else{
+                          echo 'disabled'; 
+                        }
+                        ?>
+                        id="txt_empleado_asignado" name='txt_empleado_asignado' class="form-control">
+  
+                        </select>
+  
+                        <input
+                          class="form-control"
+                          type="hidden"
+                          disabled
+                          id="txt_idempleado_asignado"
+                        />
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Antigüedad de Cliente :</label>
+                        <input
+                          id="txtNumero_Cuenta"
+                          type="text"
+                          maxlength="40"
+                          name="txtNumero_Cuenta"
+                          required=""
+                          class="form-control"
+                          placeholder="Antigüedad de Cliente"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Nombres (*):</label>
+                        <input
+                          id="txtNombre"
+                          type="text"
+                          maxlength="40"
+                          name="txtNombre"
+                          required=""
+                          class="form-control"
+                          placeholder="Nombres Completos"
+                          autofocus=""
+                          style="text-transform: uppercase"
+                          value=""
+                          onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Apellidos (*):</label>
+                        <input
+                          id="txtApellido"
+                          type="text"
+                          maxlength="40"
+                          name="txtApellido"
+                          required=""
+                          class="form-control"
+                          placeholder="Apellidos Completos"
+                          autofocus=""
+                          style="text-transform: uppercase"
+                          value=""
+                          onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Apellidos (*):</label>
+                </div>
+  
+                <div class="col-lg-6 left">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Tipo Documento (*):</label>
+                        <input
+                          type="hidden"
+                          id="cboTipo_Documento_edit"
+                          name="cboTipo_Documento_edit"
+                        />
+                        <select
+                          required=""
+                          id="cboTipo_Documento"
+                          name="cboTipo_Documento"
+                          class="form-control"
+                        ></select>
+                      </div>
+                    </div>
+                    <div
+                      id="container_button_maximizar"
+                      class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                    >
+                      <div class="form-group has-warning">
+                        <label>Número de Documento (*):</label>
+                        <div class="input-group" style="width: 100%">
+                          <input
+                            id="txtNum_Documento"
+                            type="number"
+                            maxlength="20"
+                            name="txtNum_Documento"
+                            required=""
+                            class="form-control"
+                            placeholder="Número de Documento"
+                            autofocus=""
+                          />
+                          <span class="input-group-btn">
+                            <button
+                              type="button"
+                              class="btn btn-warning"
+                              id="btnExtraerClientes"
+                            >
+                              <i class="fa fa-search"></i>
+                              EXTRAER
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group has-success" id="panel_rbg_habilitado">
+                    <label>Género (*):</label>
+                    <div class="radio" id="optionsRadios">
+                      <label
+                        ><input
+                          type="radio"
+                          name="optionsRadios"
+                          id="optionsRadios1"
+                          value="1"
+                        />Mujer</label
+                      >
+                      <label
+                        ><input
+                          type="radio"
+                          name="optionsRadios"
+                          id="optionsRadios2"
+                          value="2"
+                          required
+                        />Hombre</label
+                      >
+                      <label
+                        ><input
+                          type="radio"
+                          name="optionsRadios"
+                          id="optionsRadios3"
+                          value="3"
+                          checked
+                        />Prefiere no decirlo</label
+                      >
+                    </div>
+                  </div>
+  
+                  <div class="form-group has-success" id="panel_rbg_desabilitado">
+                    <label>Género :</label>
+                    <input
+                      id="optionsRadios_edit"
+                      type="text"
+                      name="optionsRadios_edit"
+                      class="form-control"
+                      style="text-transform: uppercase"
+                      readonly
+                    />
+                    <input
+                      id="optionsRadios_id_edit"
+                      type="hidden"
+                      name="optionsRadios_id_edit"
+                    />
+                  </div>
+                </div>
+  
+                <div class="col-lg-12 left">
+                  <div class="row">
+                    <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Departamento (*):</label>
+                        <input
+                          id="txtDirección_Departamento"
+                          type="text"
+                          maxlength="45"
+                          name="txtDireccion_Departamento"
+                          required=""
+                          placeholder="Departamento"
+                          class="form-control"
+                          autofocus=""
+                          style="text-transform: uppercase"
+                          value=""
+                          onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Provincia (*):</label>
+                        <input
+                          id="txtDireccion_Provincia"
+                          type="text"
+                          maxlength="45"
+                          name="txtDireccion_Provincia"
+                          class="form-control"
+                          required=""
+                          placeholder="Provincia"
+                          autofocus=""
+                          style="text-transform: uppercase"
+                          value=""
+                          onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Distrito (*):</label>
+                        <input
+                          id="txtDireccion_Distrito"
+                          type="text"
+                          maxlength="45"
+                          name="txtDireccion_Distrito"
+                          class="form-control"
+                          required=""
+                          placeholder="Distrito"
+                          autofocus=""
+                          style="text-transform: uppercase"
+                          value=""
+                          onkeyup="javascript:this.value=this.value.toUpperCase();"
+                        />
+                      </div>
+                    </div> -->
+  
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       <input
-                        id="txtApellido"
-                        type="text"
-                        maxlength="40"
-                        name="txtApellido"
-                        required=""
+                        type="hidden"
                         class="form-control"
-                        placeholder="Apellidos Completos"
-                        autofocus=""
+                        required
+                        placeholder="Departamento - Provincia - Distrito"
+                        list="ubicacions"
+                        id="id_ubicacion_array"
+                        name="id_ubicacion_array"
                         style="text-transform: uppercase"
-                        value=""
-                        onkeyup="javascript:this.value=this.value.toUpperCase();"
                       />
+  
+                      <div class="form-group has-success">
+                        <label
+                          >Departamento - Provincia - Distrito - Ubigeo (*):
+  
+                          <span
+                            style="color: black !important"
+                            id="container_ubicacion_antigua"
+                          >
+                            Ubicacion Antigua :
+                            <b id="ubicacion_antigua"> 'arequipa arequipa ' </b>
+                          </span>
+                        </label>
+  
+                        <input
+                          type="text"
+                          class="form-control"
+                          required
+                          placeholder="Ingresa y Selecciona el Distrito o el Codigo de Ubigeo"
+                          list="ubicacions"
+                          id="txt_ubicacion_nuevo"
+                          name="txt_ubicacion_nuevo"
+                          style="text-transform: uppercase"
+                        />
+                        <datalist
+                          id="ubicacions"
+                          class="ubicacion_containe_options"
+                        >
+                        </datalist>
+                      </div>
+                    </div>
+  
+                    <div></div>
+                  </div>
+                </div>
+                <div class="col-lg-12 left">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Direccion (*):</label>
+                        <input
+                          id="txtDireccion_Calle"
+                          type="text"
+                          maxlength="300"
+                          name="txtDireccion_Calle"
+                          required=""
+                          placeholder="Escribe aqui la direccion completa"
+                          class="form-control"
+                          autofocus=""
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Referencia: </label>
+                        <input
+                          id="txtDireccion_Referencia"
+                          type="text"
+                          maxlength="500"
+                          name="txtDireccion_Referencia"
+                          placeholder="Referencia"
+                          class="form-control"
+                          autofocus=""
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <!-- <div class="box "> -->
+                      <div class="box collapsed-box">
+                        <div class="box-header display:flex">
+                          <h5 style="font-weight: bold; color: #858585">
+                            FACTURACION A
+                          </h5>
+                          <div class="display:flex">
+                            <input
+                              style="margin: 0 5px"
+                              type="checkbox"
+                              checked
+                              id="idIgualAdirecionEnvio"
+                              name="idIgualAdirecionEnvio"
+                              value="True"
+                              onclick="handleClick(this)"
+                            />
+  
+                            <label style="font-weight: bold">
+                              Igual a la direccion de envio
+                            </label>
+                          </div>
+  
+                          <div class="box-tools pull-right">
+                            <button
+                              class="btn btn-box-tool"
+                              type="button"
+                              data-widget="collapse"
+                              id="btn_minimizar_container_localizacion_recepcion"
+                            >
+                              <i class="fa fa-minus"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="form-group has-success">
+                                <input
+                                  type="hidden"
+                                  class="form-control"
+                                  required
+                                  placeholder="Ubicacion de Envio"
+                                  list="ubicacions"
+                                  id="id_ubicacion_envio_array"
+                                  name="id_ubicacion_envio_array"
+                                  style="text-transform: uppercase"
+                                />
+  
+                                <label>Ubicacion de Envio (*):</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  required
+                                  placeholder="Ubicacion de Envio"
+                                  list="ubicacion"
+                                  id="txt_ubicacion_envio"
+                                  name="txt_ubicacion_envio"
+                                  style="text-transform: uppercase"
+                                />
+                                <datalist
+                                  id="ubicacion"
+                                  class="ubicacion_containe_options"
+                                >
+                                </datalist>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="form-group has-success">
+                                <label>Direccion de Envio (*):</label>
+                                <input
+                                  id="txt_direccion_envio"
+                                  type="text"
+                                  name="txt_direccion_envio"
+                                  class="form-control"
+                                  required
+                                  placeholder="Direccion de Envio "
+                                  style="text-transform: uppercase"
+                                />
+                              </div>
+                            </div>
+  
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="form-group has-success">
+                                <label
+                                  >Direccion de Referencia de Envio (*):</label
+                                >
+                                <input
+                                  id="txt_direccion_referencia_envio"
+                                  type="text"
+                                  name="txt_direccion_referencia_envio"
+                                  class="form-control"
+                                  placeholder="Direccion de Referencia de Envio"
+                                  style="text-transform: uppercase"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-lg-12 left">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label class="control-label" for="inputWarning">
+                          Teléfono (* 9 Digitos):
+                        </label>
+  
+                        <input
+                          id="txtTelefono"
+                          type="text"
+                          maxlength="9"
+                          name="txtTelefono"
+                          required=""
+                          class="form-control"
+                          placeholder="Ingrese el teléfono nacional"
+                          autofocus=""
+                          pattern="[0-9]{9}"
+                        />
+                        <span
+                          class="help-block containerListaTelefonoCoincidenciasText"
+                          id="txtTelefono_span"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Teléfono 2 (*):</label>
+                        <input
+                          id="txtTelefono_2"
+                          type="text"
+                          maxlength="14"
+                          name="txtTelefono_2"
+                          class="form-control"
+                          required=""
+                          placeholder="Ingrese el 2do teléfono nacional,internacional o colocar O"
+                          autofocus=""
+                          pattern="[0-9]{1,14}"
+                        />
+                        <span
+                          class="help-block containerListaTelefonoCoincidenciasText"
+                          id="txtTelefono_2_span"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Email:</label>
+                        <input
+                          id="txtEmail"
+                          type="email"
+                          maxlength="50"
+                          name="txtEmail"
+                          class="form-control"
+                          placeholder="Ingrese el email"
+                          autofocus=""
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group has-success" style="display: none">
+                        <label>Estado (*):</label>
+                        <select required="" class="form-control" name="txtEstado">
+                          <option>A</option>
+                          <option>C</option>
+                        </select>
+                      </div>
+                    </div>
+  
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group has-success">
+                        <label>Estado del Cliente :</label>
+                        <input
+                          id="txtClasificacion"
+                          type="string"
+                          maxlength="20"
+                          name="txtClasificacion"
+                          disabled
+                          required=""
+                          class="form-control"
+                          placeholder="Clasificicación"
+                          autofocus=""
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="col-lg-6 left">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+  
+              <div
+                class="loading_window"
+                style="
+                  opacity: 0.5;
+                  width: 100%;
+                  height: 100%;
+                  position: fixed;
+                  background: black;
+                  top: 0;
+                  left: 0;
+                  z-index: 214748364152435234523452345234523423;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <div class="loader" id="loader-3">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <style>
+                .loader {
+                  width: 100px;
+                  height: 100px;
+                  border-radius: 100%;
+                  position: relative;
+                  margin: 0 auto;
+                }
+  
+                #loader-3:before,
+                #loader-3:after {
+                  content: "";
+                  width: 20px;
+                  height: 20px;
+                  position: absolute;
+                  top: 0;
+                  left: calc(50% - 10px);
+                  background-color: #3498db;
+                  animation: squaremove 1s ease-in-out infinite;
+                }
+  
+                #loader-3:after {
+                  bottom: 0;
+                  animation-delay: 0.5s;
+                }
+  
+                @keyframes squaremove {
+                  0%,
+                  100% {
+                    -webkit-transform: translate(0, 0) rotate(0);
+                    -ms-transform: translate(0, 0) rotate(0);
+                    -o-transform: translate(0, 0) rotate(0);
+                    transform: translate(0, 0) rotate(0);
+                  }
+  
+                  25% {
+                    -webkit-transform: translate(40px, 40px) rotate(45deg);
+                    -ms-transform: translate(40px, 40px) rotate(45deg);
+                    -o-transform: translate(40px, 40px) rotate(45deg);
+                    transform: translate(40px, 40px) rotate(45deg);
+                  }
+  
+                  50% {
+                    -webkit-transform: translate(0px, 80px) rotate(0deg);
+                    -ms-transform: translate(0px, 80px) rotate(0deg);
+                    -o-transform: translate(0px, 80px) rotate(0deg);
+                    transform: translate(0px, 80px) rotate(0deg);
+                  }
+  
+                  75% {
+                    -webkit-transform: translate(-40px, 40px) rotate(45deg);
+                    -ms-transform: translate(-40px, 40px) rotate(45deg);
+                    -o-transform: translate(-40px, 40px) rotate(45deg);
+                    transform: translate(-40px, 40px) rotate(45deg);
+                  }
+                }
+              </style>
+              <div class="row botones_container" > 
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                  <h5></h5>
+                  <button
+                    class="btn btn-success"
+                    id="button_registrar_nuevo_cliente"
+                    type="submit"
+                  >
+                    <i class="fa fa-floppy-o"></i> Registrar
+                  </button>
+                  <a href="Cliente.php" class="btn btn-primary"
+                    ><i class="fa fa-remove"></i> Cancelar</a
+                  >
+                  <hr />
+                  <span class="lead text-primary"></span>
+                </div>
+              </div>
+            </form>
+          </div>
+  
+          <div
+            id="asignarUsuario"
+            class="modal fade bs-example-modal-lg"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel"
+          >
+            <div class="modal-dialog modal-center modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h4 class="modal-title">Reasingar EV</h4>
+                </div>
+                <div class="modal-body">
+                  <h6 id="numero_clientes_asignados" class="h4"></h6>
+                  <div class="box">
+                    <div class="box-header with-border">
+                      <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                          <i class="fa fa-minus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <ol
+                        id="lista_clientes_por_asignar"
+                        style="max-height: 500px; overflow-y: auto"
+                      ></ol>
+                    </div>
                     <div class="form-group has-success">
-                      <label>Tipo Documento (*):</label>
-                      <input
-                        type="hidden"
-                        id="cboTipo_Documento_edit"
-                        name="cboTipo_Documento_edit"
-                      />
+                      <label>Cambiar el usuario responsable a:</label>
                       <select
-                        required=""
-                        id="cboTipo_Documento"
-                        name="cboTipo_Documento"
+                        id="select_personal_vendedor"
                         class="form-control"
                       ></select>
                     </div>
                   </div>
-                  <div
-                    id="container_button_maximizar"
-                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                </div>
+                <div class="modal-footer">
+                  <button
+                    class="btn btn-success"
+                    type="button"
+                    id="insertarClientesACartera"
                   >
-                    <div class="form-group has-warning">
-                      <label>Número de Documento (*):</label>
-                      <div class="input-group" style="width: 100%">
-                        <input
-                          id="txtNum_Documento"
-                          type="number"
-                          maxlength="20"
-                          name="txtNum_Documento"
-                          required=""
-                          class="form-control"
-                          placeholder="Número de Documento"
-                          autofocus=""
-                        />
-                        <span class="input-group-btn">
-                          <button
-                            type="button"
-                            class="btn btn-warning"
-                            id="btnExtraerClientes"
-                          >
-                            <i class="fa fa-search"></i>
-                            EXTRAER
-                          </button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                    Asignar
+                  </button>
                 </div>
-              </div>
-
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="form-group has-success" id="panel_rbg_habilitado">
-                  <label>Género (*):</label>
-                  <div class="radio" id="optionsRadios">
-                    <label
-                      ><input
-                        type="radio"
-                        name="optionsRadios"
-                        id="optionsRadios1"
-                        value="1"
-                      />Mujer</label
-                    >
-                    <label
-                      ><input
-                        type="radio"
-                        name="optionsRadios"
-                        id="optionsRadios2"
-                        value="2"
-                        required
-                      />Hombre</label
-                    >
-                    <label
-                      ><input
-                        type="radio"
-                        name="optionsRadios"
-                        id="optionsRadios3"
-                        value="3"
-                        checked
-                      />Prefiere no decirlo</label
-                    >
-                  </div>
-                </div>
-
-                <div class="form-group has-success" id="panel_rbg_desabilitado">
-                  <label>Género :</label>
-                  <input
-                    id="optionsRadios_edit"
-                    type="text"
-                    name="optionsRadios_edit"
-                    class="form-control"
-                    style="text-transform: uppercase"
-                    readonly
-                  />
-                  <input
-                    id="optionsRadios_id_edit"
-                    type="hidden"
-                    name="optionsRadios_id_edit"
-                  />
-                </div>
-              </div>
-
-              <div class="col-lg-12 left">
-                <div class="row">
-                  <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Departamento (*):</label>
-                      <input
-                        id="txtDirección_Departamento"
-                        type="text"
-                        maxlength="45"
-                        name="txtDireccion_Departamento"
-                        required=""
-                        placeholder="Departamento"
-                        class="form-control"
-                        autofocus=""
-                        style="text-transform: uppercase"
-                        value=""
-                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Provincia (*):</label>
-                      <input
-                        id="txtDireccion_Provincia"
-                        type="text"
-                        maxlength="45"
-                        name="txtDireccion_Provincia"
-                        class="form-control"
-                        required=""
-                        placeholder="Provincia"
-                        autofocus=""
-                        style="text-transform: uppercase"
-                        value=""
-                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Distrito (*):</label>
-                      <input
-                        id="txtDireccion_Distrito"
-                        type="text"
-                        maxlength="45"
-                        name="txtDireccion_Distrito"
-                        class="form-control"
-                        required=""
-                        placeholder="Distrito"
-                        autofocus=""
-                        style="text-transform: uppercase"
-                        value=""
-                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                      />
-                    </div>
-                  </div> -->
-
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <input
-                      type="hidden"
-                      class="form-control"
-                      required
-                      placeholder="Departamento - Provincia - Distrito"
-                      list="ubicacions"
-                      id="id_ubicacion_array"
-                      name="id_ubicacion_array"
-                      style="text-transform: uppercase"
-                    />
-
-                    <div class="form-group has-success">
-                      <label
-                        >Departamento - Provincia - Distrito - Ubigeo (*):
-
-                        <span
-                          style="color: black !important"
-                          id="container_ubicacion_antigua"
-                        >
-                          Ubicacion Antigua :
-                          <b id="ubicacion_antigua"> 'arequipa arequipa ' </b>
-                        </span>
-                      </label>
-
-                      <input
-                        type="text"
-                        class="form-control"
-                        required
-                        placeholder="Ingresa y Selecciona el Distrito o el Codigo de Ubigeo"
-                        list="ubicacions"
-                        id="txt_ubicacion_nuevo"
-                        name="txt_ubicacion_nuevo"
-                        style="text-transform: uppercase"
-                      />
-                      <datalist
-                        id="ubicacions"
-                        class="ubicacion_containe_options"
-                      >
-                      </datalist>
-                    </div>
-                  </div>
-
-                  <div></div>
-                </div>
-              </div>
-              <div class="col-lg-12 left">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Direccion (*):</label>
-                      <input
-                        id="txtDireccion_Calle"
-                        type="text"
-                        maxlength="300"
-                        name="txtDireccion_Calle"
-                        required=""
-                        placeholder="Escribe aqui la direccion completa"
-                        class="form-control"
-                        autofocus=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Referencia: </label>
-                      <input
-                        id="txtDireccion_Referencia"
-                        type="text"
-                        maxlength="500"
-                        name="txtDireccion_Referencia"
-                        placeholder="Referencia"
-                        class="form-control"
-                        autofocus=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <!-- <div class="box "> -->
-                    <div class="box collapsed-box">
-                      <div class="box-header display:flex">
-                        <h5 style="font-weight: bold; color: #858585">
-                          FACTURACION A
-                        </h5>
-                        <div class="display:flex">
-                          <input
-                            style="margin: 0 5px"
-                            type="checkbox"
-                            checked
-                            id="idIgualAdirecionEnvio"
-                            name="idIgualAdirecionEnvio"
-                            value="True"
-                            onclick="handleClick(this)"
-                          />
-
-                          <label style="font-weight: bold">
-                            Igual a la direccion de envio
-                          </label>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                          <button
-                            class="btn btn-box-tool"
-                            type="button"
-                            data-widget="collapse"
-                            id="btn_minimizar_container_localizacion_recepcion"
-                          >
-                            <i class="fa fa-minus"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="box-body">
-                        <div class="row">
-                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group has-success">
-                              <input
-                                type="hidden"
-                                class="form-control"
-                                required
-                                placeholder="Ubicacion de Envio"
-                                list="ubicacions"
-                                id="id_ubicacion_envio_array"
-                                name="id_ubicacion_envio_array"
-                                style="text-transform: uppercase"
-                              />
-
-                              <label>Ubicacion de Envio (*):</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                required
-                                placeholder="Ubicacion de Envio"
-                                list="ubicacion"
-                                id="txt_ubicacion_envio"
-                                name="txt_ubicacion_envio"
-                                style="text-transform: uppercase"
-                              />
-                              <datalist
-                                id="ubicacion"
-                                class="ubicacion_containe_options"
-                              >
-                              </datalist>
-                            </div>
-                          </div>
-                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group has-success">
-                              <label>Direccion de Envio (*):</label>
-                              <input
-                                id="txt_direccion_envio"
-                                type="text"
-                                name="txt_direccion_envio"
-                                class="form-control"
-                                required
-                                placeholder="Direccion de Envio "
-                                style="text-transform: uppercase"
-                              />
-                            </div>
-                          </div>
-
-                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group has-success">
-                              <label
-                                >Direccion de Referencia de Envio (*):</label
-                              >
-                              <input
-                                id="txt_direccion_referencia_envio"
-                                type="text"
-                                name="txt_direccion_referencia_envio"
-                                class="form-control"
-                                placeholder="Direccion de Referencia de Envio"
-                                style="text-transform: uppercase"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-12 left">
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label class="control-label" for="inputWarning">
-                        Teléfono (* 9 Digitos):
-                      </label>
-
-                      <input
-                        id="txtTelefono"
-                        type="text"
-                        maxlength="9"
-                        name="txtTelefono"
-                        required=""
-                        class="form-control"
-                        placeholder="Ingrese el teléfono nacional"
-                        autofocus=""
-                        pattern="[0-9]{9}"
-                      />
-                      <span
-                        class="help-block containerListaTelefonoCoincidenciasText"
-                        id="txtTelefono_span"
-                      ></span>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Teléfono 2 (*):</label>
-                      <input
-                        id="txtTelefono_2"
-                        type="text"
-                        maxlength="9"
-                        name="txtTelefono_2"
-                        class="form-control"
-                        required=""
-                        placeholder="Ingrese el 2do teléfono nacional,internacional o colocar O"
-                        autofocus=""
-                        
-                      />
-                      <span
-                        class="help-block containerListaTelefonoCoincidenciasText"
-                        id="txtTelefono_2_span"
-                      ></span>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Email:</label>
-                      <input
-                        id="txtEmail"
-                        type="email"
-                        maxlength="50"
-                        name="txtEmail"
-                        class="form-control"
-                        placeholder="Ingrese el email"
-                        autofocus=""
-                      />
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group has-success" style="display: none">
-                      <label>Estado (*):</label>
-                      <select required="" class="form-control" name="txtEstado">
-                        <option>A</option>
-                        <option>C</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group has-success">
-                      <label>Estado del Cliente :</label>
-                      <input
-                        id="txtClasificacion"
-                        type="string"
-                        maxlength="20"
-                        name="txtClasificacion"
-                        disabled
-                        required=""
-                        class="form-control"
-                        placeholder="Clasificicación"
-                        autofocus=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="loading_window"
-              style="
-                opacity: 0.5;
-                width: 100%;
-                height: 100%;
-                position: fixed;
-                background: black;
-                top: 0;
-                left: 0;
-                z-index: 214748364152435234523452345234523423;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <div class="loader" id="loader-3">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-            <style>
-              .loader {
-                width: 100px;
-                height: 100px;
-                border-radius: 100%;
-                position: relative;
-                margin: 0 auto;
-              }
-
-              #loader-3:before,
-              #loader-3:after {
-                content: "";
-                width: 20px;
-                height: 20px;
-                position: absolute;
-                top: 0;
-                left: calc(50% - 10px);
-                background-color: #3498db;
-                animation: squaremove 1s ease-in-out infinite;
-              }
-
-              #loader-3:after {
-                bottom: 0;
-                animation-delay: 0.5s;
-              }
-
-              @keyframes squaremove {
-                0%,
-                100% {
-                  -webkit-transform: translate(0, 0) rotate(0);
-                  -ms-transform: translate(0, 0) rotate(0);
-                  -o-transform: translate(0, 0) rotate(0);
-                  transform: translate(0, 0) rotate(0);
-                }
-
-                25% {
-                  -webkit-transform: translate(40px, 40px) rotate(45deg);
-                  -ms-transform: translate(40px, 40px) rotate(45deg);
-                  -o-transform: translate(40px, 40px) rotate(45deg);
-                  transform: translate(40px, 40px) rotate(45deg);
-                }
-
-                50% {
-                  -webkit-transform: translate(0px, 80px) rotate(0deg);
-                  -ms-transform: translate(0px, 80px) rotate(0deg);
-                  -o-transform: translate(0px, 80px) rotate(0deg);
-                  transform: translate(0px, 80px) rotate(0deg);
-                }
-
-                75% {
-                  -webkit-transform: translate(-40px, 40px) rotate(45deg);
-                  -ms-transform: translate(-40px, 40px) rotate(45deg);
-                  -o-transform: translate(-40px, 40px) rotate(45deg);
-                  transform: translate(-40px, 40px) rotate(45deg);
-                }
-              }
-            </style>
-            <div class="row botones_container" > 
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
-                <h5></h5>
-                <button
-                  class="btn btn-success"
-                  id="button_registrar_nuevo_cliente"
-                  type="submit"
-                >
-                  <i class="fa fa-floppy-o"></i> Registrar
-                </button>
-                <a href="Cliente.php" class="btn btn-primary"
-                  ><i class="fa fa-remove"></i> Cancelar</a
-                >
-                <hr />
-                <span class="lead text-primary"></span>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div
-          id="asignarUsuario"
-          class="modal fade bs-example-modal-lg"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="myLargeModalLabel"
-        >
-          <div class="modal-dialog modal-center modal-md">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Reasingar EV</h4>
-              </div>
-              <div class="modal-body">
-                <h6 id="numero_clientes_asignados" class="h4"></h6>
-                <div class="box">
-                  <div class="box-header with-border">
-                    <div class="box-tools pull-right">
-                      <button class="btn btn-box-tool" data-widget="collapse">
-                        <i class="fa fa-minus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <!-- /.box-header -->
-                  <div class="box-body">
-                    <ol
-                      id="lista_clientes_por_asignar"
-                      style="max-height: 500px; overflow-y: auto"
-                    ></ol>
-                  </div>
-                  <div class="form-group has-success">
-                    <label>Cambiar el usuario responsable a:</label>
-                    <select
-                      id="select_personal_vendedor"
-                      class="form-control"
-                    ></select>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  class="btn btn-success"
-                  type="button"
-                  id="insertarClientesACartera"
-                >
-                  Asignar
-                </button>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row container_info_filtro">
-          <div class="col col-lg-3">
-           <div class="form-group has-warning">
-              <label>Nº TOTAL DE RESULTADOS DE BÚSQUEDA</label>
-              <input
-                id="cant_total_cliente"
-                type="number"
-                placeholder="Cantidad Total de Clientes"
-                maxlength="40"
-                class="form-control"
-                disabled
-              />
-            </div>
-          </div>
-          <div class="col col-lg-9 container_info_filtro " >
-            <div class="row">
-              <div class="col col-lg-4">
-                <label for="">Ejecutivos de Ventas:</label>
-                <select
-                  name="ejecutivo_filtro"
-                  id="ejecutivo_filtro"
-                  class="form-control "
-                ></select>
-              </div>
-              <div class="col col-lg-4">
-                <label for="">Tipos de cliente:</label>
-                <select
-                  name="cliente_filtro"
-                  id="cliente_filtro"
-                  class="form-control "
-                >
-                  <option value="">Todos ...</option>
-                  <option value="FINAL">Final</option>
-                  <option value="DISTRIBUIDOR">Distribuidor</option>
-                  <option value="SUPERDISTRIBUIDOR">
-                    Superdistribuidor
-                  </option>
-                  <option value="REPRESENTANTE">Representante</option>
-                </select>
-            
-                  <!-- <option value="proveedor">Proveedor</option> -->
-                </select>
-              </div>
-              <div class="col col-lg-4">
-                <label for="">Estados de Clientes:</label>
-                <select
-                  name="estado_filtro"
-                  id="estado_filtro"
+  
+          <div class="row container_info_filtro">
+            <div class="col col-lg-3">
+             <div class="form-group has-warning">
+                <label>Nº TOTAL DE RESULTADOS DE BÚSQUEDA</label>
+                <input
+                  id="cant_total_cliente"
+                  type="number"
+                  placeholder="Cantidad Total de Clientes"
+                  maxlength="40"
                   class="form-control"
-                >
-                  <option value="">Todos ...</option>
-                  <option value="-ACTIVO"> Activo</option>
-                  <option value="INACTIVO">Inactivo</option>
-                  <option value="PERDIDO">Perdido</option>
-                </select>
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col col-lg-9 container_info_filtro " >
+              <div class="row">
+                <div class="col col-lg-4">
+                  <label for="">Ejecutivos de Ventas:</label>
+                  <select
+                    name="ejecutivo_filtro"
+                    id="ejecutivo_filtro"
+                    class="form-control "
+                  ></select>
+                </div>
+                <div class="col col-lg-4">
+                  <label for="">Tipos de cliente:</label>
+                  <select
+                    name="cliente_filtro"
+                    id="cliente_filtro"
+                    class="form-control "
+                  >
+                    <option value="">Todos ...</option>
+                    <option value="FINAL">Final</option>
+                    <option value="DISTRIBUIDOR">Distribuidor</option>
+                    <option value="SUPERDISTRIBUIDOR">
+                      Superdistribuidor
+                    </option>
+                    <option value="REPRESENTANTE">Representante</option>
+                  </select>
+              
+                    <!-- <option value="proveedor">Proveedor</option> -->
+                  </select>
+                </div>
+                <div class="col col-lg-4">
+                  <label for="">Estados de Clientes:</label>
+                  <select
+                    name="estado_filtro"
+                    id="estado_filtro"
+                    class="form-control"
+                  >
+                    <option value="">Todos ...</option>
+                    <option value="-ACTIVO"> Activo</option>
+                    <option value="INACTIVO">Inactivo</option>
+                    <option value="PERDIDO">Perdido</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            
-             
-        <div class="row container_info_filtro" style="margin:10px 0 ;">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <H4><strong>SUBGRUPO SEGÚN TIPO DE CLIENTE</strong></H4>
-          </div>
-          <div class="col-lg-3 ">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Finales:</label>
-              <input
-                id="cant_clientes_finales"
-                type="number"
-                
-                placeholder="Cantidad de Cliente finales"
-                class="form-control"
-                disabled
-              />
+          <div class="row">
+            <div class="col-12">
+              
+               
+          <div class="row container_info_filtro" style="margin:10px 0 ;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <H4><strong>SUBGRUPO SEGÚN TIPO DE CLIENTE</strong></H4>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Distribuidores:</label>
-              <input
-                id="cant_clientes_distribuidor"
-                type="number"
-                maxlength="40"
-                placeholder="Cantidad de Cliente Distribuidores"
-                class="form-control"
-                disabled
-              />
+            <div class="col-lg-3 ">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Finales:</label>
+                <input
+                  id="cant_clientes_finales"
+                  type="number"
+                  
+                  placeholder="Cantidad de Cliente finales"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Superdistribuidores:</label>
-              <input
-                id="cant_clientes_Superdistribuidores"
-                type="number"
-                maxlength="40"
-                placeholder="Cantidad de Cliente Superdistribuidores"
-                class="form-control"
-                disabled
-              />
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Distribuidores:</label>
+                <input
+                  id="cant_clientes_distribuidor"
+                  type="number"
+                  maxlength="40"
+                  placeholder="Cantidad de Cliente Distribuidores"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Representantes:</label>
-              <input
-                id="cant_clientes_Representantes"
-                type="number"
-                placeholder="Cantidad de Cliente Representantes"
-                maxlength="40"
-                class="form-control"
-                disabled
-              />
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Superdistribuidores:</label>
+                <input
+                  id="cant_clientes_Superdistribuidores"
+                  type="number"
+                  maxlength="40"
+                  placeholder="Cantidad de Cliente Superdistribuidores"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
-          </div>
-        
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <H4><strong>SUBGRUPO SEGÚN ESTADO DEL CLIENTE</strong></H4>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label> Cantidad de Clientes Activos:</label>
-              <input
-                id="cant_clientes_activos"
-                type="number"
-                placeholder="Cantidad de Cliente Activo"
-                maxlength="40"
-                class="form-control"
-                disabled
-              />
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Representantes:</label>
+                <input
+                  id="cant_clientes_Representantes"
+                  type="number"
+                  placeholder="Cantidad de Cliente Representantes"
+                  maxlength="40"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Inactivos:</label>
-              <input
-                id="cant_clientes_inactivos"
-                type="number"
-                maxlength="40"
-                placeholder="Cantidad de Cliente Inactivo"
-                class="form-control"
-                disabled
-              />
+          
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <H4><strong>SUBGRUPO SEGÚN ESTADO DEL CLIENTE</strong></H4>
             </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="form-group has-success">
-              <label>Cantidad de Clientes Perdidos:</label>
-              <input
-                id="cant_clientes_perdidos"
-                type="number"
-                placeholder="Cantidad de Cliente Perdido"
-                maxlength="40"
-                class="form-control"
-                disabled
-              />
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label> Cantidad de Clientes Activos:</label>
+                <input
+                  id="cant_clientes_activos"
+                  type="number"
+                  placeholder="Cantidad de Cliente Activo"
+                  maxlength="40"
+                  class="form-control"
+                  disabled
+                />
+              </div>
             </div>
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Inactivos:</label>
+                <input
+                  id="cant_clientes_inactivos"
+                  type="number"
+                  maxlength="40"
+                  placeholder="Cantidad de Cliente Inactivo"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group has-success">
+                <label>Cantidad de Clientes Perdidos:</label>
+                <input
+                  id="cant_clientes_perdidos"
+                  type="number"
+                  placeholder="Cantidad de Cliente Perdido"
+                  maxlength="40"
+                  class="form-control"
+                  disabled
+                />
+              </div>
+            </div>
+           
           </div>
-         
         </div>
       </div>
-    </div>
-        <br /><br />
-        <div id="VerListado" class="table-responsive">
-          <table
-            id="tblCliente"
-            class="table table-striped table-bordered table-condensed table-hover"
-            cellpadding="0"
-            cellspacing="0"
-            width="100%"
-          >
-            <thead>
-              <tr>
-                <th></th>
-
-                <th>#</th>
-                <th>Tipo de Cliente</th>
-                <th>Estado de Cliente</th>
-                <th>Ultima Fecha de venta</th>
-                <th>Nombre</th>
-                <th>Documento</th>
-                <th>Teléfono</th>
-                <th>Dirección</th>
-                <th>Correo Electronico</th>
-                <!-- <th>Creado por</th> -->
-                <th>Fecha de creación</th>
-                <!-- <th>Modificado por</th> -->
-                <!-- <th>Fecha de modificación</th> -->
-                <th>EV Responsable</th>
-                <th>Estado de Cliente</th>
-                <th>12312</th>
-                <th>Opciones</th>
-              </tr>
-            </thead>
-
-            <tfoot>
-              <tr>
-                <th></th>
-
-                <th>#</th>
-                <th>Tipo de Cliente</th>
-                <th>Estado de Cliente</th>
-                <th>Ultima Fecha de venta</th>
-                <th>Nombre</th>
-                <th>Documento</th>
-                <th>Teléfono</th>
-                <th>Dirección</th>
-                <th>Correo Electronico</th>
-                <!-- <th>Creado por</th> -->
-                <th>Fecha de creación</th>
-                <!-- <th>Modificado por</th> -->
-                <!-- <th>Fecha de modificación</th> -->
-                <th>EV Responsable</th>
-                <th>Estado de Cliente</th>
-                <th>12312</th>
-                <th>Opciones</th>
-              </tr>
-            </tfoot>
-
-
-            <tbody id="cliente"></tbody>
-          </table>
-
-          <div id="info">
-            <p><br/><strong>Para Cliente final:</strong></p>
-            <ul>
-              <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
-              <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
-              <li><strong>Perdido:</strong> mayor igual que 120 días</li>
-            </ul>
-            <p><strong>Para Cliente distribuidor y superdistribuidor</strong>:</p>
-            <ul>
-              <li><strong>Activo:</strong> última compra, menor que 30 días</li>
-              <li><strong>Inactivo:</strong> última compra, mayor igual que 30 días y menor que 60 días.</li>
-              <li><strong>Perdido:</strong> última compra, mayor igual que 60 días</li>
-            </ul>
-            <p><strong>Para Cliente representante:</strong></p>
-            <ul>
-              <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
-              <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 90 días.</li>
-              <li><strong>Perdido:</strong> última compra, mayor igual que 90 días.</li>
-            </ul>
+          <br /><br />
+          <div id="VerListado" class="table-responsive">
+            <table
+              id="tblCliente"
+              class="table table-striped table-bordered table-condensed table-hover"
+              cellpadding="0"
+              cellspacing="0"
+              width="100%"
+            >
+              <thead>
+                <tr>
+                  <th></th>
+  
+                  <th>#</th>
+                  <th>Tipo de Cliente</th>
+                  <th>Estado de Cliente</th>
+                  <th>Ultima Fecha de venta</th>
+                  <th>Nombre</th>
+                  <th>Documento</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Correo Electronico</th>
+                  <!-- <th>Creado por</th> -->
+                  <th>Fecha de creación</th>
+                  <!-- <th>Modificado por</th> -->
+                  <!-- <th>Fecha de modificación</th> -->
+                  <th>EV Responsable</th>
+                  <th>Estado de Cliente</th>
+                  <th>12312</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+  
+              <tfoot>
+                <tr>
+                  <th></th>
+  
+                  <th>#</th>
+                  <th>Tipo de Cliente</th>
+                  <th>Estado de Cliente</th>
+                  <th>Ultima Fecha de venta</th>
+                  <th>Nombre</th>
+                  <th>Documento</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Correo Electronico</th>
+                  <!-- <th>Creado por</th> -->
+                  <th>Fecha de creación</th>
+                  <!-- <th>Modificado por</th> -->
+                  <!-- <th>Fecha de modificación</th> -->
+                  <th>EV Responsable</th>
+                  <th>Estado de Cliente</th>
+                  <th>12312</th>
+                  <th>Opciones</th>
+                </tr>
+              </tfoot>
+  
+  
+              <tbody id="cliente"></tbody>
+            </table>
+  
+            <div id="info">
+              <p><br/><strong>Para Cliente Final:</strong></p>
+              <ul>
+                <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+                <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
+                <li><strong>Perdido:</strong> mayor igual que 120 días</li>
+              </ul>
+              <p><strong>Para Cliente Distribuidor y SuperDistribuidor</strong>:</p>
+              <ul>
+                <li><strong>Activo:</strong> última compra, menor que 30 días</li>
+                <li><strong>Inactivo:</strong> última compra, mayor igual que 30 días y menor que 60 días.</li>
+                <li><strong>Perdido:</strong> última compra, mayor igual que 60 días</li>
+              </ul>
+              <p><strong>Para Cliente Representante:</strong></p>
+              <ul>
+                <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+                <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 90 días.</li>
+                <li><strong>Perdido:</strong> última compra, mayor igual que 90 días.</li>
+              </ul>
+              <p><strong>Para Cliente VIP:</strong></p>
+              <ul>
+                <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+                <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
+                <li><strong>Perdido:</strong> mayor igual que 120 días</li>
+              </ul>
+            </div>
+  
           </div>
-
+  
+          <!--Fin-Contenido-->
         </div>
-
-        <!--Fin-Contenido-->
       </div>
+      <!-- /.row -->
     </div>
-    <!-- /.row -->
+    <!-- /.box-body -->
   </div>
-  <!-- /.box-body -->
-</div>
-<!-- /.box -->
-
-<script type="text/javascript">
-  $("#liVentas").addClass("treeview active");
-  $("#liClientes").addClass("active");
-
-  $('#select_personal_vendedor').focus(function() {
-    traerPersonalVendedor();
-  })
-  function traerPersonalVendedor() {
-    $.ajax({
-      url: "./ajax/ClienteAjax.php?op=traerPersonalVendedor",
-      dataType: "json",
-      type: "get",
-      success: function (rpta) {
-        var ubicacion_containe_options_html = '<option value=""></option>';
-
-        rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
-        });
-
-        $("#select_personal_vendedor").html(ubicacion_containe_options_html);
-      },
-      error: function (e) {},
-    });
-  }
-
-
-  traerUbicacion();
-  function traerUbicacion() {
-    $.ajax({
-      url: "./ajax/ClienteAjax.php?op=traerUbicacion",
-      dataType: "json",
-      type: "get",
-      success: function (rpta) {
-        var ubicacion_containe_options_html = "";
-
-        rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
-        });
-        // console.log(rpta);
-
-        $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
-
-
-
-
-
-      },
-      error: function (e) {},
-    });
-  }
-
-</script>
+  <!-- /.box -->
+  
+  <script type="text/javascript">
+    $("#liVentas").addClass("treeview active");
+    $("#liClientes").addClass("active");
+  
+    $('#select_personal_vendedor').focus(function() {
+      traerPersonalVendedor();
+    })
+    function traerPersonalVendedor() {
+      $.ajax({
+        url: "./ajax/ClienteAjax.php?op=traerPersonalVendedor",
+        dataType: "json",
+        type: "get",
+        success: function (rpta) {
+          var ubicacion_containe_options_html = '<option value=""></option>';
+  
+          rpta.map((e) => {
+            ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
+          });
+  
+          $("#select_personal_vendedor").html(ubicacion_containe_options_html);
+        },
+        error: function (e) {},
+      });
+    }
+  
+  
+    traerUbicacion();
+    function traerUbicacion() {
+      $.ajax({
+        url: "./ajax/ClienteAjax.php?op=traerUbicacion",
+        dataType: "json",
+        type: "get",
+        success: function (rpta) {
+          var ubicacion_containe_options_html = "";
+  
+          rpta.map((e) => {
+            ubicacion_containe_options_html += `<option data-id='${e.idubicacion}' value='${e.ubicacion}'>${e.idubicacion}</option>`;
+          });
+          // console.log(rpta);
+  
+          $(".ubicacion_containe_options").html(ubicacion_containe_options_html);
+  
+  
+  
+  
+  
+        },
+        error: function (e) {},
+      });
+    }
+  
+  </script>
+  
