@@ -1697,6 +1697,9 @@ function eliminarPedido(idPedido) {
 function cambiarEstadoPedido(idPedido) {
   // COMPRUEBA PRIMERO STOCK DE PRODUCTOS
 
+
+  $("#miElemento").css("background-color", "#F0F0F0");
+
   $.get(
     "./ajax/VentaAjax.php?op=VerificarStockProductos_CambiarEstado",
     "idPedido=" + idPedido,
@@ -1761,6 +1764,10 @@ function cambiarEstadoPedidoVer(
   estado,
   ubicacion
 ) {
+
+
+  $("#detalleImagenesFEFO").css("background-color", "#dd4b39");
+ 
   $("#container_button_estado_pedido").html(`
       <button
         type="button"

@@ -706,12 +706,17 @@ switch ($_GET["op"]) {
         while ($reg = $query_total->fetch_object()) {
             echo '
                                 <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank"
-                                class="col-lg-6 "
+                                class="margin"
+                                style="width:150px;height:150px"
 
                                 >
-                                <span class="mailbox-attachment-icon has-img">
-                                <img src="./Files/FEFO/' . $reg->imagen . '" class="margin">
-                                </span>
+                              
+                                <img src="./Files/FEFO/' . $reg->imagen . '" 
+                                style="width:100%;height:100%;object-fit:cover"
+                               
+
+                                >
+                               
                                 </a>
                                ';
         }
@@ -724,12 +729,16 @@ switch ($_GET["op"]) {
         while ($reg = $query_total->fetch_object()) {
             echo '  
                             <a href="./Files/Chat/' . $reg->imagen . '" target="_blank"
-                            class="col-lg-6 "
-                             
+                            class="margin"
+                            style="width:150px;height:150px"
+
                             >
-                            <span class="mailbox-attachment-icon has-img">
-                            <img src="./Files/Chat/' . $reg->imagen . '">
-                            </span>
+                           
+                            <img src="./Files/Chat/' . $reg->imagen . '"
+                            style="width:100%;height:100%;object-fit:cover"
+                            
+                            >
+                           
                             </a>
                             ';
         }
@@ -743,13 +752,17 @@ switch ($_GET["op"]) {
         while ($reg = $query_total->fetch_object()) {
             echo '
                         <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank"
-                        class="col-lg-6" 
+                        class="margin"
+                        style="width:150px;height:150px"
 
                         >
-                        <span class="mailbox-attachment-icon has-img">
+                       
                         <img src="./Files/Empaquetado/' . $reg->imagen . '" 
+                        style="width:100%;height:100%;object-fit:cover"
+                       
+                   
                         >
-                        </span>
+                      
                         </a>
                         ';
         }
@@ -766,11 +779,20 @@ switch ($_GET["op"]) {
         while ($reg = $query_total->fetch_object()) {
             echo '
                     <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank"
-                    class="col-lg-6 "
+                    
+                    class="margin"
+                    style="width:150px;height:150px"
+                        
+                    
+
                     >
-                    <span class="mailbox-attachment-icon has-img">
-                    <img src="./Files/Voucher/' . $reg->imagen . '" >
-                    </span>
+                    
+                    <img src="./Files/Voucher/' . $reg->imagen . '"
+                    style="width:100%;height:100%;object-fit:cover"
+                   
+
+                    >
+                    
                     </a>
                     ';
         }
