@@ -222,7 +222,7 @@ iddistrito_factura='$iddistrito_factura'
  				WHERE idpersona = $idpersona and 
 			idpersona=$idpersona";
 
-		echo ($sql);
+		// echo ($sql);
 
 		$query = $conexion->query($sql);
 		return $query;
