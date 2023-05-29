@@ -81,8 +81,6 @@ function ubicacionAntiguo() {
 }
 
 function init() {
-
-
   $("#insertarClientesACartera").click(function () {
     // $('.close').click()
     $(".loading_window").show();
@@ -102,8 +100,8 @@ function init() {
             "Mensaje del Sistema",
             "clientes asignados correctamente",
             "success"
-          )
-          ListadoCliente()
+          );
+          ListadoCliente();
           $("#asignarUsuario").modal("hide");
         },
         error: function (e) {
@@ -111,8 +109,8 @@ function init() {
             "Mensaje del Sistema",
             "clientes asignados correctamente",
             "success"
-          )
-          ListadoCliente()
+          );
+          ListadoCliente();
 
           $("#asignarUsuario").modal("hide");
         },
@@ -121,8 +119,6 @@ function init() {
       alert("es necesario selecionar un vendedor");
     }
   });
-
-
 
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide();
   $("#container_alerta_telefono").hide();
@@ -182,15 +178,14 @@ function init() {
   });
 
   $("#txt_ubicacion_nuevo").on("blur", function () {
-
-    console.log($(this).val())
+    console.log($(this).val());
     var optionValues = $(".ubicacion_containe_options option")
       .map(function () {
         return $(this).val();
       })
       .get();
 
-    console.log(optionValues)
+    console.log(optionValues);
 
     if ($.inArray($(this).val(), optionValues) === -1) {
       $(this).val("");
@@ -258,13 +253,18 @@ function init() {
 		$('#cboTipo_Documento option[value="CE"]').attr("disabled", false);*/
   } else if ($("#hdn_rol_usuario").val() == "A") {
     // USUARIO / TRABAJADOR
-    $('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
-    $('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
-    $('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr(
-      "disabled",
-      true
-    );
-    $('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+    // $('#cboTipo_Persona option[value="FINAL"]').attr("disabled", false);
+    // $('#cboTipo_Persona option[value="DISTRIBUIDOR"]').attr("disabled", true);
+    // $('#cboTipo_Persona option[value="SUPERDISTRIBUIDOR"]').attr(
+    //   "disabled",
+    //   true
+    // );
+    // $('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
+
+    $('#cboTipo_Persona').prop('disabled', true);
+
+
+
 
     $("#cboTipo_Documento option:not(:selected)").attr("disabled", true);
 
@@ -285,12 +285,12 @@ function init() {
     var valor = $(this).val();
     // tabla.column(13).search(valor).draw();
 
-
     // console.log(tabla.column(13).data())
-    if (valor.length== 0) {  // verifica si el valor es nulo
-      tabla.column(13).search('').draw();  
+    if (valor.length == 0) {
+      // verifica si el valor es nulo
+      tabla.column(13).search("").draw();
     } else {
-      tabla.column(13).search(`^${valor}$`, true, false).draw();  // realiza la búsqueda normal
+      tabla.column(13).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
     }
 
     llenarCantidades();
@@ -298,12 +298,13 @@ function init() {
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
     // console.log(valor)
-    if (valor.length== 0) {  // verifica si el valor es nulo
-      tabla.column(11).search('').draw();  
+    if (valor.length == 0) {
+      // verifica si el valor es nulo
+      tabla.column(11).search("").draw();
     } else {
-      tabla.column(11).search(`^${valor}$`, true, false).draw();  // realiza la búsqueda normal
+      tabla.column(11).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
     }
-  
+
     $("#cant_total_cliente").val(tabla.page.info().end);
     llenarCantidades();
   });
@@ -331,8 +332,6 @@ function init() {
           htmlEVresponsable += `<option value="${e.idempleado}">${e.r_prefijo} ${e.nombre}</option>`;
         });
 
-        
-
         $("#txt_empleado_asignado").html(htmlEVresponsable);
         $("#ejecutivo_filtro").html(html);
       },
@@ -343,8 +342,8 @@ function init() {
   function SaveOrUpdate(e) {
     e.preventDefault(); // para que no se recargue la pagina
 
-    $('#txtTelefono_span').html('')
-    $('#txtTelefono_2_span').html('')
+    $("#txtTelefono_span").html("");
+    $("#txtTelefono_2_span").html("");
 
     console.log($("#idIgualAdirecionEnvio").val());
 
@@ -355,41 +354,67 @@ function init() {
     //   $("#txt_direccion_envio").val($("#txtDireccion_Referencia").val());
     //   $("#txt_ubicacion_envio").val($("#txtDireccion_Referencia").val());
     // }
+
+ 
+
+
+
+
+    console.log($('#cboTipo_Persona').val())
     
-    console.log($(this).serialize());
+document.getElementById("cboTipo_Persona").disabled = false;
+
 
     $.post(
       "./ajax/ClienteAjax.php?op=SaveOrUpdate",
       $(this).serialize(),
       function (r) {
+
+      document.getElementById("cboTipo_Persona").disabled = true;
+
+
         // llamamos la url por post. function(r). r-> llamada del callback
 
-        ListadoCliente();
-        //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
-        //swal("Mensaje del Sistema", r, "success");
-        OcultarForm();
+        // ListadoCliente();
+        // //$.toaster({ priority : 'success', title : 'Mensaje', message : r});
+        // //swal("Mensaje del Sistema", r, "success");
+        // OcultarForm();
 
-        $("#btnNuevo").show();
+        // $("#btnNuevo").show();
 
-        $(".container_info_filtro").show();
+        // $(".container_info_filtro").show();
 
-        $(".container_info_filtro input").val("");
+        // $(".container_info_filtro input").val("");
 
-        if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
-          $("#btn_asignar_vendedor").show();
-        }
+        // if ([17, 6].includes(Number($("#txtIdEmpleado").val()))) {
+        //   $("#btn_asignar_vendedor").show();
+        // }
 
-        Limpiar();
+        // Limpiar();
+
+        // swal(
+        //   {
+        //     title: "Mensaje del Sistema",
+        //     text: r,
+        //     type: "success",
+        //   },
+        //   function () {
+        //     // location.reload();
+        //     // window.location.href = "Cliente.php";
+        //   }
+        // );
 
         swal(
           {
             title: "Mensaje del Sistema",
             text: r,
-            type: "success",
+            icon: "success",
+         
           },
-          function () {
-            // location.reload();
-            // window.location.href = "Cliente.php";
+          function (confirm) {
+            if (confirm) {
+              location.reload();
+            }
           }
         );
       }
@@ -410,7 +435,6 @@ function init() {
 
     $("#cboTipo_Persona").val("FINAL");
 
-    
     $("#txtDireccion_Referencia").val("");
     $("#txtTelefono").val("");
     $("#txtTelefono_2").val("");
@@ -586,13 +610,11 @@ function ListadoCliente() {
       // { mDataProp: "7" },
       { mDataProp: "8" },
 
-      
-
       // { mDataProp: "10" },
       { mDataProp: "vendedor_asignado" },
 
       { mDataProp: "12", visible: false },
-      {mDataProp:"30",visible: false },
+      { mDataProp: "30", visible: false },
       { mDataProp: "11" },
     ],
 
@@ -720,9 +742,6 @@ function cargarDataCliente(
   empleado_asignado,
   disabled
 ) {
-
-
-  
   $("#txt_empleado_asignado").val(idempleado_asignado);
   $("#txt_idempleado_asignado").val(idempleado_asignado);
 
@@ -810,13 +829,10 @@ function cargarDataCliente(
 
   // }
 
-
   // $("#txtNum_Documento").prop("readonly", true);
 
-  
   if ($("#hdn_rol_usuario").val() == "S") {
     // SUPERADMIN
-    
 
     $("#panel_rbg_habilitado").show(200);
     $("#panel_rbg_desabilitado").hide(200);
@@ -831,7 +847,7 @@ function cargarDataCliente(
 
     // $('#cboTipo_Documento').prop('disabled',true)
     // $('#cboTipo_Persona').prop('disabled',true)
-    
+
     // $('#txt_empleado_asignado').prop("disabled", true);
 
     $("#panel_rbg_habilitado").hide(200);
@@ -842,7 +858,6 @@ function cargarDataCliente(
 
     $("input[name=optionsRadios]").prop("disabled", true);
 
-
     if (tipo_documento == "DNI" || tipo_documento == "RUC") {
       $("#txtNombre").prop("readonly", true);
       $("#txtApellido").prop("readonly", true);
@@ -852,13 +867,10 @@ function cargarDataCliente(
       $("#txtApellido").prop("readonly", false);
       $("#txtNum_Documento").prop("readonly", true);
     }
-
   }
 
   $(".container_info_filtro").hide();
 
-
-  
   if (disabled == "disabled") {
     $("#button_registrar_nuevo_cliente").hide();
     $("input").prop("disabled", true);
@@ -866,7 +878,6 @@ function cargarDataCliente(
   }
 
   //PROBLEMA CUANDO SE EDITA UN CLIENTE
-
 
   // $("#cboTipo_Documento").change(function () {
   //   if ($(this).val() == "DNI" || $(this).val() == "RUC") {
@@ -947,12 +958,9 @@ function buscarPorNumeroDocumento() {
           case "encontrado":
             //$("input[name=optionsRadios][value=" + genero + "]").prop("checked", true);
 
-          if($('#txtIdEmpleado').val()==17){
-
-            $('#txt_empleado_asignado').prop('disabled', false);
-            
-          }
-
+            if ($("#txtIdEmpleado").val() == 17) {
+              $("#txt_empleado_asignado").prop("disabled", false);
+            }
 
             if (rpta["direccion_antigua"]) {
               if (rpta["direccion_antigua"].length > 0) {
@@ -1053,8 +1061,7 @@ function buscarPorNumeroDocumento() {
 
             $("#txt_ubicacion_envio").val(rpta["ubicacion_factura"]);
 
-
-            console.log(rpta["idempleado_asignado"])
+            console.log(rpta["idempleado_asignado"]);
             $("#txt_empleado_asignado").val(rpta["idempleado_asignado"]);
 
             $("#txt_idempleado_asignado").val(rpta["idempleado_asignado"]);
