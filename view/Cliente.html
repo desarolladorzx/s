@@ -211,14 +211,10 @@
                         id="cboTipo_Persona"
                       >
                       <option value="FINAL">Final</option>
+                      <option value="VIP">Vip</option>
                       <option value="DISTRIBUIDOR">Distribuidor</option>
-                      <option value="SUPERDISTRIBUIDOR">
-                        Superdistribuidor
-                      </option>
+                      <option value="SUPERDISTRIBUIDOR">Superdistribuidor</option>
                       <option value="REPRESENTANTE">Representante</option>
-
-                      <option value="VIP">VIP</option>
-
                       <option value="NO RECUPERABLE">No Recuperable</option>
 
                       </select>
@@ -1129,19 +1125,25 @@
           </table>
 
           <div id="info">
-            <p><br/><strong>Para Cliente final:</strong></p>
+            <p><br/><strong>Para Cliente Final:</strong></p>
             <ul>
               <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
               <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
               <li><strong>Perdido:</strong> mayor igual que 120 días</li>
             </ul>
-            <p><strong>Para Cliente distribuidor y superdistribuidor</strong>:</p>
+            <p><strong>Para Cliente VIP</strong>:</p>
+            <ul>
+              <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
+              <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 120 días.</li>
+              <li><strong>Perdido:</strong> mayor igual que 120 días</li>
+            </ul>
+            <p><strong>Para Cliente Distribuidor y SuperDistribuidor</strong>:</p>
             <ul>
               <li><strong>Activo:</strong> última compra, menor que 30 días</li>
               <li><strong>Inactivo:</strong> última compra, mayor igual que 30 días y menor que 60 días.</li>
               <li><strong>Perdido:</strong> última compra, mayor igual que 60 días</li>
             </ul>
-            <p><strong>Para Cliente representante:</strong></p>
+            <p><strong>Para Cliente Representante:</strong></p>
             <ul>
               <li><strong>Activo:</strong> última compra, menor que 60 días.</li>
               <li><strong>Inactivo:</strong> última compra, mayor igual que 60 días y menor que 90 días.</li>
