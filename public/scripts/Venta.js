@@ -213,12 +213,12 @@ function init() {
                                       "Producto Stock ",
                                       {
                                         icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
-                                        body: `El producto ${articulo.nombre} de la marca ${articulo.marca_nombre} llego a su stock mínimo de ${articulo.stock_min} Unidades. ALERTA¡¡¡`,
+                                        body: `El ${articulo.nombre} - ${articulo.marca_nombre} quedan pocas Unidades, El stock Actual es ${articulo.stock_actual_total} Und.`,
                                       }
                                     );
                                     notification.onclick = function () {
                                       window.open(
-                                        "https://medicfit.grupopuma.pe/Venta.php"
+                                        "https://medicfit.grupopuma.pe/Articulo.php"
                                       );
                                     };
                                   }
