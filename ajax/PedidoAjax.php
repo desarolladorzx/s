@@ -651,7 +651,9 @@ switch ($_GET["op"]) {
                 $reg->vigencia
                 </span>
                 ",
-                "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />'
+                "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />',
+
+                '14'=>$reg->idarticulo
             );
             $i++;
         }

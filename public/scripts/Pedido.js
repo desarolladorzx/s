@@ -8,11 +8,16 @@ elementos = new Array();
 var email = "";
 
 let tipo_persona = "";
-var tabla;
+var tablaArticulo;
 
 function Limpiar() {
   $("#cboModPago").val("");
   $("#textObservaciones").val("");
+
+
+  $(`input[type="file"]#imagenFEFO`).val("");
+
+
 
   $("#txtIdCliente").val("");
   $("#cboTipoPedido").val("Pedido");
@@ -90,7 +95,7 @@ function init() {
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
   });
 
-  var tablaArtPed = $("#tblArticulosPed").dataTable({
+  var tablaArticuloArtPed = $("#tblArticulosPed").dataTable({
     pageLength: 30,
     //"aLengthMenu": [2, 4]
   });
@@ -153,14 +158,14 @@ function init() {
     //   }
     // }
 
-    // tabla.columns.adjust().draw();
+    // tablaArticulo.columns.adjust().draw();
 
     $("#txtCliente").val(opt.attr("data-nombre"));
     email = opt.attr("data-email");
 
     $("#modalListadoCliente").modal("hide");
 
-    /* DESTRUIR TABLA DE CLIENTES AL MOMENTO DE ELEGIR CLIENTE*/
+    /* DESTRUIR tablaArticulo DE CLIENTES AL MOMENTO DE ELEGIR CLIENTE*/
     if ($.fn.DataTable.isDataTable("#tblClientees")) {
       $("#tblClientees").DataTable().destroy();
     }
@@ -171,7 +176,7 @@ function init() {
   $("#btnAgregarArtPed").click(function (e) {
     e.preventDefault();
 
-    var opt = tablaArtPed.$("input[name='optDetIngBusqueda[]']:checked", {
+    var opt = tablaArticuloArtPed.$("input[name='optDetIngBusqueda[]']:checked", {
       page: "all",
     });
 
@@ -749,7 +754,7 @@ function init() {
     $("#VerListado").show();
   }
 
-  //Destruccion de tabla busqueda de Clientes
+  //Destruccion de tablaArticulo busqueda de Clientes
   $("#btnCerrarBusqueda").click(function () {
     if ($.fn.DataTable.isDataTable("#tblClientees")) {
       $("#tblClientees").DataTable().destroy();
@@ -830,7 +835,7 @@ function init() {
     }
 
     $("#modalListadoArticulosPed").modal("show");
-    tabla = $("#tblArticulosPed")
+    tablaArticulo = $("#tblArticulosPed")
       .dataTable({
         aProcessing: true,
         aServerSide: true,
@@ -911,8 +916,8 @@ function init() {
         },
       })
       .DataTable();
-    tabla.column(1).nodes().to$().css("background-color", "blue");
-    // var columna2 = tabla.column(2);
+    tablaArticulo.column(1).nodes().to$().css("background-color", "blue");
+    // var columna2 = tablaArticulo.column(2);
 
     // columna2.nodes().to$().css("background-color", "blue");
   }
@@ -986,7 +991,7 @@ function init() {
 }
 
 function ListadoVenta() {
-  var tabla = $("#tblVentapedido")
+  var tablaArticulo = $("#tblVentapedido")
     .dataTable({
       aProcessing: true,
       aServerSide: true,
@@ -2207,11 +2212,13 @@ function AgregarPedCarrito(
   if (stock_actual > 0) {
     let confirmarElProducto = true;
 
-    var datos = tabla.rows().data();
+    var datos = tablaArticulo.rows().data();
 
     let mu = false;
+
+    console.log(datos)
     datos.map((element) => {
-      if (element[4] == art && $("#txtSucursal").val() == element[1]) {
+      if (element[14] == idart && $("#txtSucursal").val() == element[1]) {
         var fechaselecionada = new Date(serie + "T00:00:00");
 
         var fecha1 = new Date(element[6] + "T00:00:00");
