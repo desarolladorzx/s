@@ -135,6 +135,8 @@ function init() {
     // $("input[type='file']").val("");
   });
 
+  
+
   $("#btnNuevoPedido_nuevo").click(VerFormPedido_Nuevo);
   $("form#frmPedidos").submit(GuardarPedido);
 
@@ -246,6 +248,7 @@ function init() {
     $("#image-preview-container-almacen").html("");
     const files = this.files;
 
+
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
 
@@ -270,7 +273,15 @@ function init() {
     }
   });
 
+
+  $("#btn_todos_eliminar_imagen_FEFO").hide();
+
+
+
+
+
   $("#imagenChats").on("change", function (e) {
+    
     $("#btn_todos_eliminar_imagen_chat").show();
     $("#image-preview-container_chat").html("");
     const files = this.files;
@@ -425,33 +436,50 @@ function init() {
             success: function (data) {
               $("#btn_registrar_cotizacion").prop("disabled", false);
 
-              swal("Mensaje del Sistema", data, "success");
+              // swal("Mensaje del Sistema", data, "success");
+
+
+              swal(
+                {
+                  title: "Mensaje del Sistema",
+                  text: data,
+                  icon: "success",
+               
+                },
+                function (confirm) {
+                  if (confirm) {
+                    location.reload();
+                  }
+                }
+              );
+
+
               // delete this.elementos;
-              $("#container_datos_cliente_seleccionado").hide();
-              $("#btnNuevoPedido_nuevo").show();
+              // $("#container_datos_cliente_seleccionado").hide();
+              // $("#btnNuevoPedido_nuevo").show();
 
-              $("#VerFormPed").hide(); // Mostramos el formulario
+              // $("#VerFormPed").hide(); // Mostramos el formulario
 
-              $("#btn_todos_eliminar_imagen").hide();
-              $("#btn_todos_eliminar_imagen_chat").hide();
+              // $("#btn_todos_eliminar_imagen").hide();
+              // $("#btn_todos_eliminar_imagen_chat").hide();
 
-              $("#slc_select_cliente").val(null);
+              // $("#slc_select_cliente").val(null);
 
-              $("#slc_select_cliente").trigger("change");
+              // $("#slc_select_cliente").trigger("change");
 
-              //$("#tblDetallePedido tbody").html("");
-              $("#txtIgvPed").val("");
-              $("#txtTotalPed").val("");
-              $("#txtSubTotalPed").val("");
-              OcultarForm();
-              $("#VerFormPed").hide(); // Mostramos el formulario
-              $("#txtCliente").val("");
-              Limpiar();
-              ListadoVenta();
-              GetPrimerCliente();
+              // //$("#tblDetallePedido tbody").html("");
+              // $("#txtIgvPed").val("");
+              // $("#txtTotalPed").val("");
+              // $("#txtSubTotalPed").val("");
+              // OcultarForm();
+              // $("#VerFormPed").hide(); // Mostramos el formulario
+              // $("#txtCliente").val("");
+              // Limpiar();
+              // ListadoVenta();
+              // GetPrimerCliente();
 
-              $("#image-preview-container_chat").html("");
-              $("#image-preview-container").html("");
+              // $("#image-preview-container_chat").html("");
+              // $("#image-preview-container").html("");
             },
           });
         }
@@ -2215,9 +2243,9 @@ function AgregarPedCarrito(
     var datos = tablaArticulo.rows().data();
 
     let mu = false;
-
-    console.log(datos)
+  
     datos.map((element) => {
+
       if (element[14] == idart && $("#txtSucursal").val() == element[1]) {
         var fechaselecionada = new Date(serie + "T00:00:00");
 
@@ -2255,10 +2283,30 @@ function AgregarPedCarrito(
                         autofocus=""
                         multiple
                         required
+                        onchange="ImagenesFefo(event)"
+
                       />
                     </div>
+
             </div>
+            <div class="col-lg-10 left">
+                      <label style="opacity: 0">Observaciones:</label>
+                      <div style="display: flex">
+                    
+                        <div class="col" id="image-preview-container_FEFO" style="
+                                                  display: flex;
+                                                  justify-content: center;
+                                                  align-items: center;
+                                                  flex-wrap: wrap;
+                                                  "></div>
+                        <button type="button" class="btn btn-danger" onclick="eliminarFEFO()" id="btn_todos_eliminar_imagen_FEFO">
+                          <i class="fa fa-trash"></i>
+                        </button>
+            </div>
+
       `);
+
+      $('#btn_todos_eliminar_imagen_FEFO').hide()
     }
 
     if (confirmarElProducto) {
@@ -2319,6 +2367,42 @@ function AgregarPedCarrito(
     bootbox.alert("No se puede agregar al detalle. No tiene stock");
   }
 }
+
+
+
+function eliminarFEFO () {
+  $("#image-preview-container_FEFO").html("");
+
+
+  $("input[type='file']#imagenFEFO").val("");
+}
+
+
+
+
+function ImagenesFefo (e) {
+  console.log(e)
+  $("#btn_todos_eliminar_imagen_FEFO").show();
+  $("#image-preview-container_FEFO").html("");
+  const files = e.target.files;
+  for (let i = 0; i < files.length; i++) {
+    const reader = new FileReader();
+    reader.addEventListener("load", function () {
+      const image = new Image();
+      image.src = reader.result;
+      const imagePreview = document.createElement("div");
+      image.classList.add("my-images_preview");
+      image.style.width = "30px";
+      image.style.objectFit = "fixed";
+      imagePreview.appendChild(image);
+
+      $("#image-preview-container_FEFO").append(imagePreview);
+    });
+    reader.readAsDataURL(files[i]);
+  }
+};
+
+
 
 function GetPrimerCliente() {
   $.getJSON("./ajax/PedidoAjax.php?op=GetPrimerCliente", function (r) {
