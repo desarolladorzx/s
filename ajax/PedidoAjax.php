@@ -38,6 +38,7 @@ switch ($_GET["op"]) {
                 "texto" => $value->texto,
                 "nombre_completo" => $value->nombre . ' ' . $value->apellido,
                 "documento" => $value->documento_as,
+           
                 "telefonos" => $value->telefono . ' ' . $value->telefono_2,
                 "ubicacion" => $value->ubicacion,
                 "direccion" => $value->direccion_calle,
@@ -367,7 +368,10 @@ switch ($_GET["op"]) {
             if ($_SESSION["idempleado"] == 11 || $_SESSION["idempleado"] == 6) {
 
                 if ($reg->estadoId == "D") { // APROBADO
-                    $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\')"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
+                    $botonPasarAVenta = '<button class="btn btn-success" data-toggle="tooltip" title="Generar Venta" onclick="pasarIdPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',\'' . $reg->tipo_entrega . '\'
+                    
+                    ,\'' . $reg->tipo_persona . '\'
+                    )"><i class="fa fa-shopping-cart"></i> </button>&nbsp';
                 } else {
                     $botonPasarAVenta = '';
                 }
@@ -404,9 +408,9 @@ switch ($_GET["op"]) {
 
 
 
-                    $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Ver Detalle" onclick="cambiarEstadoPedidoVer(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
-                    ,\'' . $reg->tipo_entrega . '\'
-                    
+                    $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Ver Detalle" onclick="cambiarEstadoPedidoVer(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',
+                    \'' . $reg->tipo_entrega . '\'
+                    ,\''.$reg->tipo_persona.'\'
                     )" ><i class="fa fa-refresh"></i> </button>';
                 } else {
                     $botonCambiarEstado = '';
@@ -436,6 +440,7 @@ switch ($_GET["op"]) {
                 "8" => $reg->estado,
                 "9" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
                 ,\'' . $reg->tipo_entrega . '\'
+                ,\'' . $reg->tipo_persona . '\'
                 
                 )" ><i class="fa fa-eye"></i> </button>&nbsp' .
                     $botonPasarAVenta .

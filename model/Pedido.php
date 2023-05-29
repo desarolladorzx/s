@@ -462,7 +462,7 @@ class Pedido
 	,if(c.direccion_distrito>0 AND c.direccion_provincia>0,'',CONCAT(c.direccion_departamento ,' ', c.direccion_distrito,' ',c.direccion_provincia)) direccion_antigua
 
 		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado 
-				
+		,c.tipo_persona
 		from pedido p inner join persona c on p.idcliente = c.idpersona
 		
 		

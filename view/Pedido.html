@@ -24,7 +24,7 @@
                 class="col-sm-12 col-sm-offset-0 col-lg-12 col-lg-offset-0 main"
               >
                 <div class="row">
-                  <div class="col-lg-10 left">
+                  <div class="col-lg-8 left">
                     <label id="inputCliente">Cliente:</label>
 
                      <select
@@ -73,7 +73,23 @@
 
                     </div>
                   </div>
-                  <div class="col-lg-4 left" style="display: none;">
+                  <div class="col-lg-2 ">
+                    <div class="form-group">
+                    <label id="asda">Tipo de Cliente:</label>
+                        <input
+                          id="txtTipoCliente"
+                          type="text"
+                          class="form-control"
+                          style="text-align: center"
+                          name="txtTipoCliente"
+                          disabled
+                        />
+                     
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-4 " style="display: none;">
                     <label id="inputImpuesto">Impuesto:</label>
                     <div class="form-group">
                       <div class="input-group has-success">
@@ -89,9 +105,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-4 left" style="display: none;">
-                    <label id="inputTipoPed">Tipo de Pedido:</label>
+                  <div class="col-lg-4 " style="display: none;">
                     <div class="form-group has-success">
+                    <label id="inputTipoPed">Tipo de Pedido:</label>
                       <select
                         id="cboTipoPedido"
                         name="cboTipoPedido"
@@ -118,7 +134,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="row" id="container_datos_cliente_seleccionado">
+                <div class="row container_datos_cliente_seleccionado" id="">
                   <div class="col-lg-2 left" >
                     <label id="inputNumero">Nombre y Apellido:</label>
                     <div class="form-group has-success">
@@ -565,7 +581,7 @@
         <div class="col-sm-14" id="VerForm">
           <form role="form" name="frmVentas" id="frmVentas">
             <div class="row">
-              <div class="col-lg-3 left">
+              <div class="col-lg-2 left">
                 <label for="inputMarca">Tipo de Venta:</label>
                 <div class="form-group has-success">
                   <input
@@ -616,7 +632,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-lg-3 left">
+              <div class="col-lg-2 left">
                 <label for="inputMarca"
                   >T. Comprobante* (Seleccionar Ticket)</label
                 >
@@ -629,7 +645,7 @@
                   ></select>
                 </div>
               </div>
-              <div class="col-lg-3 left">
+              <div class="col-lg-2 left">
                 <label for="inputMarca">Serie/Folio:</label>
                 <div class="form-group has-success">
                   <input
@@ -657,7 +673,7 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-3 left">
+              <div class="col-lg-2 left">
                 <label for="inputInscripcion">Numero</label>
                 <div class="form-group has-success">
                   <input
@@ -671,9 +687,8 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-12 left">
-                <div class="row">
-                  <div class="col-lg-3 left">
+              
+                  <div class="col-lg-4 left">
                     <div class="form-group has-warning">
                       <label>Ejecutivo:</label>
                       <input
@@ -685,6 +700,20 @@
                       />
                     </div>
                   </div>
+
+                  <div class="col-lg-3 left">
+                    <div class="form-group has-success">
+                      <label>Tipo de Cliente:</label>
+                      <input
+                        id="txtTipoClienteVas"
+                        type="text"
+                        name="txtTipoClienteVas"
+                        class="form-control"
+                        readonly="readonly"
+                      />
+                    </div>
+                  </div>
+
                   <div class="col-lg-3 left">
                     <div class="form-group has-success">
                       <label>Cliente:</label>
@@ -721,8 +750,10 @@
                       />
                     </div>
                   </div>
-                </div>
-              </div>
+
+                  
+
+               
               <div class="col-lg-2 left">
                 <label for="inputMarca">Modo de Pago:</label>
                 <div class="form-group has-success">
@@ -842,8 +873,6 @@
                   </div>
                 </div>
               </div>
-
-             
 
                 <div class="col-lg-10 left" id="container_metodos_pago">
                   
@@ -1362,7 +1391,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 <script type="text/javascript">
 
-$('#container_datos_cliente_seleccionado').hide();
+$('.container_datos_cliente_seleccionado').hide();
  $("#slc_select_cliente").on("select2:select", function (e) {
       // tabla.ajax.reload();
       // console.log($("#slc_select_cliente").data('nombre'))
@@ -1376,13 +1405,19 @@ $('#container_datos_cliente_seleccionado').hide();
       ConsultarDetallesPed()
       tipo_persona = opcionSeleccionada.tipo_persona;
 
-    console.log(opcionSeleccionada.ubicacion)
-      $('#container_datos_cliente_seleccionado').show();
+   
+      $('.container_datos_cliente_seleccionado').show();
       $('#txtNuevoNombre').val(opcionSeleccionada.nombre_completo)
       $('#txtNuevoDocumento').val(opcionSeleccionada.documento)
       $('#txtNuevoCelulares').val(opcionSeleccionada.telefonos)
       $('#txtNuevoUbicacion').val(opcionSeleccionada.ubicacion)
       $('#txtNuevoDireccion').val(opcionSeleccionada.direccion)
+
+
+      $('#txtTipoCliente').val(opcionSeleccionada.tipo_persona)
+
+
+
       
 
       // $("#slc_select_cliente").prop("disabled", true);
@@ -1398,6 +1433,10 @@ function formatRepo(repo) {
       var markup =
         `<option value='${repo.id}'
         
+
+  
+        
+
         data-tipo_persona='${repo.tipo_persona}' 
         data-nombre_completo='${repo.nombre_completo}' data-documento='${repo.documento}' data-telefonos='${repo.telefonos}' data-ubicacion='${repo.ubicacion}' data-direccion='${repo.direccion}' >${repo.texto}</option>`;
       

@@ -1222,6 +1222,11 @@ function cargarDataPedido(
   estado,
   ubicacion
 ) {
+
+
+  $("#txtTipoClienteVas").val(agencia_envio);
+
+  
   $(".ventasFechasOcultar").hide();
 
   if (modificar_detalle === "C") {
@@ -1798,7 +1803,30 @@ function cambiarEstadoPedidoVer(
   ubicacion
 ) {
 
-
+  console.log(idPedido,
+    tipo_pedido,
+    numero,
+    cliente,
+    total,
+    correo,
+    num_documento,
+    celular,
+    tipo_cliente,
+    destino,
+    ticket,
+    aproba_venta,
+    aproba_pedido,
+    empleado,
+    metodo_pago,
+    agencia_envio,
+    tipo_promocion,
+    observaciones,
+    modo_pago,
+    ultimo,
+    modificar_detalle,
+    idcliente,
+    estado,
+    ubicacion)
   $("#detalleImagenesFEFO").css("background-color", "#dd4b39");
  
   $("#container_button_estado_pedido").html(`
@@ -1830,6 +1858,12 @@ function cambiarEstadoPedidoVer(
 
   $("#txtIdPedido").val(idPedido);
 
+
+
+  $("#txtTipoClienteVas").val(agencia_envio);
+
+
+
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
@@ -1857,6 +1891,9 @@ function cambiarEstadoPedidoVer(
   $("#cboModTipo_EntregaDetalles").val(metodo_pago);
 
   $("#txtTotalVent").val(tipo_pedido);
+
+
+  
 
   //$("#hdn_agencia_envio").val(agencia_envio);
   //$("#txtClienteDir").val(destino); // MUESTRA DETALLE DE VENTA

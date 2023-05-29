@@ -700,9 +700,14 @@ function pasarIdPedido(
   tipo_promocion,
   OBSERVACIONES,
   PAGO_DETALLE,
-  tipo_entrega
+  tipo_entrega,
+  tipo_cliente
 ) {
   // funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
+
+
+  $("#txtTipoClienteVas").val(tipo_cliente);
+
 
   $("#VerForm").show(); // mostramos el formulario
   $("#VerListado").hide(); // ocultamos el listado
