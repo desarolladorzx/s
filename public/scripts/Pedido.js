@@ -125,14 +125,12 @@ function init() {
 
   $("#btn_todos_eliminar_imagen").click(function () {
     $("#image-preview-container").html("");
-    $("#image-preview-container-almacen").html("");
-    // $("input[type='file']").val("");
+    $("input[type='file']#imagenVoucher").val("");
   });
 
   $("#btn_todos_eliminar_imagen_chat").click(function () {
     $("#image-preview-container_chat").html("");
-    $("#image-preview-container-almacen").html("");
-    // $("input[type='file']").val("");
+    $("input[type='file']#imagenChats").val("");
   });
 
   
@@ -1226,7 +1224,7 @@ function cargarDataPedido(
 
   $("#txtTipoClienteVas").val(agencia_envio);
 
-  
+
   $(".ventasFechasOcultar").hide();
 
   if (modificar_detalle === "C") {

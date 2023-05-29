@@ -710,22 +710,33 @@ switch ($_GET["op"]) {
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImageneFEFO($_REQUEST["idPedido"]);
+        $index = 1;
+
         while ($reg = $query_total->fetch_object()) {
+            
+            
             echo '
                                 <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank"
                                 class="margin"
-                                style="width:150px;height:150px"
+                                style="width:150px;height:175px;padding:0 10px"
 
                                 >
                               
                                 <img src="./Files/FEFO/' . $reg->imagen . '" 
-                                style="width:100%;height:100%;object-fit:cover"
+                                style="width:100%;height:75%;object-fit:cover">
                                
+                                <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
 
-                                >
+                            border:4px solid #ddd
+                            ">FEFO - '.$index.'</div>
+
+                                
                                
                                 </a>
                                ';
+
+                               $index++;
+
         }
         break;
 
@@ -733,21 +744,30 @@ switch ($_GET["op"]) {
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImagenesChat($_REQUEST["idPedido"]);
+
+        $index = 1;
         while ($reg = $query_total->fetch_object()) {
             echo '  
                             <a href="./Files/Chat/' . $reg->imagen . '" target="_blank"
                             class="margin"
-                            style="width:150px;height:150px"
-
+                            style="width:150px;height:175px;padding:0 10px"
                             >
-                           
                             <img src="./Files/Chat/' . $reg->imagen . '"
-                            style="width:100%;height:100%;object-fit:cover"
-                            
+                            style="width:100%;height:75%;object-fit:cover"
                             >
-                           
+
+                            <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
+
+                            border:4px solid #ddd
+                            ">CHAT - '.$index.'</div>
+    
+                            </a>
+
+
                             </a>
                             ';
+
+                            $index++;
         }
         break;
 
@@ -756,22 +776,31 @@ switch ($_GET["op"]) {
         require_once "../model/Pedido.php";
         $objPedido = new Pedido();
         $query_total = $objPedido->GetImagenesEmpaquetado($_REQUEST["idPedido"]);
+
+
+        $index = 1;
+
         while ($reg = $query_total->fetch_object()) {
             echo '
                         <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank"
                         class="margin"
-                        style="width:150px;height:150px"
-
+                        style="width:150px;height:175px;padding:0 10px"
                         >
                        
                         <img src="./Files/Empaquetado/' . $reg->imagen . '" 
-                        style="width:100%;height:100%;object-fit:cover"
+                        style="width:100%;height:75%;object-fit:cover"
                        
-                   
                         >
-                      
+                        <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
+
+                        border:4px solid #ddd
+                        ">EMPAQUETADO - '.$index.'</div>
+
                         </a>
                         ';
+
+                        $index++;
+
         }
         break;
 
@@ -782,26 +811,33 @@ switch ($_GET["op"]) {
 
         //var_dump($query_total->fetch_object());
         //exit;
+        $index = 1;
+
 
         while ($reg = $query_total->fetch_object()) {
             echo '
                     <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank"
-                    
+
                     class="margin"
-                    style="width:150px;height:150px"
+                    style="width:150px;height:175px;padding:0 10px"
                         
                     
 
                     >
                     
                     <img src="./Files/Voucher/' . $reg->imagen . '"
-                    style="width:100%;height:100%;object-fit:cover"
-                   
-
+                    style="width:100%;height:75%;object-fit:cover"
                     >
+                    <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
+
+                    border:4px solid #ddd
+                    ">VOUCHER - '.$index.'</div>
                     
                     </a>
                     ';
+
+                    $index++;
+
         }
 
 
