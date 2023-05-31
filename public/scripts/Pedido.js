@@ -865,12 +865,7 @@ function init() {
       .dataTable({
         aProcessing: true,
         aServerSide: true,
-
-
         "order": [[6, 'asc'],
-      
-`        [1, 'asc']`
-
       ],
       "columnDefs": [
         {
