@@ -16,7 +16,7 @@ switch ($_GET["op"]) {
             $nuevo[] = $reg;
         }
         echo  json_encode($nuevo);
-    break;
+        break;
     case 'buscarCliente':
         $q = $_GET["q"];
         require_once "../model/Pedido.php";
@@ -38,7 +38,7 @@ switch ($_GET["op"]) {
                 "texto" => $value->texto,
                 "nombre_completo" => $value->nombre . ' ' . $value->apellido,
                 "documento" => $value->documento_as,
-           
+
                 "telefonos" => $value->telefono . ' ' . $value->telefono_2,
                 "ubicacion" => $value->ubicacion,
                 "direccion" => $value->direccion_calle,
@@ -234,8 +234,8 @@ switch ($_GET["op"]) {
                     }
                 }
 
-          
-                
+
+
                 if (!empty($_FILES["fileuploadFEFO"])) {
 
                     $file_names = $_FILES['fileuploadFEFO']['name'];
@@ -410,7 +410,7 @@ switch ($_GET["op"]) {
 
                     $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Ver Detalle" onclick="cambiarEstadoPedidoVer(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',
                     \'' . $reg->tipo_entrega . '\'
-                    ,\''.$reg->tipo_persona.'\'
+                    ,\'' . $reg->tipo_persona . '\'
                     )" ><i class="fa fa-refresh"></i> </button>';
                 } else {
                     $botonCambiarEstado = '';
@@ -658,7 +658,7 @@ switch ($_GET["op"]) {
                 ",
                 "9" => '<img width=100px height=100px src="./' . $reg->imagen . '" />',
 
-                '14'=>$reg->idarticulo
+                '14' => $reg->idarticulo
             );
             $i++;
         }
@@ -713,30 +713,35 @@ switch ($_GET["op"]) {
         $index = 1;
 
         while ($reg = $query_total->fetch_object()) {
-            
-            
+
+
             echo '
-                                <a href="./Files/FEFO/' . $reg->imagen . '" target="_blank"
-                                class="margin"
-                                style="width:150px;height:175px;padding:0 10px"
-
-                                >
-                              
-                                <img src="./Files/FEFO/' . $reg->imagen . '" 
-                                style="width:100%;height:75%;object-fit:cover">
-                               
-                                <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
-
-                            border:4px solid #ddd
-                            ">FEFO - '.$index.'</div>
-
-                                
-                               
-                                </a>
+            <li>
+           
+            <a  href="./Files/FEFO/' . $reg->imagen . '" target="_blank" 
+            >
+            <span class="mailbox-attachment-icon has-img">
+            <img src="./Files/FEFO/' . $reg->imagen . '" />
+            </span>
+           </a>
+        
+            <div class="mailbox-attachment-info">
+              <a href="#" class="mailbox-attachment-name"
+                ><i class="fa fa-camera"></i>
+                FEFO - ' . $index . '
+              </a>
+        
+              <span class="mailbox-attachment-size">
+                1.9 MB
+                <a href="#" class="btn btn-default btn-xs pull-right"
+                  ><i class="fa fa-cloud-download"></i
+                ></a>
+              </span>
+            </div>
+          </li>
                                ';
 
-                               $index++;
-
+            $index++;
         }
         break;
 
@@ -748,26 +753,32 @@ switch ($_GET["op"]) {
         $index = 1;
         while ($reg = $query_total->fetch_object()) {
             echo '  
-                            <a href="./Files/Chat/' . $reg->imagen . '" target="_blank"
-                            class="margin"
-                            style="width:150px;height:175px;padding:0 10px"
-                            >
-                            <img src="./Files/Chat/' . $reg->imagen . '"
-                            style="width:100%;height:75%;object-fit:cover"
-                            >
-
-                            <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
-
-                            border:4px solid #ddd
-                            ">CHAT - '.$index.'</div>
-    
-                            </a>
-
-
-                            </a>
+            <li>
+           
+            <a  href="./Files/Chat/' . $reg->imagen . '" target="_blank" 
+            >
+            <span class="mailbox-attachment-icon has-img">
+            <img src="./Files/Chat/' . $reg->imagen . '" />
+            </span>
+           </a>
+        
+            <div class="mailbox-attachment-info">
+              <a href="#" class="mailbox-attachment-name"
+                ><i class="fa fa-camera"></i>
+                CHAT - ' . $index . '
+              </a>
+        
+              <span class="mailbox-attachment-size">
+                1.9 MB
+                <a href="#" class="btn btn-default btn-xs pull-right"
+                  ><i class="fa fa-cloud-download"></i
+                ></a>
+              </span>
+            </div>
+          </li>
                             ';
 
-                            $index++;
+            $index++;
         }
         break;
 
@@ -782,25 +793,32 @@ switch ($_GET["op"]) {
 
         while ($reg = $query_total->fetch_object()) {
             echo '
-                        <a href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank"
-                        class="margin"
-                        style="width:150px;height:175px;padding:0 10px"
-                        >
-                       
-                        <img src="./Files/Empaquetado/' . $reg->imagen . '" 
-                        style="width:100%;height:75%;object-fit:cover"
-                       
-                        >
-                        <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
-
-                        border:4px solid #ddd
-                        ">EMPAQUETADO - '.$index.'</div>
-
-                        </a>
+            <li>
+           
+            <a  href="./Files/Empaquetado/' . $reg->imagen . '" target="_blank" 
+            >
+            <span class="mailbox-attachment-icon has-img">
+            <img src="./Files/Empaquetado/' . $reg->imagen . '" />
+            </span>
+           </a>
+        
+            <div class="mailbox-attachment-info">
+              <a href="#" class="mailbox-attachment-name"
+                ><i class="fa fa-camera"></i>
+                EMPAQUETADO - ' . $index . '
+              </a>
+        
+              <span class="mailbox-attachment-size">
+                1.9 MB
+                <a href="#" class="btn btn-default btn-xs pull-right"
+                  ><i class="fa fa-cloud-download"></i
+                ></a>
+              </span>
+            </div>
+          </li>
                         ';
 
-                        $index++;
-
+            $index++;
         }
         break;
 
@@ -816,28 +834,32 @@ switch ($_GET["op"]) {
 
         while ($reg = $query_total->fetch_object()) {
             echo '
-                    <a href="./Files/Voucher/' . $reg->imagen . '" target="_blank"
-
-                    class="margin"
-                    style="width:150px;height:175px;padding:0 10px"
-                        
-                    
-
-                    >
-                    
-                    <img src="./Files/Voucher/' . $reg->imagen . '"
-                    style="width:100%;height:75%;object-fit:cover"
-                    >
-                    <div style="align-items:center;display:flex;width:100%; justify-content:center;background:#f0f0f0;
-
-                    border:4px solid #ddd
-                    ">VOUCHER - '.$index.'</div>
-                    
-                    </a>
+            <li>
+           
+            <a  href="./Files/Voucher/' . $reg->imagen . '" target="_blank" 
+            >
+            <span class="mailbox-attachment-icon has-img">
+            <img src="./Files/Voucher/' . $reg->imagen . '" />
+            </span>
+           </a>
+        
+            <div class="mailbox-attachment-info">
+              <a href="#" class="mailbox-attachment-name"
+                ><i class="fa fa-camera"></i>
+                VOUCHER - ' . $index . '
+              </a>
+        
+              <span class="mailbox-attachment-size">
+                1.9 MB
+                <a href="#" class="btn btn-default btn-xs pull-right"
+                  ><i class="fa fa-cloud-download"></i
+                ></a>
+              </span>
+            </div>
+          </li>
                     ';
 
-                    $index++;
-
+            $index++;
         }
 
 
