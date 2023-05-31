@@ -865,6 +865,28 @@ function init() {
       .dataTable({
         aProcessing: true,
         aServerSide: true,
+
+
+        "order": [[6, 'asc'],
+      
+`        [1, 'asc']`
+
+      ],
+      "columnDefs": [
+        {
+          "type": "date",
+          "targets": 6,
+          "render": function(data, type, row, meta) {
+            // Obtener el valor de la columna de sucursales (columna 7)
+            var sucursal = row[1];
+  
+            // Concatenar el valor de la columna de sucursales y la fecha para obtener un valor único para ordenar
+            var fechaOrdenada = sucursal + data;
+  
+            return fechaOrdenada;
+          }
+        }
+      ] ,
         pageLength: 7,
         //"search": false ,
         // "iDisplayLength": 7,
