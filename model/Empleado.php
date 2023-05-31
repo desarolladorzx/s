@@ -13,14 +13,39 @@
 		,$sexo
 		){
 			global $conexion;
-			$sql = "INSERT INTO empleado(apellidos,nombre,tipo_documento,num_documento,direccion,telefono,email,fecha_nacimiento,foto, login, clave,estado
-			,cargo,fecha_ingreso,sexo
+			$sql = "INSERT INTO empleado(
+			apellidos
+			,nombre
+			,tipo_documento
+			,num_documento
+			,direccion
+			,telefono
+			,email
+			,fecha_nacimiento
+			,foto
+			,login
+			,clave
+			,estado
+			,cargo
+			,fecha_ingreso
+			,sexo
 			)
-						VALUES('$apellidos','$nombre','$tipo_documento','$num_documento','$direccion','$telefono','$email','$fecha_nacimiento','$foto', '$login', '$clave','$estado'
-						
-						,'$cargo'
-						,'$fecha_ingreso'
-						,'$sexo'
+						VALUES(
+							'$apellidos'
+							,'$nombre'
+							,'$tipo_documento'
+							,'$num_documento'
+							,'$direccion'
+							,'$telefono'
+							,'$email'
+							,'$fecha_nacimiento'
+							,'$foto'
+							,'$login'
+							,'$clave'
+							,'$estado'
+							,'$cargo'
+							,'$fecha_ingreso'
+							,'$sexo'
 						)";
 			// echo $sql;	
 			$query = $conexion->query($sql);
