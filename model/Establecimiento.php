@@ -128,7 +128,22 @@
 				provincia,
 				distrito,
 				idempleado,
-				nombre
+				nombre,
+				hor_ini_lunes,
+				hor_ini_martes,
+				hor_ini_miercoles,
+				hor_ini_jueves,
+				hor_ini_viernes,
+				hor_ini_sabado,
+				hor_ini_domingo,
+
+				hor_fin_lunes,
+				hor_fin_martes,
+				hor_fin_miercoles,
+				hor_fin_jueves,
+				hor_fin_viernes,
+				hor_fin_sabado,
+				hor_fin_domingo
 				
 				)
 			values(
@@ -141,7 +156,24 @@
 				'$id_ubicacion_envio_array[1]',
 				'$id_ubicacion_envio_array[2]',
 				'".$_SESSION['idempleado']."',
-				'$json->txtNombre'
+				'$json->txtNombre',
+
+				'$json->hor_ini_lunes',
+				'$json->hor_ini_martes',
+				'$json->hor_ini_miercoles',
+				'$json->hor_ini_jueves',
+				'$json->hor_ini_viernes',
+				'$json->hor_ini_sabado',
+				'$json->hor_ini_domingo',
+
+				'$json->hor_fin_lunes',
+				'$json->hor_fin_martes',
+				'$json->hor_fin_miercoles',
+				'$json->hor_fin_jueves',
+				'$json->hor_fin_viernes',
+				'$json->hor_fin_sabado',
+				'$json->hor_fin_domingo'
+
 				) ";
 			
 			$query = $conexion->query($sql);
@@ -168,6 +200,26 @@
 			distrito='$id_ubicacion_envio_array[2]',
 			idempleado='".$_SESSION['idempleado']."',
 			nombre='$json->txtNombre'
+			,
+			hor_ini_lunes='$json->hor_ini_lunes',
+			hor_ini_martes='$json->hor_ini_martes',
+			hor_ini_miercoles='$json->hor_ini_miercoles',
+			hor_ini_jueves='$json->hor_ini_jueves',
+			hor_ini_viernes='$json->hor_ini_viernes',
+			hor_ini_sabado='$json->hor_ini_sabado',
+			hor_ini_domingo='$json->hor_ini_domingo',
+
+			hor_fin_lunes='$json->hor_fin_lunes',
+			hor_fin_martes='$json->hor_fin_martes',
+			hor_fin_miercoles='$json->hor_fin_miercoles',
+			hor_fin_jueves='$json->hor_fin_jueves',
+			hor_fin_viernes='$json->hor_fin_viernes',
+			hor_fin_sabado='$json->hor_fin_sabado',
+			hor_fin_domingo='$json->hor_fin_domingo'
+
+
+
+
 			WHERE idempresa = $idempresa";
 
 			// echo $sql;

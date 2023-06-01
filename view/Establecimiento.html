@@ -41,103 +41,247 @@
                 />
 
               </div>
-              <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Departamento - Provincia - Distrito (*):</label>
+             
+             
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Departamento - Provincia - Distrito (*):</label>
+    
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Envio"
+                        list="ubicacions"
+                        id="id_ubicacion_envio_array"
+                        name="id_ubicacion_envio_array"
+                        style="text-transform: uppercase"
+                      />
+    
+                      <input
+                        type="text"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Envio"
+                        list="ubicacion"
+                        id="txt_ubicacion_establecimiento"
+                        name="txt_ubicacion_establecimiento"
+                        style="text-transform: uppercase"
+                      />
+                      <datalist id="ubicacion" class="ubicacion_containe_options">
+                      </datalist>
+                    </div>
+                  </div>
 
-                  <input
-                    type="hidden"
-                    class="form-control"
-                    required
-                    placeholder="Ubicacion de Envio"
-                    list="ubicacions"
-                    id="id_ubicacion_envio_array"
-                    name="id_ubicacion_envio_array"
-                    style="text-transform: uppercase"
-                  />
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Tipo de Establecimiento (*):</label>
+                    
+                      <select 
+                      name="txtTipoEstablecimiento" id="txtTipoEstablecimiento"
+                      required=""
+                      class="form-control tipo_establecimiento_select"
+                      placeholder="Tipo de Establecimiento (*)"
+                      >
+    
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Nombre de Establecimiento (*):</label>
+                      <input
+                        id="txtNombreEstablecimiento"
+                        name="txtNombreEstablecimiento"
+                        type="text"
+                        maxlength="150"
+                        class="form-control"
+                        required=""
+                        placeholder="Nombre de Establecimiento (*)"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Dirección Establecimiento (*):</label>
+                      <input
+                        id="txtDireccionEstablecimiento"
+                        type="text"
+                        maxlength="150"
+                        class="form-control"
+                        name="txtDireccionEstablecimiento"
+                        required=""
+                        placeholder="Dirección Establecimiento (*)"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+               
 
-                  <input
-                    type="text"
-                    class="form-control"
-                    required
-                    placeholder="Ubicacion de Envio"
-                    list="ubicacion"
-                    id="txt_ubicacion_establecimiento"
-                    name="txt_ubicacion_establecimiento"
-                    style="text-transform: uppercase"
-                  />
-                  <datalist id="ubicacion" class="ubicacion_containe_options">
-                  </datalist>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Tipo de Establecimiento (*):</label>
-                  <!-- <input
-                    id="txtTipoEstablecimiento"
-                    name="txtTipoEstablecimiento"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    required=""
-                    placeholder="Tipo de Establecimiento (*)"
-                    autofocus=""
-                  /> -->
-                  <select 
-                  name="txtTipoEstablecimiento" id="txtTipoEstablecimiento"
-                  required=""
-                  class="form-control"
-                  placeholder="Tipo de Establecimiento (*)"
-                  >
+                <div class="row">
+                  <div class="col-lg-12">
+                    <!-- <div class="form-group has-success"> -->
+                   
+                    <div class="row margin">
+                      <div class="col-lg-2">
 
-                  </select>
+                          <label for="">Lunes</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_lunes" 
+                        name="hor_ini_lunes"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_lunes" 
+                        name="hor_fin_lunes"
+                         
+                        class="form-control">
+                    </div>
+                  </div>
+
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Martes</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_martes" 
+                        name="hor_ini_martes"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_martes" 
+                        name="hor_fin_martes"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Miercoles</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_miercoles" 
+                        name="hor_ini_miercoles"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_miercoles" 
+                        name="hor_fin_miercoles"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Jueves</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_jueves" 
+                        name="hor_ini_jueves"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_jueves" 
+                        name="hor_fin_jueves"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Viernes</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_viernes" 
+                        name="hor_ini_viernes"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_viernes" 
+                        name="hor_fin_viernes"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Sabado</label>
+                      </div>
+                      <div class="col-lg-5">
+
+                        <input type="hidden" 
+                        id="txtHorario" 
+                        name="txtHorario"
+                         
+                       class="form-control">
+
+                        <input type="time" 
+                        id="hor_ini_sabado" 
+                        name="hor_ini_sabado"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_sabado" 
+                        name="hor_fin_sabado"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+                    <div class="row margin">
+                      <div class="col-lg-2">
+                          <label for="">Domingo</label>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_ini_domingo" 
+                        name="hor_ini_domingo"
+                         
+                       class="form-control">
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="time" 
+                        id="hor_fin_domingo" 
+                        name="hor_fin_domingo"
+                         
+                       class="form-control">
+                      </div>
+
+                    </div>
+
+                  </div>
                 </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Nombre de Establecimiento (*):</label>
-                  <input
-                    id="txtNombreEstablecimiento"
-                    name="txtNombreEstablecimiento"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    required=""
-                    placeholder="Nombre de Establecimiento (*)"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Dirección Establecimiento (*):</label>
-                  <input
-                    id="txtDireccionEstablecimiento"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    name="txtDireccionEstablecimiento"
-                    required=""
-                    placeholder="Dirección Establecimiento (*)"
-                    autofocus=""
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Horario de Atención (*):</label>
-                  <input
-                    id="txtHorario"
-                    type="text"
-                    maxlength="150"
-                    class="form-control"
-                    name="txtHorario"
-                    required=""
-                    placeholder="Horario de Atención (*)"
-                    autofocus=""
-                  />
-                </div>
-              </div>
+             
+
             </div>
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -188,7 +332,7 @@
                     class="form-control"
                     name="txtFileFotografia"
                     multiple
-                    
+                    required  
                     placeholder="Fotografías Fachada"
                     autofocus=""
                   />
@@ -296,15 +440,68 @@
           </form>
         </div>
 
-        <?php if($_SESSION["idrol"]==2 || $_SESSION["idrol"]==7  || $_SESSION["idrol"]==3){
+        
+        
+        <div class="col-md-12">
           
-          echo '
-          <button class="btn btn-primary" id="btnNuevo">
-            <i class="fa fa-file"></i> Nuevo
-          </button>
-          ';
-        } ?>
-
+        </div>
+        
+        <div class="row" id="container_select_button">
+          <?php if($_SESSION["idrol"]==2 || $_SESSION["idrol"]==7  || $_SESSION["idrol"]==3){
+            
+            echo ' 
+            <div class="col-lg-2" style="display:flex;
+            flex-direction:column;
+            
+            ">
+                  <label 
+                  style="opacity: 0;"
+                  for="">ubicacion</label>
+  
+              <button class="btn btn-primary" id="btnNuevo">
+                <i class="fa fa-file"></i> Nuevo
+              </button>
+            </div>
+            ';
+          } ?>
+          <div class="col-lg-4">
+                  <label for="">ubicacion</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  required
+                  placeholder="Ubicacion de Envio"
+                  list="ubicacionSelect"
+                  id="txt_ubicacionSelect"
+                  name="txt_ubicacionSelect"
+                  style="text-transform: uppercase"
+                  />
+                  <datalist id="ubicacionSelect" class="ubicacion_containe_options">
+                  </datalist>
+              
+          </div>
+          <div class="col-lg-3">
+            <label for="">Tipo de Establecimiento</label>
+            <select name="tipo_de_establecimiento_select" id="tipo_de_establecimiento_select" class="form-control
+            tipo_establecimiento_select
+            ">
+            </select>
+          </div>
+          <div class="col-lg-3">
+            <label for="">Nº Total de Resultados de Búsqueda</label>
+              <input
+              type="text"
+              class="form-control"
+              required
+              disabled
+              placeholder="Nº Total de Resultados de Búsqueda"
+              id="txt_resultados_busquedas"
+              name="txt_resultados_busquedas"
+              style="text-transform: uppercase"
+              />
+          </div>
+        </div>
+     
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table
@@ -320,9 +517,11 @@
                 <th>Departamento</th>
                 <th>Tipo de Establecimiento</th>
                 <th>Dirección de Establecimiento</th>
+                <th>Nombre de Establecimiento</th>
                 <th>Dueño o administrador</th>
                 <th>EVC Responsable</th>
                 <th>Opciones</th>
+                <th>idTipoEstablecimiento</th>
               </tr>
             </thead>
 
@@ -332,9 +531,11 @@
                 <th>Departamento</th>
                 <th>Tipo de Establecimiento</th>
                 <th>Dirección de Establecimiento</th>
+                <th>Nombre de Establecimiento</th>
                 <th>Dueño o administrador</th>
                 <th>EVC Responsable</th>
                 <th>Opciones</th>
+                <th>idTipoEstablecimiento</th>
               </tr>
             </tfoot>
 

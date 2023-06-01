@@ -91,15 +91,17 @@ switch ($_GET["op"]) {
                 "2" => $reg->categoria_empresa_descripcion,
 
                 "3" => $reg->direccion,
+                "4" => $reg->razon_comercial,
 
-                "4" => $reg->nombre,
+                "5" => $reg->nombre,
 
-                "5" => $reg->empleado,
-                "6" => $buttonEditar .
+                "6" => $reg->empleado,
+                "7" => $buttonEditar .
 
                     '<button class="btn btn-success" data-toggle="tooltip" title="Detalles" onclick="cargarDataEstablecimiento(' . $reg->idempresa . ',\'' . false . '\')"><i class="fa fa-eye"></i> </button>&nbsp;' .
 
-                    $buttonEliminar
+                    $buttonEliminar,
+                '8'=>$reg->categoria_empresa
             );
             $i++;
         }
