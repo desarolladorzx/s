@@ -76,13 +76,13 @@ function init() {
   $("#txt_ubicacionSelect").on("change", function () {
     var valorSeleccionado = this.value;
 
-    tablaEstablecimiento.column(1).search(valorSeleccionado).draw();
-
+    tablaEstablecimiento.column(1).search("^" + valorSeleccionado + "$", true, false).draw();
+  
     let valoresFiltrados = tablaEstablecimiento
       .rows({ search: "applied" })
       .data()
       .toArray().length;
-
+  
     $("#txt_resultados_busquedas").val(valoresFiltrados);
   });
 
