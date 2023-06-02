@@ -4,13 +4,13 @@
 
 	if(isset($_SESSION["idusuario"])){
 
-		if ($_SESSION["superadmin"] != "S") {
+		// if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
 			include "view/CronogramaReportesTotalesOVT.html";
-		} else {
-			include "view/headeradmin.html";
-			include "view/CronogramaReportesTotalesOVT.html";
-		}
+		// } else {
+		// 	include "view/headeradmin.html";
+		// 	include "view/CronogramaReportesTotalesOVT.html";
+		// }
 
 		include "view/footer.html";
 	} else {

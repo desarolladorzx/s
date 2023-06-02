@@ -15,7 +15,33 @@ switch ($_GET["op"]) {
 		$query_Tipo = $objSucursal->ListarSucursalesEmp($_SESSION["idempleado"]);
 
 		while ($reg = $query_Tipo->fetch_object()) {
-			echo '<button type="button" onclick="NuevoAcceder('.$reg->idusuario.',\''.$reg->idsucursal.'\',\''.$reg->idempleado.'\',\''.$reg->empleado.'\',\''.$reg->tipo_documento.'\',\''.$reg->tipo_usuario.'\',\''.$reg->num_documento.'\',\''.$reg->direccion.'\',\''.$reg->telefono.'\',\''.$reg->foto.'\',\''.$reg->logo.'\',\''.$reg->email.'\',\''.$reg->login.'\',\''.$reg->razon_social.'\',\''.$reg->mnu_almacen.'\',\''.$reg->mnu_compras.'\',\''.$reg->mnu_ventas.'\',\''.$reg->mnu_mantenimiento.'\',\''.$reg->mnu_seguridad.'\',\''.$reg->mnu_consulta_compras.'\',\''.$reg->mnu_consulta_ventas.'\',\''.$reg->mnu_admin.'\',\''.$reg->superadmin.'\',\''.$reg->idrol.'\')" class="btn btn-info pull-left">'.explode("-", $reg->razon_social)[0].'</button>
+			echo '<button type="button" onclick="NuevoAcceder(
+				'.$reg->idusuario.',
+				\''.$reg->idsucursal.'\',
+				\''.$reg->idempleado.'\',
+				\''.$reg->empleado.'\',
+				\''.$reg->tipo_documento.'\',
+				\''.$reg->tipo_usuario.'\',
+				\''.$reg->num_documento.'\',
+				\''.$reg->direccion.'\',
+				\''.$reg->telefono.'\',
+				\''.$reg->foto.'\',
+				\''.$reg->logo.'\',
+				\''.$reg->email.'\',
+				\''.$reg->login.'\',
+				\''.$reg->razon_social.'\',
+				\''.$reg->mnu_almacen.'\',
+				\''.$reg->mnu_compras.'\',
+				\''.$reg->mnu_ventas.'\',
+				\''.$reg->mnu_mantenimiento.'\',
+				\''.$reg->mnu_seguridad.'\',
+				\''.$reg->mnu_consulta_compras.'\',
+				\''.$reg->mnu_consulta_ventas.'\',
+				\''.$reg->mnu_admin.'\',
+				\''.$reg->superadmin.'\',
+				\''.$reg->idrol.'\',
+				\''.$reg->mnu_ventas_campo.'\'
+			)" class="btn btn-info pull-left">'.explode("-", $reg->razon_social)[0].'</button>
 		  ';
 		}
 		// echo 'hola';
@@ -98,6 +124,15 @@ switch ($_GET["op"]) {
 			$admin = 0;
 		}
 
+
+		if (isset($_POST["chkMnuVentasCampo"])) {
+			$ventas_campo = true;
+		} else {
+			$ventas_campo = 0;
+		}
+
+
+
 		// print_r($_POST);
 // documentacion
 		if (isset($_POST["chkMnuDocumentacion"])) {
@@ -177,7 +212,9 @@ $chkMnuDocLogistica,
 $chkMnuDocFinanzas,
 $chkMnuDocRRHH,
 $chkMnuDocIT,
-$chkMnuDoProduccion
+$chkMnuDoProduccion,
+
+$ventas_campo
 // 
 			)) {
 				echo "Registrado Exitosamente";
@@ -213,6 +250,8 @@ $chkMnuDoProduccion
 				$chkMnuDocRRHH,
 				$chkMnuDocIT,
 				$chkMnuDoProduccion
+				,
+				$ventas_campo
 
 				// documentacion 
 			)) {
@@ -350,6 +389,10 @@ $chkMnuDoProduccion
 			$_SESSION["superadmin"] = $fetch->superadmin;
 			$_SESSION["rol"] = $fetch->rol_id;
 
+
+		$_SESSION["mnu_ventas_campo"] = $_POST["mnu_ventas_campo"];
+
+		
 			// documentacion
 			$_SESSION["mnu_documentacion_produccion"] = $fetch->mnu_documentacion_produccion;
 			$_SESSION["mnu_documentacion_ventas"] = $fetch->mnu_documentacion_ventas;
@@ -393,6 +436,10 @@ $chkMnuDoProduccion
 		$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
 
 		$_SESSION["idrol"] = $_POST["idrol"];
+		
+
+
+		$_SESSION["mnu_ventas_campo"] = $_POST["mnu_ventas_campo"];
 
 
 		/*$_SESSION["rol"] = $fetch->rol_id;*/

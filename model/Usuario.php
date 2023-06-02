@@ -17,6 +17,7 @@
 			$chkMnuDocRRHH,
 			$chkMnuDocIT,
 			$chkMnuDoProduccion
+			,$ventas_campo
 	// documentacion
 		
 		){
@@ -30,6 +31,7 @@
 			,mnu_documentacion_rrhh
 			,mnu_documentacion_it
 			,mnu_documentacion_produccion
+			,ventas_campo
 			)
 						VALUES($idsucursal, $idempleado, '$tipo_usuario', curdate(), $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas,$mnu_documentacion_ev,$mnu_documentacion_jv,$mnu_documentacion_ja,$mnu_documentacion_jl, $mnu_admin, 'A'
 						,$chkMnuDocumentacion,
@@ -39,7 +41,8 @@
 						$chkMnuDocFinanzas,
 						$chkMnuDocRRHH,
 						$chkMnuDocIT,
-						$chkMnuDoProduccion
+						$chkMnuDoProduccion,
+						$ventas_campo
 						)";
 			$query = $conexion->query($sql);
 			return $query;
@@ -56,6 +59,9 @@
 				$chkMnuDocIT,
 				$chkMnuDoProduccion
 		// documentacion
+
+		,$ventas_campo
+
 				){
 			global $conexion;
 			$sql = "UPDATE usuario set idsucursal = $idsucursal, idempleado = $idempleado, tipo_usuario = '$tipo_usuario', mnu_almacen = $mnu_almacen, mnu_compras = $mnu_compras, mnu_ventas = $mnu_ventas, mnu_mantenimiento = $mnu_mantenimiento, mnu_seguridad = $mnu_seguridad, mnu_consulta_compras = $mnu_consulta_compras, mnu_consulta_ventas = $mnu_consultas_ventas, mnu_documentacion_ev = $mnu_documentacion_ev, mnu_documentacion_jv = $mnu_documentacion_jv, mnu_documentacion_ja = $mnu_documentacion_ja, mnu_documentacion_jl = $mnu_documentacion_jl, mnu_admin = $mnu_admin
@@ -68,7 +74,7 @@
 			,mnu_documentacion_rrhh=$chkMnuDocRRHH
 			,mnu_documentacion_it=$chkMnuDocIT
 			,mnu_documentacion_produccion=$chkMnuDoProduccion
-
+					,mnu_ventas_campo=$ventas_campo
 
 
 						WHERE idusuario = $idusuario";

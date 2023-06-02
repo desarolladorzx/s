@@ -45,37 +45,9 @@
              
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
-                    <div class="form-group has-success">
-                      <label>Departamento - Provincia - Distrito (*):</label>
-    
-                      <input
-                        type="hidden"
-                        class="form-control"
-                        required
-                        placeholder="Ubicacion de Envio"
-                        list="ubicacions"
-                        id="id_ubicacion_envio_array"
-                        name="id_ubicacion_envio_array"
-                        style="text-transform: uppercase"
-                      />
-    
-                      <input
-                        type="text"
-                        class="form-control"
-                        required
-                        placeholder="Ubicacion de Envio"
-                        list="ubicacion"
-                        id="txt_ubicacion_establecimiento"
-                        name="txt_ubicacion_establecimiento"
-                        style="text-transform: uppercase"
-                      />
-                      <datalist id="ubicacion" class="ubicacion_containe_options">
-                      </datalist>
-                    </div>
-                  </div>
+                  
 
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                     <div class="form-group has-success">
                       <label>Tipo de Establecimiento (*):</label>
                     
@@ -89,7 +61,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                     <div class="form-group has-success">
                       <label>Nombre de Establecimiento (*):</label>
                       <input
@@ -104,6 +76,74 @@
                       />
                     </div>
                   </div>
+                  <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Departamento - Provincia - Distrito (*):</label>
+    
+                      <input
+                        type="hidden"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Establecimiento (*)"
+                        list="ubicacions"
+                        id="id_ubicacion_envio_array"
+                        name="id_ubicacion_envio_array"
+                        style="text-transform: uppercase"
+                      />
+    
+                      <input
+                        type="text"
+                        class="form-control"
+                        required
+                        placeholder="Ubicacion de Establecimiento"
+                        list="ubicacion"
+                        id="txt_ubicacion_establecimiento"
+                        name="txt_ubicacion_establecimiento"
+                        style="text-transform: uppercase"
+                      />
+                      <datalist id="ubicacion" class="ubicacion_containe_options">
+                      </datalist>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>verificacion  (*):</label>
+                    
+                      <select 
+                      name="txt_verificacion" id="txt_verificacion"
+                      required=""
+                      class="form-control "
+                      placeholder="verifacion (*)"
+                      >
+
+                      <option value=""></option>
+                      <option value="SIN VERIFICAR">Sin Verificar</option>
+                      <option value="VERIFICADO">Verificado</option>
+                    </select>
+                  </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Empleado Asignado (*):</label>
+
+                      <select 
+                      name="txtEmpleadoAsignado" id="txtEmpleadoAsignado"
+                      required=""
+                      value="6"
+                      class="form-control tipo_empleadoAsignadoEstablecimiento"
+                      placeholder="Empleado  Asignado (*)"
+                      >
+
+                      </select>
+                    </div>
+                  </div>
+
+
+
+
+
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
                     <div class="form-group has-success">
                       <label>Dirección Establecimiento (*):</label>
@@ -445,7 +485,16 @@
         <div class="col-md-12">
           
         </div>
-        
+          <input type="hidden"
+          id="idrol_g"
+          value=<?php echo $_SESSION["idrol"]?>
+          >
+
+          <input type="hidden"
+          id="idempleado_g"
+          value=<?php echo $_SESSION["idempleado"]?>
+          >
+
         <div class="row" id="container_select_button">
           <?php if($_SESSION["idrol"]==2 || $_SESSION["idrol"]==7  || $_SESSION["idrol"]==3){
             
@@ -520,6 +569,8 @@
                 <th>Nombre de Establecimiento</th>
                 <th>Dueño o administrador</th>
                 <th>EVC Responsable</th>
+                <th>Verificacion</th>
+
                 <th>Opciones</th>
                 <th>idTipoEstablecimiento</th>
               </tr>
@@ -534,6 +585,8 @@
                 <th>Nombre de Establecimiento</th>
                 <th>Dueño o administrador</th>
                 <th>EVC Responsable</th>
+                <th>Verificacion</th>
+
                 <th>Opciones</th>
                 <th>idTipoEstablecimiento</th>
               </tr>

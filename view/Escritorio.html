@@ -57,8 +57,6 @@ $cantidad7=$reg_Global3->cantidad7; $cantidad8=$reg_Global3->cantidad8; }
 
 
 
-
-// $_SESSION["idempleado"]=6;
 require_once "model/Grafico.php"; 
 $objGlobal = new Grafico(); 
 $query_Global = $objGlobal->VentasTotales(0,$_SESSION["idempleado"]); 

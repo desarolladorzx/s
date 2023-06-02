@@ -12,13 +12,13 @@
 		header("Location:index.html");
 	} */
 	
-	if ($_SESSION["superadmin"] != "S") {
+	// if ($_SESSION["superadmin"] != "S") {
 		include "view/header.html";
 		include "view/VentaEmpleado.html";
-	} else {
-		include "view/headeradmin.html";
-		include "view/Credito.html";
-	}
+	// } else {
+		// include "view/headeradmin.html";
+		// include "view/Credito.html";
+	// }
 
 	include "view/footer.html";
 } else {

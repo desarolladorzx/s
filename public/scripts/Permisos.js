@@ -81,6 +81,15 @@ function init(){
 		$("#liDoProduccion").hide();
 	};
 
+
+
+	if ($("#txtMnuVentasCampo").val() == "0") {
+
+		$("#liVentasCampo").hide();
+	};
+
+
+
 	//documentacion
 	
 	

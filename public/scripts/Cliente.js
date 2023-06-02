@@ -1143,13 +1143,18 @@ function buscarPorNumeroDocumento() {
             swal("Mensaje del Sistema", "error del sistema", "error");
             break;
           case "no_encontrado":
-            $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
 
-            $("#cboTipo_Persona").val("");
+              console.log(434534534534)
+            $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
+            
+
+            // $('#cboTipo_Persona').val('FINAL')
+            
+            $("#cboTipo_Persona").val("FINAL");
             $("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
             $("#txtNombre").val("");
             $("#txtApellido").val("");
-            $("#cboTipo_Documento").val("");
+            $("#cboTipo_Documento").val("DNI");
             $("#txtNum_Documento").val($("#txtNum_Documento").val());
             $("#optionsRadios").val("");
             $("#txtDireccion_Departamento").val();

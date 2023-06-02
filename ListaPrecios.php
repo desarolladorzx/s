@@ -4,13 +4,13 @@
 
 	if(isset($_SESSION["idusuario"])){
 
-		if ($_SESSION["superadmin"] != "S") {
+		// if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";
 			include "view/ListaPrecios.html";
-		} else {
-			include "view/headeradmin.html";
-			include "view/ListaPrecios.html";
-		}
+		// } else {
+		// 	include "view/headeradmin.html";
+		// 	include "view/ListaPrecios.html";
+		// }
 
 		include "view/footer.html";
 	} else {

@@ -1,10 +1,6 @@
 $(document).on("ready", init); // Inciamos el jquery
 
-
-
-
 function traerDatosTipoEstablecimiento() {
-
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=TraerDatosCategoria_empresa",
     dataType: "json",
@@ -25,40 +21,70 @@ function traerDatosTipoEstablecimiento() {
   });
 }
 
+function traerDatosRolVendedor() {
+  $.ajax({
+    url: "./ajax/EstablecimientoAjax.php?op=traerDatosRolVendedor",
+    dataType: "json",
+    type: "get",
+    success: function (rpta) {
+      console.log(rpta);
+      var options_html = '<option value=""></option>';
+
+      rpta.map((e) => {
+        if ($("#idempleado_g").val() == e.idempleado) {
+          options_html += `<option selected data-id='${e.idempleado}'value='${e.idempleado}'> ${e.apellidos}${e.nombre} </option>`;
+        } else {
+          options_html += `<option data-id='${e.idempleado}'value='${e.idempleado}'> ${e.apellidos}${e.nombre} </option>`;
+        }
+      });
+
+
+      
+      if($('#idrol_g').val()==7){
+        $('#txtEmpleadoAsignado').prop('disabled',true)
+      }
+      $(".tipo_empleadoAsignadoEstablecimiento").html(options_html);
+    },
+    error: function (e) {
+      console.log(e);
+    },
+  });
+}
 
 function init() {
-
+  traerDatosRolVendedor();
   traerDatosTipoEstablecimiento();
-  
 
-  $('#tipo_de_establecimiento_select').on('change', function(){
+  if($('#idrol_g').val()==7){
+    $('#txt_verificacion').prop('disabled',true)
+    $('#txt_verificacion').val('SIN VERIFICAR')
+  }
+
+
+  $("#tipo_de_establecimiento_select").on("change", function () {
     var valorSeleccionado = this.value;
     tablaEstablecimiento.column(8).search(valorSeleccionado).draw();
 
+    let valoresFiltrados = tablaEstablecimiento
+      .rows({ search: "applied" })
+      .data()
+      .toArray().length;
 
-    
-  let valoresFiltrados = tablaEstablecimiento.rows({ search: "applied" }).data().toArray().length ;
+    $("#txt_resultados_busquedas").val(valoresFiltrados);
+  });
 
-  $('#txt_resultados_busquedas').val(valoresFiltrados)
-
-
-  })
-
-  $('#txt_ubicacionSelect').on('change', function(){
+  $("#txt_ubicacionSelect").on("change", function () {
     var valorSeleccionado = this.value;
 
-   
     tablaEstablecimiento.column(1).search(valorSeleccionado).draw();
 
+    let valoresFiltrados = tablaEstablecimiento
+      .rows({ search: "applied" })
+      .data()
+      .toArray().length;
 
-    
-  let valoresFiltrados = tablaEstablecimiento.rows({ search: "applied" }).data().toArray().length;
-
-    
-  $('#txt_resultados_busquedas').val(valoresFiltrados)
-  })
-  
-
+    $("#txt_resultados_busquedas").val(valoresFiltrados);
+  });
 
   $("#tblEstablecimientos").dataTable({
     dom: "Bfrtip",
@@ -131,7 +157,15 @@ function init() {
   function SaveOrUpdate(e) {
     e.preventDefault();
 
+
+    $('#txt_verificacion').prop('disabled',false)
+
+    $('#txtEmpleadoAsignado').prop('disabled',false)
     var formData = new FormData($("#frmEstablecimiento")[0]);
+    $('#txtEmpleadoAsignado').prop('disabled',true)
+
+    $('#txt_verificacion').prop('disabled',true)
+
 
     $.each($("#txtFileFotografia")[0].files, function (i, file) {
       formData.append("fileupload[]", file);
@@ -152,11 +186,11 @@ function init() {
         swal("Mensaje del Sistema", datos, "success");
         ListadoEstablecimientos();
         OcultarForm();
-        $('input').val('')
-        $('select').val('')
-        $('#image-preview-container').html('')
+        $("input").val("");
+        $("select").val("");
+        $("#image-preview-container").html("");
 
-        $('#container_select_button').show()
+        $("#container_select_button").show();
       },
     });
   }
@@ -172,8 +206,11 @@ function init() {
     $("#btnNuevo").hide(); // ocultamos el boton nuevo
     $("#VerListado").hide();
 
-    $('#txtFileFotografia').prop('required',true)
-    $('#container_select_button').hide()
+    $("input").prop("required", false);
+    $("select").prop("required", false);
+
+    // $('#txtFileFotografia').prop('required',true)
+    $("#container_select_button").hide();
   }
 
   function OcultarForm() {
@@ -182,9 +219,9 @@ function init() {
     $("#VerListado").show();
   }
 }
-var tablaEstablecimiento
+var tablaEstablecimiento;
 function ListadoEstablecimientos() {
-  tablaEstablecimiento= $("#tblEstablecimientos")
+  tablaEstablecimiento = $("#tblEstablecimientos")
     .dataTable({
       aProcessing: true,
       aServerSide: true,
@@ -199,9 +236,8 @@ function ListadoEstablecimientos() {
         { mDataProp: "5" },
         { mDataProp: "6" },
         { mDataProp: "7" },
-        { mDataProp: "8",
-          visible:false
-      },
+        { mDataProp: "8" },
+        { mDataProp: "9", visible: false },
       ],
       ajax: {
         url: "./ajax/EstablecimientoAjax.php?op=list",
@@ -255,9 +291,6 @@ function mostrarImagenes(idempresa) {
   );
 }
 
-
-
-
 function cargarDataEstablecimiento(id, editable) {
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=cargarDatos",
@@ -268,7 +301,9 @@ function cargarDataEstablecimiento(id, editable) {
 
     type: "GET",
     success: function (empresa) {
-    
+      $("input").prop("required", true);
+      $("select").prop("required", true);
+
       $("#hor_ini_lunes").val(empresa.hor_ini_lunes);
       $("#hor_ini_martes").val(empresa.hor_ini_martes);
       $("#hor_ini_miercoles").val(empresa.hor_ini_miercoles);
@@ -284,11 +319,9 @@ function cargarDataEstablecimiento(id, editable) {
       $("#hor_fin_sabado").val(empresa.hor_fin_sabado);
       $("#hor_fin_domingo").val(empresa.hor_fin_domingo);
 
-      
-      
-      $("#txtFileFotografia").prop('required', false);
+      $("#txtFileFotografia").prop("required", false);
 
-      $('#container_select_button').hide()
+      $("#container_select_button").hide();
 
       $("#idEstablecimiento").val(empresa.idempresa);
 

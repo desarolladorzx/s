@@ -1,15 +1,24 @@
 <?php
 
-	require "Conexion.php";
+require "Conexion.php";
 
-	class Establecimiento{
+class Establecimiento
+{
+	public function traerDatosRolVendedor()
+	{
+		global $conexion;
+		$sql = "SELECT *  FROM  empleado WHERE  idrol=1 or idrol=2 or idrol=7;";
+		$query = $conexion->query($sql);
+		return $query;
+	}
 
-	public function TraerDatosCategoria_empresa(){
+
+	public function TraerDatosCategoria_empresa()
+	{
 		global $conexion;
 		$sql = "SELECT * from categoria_empresa where estado='1'";
 		$query = $conexion->query($sql);
 		return $query;
-
 	}
 	public function GetImagenes($idempresa)
 	{
@@ -25,11 +34,11 @@
 		return $query;
 	}
 
-		public function RegistrarImagenes($idempresa, $imagen)
-		{
-	
-			global $conexion;
-			$sql = "INSERT INTO empresa_img(
+	public function RegistrarImagenes($idempresa, $imagen)
+	{
+
+		global $conexion;
+		$sql = "INSERT INTO empresa_img(
 				idempresa,
 				imagen,
 				estado,
@@ -43,17 +52,22 @@
 				 'EMPRESA',
 				 CURRENT_TIMESTAMP()
 				 )";
-	
-	
-			$query = $conexion->query($sql);
-	
-			return $query;
-		}
 
-		public function cargarDatos($id){
-			global $conexion;
-			
-			$sql = "SELECT * 
+
+		$query = $conexion->query($sql);
+
+		return $query;
+	}
+
+	public function cargarDatos($id)
+	{
+		global $conexion;
+
+
+
+
+
+		$sql = "SELECT * 
 			,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
 			,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
 			,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
@@ -72,52 +86,73 @@
 			idempresa=$id
 			";
 
-			
-			$query = $conexion->query($sql);
-			return $query;
+
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+	public function listar()
+	{
+		global $conexion;
+
+		$exepcion='';
+		if($_SESSION['idrol']==7){
+			$exepcion="and cartera_empresa.idempleado=".$_SESSION['idempleado'].  "";
 		}
+		$sql = "SELECT * 
+		,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
+		,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
+		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+		,empresa.nombre,empresa.direccion	,empresa.telefono
+		
+		, categoria_empresa.descripcion categoria_empresa_descripcion
+		 from empresa 
+		
 
-		public function listar(){
-			global $conexion;
-			$sql = "SELECT * 
-			,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
-			,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
-			,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
-			,empresa.nombre,empresa.direccion	,empresa.telefono
-			
-			, categoria_empresa.descripcion categoria_empresa_descripcion
-			 from empresa 
-			
-			left JOIN empleado ON empleado.idempleado =empresa.idempleado
-			
-			
-			LEFT JOIN distrito  ON distrito.iddistrito=empresa.distrito
-			left JOIN provincia  ON provincia.idprovincia=empresa.provincia
+		LEFT JOIN distrito  ON distrito.iddistrito=empresa.distrito
+		
+		left JOIN provincia  ON provincia.idprovincia=empresa.provincia
 
-			left join categoria_empresa on categoria_empresa.idcategoria_empresa=empresa.categoria_empresa
-			left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
-					
-			where empresa.estado='1'
+		left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
+		
+		left join categoria_empresa on categoria_empresa.idcategoria_empresa=empresa.categoria_empresa
+		
+		JOIN cartera_empresa ON empresa.idempresa=cartera_empresa.idempresa
+		
+		left JOIN empleado ON empleado.idempleado =cartera_empresa.idempleado
+		
+		WHERE cartera_empresa.estado='A'
+		
+		".$exepcion."
+		and empresa.estado='1'
 			";
-			$query = $conexion->query($sql);
-			return $query;
-		}
+		$query = $conexion->query($sql);
+		return $query;
+	}
 
-		public function Eliminar($idempresa){
-			global $conexion;
-			$sql = "UPDATE empresa set estado='0' WHERE idempresa = $idempresa";
-			$query = $conexion->query($sql);
-			return $query;
-		}
-		public function Registrar($POST){
+	public function Eliminar($idempresa)
+	{
+		global $conexion;
+		$sql = "UPDATE empresa set estado='0' WHERE idempresa = $idempresa";
+		$query = $conexion->query($sql);
+		return $query;
+	}
+	public function Registrar($POST)
+	{
 
 
-			$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
+		$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
 
-			$json = json_decode(json_encode($POST));
-			// print_r($json);
-			global $conexion;
-			$sql = "INSERT INTO 
+		$json = json_decode(json_encode($POST));
+		// print_r($json);
+
+
+
+		 $verificado= strlen($json->txt_verificacion)==0?'SIN VERIFICAR':$json->txt_verificacion;
+
+
+		global $conexion;
+		$sql = "INSERT INTO 
 			empresa(
 				horario,
 				estado,
@@ -145,6 +180,9 @@
 				hor_fin_sabado,
 				hor_fin_domingo
 				
+				,fecha_registro
+				,fecha_modificado
+				,verificacion
 				)
 			values(
 				'$json->txtHorario',
@@ -155,7 +193,7 @@
 				'$json->txtDireccionEstablecimiento',
 				'$id_ubicacion_envio_array[1]',
 				'$id_ubicacion_envio_array[2]',
-				'".$_SESSION['idempleado']."',
+				'" . $_SESSION['idempleado'] . "',
 				'$json->txtNombre',
 
 				'$json->hor_ini_lunes',
@@ -172,24 +210,45 @@
 				'$json->hor_fin_jueves',
 				'$json->hor_fin_viernes',
 				'$json->hor_fin_sabado',
-				'$json->hor_fin_domingo'
+				'$json->hor_fin_domingo',
+
+				CURRENT_TIMESTAMP(),
+				CURRENT_TIMESTAMP()
+				,'$verificado'
+
 
 				) ";
-			
-			$query = $conexion->query($sql);
-			$idpedido = $conexion->insert_id;
-
-			return $idpedido;
-		}
-		public function Modificar($idempresa,$POST){
-			global $conexion;
-
-			$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
-
-			$json = json_decode(json_encode($POST));
+				echo $sql;
+		$query = $conexion->query($sql);
 
 
-			$sql = "UPDATE empresa set 
+		$idempresa = $conexion->insert_id;
+
+		$sql ="INSERT INTO  
+		cartera_empresa(idempleado,idempresa,fecha_modificado,fecha_registro,estado) 
+		values(
+			'$json->txtEmpleadoAsignado',
+			'$idempresa',
+			CURRENT_TIMESTAMP(),
+			CURRENT_TIMESTAMP(),
+			'A'
+		)";
+
+		$query = $conexion->query($sql);
+
+
+		return $idempresa;
+	}
+	public function Modificar($idempresa, $POST)
+	{
+		global $conexion;
+
+		$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
+
+		$json = json_decode(json_encode($POST));
+
+
+		$sql = "UPDATE empresa set 
 			horario='$json->txtHorario',
 			estado='1',
 			telefono='$json->txtTelefono',
@@ -198,7 +257,7 @@
 			direccion='$json->txtDireccionEstablecimiento',
 			provincia='$id_ubicacion_envio_array[1]',
 			distrito='$id_ubicacion_envio_array[2]',
-			idempleado='".$_SESSION['idempleado']."',
+			idempleado='" . $_SESSION['idempleado'] . "',
 			nombre='$json->txtNombre'
 			,
 			hor_ini_lunes='$json->hor_ini_lunes',
@@ -217,13 +276,10 @@
 			hor_fin_sabado='$json->hor_fin_sabado',
 			hor_fin_domingo='$json->hor_fin_domingo'
 
-
-
-
 			WHERE idempresa = $idempresa";
 
-			// echo $sql;
-			$query = $conexion->query($sql);
-			return $query;
-		}
-    }
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+}

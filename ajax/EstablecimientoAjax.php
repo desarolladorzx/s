@@ -6,10 +6,20 @@ $obj = new Establecimiento();
 switch ($_GET["op"]) {
 
 
+    case 'traerDatosRolVendedor':
+
+        $query_Tipo = $obj->traerDatosRolVendedor();
+
+        $nuevo = array();
+        while ($reg = $query_Tipo->fetch_object()) {
+            $nuevo[] = $reg;
+        }
+        echo  json_encode($nuevo);
+
+        break;
+
+
     case 'TraerDatosCategoria_empresa':
-
-
-      
 
         $query_Tipo = $obj->TraerDatosCategoria_empresa();
 
@@ -22,6 +32,8 @@ switch ($_GET["op"]) {
 
 
         break;
+
+
     case 'GetImagenes':
 
         $query_total = $obj->GetImagenes($_REQUEST["idempresa"]);
@@ -96,12 +108,13 @@ switch ($_GET["op"]) {
                 "5" => $reg->nombre,
 
                 "6" => $reg->empleado,
-                "7" => $buttonEditar .
+                "7" => $reg->verificacion,
+                "8" => $buttonEditar .
 
                     '<button class="btn btn-success" data-toggle="tooltip" title="Detalles" onclick="cargarDataEstablecimiento(' . $reg->idempresa . ',\'' . false . '\')"><i class="fa fa-eye"></i> </button>&nbsp;' .
 
                     $buttonEliminar,
-                '8'=>$reg->categoria_empresa
+                '9' => $reg->categoria_empresa
             );
             $i++;
         }

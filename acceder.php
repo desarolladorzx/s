@@ -134,9 +134,64 @@ if (isset($_SESSION["idusuario"])) {
       }
 
 
-      function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, superadmin, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl,idrol) {
+      function Acceder(
+        idusuario,
+        idsucursal,
+        idempleado,
+        empleado,
+        tipo_documento,
+        tipo_usuario,
+        num_documento,
+        direccion,
+        telefono,
+        foto,
+        logo,
+        email,
+        login,
+        razon_social,
+        mnu_almacen,
+        mnu_compras,
+        mnu_ventas,
+        mnu_mantenimiento,
+        mnu_seguridad,
+        mnu_consulta_compras,
+        mnu_consulta_ventas,
+        mnu_admin,
+        superadmin,
+        idrol,
+        mnu_ventas_campo
+        ) {
+
 
         //alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
+
+
+
+        // '.$reg->idusuario.',
+				// 			\''.$reg->idsucursal.'\',
+				// 			\''.$reg->idempleado.'\',
+				// 			\''.$reg->empleado.'\',
+				// 			\''.$reg->tipo_documento.'\',
+				// 			\''.$reg->tipo_usuario.'\',
+				// 			\''.$reg->num_documento.'\',
+				// 			\''.$reg->direccion.'\',
+				// 			\''.$reg->telefono.'\',
+				// 			\''.$reg->foto.'\',
+				// 			\''.$reg->logo.'\',
+				// 			\''.$reg->email.'\',
+				// 			\''.$reg->login.'\',
+				// 			\''.$reg->razon_social.'\',
+				// 			\''.$reg->mnu_almacen.'\',
+				// 			\''.$reg->mnu_compras.'\',
+				// 			\''.$reg->mnu_ventas.'\',
+				// 			\''.$reg->mnu_mantenimiento.'\',
+				// 			\''.$reg->mnu_seguridad.'\',
+				// 			\''.$reg->mnu_consulta_compras.'\',
+				// 			\''.$reg->mnu_consulta_ventas.'\',
+				// 			\''.$reg->mnu_admin.'\',
+				// 			\''.$reg->superadmin.'\',
+				// 			\''.$reg->idrol.'\',
+				// 			\''.$reg->mnu_ventas_campo.'\'
 
 
      
@@ -163,19 +218,16 @@ if (isset($_SESSION["idusuario"])) {
           mnu_consulta_compras: mnu_consulta_compras,
           mnu_consulta_ventas: mnu_consulta_ventas,
           mnu_admin: mnu_admin,
-          mnu_documentacion_ev: mnu_documentacion_ev,
-          mnu_documentacion_jv: mnu_documentacion_jv,
-          mnu_documentacion_ja: mnu_documentacion_ja,
-          mnu_documentacion_jl: mnu_documentacion_jl,
-          mnu_admin: mnu_admin,
           superadmin: superadmin,
-
-          idrol:mnu_documentacion_ev
+          idrol:idrol,
+          mnu_ventas_campo:mnu_ventas_campo
         };
 
-        console.log(data)
+     
 
         $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
+
+          
           $(location).attr("href", "EscritorioEmp.php");
         });
       }
