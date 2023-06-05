@@ -312,16 +312,16 @@
 			,c.num_documento as dni
 			,v.total
 				from pedido p
-							inner join persona c on p.idcliente = c.idpersona
-				inner join venta v on p.idpedido = v.idpedido
-							inner join usuario u on p.idusuario=u.idusuario
-							inner join empleado e on u.idempleado=e.idempleado
-							inner join usuario uv on v.idusuario=uv.idusuario
-							inner join empleado ev on uv.idempleado=ev.idempleado
-							inner join usuario uva on p.idusuario_est=uva.idusuario
-							inner join empleado eva on uva.idempleado=eva.idempleado
+				LEFT join persona c on p.idcliente = c.idpersona
+				LEFT join venta v on p.idpedido = v.idpedido
+				LEFT join usuario u on p.idusuario=u.idusuario
+							LEFT join empleado e on u.idempleado=e.idempleado
+							LEFT join usuario uv on v.idusuario=uv.idusuario
+							LEFT join empleado ev on uv.idempleado=ev.idempleado
+							LEFT join usuario uva on p.idusuario_est=uva.idusuario
+							LEFT join empleado eva on uva.idempleado=eva.idempleado
 			
-							inner join sucursal s on p.idsucursal=s.idsucursal
+							LEFT join sucursal s on p.idsucursal=s.idsucursal
 							LEFT JOIN rol r_e ON r_e.r_id=e.idrol
 							LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
 							LEFT JOIN rol r_ev ON r_ev.r_id=ev.idrol
