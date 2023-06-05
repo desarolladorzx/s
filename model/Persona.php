@@ -18,7 +18,7 @@ class Persona
 
 			// echo $idpersona;
 			// echo '-';
-			
+
 			$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';
 
 		";
@@ -30,13 +30,17 @@ class Persona
 			idcliente,
 			fecha_registro,
 			fecha_modificado,
-			estado
+			estado,
+			idempleado_asignado
+
 			) VALUES (
 			$idempleado,
 			$idpersona,
 			CURRENT_TIMESTAMP(),
 			CURRENT_TIMESTAMP(),
-			'A'
+			'A',
+			".$_SESSION['idempleado']." 
+
 			);";
 			$query = $conexion->query($sql);
 		}
@@ -95,8 +99,8 @@ class Persona
 		$direccion_calle_factura,
 		$direccion_referencia_factura,
 		$idprovincia_factura,
-		$iddistrito_factura
-		,$empleado_asignado
+		$iddistrito_factura,
+		$empleado_asignado
 	) {
 		global $conexion;
 		$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia
@@ -117,29 +121,31 @@ class Persona
 
 		$query = $conexion->query($sql);
 
-		$idpersona= $conexion->insert_id;
+		$idpersona = $conexion->insert_id;
 
 
-		$sql="INSERT  INTO cartera_cliente
+		$sql = "INSERT  INTO cartera_cliente
 		(
 		idempleado,
 		idcliente,
 		fecha_registro,
 		fecha_modificado,
-		estado
+		estado,
+		idempleado_asignado
 		) VALUES (
 		$empleado_asignado,
 		$idpersona,
 		CURRENT_TIMESTAMP(),
 		CURRENT_TIMESTAMP(),
-		'A'
+		'A',
+		".$_SESSION['idempleado']." 
 		);";
 		$query = $conexion->query($sql);
-		
+
 
 		// echo $sql;
 
-		
+
 		return $query;
 	}
 
@@ -167,32 +173,47 @@ class Persona
 		$direccion_calle_factura,
 		$direccion_referencia_factura,
 		$idprovincia_factura,
-		$iddistrito_factura
-		,$empleado_asignado
+		$iddistrito_factura,
+		$empleado_asignado
 	) {
 		global $conexion;
 
-		$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';";
-		$query = $conexion->query($sql);
+
+		$sql = "SELECT *  FROM cartera_cliente where estado='A'
+		and  idcliente='$idpersona'
+		";
+		$idempleadoAntiguo = $conexion->query($sql)->fetch_object()->idempleado;
+
+		if ($idempleadoAntiguo != $empleado_asignado) {
+			$sql = "UPDATE cartera_cliente set estado ='C' WHERE idcliente='$idpersona';";
+			$query = $conexion->query($sql);
 
 
-		$sql="INSERT  INTO cartera_cliente
+
+			$sql = "INSERT  INTO cartera_cliente
 		(
 		idempleado,
 		idcliente,
 		fecha_registro,
 		fecha_modificado,
-		estado
+		estado,
+		idempleado_asignado
 		) VALUES (
 		$empleado_asignado,
 		$idpersona,
 		CURRENT_TIMESTAMP(),
 		CURRENT_TIMESTAMP(),
-		'A'
+		'A',
+		".$_SESSION['idempleado']." 
 		);";
 
-		
-		$query = $conexion->query($sql);
+
+			$query = $conexion->query($sql);
+		}
+
+
+
+
 
 
 
@@ -354,7 +375,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			/* limit 10 */
+			 limit 10 
 ;
 		";
 		// $sql = "SELECT  
@@ -370,7 +391,7 @@ iddistrito_factura='$iddistrito_factura'
 		// tipo_documento  ubicacion ,
 		// tipo_documento idubicacion_factura, 
 		// persona.* 
-	
+
 
 		// from persona
 		// limit 1000
@@ -398,20 +419,20 @@ iddistrito_factura='$iddistrito_factura'
 		// 		 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
 		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
 		//    WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-		   
+
 		// 	WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
 		// 		 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
 		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
 		//    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-		   
-				 
+
+
 		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
 		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
 		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
 		//    WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
-			   
+
 		// 		WHEN venta.fecha IS NULL then 'PERDIDO'
-			   
+
 		// END  
 
 		// )as clasificacion ,
@@ -425,7 +446,7 @@ iddistrito_factura='$iddistrito_factura'
 		// left JOIN venta ON venta.idpedido=pedido.idpedido
 		// WHERE num_documento = $numeroDocumento";
 		// nuevo sql que solo trae el dato el dato mas reciente
-			$sql = "SELECT persona.*,
+		$sql = "SELECT persona.*,
 			(
 				CASE 
 				WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
