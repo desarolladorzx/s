@@ -1,6 +1,9 @@
 $(document).on("ready", init); // Inciamos el jquery
 
 function traerDatosTipoEstablecimiento() {
+
+
+
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=TraerDatosCategoria_empresa",
     dataType: "json",
@@ -52,6 +55,12 @@ function traerDatosRolVendedor() {
 }
 
 function init() {
+
+
+  $('.horaInicio ').val('09:00');
+  $('.horaFin').val('20:30');
+
+
   traerDatosRolVendedor();
   traerDatosTipoEstablecimiento();
 
