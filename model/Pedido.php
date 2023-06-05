@@ -60,7 +60,7 @@ class Pedido
 	 persona.estado = 'A'  
 	
 	 AND (
-			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona = 'VIP' or tipo_persona = 'NO RECUPERABLE')
+			tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona = 'VIP')
 			$exepcion
 		 and CONCAT(persona.num_documento,' - ',persona.nombre,' - ',persona.apellido,' - ' )  like '%$q%'
 

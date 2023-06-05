@@ -83,7 +83,7 @@ function init() {
       .data()
       .toArray().length;
   
-    $("#txt_resultados_busquedas").val(valoresFiltrados);
+    $("#txt_resultados_busquedas").val(valoresFiltrados); 
   });
 
   $("#tblEstablecimientos").dataTable({

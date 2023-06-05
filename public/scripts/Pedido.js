@@ -837,17 +837,17 @@ function init() {
         valores.distribuidor = false;
         valores.superdistribuidor = false;
         valores.representante = false;
-      } else if (tipo_persona == "DISTRIBUIDOR") {
+      } else if (tipo_persona == "DISTRIBUIDOR" || tipo_persona == "VIP") {
         valores.publico = false;
         valores.distribuidor = true;
         valores.superdistribuidor = false;
         valores.representante = false;
-      } else if (tipo_persona == "superdistribuidor") {
+      } else if (tipo_persona == "SUPERDISTRIBUIDOR") {
         valores.publico = false;
         valores.distribuidor = false;
         valores.superdistribuidor = true;
         valores.representante = false;
-      } else if (tipo_persona == "representante") {
+      } else if (tipo_persona == "REPRESENTANTE") {
         valores.publico = false;
         valores.distribuidor = false;
         valores.superdistribuidor = false;
@@ -943,14 +943,22 @@ function init() {
         },
         bDestroy: true, //funcion que causa problemas en el rendimiento
         createdRow: function (row, data, index) {
+
+    
           if (tipo_persona == "FINAL") {
-            $(row).find("td:eq(8)").addClass("bg-info");
-          } else if (tipo_persona == "DISTRIBUIDOR") {
             $(row).find("td:eq(9)").addClass("bg-info");
-          } else if (tipo_persona == "superDistribuidor") {
+          } else if (tipo_persona == "DISTRIBUIDOR" || tipo_persona == "VIP") {
+
+
             $(row).find("td:eq(10)").addClass("bg-info");
-          } else if (tipo_persona == "Representante") {
+          
+          } else if (tipo_persona == "SUPERDISTRIBUIDOR") {
+
             $(row).find("td:eq(11)").addClass("bg-info");
+
+
+          } else if (tipo_persona == "REPRESENTANTE" ) {
+            $(row).find("td:eq(12)").addClass("bg-info");
           }
         },
       })
@@ -2364,11 +2372,11 @@ function AgregarPedCarrito(
 
       if (tipo_persona == "FINAL") {
         precio_a_vender = precio_venta;
-      } else if (tipo_persona == "DISTRIBUIDOR") {
+      } else if (tipo_persona == "DISTRIBUIDOR" || tipo_persona == "VIP") {
         precio_a_vender = precio_ventadistribuidor;
-      } else if (tipo_persona == "SuperDistribuidor") {
+      } else if (tipo_persona == "SUPERDISTRIBUIDOR") {
         precio_a_vender = precio_ventasuperdistribuidor;
-      } else if (tipo_persona == "Representante") {
+      } else if (tipo_persona == "REPRESENTANTE" ) {
         precio_a_vender = precio_ventarepresentante;
       } else {
         precio_a_vender = precio_venta;
