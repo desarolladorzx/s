@@ -114,7 +114,7 @@ switch ($_GET["op"]) {
                     '<button class="btn btn-success" data-toggle="tooltip" title="Detalles" onclick="cargarDataEstablecimiento(' . $reg->idempresa . ',\'' . false . '\')"><i class="fa fa-eye"></i> </button>&nbsp;' .
 
                     $buttonEliminar,
-                '9' => $reg->categoria_empresa
+                '9' => $reg->idcategoria_empresa
             );
             $i++;
         }

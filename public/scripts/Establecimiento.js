@@ -329,7 +329,7 @@ function cargarDataEstablecimiento(id, editable) {
 
       $("#txt_ubicacion_establecimiento").val(empresa.ubicacion);
 
-      $("#txtTipoEstablecimiento").val(empresa.categoria_empresa);
+      $("#txtTipoEstablecimiento").val(empresa.idcategoria_empresa);
 
       $("#txtNombreEstablecimiento").val(empresa.razon_comercial);
 

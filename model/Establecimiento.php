@@ -78,8 +78,8 @@ class Establecimiento
 			left JOIN empleado ON empleado.idempleado =empresa.idempleado
 			
 			
-			LEFT JOIN distrito  ON distrito.iddistrito=empresa.distrito
-			left JOIN provincia  ON provincia.idprovincia=empresa.provincia
+			LEFT JOIN distrito  ON distrito.iddistrito=empresa.iddistrito
+			left JOIN provincia  ON provincia.idprovincia=empresa.idprovincia
 			left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
 					
 			where empresa.estado='1' and 
@@ -109,13 +109,13 @@ class Establecimiento
 		 from empresa 
 		
 
-		LEFT JOIN distrito  ON distrito.iddistrito=empresa.distrito
+		LEFT JOIN distrito  ON distrito.iddistrito=empresa.iddistrito
 		
-		left JOIN provincia  ON provincia.idprovincia=empresa.provincia
+		left JOIN provincia  ON provincia.idprovincia=empresa.idprovincia
 
 		left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
 		
-		left join categoria_empresa on categoria_empresa.idcategoria_empresa=empresa.categoria_empresa
+		left join categoria_empresa on categoria_empresa.idcategoria_empresa=empresa.idcategoria_empresa
 		
 		JOIN cartera_empresa ON empresa.idempresa=cartera_empresa.idempresa
 		
@@ -125,7 +125,11 @@ class Establecimiento
 		
 		".$exepcion."
 		and empresa.estado='1'
+
+		order by empresa.idempresa desc
 			";
+
+			
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -140,16 +144,15 @@ class Establecimiento
 	public function Registrar($POST)
 	{
 
+		if(isset($_POST["id_ubicacion_envio_array"]) and $_POST["id_ubicacion_envio_array"]!=""){
+			$id_ubicacion_envio_array =explode(' - ', $_POST["id_ubicacion_envio_array"]);
 
-		$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
-
+		}else{
+			$id_ubicacion_envio_array =[" " ," "," "];
+		}
 		$json = json_decode(json_encode($POST));
-		// print_r($json);
 
-
-
-		 $verificado= strlen($json->txt_verificacion)==0?'SIN VERIFICAR':$json->txt_verificacion;
-
+		$verificado= strlen($json->txt_verificacion)==0?'SIN VERIFICAR':$json->txt_verificacion;
 
 		global $conexion;
 		$sql = "INSERT INTO 
@@ -157,11 +160,11 @@ class Establecimiento
 				horario,
 				estado,
 				telefono,
-				categoria_empresa,
+				idcategoria_empresa,
 				razon_comercial,
 				direccion,
-				provincia,
-				distrito,
+				idprovincia,
+				iddistrito,
 				idempleado,
 				nombre,
 				hor_ini_lunes,
@@ -218,7 +221,7 @@ class Establecimiento
 
 
 				) ";
-				echo $sql;
+				// echo $sql;
 		$query = $conexion->query($sql);
 
 
@@ -252,11 +255,11 @@ class Establecimiento
 			horario='$json->txtHorario',
 			estado='1',
 			telefono='$json->txtTelefono',
-			categoria_empresa='$json->txtTipoEstablecimiento',
+			idcategoria_empresa='$json->txtTipoEstablecimiento',
 			razon_comercial='$json->txtNombreEstablecimiento',
 			direccion='$json->txtDireccionEstablecimiento',
-			provincia='$id_ubicacion_envio_array[1]',
-			distrito='$id_ubicacion_envio_array[2]',
+			idprovincia='$id_ubicacion_envio_array[1]',
+			iddistrito='$id_ubicacion_envio_array[2]',
 			idempleado='" . $_SESSION['idempleado'] . "',
 			nombre='$json->txtNombre'
 			,
