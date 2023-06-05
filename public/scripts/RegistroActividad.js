@@ -6,6 +6,8 @@ function init() {
     var tabla = $("#tblRegistroActividad")
       .dataTable({
         aProcessing: true,
+        "pageLength": 20
+        ,
         aServerSide: true,
         dom: "Bfrtip",
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
