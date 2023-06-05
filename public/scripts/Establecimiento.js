@@ -83,7 +83,7 @@ function init() {
       .data()
       .toArray().length;
   
-    $("#txt_resultados_busquedas").val(valoresFiltrados); 
+    $("#txt_resultados_busquedas").val(valoresFiltrados);
   });
 
   $("#tblEstablecimientos").dataTable({
@@ -152,7 +152,7 @@ function init() {
     $("#id_ubicacion_envio_array").val(selectedOption.data("id"));
   });
 
-  $("#btnNuevo").click(VerForm); // evento click de jquery que llamamos al metodo VerForm
+  $("#btnNuevoEstablecimiento").click(VerFormEstablecimiento); // evento click de jquery que llamamos al metodo VerForm
 
   function SaveOrUpdate(e) {
     e.preventDefault();
@@ -201,9 +201,9 @@ function init() {
     $("#txtDescripcion").val("");
   }
 
-  function VerForm() {
+  function VerFormEstablecimiento() {
     $("#VerForm").show(); // Mostramos el formulario
-    $("#btnNuevo").hide(); // ocultamos el boton nuevo
+    $("#btnNuevoEstablecimiento").hide(); // ocultamos el boton nuevo
     $("#VerListado").hide();
 
     $("input").prop("required", false);
@@ -215,7 +215,7 @@ function init() {
 
   function OcultarForm() {
     $("#VerForm").hide(); // Mostramos el formulario
-    $("#btnNuevo").show(); // ocultamos el boton nuevo
+    $("#btnNuevoEstablecimiento").show(); // ocultamos el boton nuevo
     $("#VerListado").show();
   }
 }
@@ -351,6 +351,6 @@ function cargarDataEstablecimiento(id, editable) {
 
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
   $("#VerForm").show(); // mostramos el formulario
-  $("#btnNuevo").hide(); // ocultamos el boton nuevo
+  $("#btnNuevoEstablecimiento").hide(); // ocultamos el boton nuevo
   $("#VerListado").hide(); // ocultamos el listado
 }

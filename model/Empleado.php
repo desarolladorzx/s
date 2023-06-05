@@ -3,7 +3,17 @@
 
 	class Empleado{
 	
-		
+		public function traerRol(){
+			global $conexion;
+	
+
+			$sql="SELECT *  from rol";
+
+			$query = $conexion->query($sql);
+
+			// echo $sql;
+			return $query;
+		}
 		public function __construct(){
 		}
 

@@ -80,7 +80,11 @@ function ubicacionAntiguo() {
   console.log();
 }
 
+
+
+
 function init() {
+
   $("#insertarClientesACartera").click(function () {
     // $('.close').click()
     $(".loading_window").show();
@@ -261,10 +265,7 @@ function init() {
     // );
     // $('#cboTipo_Persona option[value="REPRESENTANTE"]').attr("disabled", true);
 
-    $('#cboTipo_Persona').prop('disabled', true);
-
-
-
+    $("#cboTipo_Persona").prop("disabled", true);
 
     $("#cboTipo_Documento option:not(:selected)").attr("disabled", true);
 
@@ -355,23 +356,15 @@ function init() {
     //   $("#txt_ubicacion_envio").val($("#txtDireccion_Referencia").val());
     // }
 
- 
+    console.log($("#cboTipo_Persona").val());
 
-
-
-
-    console.log($('#cboTipo_Persona').val())
-    
-document.getElementById("cboTipo_Persona").disabled = false;
-
+    document.getElementById("cboTipo_Persona").disabled = false;
 
     $.post(
       "./ajax/ClienteAjax.php?op=SaveOrUpdate",
       $(this).serialize(),
       function (r) {
-
-      document.getElementById("cboTipo_Persona").disabled = true;
-
+        document.getElementById("cboTipo_Persona").disabled = true;
 
         // llamamos la url por post. function(r). r-> llamada del callback
 
@@ -409,7 +402,6 @@ document.getElementById("cboTipo_Persona").disabled = false;
             title: "Mensaje del Sistema",
             text: r,
             icon: "success",
-         
           },
           function (confirm) {
             if (confirm) {
@@ -1143,13 +1135,11 @@ function buscarPorNumeroDocumento() {
             swal("Mensaje del Sistema", "error del sistema", "error");
             break;
           case "no_encontrado":
-
-              console.log(434534534534)
+            console.log(434534534534);
             $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
-            
 
             // $('#cboTipo_Persona').val('FINAL')
-            
+
             $("#cboTipo_Persona").val("FINAL");
             $("#txtNumero_Cuenta").val(rpta["estadoCuenta"]);
             $("#txtNombre").val("");
