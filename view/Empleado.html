@@ -59,6 +59,7 @@
                     class="form-control"
                     placeholder="Nombre"
                     autofocus=""
+                    required
                   />
                 </div>
               </div>
@@ -71,6 +72,7 @@
                     class="form-control"
                     placeholder="Nombre"
                     autofocus=""
+                    required
                   >
                     <option value="MEDICFITCEN SAC">MEDICFITCEN SAC</option>
                     <option value="GRUPO EMPRESARIAL PUMA SAC">
@@ -88,10 +90,12 @@
                 <div class="form-group has-success">
                   <label>Contrato de Trabajo (*):</label>
                   <input
-                    id="txtfecha_inicio_labores"
+                    id="contrato_trabajo"
                     type="file"
-                    name="txtfecha_inicio_labores"
+                    name="contrato_trabajo"
                     class="form-control"
+                    accept="application/pdf"
+                    required
                   />
                 </div>
               </div>
@@ -100,18 +104,19 @@
                 <div class="form-group has-success">
                   <label>DNI/CE (*):</label>
                   <input
-                    id="txtfecha_inicio_labores"
+                    id="dniFile"
                     type="file"
-                    name="txtfecha_inicio_labores"
+                    name="dniFile"
                     class="form-control"
+                    accept="application/pdf"
                   />
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="form-group has-success">
                   <label>CV (*):</label>
-                  <input id="txtfecha_inicio_labores" type="file"
-                  name="txtfecha_inicio_labores" class="form-control"" />
+                  <input id="cv_file" type="file" name="cv_file"
+                  class="form-control"" accept="application/pdf" />
                 </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -121,10 +126,11 @@
                     (*):</label
                   >
                   <input
-                    id="txtfecha_inicio_labores"
+                    id="registro_RIT"
                     type="file"
-                    name="txtfecha_inicio_labores"
+                    name="registro_RIT"
                     class="form-control"
+                    accept="application/pdf"
                   />
                 </div>
               </div>
@@ -132,10 +138,11 @@
                 <div class="form-group has-success">
                   <label>Antecedentes (*):</label>
                   <input
-                    id="txtfecha_inicio_labores"
+                    id="antecedentes"
                     type="file"
-                    name="txtfecha_inicio_labores"
+                    name="antecedentes"
                     class="form-control"
+                    accept="application/pdf"
                   />
                 </div>
               </div>
@@ -143,12 +150,64 @@
                 <div class="form-group has-success">
                   <label>Declaración Jurada (*):</label>
                   <input
-                    id="txtfecha_inicio_labores"
+                    id="declaracion_jurada"
                     type="file"
-                    name="txtfecha_inicio_labores"
+                    name="declaracion_jurada"
                     class="form-control"
+                    accept="application/pdf"
                   />
                 </div>
+              </div>
+            </div>
+            <div class="row" id="container_tbl_contratos">
+              <div class="col-lg-12">
+                <button
+                  class="btn btn-primary"
+                  style="margin: 10px 0"
+                  id="button_renovar_contrato"
+                  type="button"
+                >
+                  Renovar Contrato
+                </button>
+              </div>
+              <div class="col-lg-12">
+                <table
+                  id="tblEmpleadoContrato"
+                  class="table table-striped table-bordered table-condensed table-hover"
+                  cellspacing="0"
+                  cellpadding="0"
+                  width="100%"
+                >
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Contrato de Trabajo</th>
+                      <th>DNI/CE</th>
+                      <th>CV</th>
+                      <th>RIT</th>
+                      <th>Antecedentes</th>
+                      <th>Declaración Jurada</th>
+                      <th>Razon Social</th>
+                      <th>Inicio de Labores</th>
+                      <th>Fin de Labores</th>
+                    </tr>
+                  </thead>
+
+                  <tfoot>
+                    <tr>
+                      <th>#</th>
+                      <th>Contrato de Trabajo</th>
+                      <th>DNI/CE</th>
+                      <th>CV</th>
+                      <th>RIT</th>
+                      <th>Antecedentes</th>
+                      <th>Declaración Jurada</th>
+                      <th>Razon Social</th>
+                      <th>Inicio de Labores</th>
+                      <th>Fin de Labores</th>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
 
@@ -206,7 +265,7 @@
                   ></select>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Documento (*):</label>
                   <input
@@ -221,7 +280,7 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Rol (*):</label>
                   <select
@@ -236,7 +295,7 @@
                   ></select>
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Fecha de Nacimiento (*):</label>
                   <input
@@ -250,17 +309,62 @@
                   />
                 </div>
               </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="form-group has-success" id="panel_rbg_habilitado">
+                  <label>Género (*):</label>
+                  <div class="radio" id="optionsRadios">
+                    <label
+                      ><input
+                        type="radio"
+                        name="optionsRadios"
+                        id="optionsRadios1"
+                        value="1"
+                      />Mujer</label
+                    >
+                    <label
+                      ><input
+                        type="radio"
+                        name="optionsRadios"
+                        id="optionsRadios2"
+                        value="2"
+                        required
+                      />Hombre</label
+                    >
+                    <label
+                      ><input
+                        type="radio"
+                        name="optionsRadios"
+                        id="optionsRadios3"
+                        value="3"
+                        checked
+                      />Prefiere no decirlo</label
+                    >
+                  </div>
+                </div>
+              </div>
+
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group has-success">
                   <label> Departamento - Provincia - Distrito:</label>
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    required
+                    placeholder="Ubicacion de Establecimiento (*)"
+                    list="ubicacions"
+                    id="id_ubicacion_empleado_array"
+                    name="id_ubicacion_empleado_array"
+                    style="text-transform: uppercase"
+                  />
+
                   <input
                     type="text"
                     class="form-control"
                     required
                     placeholder="Ubicacion de Envio"
                     list="ubicacion"
-                    id="txt_ubicacion_envio"
-                    name="txt_ubicacion_envio"
+                    id="txt_ubicacion_empleado"
+                    name="txt_ubicacion_empleado"
                     style="text-transform: uppercase"
                   />
                   <datalist id="ubicacion" class="ubicacion_containe_options">
@@ -278,26 +382,29 @@
                     placeholder="Ingrese la dirección"
                     class="form-control"
                     autofocus=""
+                    required
                   />
                 </div>
               </div>
+
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group has-success">
                   <label>Teléfono:</label>
                   <input
                     id="txtTelefono"
-                    type="text"
+                    type="number"
                     maxlength="9"
                     name="txtTelefono"
                     class="form-control"
                     placeholder="Ingrese el teléfono"
                     autofocus=""
+                    required
                   />
                 </div>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group has-success">
-                  <label>Email:</label>
+                  <label>Email Personal:</label>
                   <input
                     id="txtEmail"
                     type="text"
@@ -313,13 +420,14 @@
                 <div class="form-group has-success">
                   <label>Estado Civil:</label>
                   <select
-                    id="txtEmail"
+                    id="txtEstado_civil"
                     type="text"
                     maxlength="70"
-                    name="txtEmail"
+                    name="txtEstado_civil"
                     class="form-control"
                     placeholder="Ingrese el email"
                     autofocus=""
+                    required
                   />
                   <option value=""></option>
                   <option value="SOLTERO">SOLTERO</option>
@@ -344,7 +452,10 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div
+                class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                id="container_insert_hijos"
+              >
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="form-group has-success">
@@ -388,62 +499,153 @@
                   ></div>
                 </div>
               </div>
-              <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Cargo:</label>
-                  <input
-                    id="txtCargo"
-                    type="text"
-                    maxlength="100"
-                    name="txtCargo"
-                    placeholder="Ingrese la dirección"
-                    class="form-control"
-                    autofocus=""
-                  />
+              <div class="col-lg-12" id="container_tbl_hijos">
+                <div class="box box-danger">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Hijos del Empleado</h3>
+                    <div class="box-tools pull-right">
+                      <button
+                        type="button"
+                        class="btn btn-box-tool"
+                        data-widget="collapse"
+                      >
+                        <i class="fa fa-minus"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-box-tool"
+                        data-widget="remove"
+                      >
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="box-body" style="">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>Nombres hijo/a:</label>
+
+                              <input
+                                id="iddetalle_empleado_hijo"
+                                type="hidden"
+                              
+                                maxlength="70"
+                                name="iddetalle_empleado_hijo"
+                                class="form-control"
+                                placeholder="Nombre del hijo"
+                                autofocus=""
+                              />
+                              <input
+                                id="txtNombre_hijoNuevo"
+                                type="text"
+                               
+                                maxlength="70"
+                                name="txtNombre_hijoNuevo"
+                                class="form-control"
+                                placeholder="Nombre del hijo"
+                                autofocus=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>Apellido hijo/a:</label>
+                              <input
+                                id="txtApellido_hijoNuevo"
+                                type="text"
+                               
+                                maxlength="70"
+                                name="txtApellido_hijoNuevo"
+                                class="form-control"
+                                placeholder="Nombre del Hijo"
+                                autofocus=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>DNI hijo/a:</label>
+                              <input
+                                id="txtDni_hijoNuevo"
+                                type="number"
+                              
+                                maxlength="70"
+                                name="txtDni_hijoNuevo"
+                                class="form-control"
+                                placeholder="Nombre del conyugue"
+                                autofocus=""
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group has-success">
+                              <label>Fecha Nacimiento hijo/a:</label>
+                              <input
+                                id="txtFechaNacimiento_hijoNuevo"
+                                type="date"
+                              
+                                maxlength="70"
+                                name="txtFechaNacimiento_hijoNuevo"
+                                class="form-control"
+                                placeholder="Nombre del conyugue"
+                                autofocus=""
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <div class="form-group has-success">
+                              <button type="button" class="btn btn-primary"
+                              
+                              id="anadir_hijo"
+                              >
+                                Anadir Hijo
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <table
+                          id="tblEmpleadoHijos"
+                          class="table table-striped table-bordered table-condensed table-hover"
+                          cellspacing="0"
+                          cellpadding="0"
+                          width="100%"
+                        >
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
+                              <th>DNI</th>
+                              <th>Fecha de nacimiento</th>
+                              <th>Opciones</th>
+                            </tr>
+                          </thead>
+
+                          <tfoot>
+                            <tr>
+                              <th>#</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
+                              <th>DNI</th>
+                              <th>Fecha de nacimiento</th>
+                              <th>Opciones</th>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div> -->
-              <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Fecha de Ingreso:</label>
-                  <input
-                    id="txtfecha_ingreso"
-                    type="date"
-                    maxlength="100"
-                    name="txtfecha_ingreso"
-                    placeholder="Ingrese la dirección"
-                    class="form-control"
-                    required
-                    autofocus=""
-                  />
-                </div>
-              </div> -->
-              <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Sexo:</label>
-                  <input
-                    id="txtsexo"
-                    type="text"
-                    maxlength="100"
-                    name="txtsexo"
-                    placeholder="Ingrese la dirección"
-                    class="form-control"
-                    autofocus=""
-                  />
-                </div> -->
-              <!-- </div> -->
-              <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Fecha Nacimiento:</label>
-                  <input
-                    id="txtFecha_Nacimiento"
-                    required
-                    type="date"
-                    name="txtFecha_Nacimiento"
-                    class="form-control"
-                    autofocus=""
-                  />
-                </div>
-              </div> -->
+              </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group has-success">
                   <label>Foto (*):</label>
@@ -453,6 +655,7 @@
                     class="form-control"
                     name="imagenEmp"
                     autofocus=""
+                    required
                   />
                   <!-- <input id="txtRutaImgEmp" type="text" class="form-control" name="txtRutaImgEmp" autofocus="" /> -->
                 </div>
@@ -467,7 +670,6 @@
                     id="txtEstado"
                   >
                     <option value="A">Activo</option>
-                    <option value="B">Suspendido</option>
                     <option value="C">Inactivo</option>
                     <option value="S">SuperAdmin</option>
                   </select>
@@ -494,7 +696,7 @@
                     <label>Clave (*):</label>
                     <input
                       id="txtClave"
-                      type="text"
+                      type="password"
                       required=""
                       class="form-control"
                       maxlength="32"
@@ -521,10 +723,11 @@
                 <div class="form-group has-success">
                   <label>Nombre de Contacto (*):</label>
                   <input
-                    id="txtnombre_contacto "
-                    type="file"
+                    id="txtnombre_contacto"
+                    type="text"
                     name="txtnombre_contacto"
                     class="form-control"
+                    required
                   />
                 </div>
               </div>
@@ -532,8 +735,9 @@
                 <div class="form-group has-success">
                   <label>N° de celular de contacto (*):</label>
                   <input
-                    id="txtcelular_contacto "
-                    type="file"
+                    id="txtcelular_contacto"
+                    type="text"
+                    required
                     name="txtcelular_contacto"
                     class="form-control"
                   />
