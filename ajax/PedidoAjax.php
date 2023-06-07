@@ -101,9 +101,7 @@ switch ($_GET["op"]) {
                 $file_name = $file_names[$i];
 
                 $parte = explode(".", $file_name);
-                // echo $parte[0]; // nombre del archivo
-                // echo $parte[1]; // extension del archivo
-
+                
                 $codigoInterno = strtotime(date('Y-m-d H:i:s'));
                 $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
 
