@@ -215,7 +215,24 @@
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <label>Informacion del Empleado</label>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="form-group has-warning">
+                
+                  <label>Nombre de Usuario(*):</label>
+                  <input
+                    id="txtNombreUsuario"
+                    type="text"
+                    maxlength="40"
+                    name="txtNombreUsuario"
+                    required=""
+                    class="form-control"
+                    placeholder="Usuario"
+                    autofocus=""
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Nombres (*):</label>
                   <input
@@ -230,7 +247,7 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <input
                     id="txtIdEmpleado"
@@ -254,7 +271,8 @@
                   />
                 </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+              
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Tipo Documento (*):</label>
                   <select
@@ -299,7 +317,7 @@
                 <div class="form-group has-success">
                   <label>Fecha de Nacimiento (*):</label>
                   <input
-                    id="txtfecha_nacimiento "
+                    id="txtfecha_nacimiento"
                     type="date"
                     name="txtfecha_nacimiento"
                     required=""
@@ -407,7 +425,7 @@
                   <label>Email Personal:</label>
                   <input
                     id="txtEmail"
-                    type="text"
+                    type="email"
                     maxlength="70"
                     name="txtEmail"
                     class="form-control"
@@ -442,7 +460,7 @@
                 <div class="form-group has-success">
                   <label>Nombre del conyugue:</label>
                   <input
-                    id="txtnombre_conyugue "
+                    id="txtnombre_conyugue"
                     type="text"
                     maxlength="70"
                     name="txtnombre_conyugue"
@@ -680,7 +698,7 @@
                   <label>Login (*):</label>
                   <input
                     id="txtLogin"
-                    type="mail"
+                    type="email"
                     class="form-control"
                     required=""
                     maxlength="50"
@@ -736,7 +754,7 @@
                   <label>N° de celular de contacto (*):</label>
                   <input
                     id="txtcelular_contacto"
-                    type="text"
+                    type="number"
                     required
                     name="txtcelular_contacto"
                     class="form-control"
@@ -764,7 +782,19 @@
         <button class="btn btn-primary" id="btnNuevoEmpleado">
           <i class="fa fa-file"></i> Nuevo
         </button>
-
+        <!-- <div style="display: flex;">
+          <ul >
+            <li>DNI/CE  ✅</li>
+            <li>CV ❌</li>
+            <li>Antecedentes  ✅</li>
+          </ul>
+          <ul>
+            <li>D. Jurada  ✅</li>
+            <li>Contrato   ✅</li>
+            <li>RIT  ✅</li>
+          </ul>
+        </div> -->
+    
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table
@@ -777,13 +807,13 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Apellidos</th>
-                <th>Documento</th>
-                <th>Num. Documento</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Login</th>
-                <th>Foto</th>
+                <th>Razón Social</th>
+                <th>Nombres y Apellidos</th>
+                <th>Puesto Ocupado</th>
+                <th>Area Funcional</th>
+                <th>Estado de Documentación</th>
+                <th>Venci. Contrato</th>
+                <th>Antigüedad</th>
                 <th>Opciones</th>
               </tr>
             </thead>

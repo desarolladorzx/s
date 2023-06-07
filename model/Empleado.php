@@ -59,7 +59,7 @@ class Empleado
 		global $conexion;
 		$sql = "SELECT * FROM detalle_empleado_hijo 
 		
-		where idempleado = '$id'
+		where idempleado = '$id' and estado='A'
 		order by iddetalle_empleado_hijo desc";
 		$query = $conexion->query($sql);
 		return $query;
@@ -144,12 +144,12 @@ class Empleado
 		$sql = "INSERT INTO 
 				contrato(
 					idempleado,
-					contrato_trabajo,
-					dni,
-					cv,
-					rit,
-					antecedentes,
-					declaracion_jurada,
+					archivo_contrato_trabajo,
+					archivo_dni,
+					archivo_cv,
+					archivo_rit,
+					archivo_antecedentes,
+					archivo_declaracion_jurada,
 					fecha_creacion,
 					idempleado_creacion,
 					estado,
@@ -197,12 +197,12 @@ class Empleado
 		$sql = "INSERT INTO 
 			contrato(
 				idempleado,
-				contrato_trabajo,
-				dni,
-				cv,
-				rit,
-				antecedentes,
-				declaracion_jurada,
+				archivo_contrato_trabajo,
+				archivo_dni,
+				archivo_cv,
+				archivo_rit,
+				archivo_antecedentes,
+				archivo_declaracion_jurada,
 				fecha_creacion,
 				idempleado_creacion,
 				estado,
@@ -271,7 +271,9 @@ class Empleado
 				nombre_conyugue,
 				hijos,
 				nombre_contacto,
-				celular_contacto
+				celular_contacto,
+
+				nombre_usuario
 			  )
 			  VALUES (
 				'$values->txtApellidos',
@@ -300,7 +302,8 @@ class Empleado
 				'$values->txtnombre_conyugue',
 				'$values->txtcant_hijos',
 				'$values->txtnombre_contacto',
-				'$values->txtcelular_contacto'
+				'$values->txtcelular_contacto',
+				'$values->txtNombreUsuario'
 			  );";
 		// echo $sql;	
 		$conexion->query($sql);
@@ -355,16 +358,15 @@ class Empleado
 		global $conexion;
 		$sql = "UPDATE empleado
 		SET apellidos = '$values->txtApellidos',
-			nombre ='$values->nombre',
+			nombre ='$values->txtNombre',
 			tipo_documento = '$values->cboTipo_Documento',
 			num_documento ='$values->txtNum_Documento',
 			direccion = '$values->txtDireccion',
 			telefono ='$values->txtTelefono',
-			email = '$values->txtLogin',
+			
 			fecha_nacimiento ='$values->txtfecha_nacimiento',
 			foto = '$ruta',
-			login = '$values->txtLogin',
-			-- clave = 'Nueva clave',
+		
 			idrol = '$values->txtRol',
 			email_personal = '$values->txtEmail',
 			
@@ -380,11 +382,13 @@ class Empleado
 			nombre_conyugue = '$values->txtnombre_conyugue',
 			hijos = '$values->txtcant_hijos',
 			nombre_contacto = '$values->txtnombre_contacto',
-			celular_contacto = '$values->txtcelular_contacto'
+			celular_contacto = '$values->txtcelular_contacto',
+
+			nombre_usuario = '$values->txtNombreUsuario'
 		WHERE idempleado = '$values->txtIdEmpleado'";
 		$query = $conexion->query($sql);
 
-		echo $sql;
+		// echo $sql;
 		return $query;
 	}
 
@@ -395,28 +399,87 @@ class Empleado
 		$query = $conexion->query($sql);
 		return $query;
 	}
-
+	public function EliminarHijo($id)
+	{
+		global $conexion;
+		$sql = "UPDATE detalle_empleado_hijo set estado='C' WHERE iddetalle_empleado_hijo = $id";
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function Listar()
 	{
 		global $conexion;
-		$sql = "SELECT *,
-
+		$sql = "SELECT 
 		CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
+		
 		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+		
+		,CONCAT(empleado.nombre,' ',empleado.apellidos) nombre_completo
+		
+		,DATEDIFF(fecha_fin_labores, CURDATE())   dias_restantes
+		
+		,contrato.razon_social
+		
+		,fecha_inicio_labores
+		,rol.r_descripcion puesto_ocupado
+		,AREA.descripcion area_funcional
+		
+		,contrato.*
+
+		,
+		
+
+		CASE
+           WHEN DATEDIFF(CURDATE(), (SELECT MIN(fecha_inicio_labores) FROM contrato WHERE idempleado = empleado.idempleado)) > 1095 THEN 'Antiguo'
+           ELSE 'Nuevo'
+       END 
 
 
 		
-		 FROM empleado
+		 AS primera_fecha_contrato
 		
-		
+		FROM empleado
 		LEFT JOIN distrito  ON distrito.iddistrito=empleado.iddistrito
+				
+		LEFT  JOIN  rol  ON rol.r_id=empleado.idrol
 		
+		LEFT  JOIN AREA ON AREA.idarea=rol.idarea
 		left JOIN provincia  ON provincia.idprovincia=empleado.idprovincia
-
+		
+		LEFT JOIN (
+			SELECT
+		    idcontrato,
+		    razon_social,
+		    fecha_fin_labores,
+		    fecha_inicio_labores,
+		    estado,
+		    idempleado,
+		     CASE
+        WHEN (
+            LENGTH(archivo_dni) = 0 OR
+            LENGTH(archivo_cv) = 0 OR
+            LENGTH(archivo_antecedentes) = 0 OR
+            LENGTH(archivo_declaracion_jurada) = 0 OR
+            LENGTH(archivo_contrato_trabajo) = 0 OR
+            LENGTH(archivo_rit) = 0
+        ) THEN CONCAT(
+            CASE WHEN LENGTH(archivo_dni) = 0 THEN 'archivo_dni, ' ELSE '' END,
+            CASE WHEN LENGTH(archivo_cv) = 0 THEN 'archivo_cv, ' ELSE '' END,
+            CASE WHEN LENGTH(archivo_antecedentes) = 0 THEN 'archivo_antecedentes, ' ELSE '' END,
+            CASE WHEN LENGTH(archivo_declaracion_jurada) = 0 THEN 'archivo_declaracion_jurada, ' ELSE '' END,
+            CASE WHEN LENGTH(archivo_contrato_trabajo) = 0 THEN 'archivo_contrato_trabajo, ' ELSE '' END,
+            CASE WHEN LENGTH(archivo_rit) = 0 THEN 'archivo_rit' ELSE '' END
+        )
+        ELSE 'No falta ningún archivo'
+    END AS mensaje
+FROM contrato
+		) contrato ON contrato.idempleado =empleado.idempleado AND contrato.estado='A'
+		
 		left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
-
-
-		 order by idempleado desc";
+		
+		order by empleado.idempleado DESC;
+		
+		";
 		$query = $conexion->query($sql);
 		return $query;
 	}

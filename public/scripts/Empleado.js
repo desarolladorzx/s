@@ -32,7 +32,7 @@ function renderizarHijos() {
 						  maxlength="70"
 						  name="txtnombre_hijo"
 						  class="form-control"
-						  placeholder="Nombre del conyugue"
+						  placeholder="Nombre del hijo/a"
 						  autofocus=""
 						  required
 						/>
@@ -52,7 +52,7 @@ function renderizarHijos() {
 						  maxlength="70"
 						  name="txtapellido_hijo"
 						  class="form-control"
-						  placeholder="Nombre del conyugue"
+						  placeholder="Apellido del hijo/a"
 						  autofocus=""
 						  required="true"
 						/>
@@ -61,7 +61,7 @@ function renderizarHijos() {
 
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 					  <div class="form-group has-success">
-						<label>Apellido hijo/a:</label>
+						<label>DNI hijo/a:</label>
 						<input
 						  id="txtDni_hijo[]"
 						  type="number"
@@ -73,7 +73,7 @@ function renderizarHijos() {
 						  maxlength="70"
 						  name="txtDni_hijo"
 						  class="form-control"
-						  placeholder="Nombre del conyugue"
+						  placeholder="DNI del hijo/a "
 						  autofocus=""
 						  required="true"
 						/>
@@ -82,7 +82,7 @@ function renderizarHijos() {
 
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 					  <div class="form-group has-success">
-						<label>Apellido hijo/a:</label>
+						<label>f. Nacimiento hijo/a:</label>
 						<input
 						  id="txtNacimiento_hijo[]"
 						  type="date"
@@ -94,7 +94,7 @@ function renderizarHijos() {
 						  maxlength="70"
 						  name="txtNacimiento_hijo"
 						  class="form-control"
-						  placeholder="Nombre del conyugue"
+						  placeholder="fecha de nacimiento hijo/a"
 						  autofocus=""
 						  required="true"
 						/>
@@ -153,6 +153,20 @@ function cargarDataEmpleadoHijo(iddetalle_empleado_hijo,nombre_hijo,apellido_hij
 
 
 function init() {
+
+
+  $("#txtEstado_civil").change(function() {
+
+    console.log(this.value)
+
+    if(this.value=='CASADO'){
+      $('#txtnombre_conyugue').prop('required',true)
+    }else{
+      $('#txtnombre_conyugue').prop('required',false)
+
+    }
+
+  })
   $("#txt_ubicacion_empleado").on("blur", function () {
     var optionValues = $(".ubicacion_containe_options option")
       .map(function () {
@@ -263,7 +277,13 @@ function init() {
             // ListadoEmpleado();
             // OcultarForm();
             // Limpiar();
-
+            $('#txtfecha_fin_labores').val('')
+            $('#declaracion_jurada').val('')
+            $('#antecedentes').val('')
+            $('#registro_RIT').val('')
+            $('#dniFile').val('')
+            $('#contrato_trabajo').val('')
+            $('#cv_file').val('')
             ListarContratos($("#txtIdEmpleado").val());
           },
         });
@@ -354,10 +374,18 @@ function init() {
       processData: false,
 
       success: function (datos) {
-        swal("Mensaje del Sistema", datos, "success");
-        ListadoEmpleado();
-        OcultarForm();
-        Limpiar();
+        swal(
+          {
+            title: "Mensaje del Sistema",
+            text: datos,
+            icon: "success",
+          },
+          function (confirm) {
+            if (confirm) {
+              location.reload();
+            }
+          }
+        );
       },
     });
   }
@@ -436,6 +464,22 @@ function eliminarEmpleado(id) {
     }
   });
 }
+
+
+function eliminarEmpleadoHijo(id){
+  bootbox.confirm("¿Esta Seguro de eliminar el Hijo?", function (result) {
+    // confirmamos con una pregunta si queremos eliminar
+    if (result) {
+      // si el result es true
+      $.post("./ajax/EmpleadoAjax.php?op=deleteHijo", { id: id }, function (e) {
+        // llamamos la url de eliminar por post. y mandamos por parametro el id
+        swal("Mensaje del Sistema", e, "success");
+        // ListadoEmpleado();
+      });
+    }
+  });
+}
+
 
 function ListarContratos(id) {
   var tabla = $("#tblEmpleadoContrato")
@@ -537,7 +581,24 @@ function cargarDataEmpleado(id) {
 
       $("#txtDireccion").val(values.direccion);
 
+      $("#id_ubicacion_empleado_array").val(values.idubicacion);
+
+      $("#txt_ubicacion_empleado").val(values.ubicacion);
+
+
+      $("#txtfecha_nacimiento").val(values.fecha_nacimiento);
+
+
+      $('#imagenEmp').prop('required', false);
+      $("#txtRol").val(values.idrol);
+
+      
+
       $("#txtTelefono").val(values.telefono);
+
+
+      $("#txtNombreUsuario").val(values.nombre_usuario);
+
 
       $("#txtEmail").val(values.email_personal);
 
