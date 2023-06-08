@@ -629,9 +629,11 @@ switch ($_GET["op"]) {
 
 
 			// muesta los estados de los documentos 
+
+
 			$estadoDocumentacion = '<div style="display: flex;">
 			<ul>
-				<li>DNI/CE ' . (strpos($reg->mensaje, 'archivo_dni') ? '❌' : '✅') . '</li>
+				<li>DNI/CE ' . (strpos($reg->mensaje, 'dni') ? '❌' : '✅') . '</li>
 				<li>CV ' . (strpos($reg->mensaje, 'archivo_cv') ? '❌' : '✅') . '</li>
 				<li>Antecedentes ' . (strpos($reg->mensaje, 'archivo_antecedentes') ? '❌' : '✅') . '</li>
 			</ul>
