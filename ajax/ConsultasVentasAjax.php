@@ -34,7 +34,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "0" => $reg->sucursal,
                     "1" => $reg->fecha,
-                    "2" => $reg->empleado,
+                    "2" => $reg->nombre_usuario_rol,
                     "3" => $reg->nuevo_antiguo,
                     "4" => $reg->tipo_cliente,
                     "5" => $reg->cliente,
@@ -88,7 +88,8 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "0" => $reg->sucursal,
                     "1" => $reg->fecha,
-                    "2" => $reg->empleado,
+                    // "2" => $reg->empleado,
+                    "2" => $reg->nombre_usuario_rol,
                     "3" => $reg->tipo_cliente,
                     "4" => $reg->antiguedad,
                     '5'=>$clasificacion,
@@ -142,7 +143,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "0" => $reg->fecha,
                     "1" => $reg->sucursal,
-                    "2" => $reg->empleado,
+                    "2" => $reg->nombre_usuario_rol,
                     "3" => $reg->cliente,
                     "4" => $reg->dni,
                     "5" => $reg->celular,
@@ -209,7 +210,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "0" => $reg->fecha,
                     "1" => $reg->sucursal,
-                    "2" => $reg->empleado,
+                    "2" => $reg->nombre_usuario_rol,
                     "3" => $reg->cliente,
                     "4" => $reg->comprobante,
                     "5" => $reg->serie,
@@ -283,7 +284,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "0" => $reg->fecha,
                     "1" => $reg->sucursal,
-                    "2" => $reg->empleado,
+                    "2" => $reg->nombre_usuario_rol,
                     "3" => $reg->cliente,
                     "4" => $reg->dni,
                     "5" => $reg->celular.' - '.$reg->telefono_2,
@@ -358,7 +359,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "1" => $reg->fecha,
                     "2" => $reg->sucursal,
-                    "3" => $reg->empleado,
+                    "3" => $reg->nombre_usuario_rol,
                     "4" => $reg->cliente,
                     "5" => $reg->comprobante,
                     "6" => $reg->serie,
@@ -389,7 +390,7 @@ switch ($_GET["op"]) {
                $data[] = array(
                     "1" => $reg->fecha,
                     "2" => $reg->sucursal,
-                    "3" => $reg->empleado,
+                    "3" => $reg->nombre_usuario_rol,
                     "4" => $reg->cliente,
                     "5" => $reg->comprobante,
                     "6" => $reg->serie,

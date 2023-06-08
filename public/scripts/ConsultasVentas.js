@@ -100,7 +100,7 @@ function TraerRoles() {
       var html = `<option value=""></option>`;
       lista.map((e) => {
         html += `
-				<option value="${e.idempleado}">${e.nombre}</option>`;
+				<option value="${e.idempleado}">${e.rol_nombre_usuario}</option>`;
       });
 
       $("#cboEjecutivoComercial").html(html);

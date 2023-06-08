@@ -404,10 +404,10 @@ foreach (json_decode($query_Global_por_usuario) as &$elemento) {
             <img class="img-circle" src="'.$elemento->foto.'" alt="User Avatar">
             </div>
             
-            <h3 class="widget-user-username">'.$elemento->vendedor.'</h3>
+            <h3 class="widget-user-username">'.$elemento->nombre_usuario_prefijo.'</h3>
             <h5 class="widget-user-desc">Empleado</h5>
             </div>
-             <div class="box-footer no-padding">
+             <div class="box-footer no-padding">  
             <ul class="nav nav-stacked">
             <li><a href="#">Monto Diario : <strong>S/ '.$elemento->ventas_diarias.'</strong>  <span class="pull-right badge bg-blue">'.$elemento->ventas_diarias_cantidad.' pedidos</span></a></li>
             <li><a href="#"> Monto Semanal: <strong>S/ '.$elemento->ventas_semanales.'</strong> <span class="pull-right badge bg-aqua">'.$elemento->ventas_semanales_cantidad.' pedidos</span></a></li>

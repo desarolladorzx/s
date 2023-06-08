@@ -310,6 +310,9 @@ iddistrito_factura='$iddistrito_factura'
 		 JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona AND cartera_cliente.estado='A'
 		 
 		JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+
+		left JOIN rol ON rol.r_id=e3.idrol
+
 		";
 
 		if ($_SESSION["idempleado"] == 17 || $_SESSION["idempleado"] == 6) {
@@ -342,7 +345,12 @@ iddistrito_factura='$iddistrito_factura'
 		,if(p.direccion_distrito>0 AND p.direccion_provincia>0,'',CONCAT(p.direccion_departamento ,' ', p.direccion_distrito,' ',p.direccion_provincia)) direccion_antigua
 
 		
+	
 		,	CONCAT( e3.nombre, ' ', e3.apellidos ) AS  empleado_asignado
+
+		,CONCAT (IFNULL(rol.r_prefijo,' '), ' - ',IFNULL(e3.nombre_usuario,' ')) rol_nombre_usuario
+
+
 		,e3.idempleado idempleado_asignado
 
 
@@ -375,7 +383,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			 limit 10 
+			--  limit 10 
 ;
 		";
 		// $sql = "SELECT  

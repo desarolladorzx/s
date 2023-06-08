@@ -293,7 +293,7 @@ $mnu_sigrh
 			$data[] = array(
 				"0" => $i,
 				"1" => $reg->razon_social,
-				"2" => $reg->empleado,
+				"2" => $reg->nombre_usuario_rol,
 				"3" => $reg->tipo_usuario,
 				"4" => $reg->fecha_registro,
 				"5" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataUsuario(' . $reg->idusuario . ',\'' . $reg->idsucursal . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->tipo_usuario . '\',\'' . $reg->mnu_almacen . '\',\'' . $reg->mnu_compras . '\',\'' . $reg->mnu_ventas . '\',\'' . $reg->mnu_mantenimiento . '\',\'' . $reg->mnu_seguridad . '\',\'' . $reg->mnu_consulta_compras . '\',\'' . $reg->mnu_consulta_ventas . '\',\'' . $reg->mnu_documentacion_ev . '\',\'' . $reg->mnu_documentacion_jv . '\',\'' . $reg->mnu_documentacion_ja . '\',\'' . $reg->mnu_documentacion_jl . '\',\'' . $reg->mnu_admin . '\'

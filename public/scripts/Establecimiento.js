@@ -1,9 +1,6 @@
 $(document).on("ready", init); // Inciamos el jquery
 
 function traerDatosTipoEstablecimiento() {
-
-
-
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=TraerDatosCategoria_empresa",
     dataType: "json",
@@ -35,16 +32,14 @@ function traerDatosRolVendedor() {
 
       rpta.map((e) => {
         if ($("#idempleado_g").val() == e.idempleado) {
-          options_html += `<option selected data-id='${e.idempleado}'value='${e.idempleado}'> ${e.apellidos}${e.nombre} </option>`;
+          options_html += `<option selected data-id='${e.idempleado}'value='${e.idempleado}'> ${e.rol_nombre_usuario}</option>`;
         } else {
-          options_html += `<option data-id='${e.idempleado}'value='${e.idempleado}'> ${e.apellidos}${e.nombre} </option>`;
+          options_html += `<option data-id='${e.idempleado}'value='${e.idempleado}'> ${e.rol_nombre_usuario} </option>`;
         }
       });
 
-
-      
-      if($('#idrol_g').val()==7){
-        $('#txtEmpleadoAsignado').prop('disabled',true)
+      if ($("#idrol_g").val() == 7) {
+        $("#txtEmpleadoAsignado").prop("disabled", true);
       }
       $(".tipo_empleadoAsignadoEstablecimiento").html(options_html);
     },
@@ -55,20 +50,16 @@ function traerDatosRolVendedor() {
 }
 
 function init() {
-
-
-  $('.horaInicio ').val('09:00');
-  $('.horaFin').val('20:30');
-
+  $(".horaInicio ").val("09:00");
+  $(".horaFin").val("20:30");
 
   traerDatosRolVendedor();
   traerDatosTipoEstablecimiento();
 
-  if($('#idrol_g').val()==7){
-    $('#txt_verificacion').prop('disabled',true)
-    $('#txt_verificacion').val('SIN VERIFICAR')
+  if ($("#idrol_g").val() == 7) {
+    $("#txt_verificacion").prop("disabled", true);
+    $("#txt_verificacion").val("SIN VERIFICAR");
   }
-
 
   $("#tipo_de_establecimiento_select").on("change", function () {
     var valorSeleccionado = this.value;
@@ -85,13 +76,16 @@ function init() {
   $("#txt_ubicacionSelect").on("change", function () {
     var valorSeleccionado = this.value;
 
-    tablaEstablecimiento.column(1).search("^" + valorSeleccionado + "$", true, false).draw();
-  
+    tablaEstablecimiento
+      .column(1)
+      .search("^" + valorSeleccionado + "$", true, false)
+      .draw();
+
     let valoresFiltrados = tablaEstablecimiento
       .rows({ search: "applied" })
       .data()
       .toArray().length;
-  
+
     $("#txt_resultados_busquedas").val(valoresFiltrados);
   });
 
@@ -166,15 +160,13 @@ function init() {
   function SaveOrUpdate(e) {
     e.preventDefault();
 
+    $("#txt_verificacion").prop("disabled", false);
 
-    $('#txt_verificacion').prop('disabled',false)
-
-    $('#txtEmpleadoAsignado').prop('disabled',false)
+    $("#txtEmpleadoAsignado").prop("disabled", false);
     var formData = new FormData($("#frmEstablecimiento")[0]);
-    $('#txtEmpleadoAsignado').prop('disabled',true)
+    $("#txtEmpleadoAsignado").prop("disabled", true);
 
-    $('#txt_verificacion').prop('disabled',true)
-
+    $("#txt_verificacion").prop("disabled", true);
 
     $.each($("#txtFileFotografia")[0].files, function (i, file) {
       formData.append("fileupload[]", file);

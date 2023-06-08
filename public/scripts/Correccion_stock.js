@@ -17,7 +17,7 @@ function traerContainer_btn_nueva_correccion_stock(){
     function(r){
       console.log([4 ,6,2].includes(Number(r)))
       if(true){
-        let html=`  <button class="btn btn-primary" id="btnNuevoCorrecion_stock">
+        let html=`  <button class="btn btn-primary" id="btnNuevoCorrecion_stock" onclick="VerFormPedido_Nuevo()">
         <i class="fa fa-file"></i>  Nueva Solicitud de Correccion de Stock
       </button>`
         $('#container_btn_nueva_correccion_stock').html(html)
@@ -526,16 +526,18 @@ function getCodigoCorreccion_stock() {
     }
   );
 }
-
+function VerFormPedido_Nuevo() {
+ 
+  $("#VerFormPed").show(); // Mostramos el formulario
+  $("#btnNuevoCorrecion_stock").hide(); // ocultamos el boton nuevo
+  $("#btnGenerarVenta").hide();
+  $("#VerListado").hide(); // ocultamos el listado
+  
+  getCodigoCorreccion_stock();
+}
 function init() {
   $("#btnNuevoCorrecion_stock").click(VerFormPedido_Nuevo);
-  function VerFormPedido_Nuevo() {
-    $("#VerFormPed").show(); // Mostramos el formulario
-    $("#btnNuevoCorrecion_stock").hide(); // ocultamos el boton nuevo
-    $("#btnGenerarVenta").hide();
-    $("#VerListado").hide(); // ocultamos el listado
-    getCodigoCorreccion_stock();
-  }
+
 
   $("#containerGuardarCambiarEstado").hide();
   $("#container_descripcion_recepcion").hide();

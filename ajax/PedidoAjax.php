@@ -431,7 +431,7 @@ switch ($_GET["op"]) {
                 "1" => $reg->idsucursal == 1 ? 'Arequipa' : 'Lima',
                 "2" => "$fecha_cotizacion $fecha_aprobacion  ",
                 "3" => $reg->numero,
-                "4" =>  explode("|", $reg->empleado)[0],
+                "4" =>  explode("|", $reg->nombre_usario_rol)[0],
                 "5" => $reg->cliente,
                 "6" => $reg->agencia_envio,
                 "7" => $fetch->total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO

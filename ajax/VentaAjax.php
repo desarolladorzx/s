@@ -205,7 +205,8 @@ switch ($_GET["op"]) {
 									
 				"3" =>"<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
 				"4" => $reg->cliente,
-				"5" => explode("|", $reg->empleado)[0],
+				// "5" => explode("|", $reg->empleado)[0],
+				"5" => $reg->nombre_usuario_rol,
 				"6" => $reg->agencia_envio,
 			
 				// "6" => ($reg->tipo_pedido == "Pedido") ? '<span class="badge bg-blue">Pedido</span>' : (($reg->tipo_pedido == "Venta") ? '<span class="badge bg-aqua">Venta</span>' : '<span class="badge bg-green">Proforma</span>'),

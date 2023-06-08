@@ -99,10 +99,13 @@
 
 		public function Listar(){
 			global $conexion;
-			$sql = "select u.*, s.razon_social, concat(e.nombre, ' ', e.apellidos) as empleado
-	from usuario u inner join sucursal s on u.idsucursal = s.idsucursal
-	inner join empleado e on u.idempleado = e.idempleado
-	where u.estado <> 'C'";
+			$sql = "select u.*,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario_rol, s.razon_social, concat(e.nombre, ' ', e.apellidos) as empleado
+			from usuario u inner join sucursal s on u.idsucursal = s.idsucursal
+			
+			
+			inner join empleado e on u.idempleado = e.idempleado
+			left JOIN rol ON rol.r_id=e.idrol
+			where u.estado <> 'C'";
 			$query = $conexion->query($sql);
 			return $query;
 		}

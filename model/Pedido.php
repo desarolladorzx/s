@@ -195,6 +195,10 @@ class Pedido
 
 
 		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta
+		,
+
+		CONCAT (IFNULL(r_e.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) nombre_usuario_rol
+
 
 			from pedido p
 						inner join persona c on p.idcliente = c.idpersona
@@ -442,7 +446,11 @@ class Pedido
 	public function ListarTipoPedidoPedido($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
+		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado
+		,
+		CONCAT (IFNULL(r_e.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) nombre_usario_rol
+
+		,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
 	
 
 		(CASE

@@ -9,7 +9,12 @@
 
 		public function listaDePersonasVendedor(){
 			global $conexion;
-			$sql="SELECT idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre FROM empleado
+			$sql="SELECT *,idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre
+			
+			,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
+
+
+			 FROM empleado
 			JOIN rol ON rol.r_id=empleado.idrol
 			
 			 WHERE idrol=1 or idrol=2 or idrol=3
@@ -52,6 +57,10 @@
 
 			p.*, p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,pe.tipo_persona as tipo_cliente,pe.numero_cuenta as nuevo_antiguo,
 							concat(e.apellidos,' ',e.nombre) as empleado,
+
+							CONCAT (IFNULL(rol.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) as nombre_usuario_rol,
+
+
 							concat(pe.nombre,' ',pe.apellido) as cliente,
 							pe.num_documento as dni,pe.telefono as celular,pe.telefono_2,
 							
@@ -67,9 +76,13 @@
 							v.total
 							from venta v inner join pedido p on v.idpedido=p.idpedido
 							inner join sucursal s on p.idsucursal=s.idsucursal
+
+
 							inner join usuario u on p.idusuario=u.idusuario
 							inner join empleado e on u.idempleado=e.idempleado
 							inner join persona pe on p.idcliente=pe.idpersona
+
+							left JOIN rol ON rol.r_id=e.idrol
 
 
 							LEFT JOIN distrito ON distrito.iddistrito=pe.direccion_distrito
@@ -104,6 +117,9 @@
 			global $conexion;
 				$sql="select s.razon_social as sucursal, v.fecha,pe.numero_cuenta as antiguedad,pe.tipo_persona as tipo_cliente,
 				concat(e.apellidos,' ',e.nombre) as empleado,
+
+				CONCAT (IFNULL(rol.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) as nombre_usuario_rol,
+
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				v.tipo_comprobante as comprobante,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
@@ -132,6 +148,9 @@
 				inner join sucursal s on p.idsucursal=s.idsucursal
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				left JOIN rol ON rol.r_id=e.idrol
+
 				inner join persona pe on p.idcliente=pe.idpersona
 
 				LEFT JOIN distrito ON distrito.iddistrito=pe.direccion_distrito
@@ -152,6 +171,9 @@
 			global $conexion;
 			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
+
+				CONCAT (IFNULL(rol.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) as nombre_usuario_rol,
+
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				pe.num_documento as dni,pe.telefono as celular, pe.direccion_departamento as departamento,
 				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
@@ -166,6 +188,10 @@
 				inner join sucursal s on p.idsucursal=s.idsucursal
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				left JOIN rol ON rol.r_id=e.idrol
+
+
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.estado='C'
 				order by v.fecha desc ";
@@ -231,6 +257,9 @@
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
+
+				CONCAT (IFNULL(rol.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) as nombre_usuario_rol,
+
 				concat(pe.nombre,' ',pe.apellido) as cliente,v.tipo_comprobante as comprobante,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
 				v.impuesto,
@@ -241,6 +270,11 @@
 				inner join sucursal s on p.idsucursal=s.idsucursal
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				
+				left JOIN rol ON rol.r_id=e.idrol
+
+				
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta' and v.tipo_venta='Contado' and v.estado='A'
 				order by v.fecha desc
@@ -278,6 +312,7 @@
 			$sql = "select p.idpedido, p.tipo_pedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
 				concat(pe.nombre,' ',pe.apellido) as cliente,
+			
 				pe.num_documento as dni,pe.telefono as celular,pe.telefono_2, pe.direccion_departamento as departamento,
 				concat(v.serie_comprobante,'-',v.num_comprobante) as ticket,
 				v.metodo_pago as cuenta_abonada,
@@ -311,6 +346,9 @@
 			,s.razon_social as sucursal
 			,c.num_documento as dni
 			,v.total
+
+			,	CONCAT (IFNULL(r_e.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) as nombre_usuario_rol
+
 				from pedido p
 				LEFT join persona c on p.idcliente = c.idpersona
 				LEFT join venta v on p.idpedido = v.idpedido
@@ -349,6 +387,10 @@
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
+
+				CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario_rol,
+
+				
 				concat(pe.nombre,' ',pe.apellido) as cliente,v.tipo_comprobante as comprobante,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
 				v.impuesto,
@@ -359,6 +401,9 @@
 				inner join sucursal s on p.idsucursal=s.idsucursal
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				left JOIN rol ON rol.r_id=e.idrol
+
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
 				and e.idempleado= $idempleado and v.estado='A'
@@ -372,6 +417,9 @@
 			global $conexion;
 			$sql = "select v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
+
+				CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario_rol,
+
 				concat(pe.nombre,' ',pe.apellido) as cliente,v.tipo_comprobante as comprobante,
 				v.serie_comprobante as serie,v.num_comprobante as numero,
 				v.impuesto,
@@ -385,6 +433,9 @@
 				inner join sucursal s on p.idsucursal=s.idsucursal
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				left JOIN rol ON rol.r_id=e.idrol
+
 				inner join persona pe on p.idcliente=pe.idpersona
 				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
 				and v.estado='A'

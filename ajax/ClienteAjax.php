@@ -265,7 +265,7 @@ switch ($_GET["op"]) {
 			$data[] = array(
 				"id" => $i,
 				"0" => '',
-				'vendedor_asignado'=>$reg->empleado_asignado,
+				'vendedor_asignado'=>$reg->rol_nombre_usuario,
 				'12'=>$reg->idpersona,
 				"1" => $reg->tipo_persona . ' - ' . $reg->numero_cuenta,
 				"2" => $reg->nombre . '&nbsp;' . $reg->apellido,

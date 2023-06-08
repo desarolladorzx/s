@@ -107,7 +107,7 @@ switch ($_GET["op"]) {
 
                 "5" => $reg->nombre,
 
-                "6" => $reg->empleado,
+                "6" => $reg->rol_nombre_usuario,
                 "7" => $reg->verificacion,
                 "8" => $buttonEditar .
 

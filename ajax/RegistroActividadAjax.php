@@ -19,10 +19,10 @@ switch ($_GET["op"]) {
             $data[] = array(
                 "0" => $i,
                 "1" => $reg->fecha_registro,
-                "2" => $reg->usuario,
+                "2" => $reg->nombre_usuario_rol,
                 "3" => $reg->tipo_cliente,
                 "4" => $reg->cliente,
-                "5" => $reg->evento,
+                "5" => $reg->nombre_usuario_rol,
                 '6' => $reg->cartera_estado
             );
             $i++;

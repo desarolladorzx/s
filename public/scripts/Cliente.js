@@ -328,9 +328,9 @@ function init() {
         var html = `<option value="" selected="selected">Todos ...</option>`;
         var htmlEVresponsable = `<option value="" selected="selected"></option>`;
         lista.map((e) => {
-          html += `<option value="${e.nombre}">${e.r_prefijo} ${e.nombre}</option>`;
+          html += `<option value="${e.rol_nombre_usuario}">${e.r_prefijo} ${e.nombre_usuario}</option>`;
 
-          htmlEVresponsable += `<option value="${e.idempleado}">${e.r_prefijo} ${e.nombre}</option>`;
+          htmlEVresponsable += `<option value="${e.idempleado}">${e.r_prefijo} ${e.nombre_usuario}</option>`;
         });
 
         $("#txt_empleado_asignado").html(htmlEVresponsable);

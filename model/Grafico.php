@@ -2,24 +2,25 @@
 
 require "Conexion.php";
 class Grafico
-	
+
 {
 
 	public function __construct()
 	{
 	}
 
-	public function VentasDelMesPorUsuario() { 
+	public function VentasDelMesPorUsuario()
+	{
 		global $conexion;
 
-		$sql="SELECT idempleado ,concat(nombre,' ',apellidos) nombre FROM empleado WHERE idrol=1;";
+		$sql = "SELECT idempleado ,concat(nombre,' ',apellidos) nombre ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario FROM empleado left JOIN rol ON rol.r_id=empleado.idrol WHERE idrol=1;";
 		$query = $conexion->query($sql);
 
 		$reg = $query->fetch_all();
-	
-		$super=array();
+
+		$super = array();
 		foreach ($reg as $idempleado) {
-			$sql="SELECT 
+			$sql = "SELECT 
 			concat(DATE_FORMAT(DATE_RANGE, '%d'),' ',MONTHNAME(DATE_RANGE))
 			 AS fecha, COALESCE(ventas_totales, 0) AS ventas_totales
 			FROM (
@@ -46,32 +47,32 @@ class Grafico
 			) AS temp_dates ON fechas_venta.fecha = temp_dates.date_range
 			ORDER BY fecha ASC;
 			";
-		
+
 			$query_venta_por_empleado = $conexion->query($sql);
-			
-			$nuevo=[];
-			while($reg = $query_venta_por_empleado->fetch_object()){		
+
+			$nuevo = [];
+			while ($reg = $query_venta_por_empleado->fetch_object()) {
 				$nuevo['data'][] = $reg;
-				$nuevo['nombre']=$idempleado[1];
+				$nuevo['nombre'] = $idempleado[2];
 			}
 			$super[] = $nuevo;
 		}
-		return $super; 
-
+		return $super;
 	}
 
-	public function TraerVentasSemanalesUltimosAños(){
+	public function TraerVentasSemanalesUltimosAños()
+	{
 		global $conexion;
-		$sql="SELECT DISTINCT YEAR(fecha) year  FROM venta;";
+		$sql = "SELECT DISTINCT YEAR(fecha) year  FROM venta;";
 
 		$query = $conexion->query($sql);
 
 
 		$reg = $query->fetch_all();
 
-		$super=array();
-		foreach($reg as $row){
-			$sql="SELECT DAYNAME(dias.fecha) AS nombre_dia, dias.fecha, IFNULL(SUM(venta.total), 0) AS total_venta
+		$super = array();
+		foreach ($reg as $row) {
+			$sql = "SELECT DAYNAME(dias.fecha) AS nombre_dia, dias.fecha, IFNULL(SUM(venta.total), 0) AS total_venta
 			FROM (
 			  SELECT '$row[0]-01-01' + INTERVAL ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1 DAY AS fecha
 			  FROM information_schema.columns
@@ -84,38 +85,36 @@ class Grafico
 			ORDER BY FIELD(nombre_dia, 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 			";
 
-			
+
 			$queryMeses = $conexion->query($sql);
 
 			$nuevo = array();
-			
-			while($reg = $queryMeses->fetch_object()){
-				$nuevo['año']=$row[0];
-				$nuevo['data'][] = $reg;
 
+			while ($reg = $queryMeses->fetch_object()) {
+				$nuevo['año'] = $row[0];
+				$nuevo['data'][] = $reg;
 			}
 			$super[] = $nuevo;
 			// echo  json_encode($nuevo);
 
 		}
-		return $super; 
-
+		return $super;
 	}
 	public function TraerVentasUltimosAños()
 	{
 		global $conexion;
 
-		$sql="SELECT DISTINCT YEAR(fecha) year  FROM venta;";
+		$sql = "SELECT DISTINCT YEAR(fecha) year  FROM venta;";
 
 		$query = $conexion->query($sql);
 
 
 		$reg = $query->fetch_all();
-		
 
-		$super=array();
-		foreach($reg as $row){
-			$sql="SELECT meses.mes, $row[0] AS año, IFNULL(SUM(venta.total), 0) AS total_venta
+
+		$super = array();
+		foreach ($reg as $row) {
+			$sql = "SELECT meses.mes, $row[0] AS año, IFNULL(SUM(venta.total), 0) AS total_venta
 			FROM (
 				SELECT 1 AS mes UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
 				UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12
@@ -125,22 +124,21 @@ class Grafico
 			ORDER BY meses.mes
 			";
 
-			
+
 			$queryMeses = $conexion->query($sql);
 
 			$nuevo = array();
-			
-			while($reg = $queryMeses->fetch_object()){
-				
-				$nuevo[] = $reg;
 
+			while ($reg = $queryMeses->fetch_object()) {
+
+				$nuevo[] = $reg;
 			}
 			$super[] = $nuevo;
 			// echo  json_encode($nuevo);
 
 		}
 
-		return $super; 
+		return $super;
 	}
 
 	public function ComprasMesSucursal($idsucursal)
@@ -313,7 +311,7 @@ class Grafico
 
 
 
-	public function VentasTotales($idsucursal,$idempleado)
+	public function VentasTotales($idsucursal, $idempleado)
 	{
 		$sql = "SELECT 
 		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE AND year(venta.fecha)=year(CURRENT_DATE) )   ventas_diarias,
@@ -325,7 +323,7 @@ class Grafico
 		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='C' AND MONTH(venta.fecha)= MONTH(CURRENT_DATE) AND year(venta.fecha)=year(CURRENT_DATE) ) ventas_anuladas
 			";
 		if ($idsucursal != 0) {
-		$sql = "SELECT 
+			$sql = "SELECT 
 		(SELECT IFNULL(SUM(venta.total),0)  FROM venta join pedido on venta.idpedido=pedido.idpedido  WHERE venta.estado='A' AND date(venta.fecha)= CURRENT_DATE
 		AND year(venta.fecha)=year(CURRENT_DATE) 
 		  and pedido.idsucursal='$idsucursal' )   ventas_diarias,
@@ -338,8 +336,8 @@ class Grafico
 		AND year(venta.fecha)=year(CURRENT_DATE) and pedido.idsucursal='$idsucursal') ventas_anuladas
 		";
 
-		if($idempleado==12 || $idempleado==14 ||$idempleado==15 ||$idempleado==16 ||$idempleado==18 ||$idempleado==20  ||$idempleado==19 ){
-			$sql="SELECT 
+			if ($idempleado == 12 || $idempleado == 14 || $idempleado == 15 || $idempleado == 16 || $idempleado == 18 || $idempleado == 20  || $idempleado == 19) {
+				$sql = "SELECT 
 			(
 			SELECT  IFNULL(SUM(venta.total),0) 
 			FROM venta
@@ -387,13 +385,9 @@ class Grafico
 			) ventas_anuladas,
 			(SELECT CONCAT(nombre,' ',apellidos) FROM empleado WHERE idempleado=$idempleado) vendedor
 			";
-
+			}
 		}
-
-	
-
-		}
-		if($idsucursal==0 && in_array($idempleado,[12, 14, 15, 16, 18, 20 , 19])){
+		if ($idsucursal == 0 && in_array($idempleado, [12, 14, 15, 16, 18, 20, 19])) {
 			$sql = "SELECT 
 			(SELECT  IFNULL(SUM(venta.total),0) 
 			FROM venta
@@ -435,9 +429,6 @@ class Grafico
 
 			AND empleado.idempleado=$idempleado) ventas_anuladas
 				";
-
-				
-				
 		}
 
 		global $conexion;
@@ -473,15 +464,16 @@ class Grafico
 	}
 
 
-	public function VentasPorUsuario($empleados){
+	public function VentasPorUsuario($empleados)
+	{
 
 
 
 		global $conexion;
 
-		
+
 		foreach ($empleados as &$idempleado) {
-			$sql="SELECT 
+			$sql = "SELECT 
 			(
 			SELECT  IFNULL(SUM(venta.total),0) 
 			FROM venta
@@ -579,18 +571,18 @@ class Grafico
 
 			(SELECT CONCAT(nombre,' ',apellidos) FROM empleado WHERE idempleado=$idempleado) vendedor,
 
+
+			(SELECT  CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) FROM empleado left JOIN rol ON rol.r_id=empleado.idrol where  idempleado=$idempleado) nombre_usuario_prefijo,
 			(SELECT foto FROM empleado WHERE idempleado=$idempleado) foto
 			;";
 			$query = $conexion->query($sql);
 
 			// echo $sql;
 			$array[] = $query->fetch_object();
-
 		}
 		// echo json_encode($array);
 
 		return json_encode($array);
-
 	}
 
 	public function TotalesVentas($idsucursal)
@@ -743,7 +735,7 @@ and month(v.fecha)>=MONTH(current_date)
 
 
 
-	
+
 
 	public function CantPedidosVendidos()
 	{

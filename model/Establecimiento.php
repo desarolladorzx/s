@@ -8,6 +8,18 @@ class Establecimiento
 	{
 		global $conexion;
 		$sql = "SELECT *  FROM  empleado WHERE  idrol=1 or idrol=2 or idrol=7;";
+
+
+
+		$sql="SELECT *  ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
+		
+		FROM  empleado 
+		left JOIN rol ON rol.r_id=empleado.idrol
+		
+		LEFT JOIN area ON area.idarea=rol.idarea
+		WHERE  idrol=1 or idrol=2 or idrol=7;";
+
+
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -105,6 +117,7 @@ class Establecimiento
 		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
 		,empresa.nombre,empresa.direccion	,empresa.telefono
 		
+		,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
 		, categoria_empresa.descripcion categoria_empresa_descripcion
 		 from empresa 
 		
@@ -121,6 +134,9 @@ class Establecimiento
 		
 		left JOIN empleado ON empleado.idempleado =cartera_empresa.idempleado
 		
+		left JOIN rol ON rol.r_id=empleado.idrol
+		
+
 		WHERE cartera_empresa.estado='A'
 		
 		".$exepcion."
@@ -128,7 +144,7 @@ class Establecimiento
 
 		order by empresa.idempresa desc
 			";
-
+// echo $sql;
 			
 		$query = $conexion->query($sql);
 		return $query;
