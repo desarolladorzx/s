@@ -159,7 +159,8 @@ if (isset($_SESSION["idusuario"])) {
         mnu_admin,
         superadmin,
         idrol,
-        mnu_ventas_campo
+        mnu_ventas_campo,
+        mnu_sigrh
         ) {
 
 
@@ -220,7 +221,8 @@ if (isset($_SESSION["idusuario"])) {
           mnu_admin: mnu_admin,
           superadmin: superadmin,
           idrol:idrol,
-          mnu_ventas_campo:mnu_ventas_campo
+          mnu_ventas_campo:mnu_ventas_campo,
+          mnu_sigrh:mnu_sigrh
         };
 
      

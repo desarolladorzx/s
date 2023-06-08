@@ -88,6 +88,16 @@ function init(){
 		$("#liVentasCampo").hide();
 	};
 
+	console.log($("#txtMnu_sigrh").val())
+	if ($("#txtMnu_sigrh").val() == "0") {
+
+
+		
+		$("#liSIGRH").hide();
+	};
+
+
+
 
 
 	//documentacion

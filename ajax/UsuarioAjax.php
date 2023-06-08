@@ -40,7 +40,9 @@ switch ($_GET["op"]) {
 				\''.$reg->mnu_admin.'\',
 				\''.$reg->superadmin.'\',
 				\''.$reg->idrol.'\',
-				\''.$reg->mnu_ventas_campo.'\'
+				\''.$reg->mnu_ventas_campo.'\',
+				\''.$reg->mnu_sigrh.'\'
+				
 			)" class="btn btn-info pull-left">'.explode("-", $reg->razon_social)[0].'</button>
 		  ';
 		}
@@ -131,6 +133,14 @@ switch ($_GET["op"]) {
 			$ventas_campo = 0;
 		}
 
+		
+		if (isset($_POST["chkMnuSIGRH"])) {
+			$mnu_sigrh = true;
+		} else {
+			$mnu_sigrh = 0;
+		}
+
+
 
 
 		// print_r($_POST);
@@ -214,7 +224,8 @@ $chkMnuDocRRHH,
 $chkMnuDocIT,
 $chkMnuDoProduccion,
 
-$ventas_campo
+$ventas_campo,
+$mnu_sigrh
 // 
 			)) {
 				echo "Registrado Exitosamente";
@@ -252,7 +263,7 @@ $ventas_campo
 				$chkMnuDoProduccion
 				,
 				$ventas_campo
-
+				,$mnu_sigrh
 				// documentacion 
 			)) {
 				echo "Informacion del Usuario ha sido actualizada";
@@ -295,6 +306,7 @@ $ventas_campo
 				,\'' . $reg->mnu_documentacion_it . '\'
 				,\'' . $reg->mnu_documentacion_rrhh . '\'
 				,\'' . $reg->mnu_documentacion_produccion . '\'
+				,\'' . $reg->mnu_sigrh . '\'
 
 				)"><i class="fa fa-pencil"></i> </button>&nbsp;' .
 					'<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarUsuario(' . $reg->idusuario . ')"><i class="fa fa-trash"></i> </button>'
@@ -392,6 +404,8 @@ $ventas_campo
 
 		$_SESSION["mnu_ventas_campo"] = $_POST["mnu_ventas_campo"];
 
+		$_SESSION["mnu_sigrh"] = $_POST["mnu_sigrh"];
+
 		
 			// documentacion
 			$_SESSION["mnu_documentacion_produccion"] = $fetch->mnu_documentacion_produccion;
@@ -440,6 +454,9 @@ $ventas_campo
 
 
 		$_SESSION["mnu_ventas_campo"] = $_POST["mnu_ventas_campo"];
+
+
+		$_SESSION["mnu_sigrh"] = $_POST["mnu_sigrh"];
 
 
 		/*$_SESSION["rol"] = $fetch->rol_id;*/

@@ -79,6 +79,7 @@ function init() {
     $("#chkMnuDocJA").attr("checked", false);
     $("#chkMnuDocJL").attr("checked", false);
     $("#chkMnuAdmin").attr("checked", false);
+    $("#chkMnuSIGRH").attr("checked", false);
   }
 
   function VerForm() {
@@ -162,7 +163,8 @@ function cargarDataUsuario(
   mnu_documentacion_ventas,
   mnu_documentacion_it,
   mnu_documentacion_rrhh,
-  mnu_documentacion_produccion
+  mnu_documentacion_produccion,
+  mnu_sigrh
 ) {
   $("#VerForm").show();
   $("#btnNuevo").hide();
@@ -180,6 +182,17 @@ function cargarDataUsuario(
   } else {
     $("#chkMnuDocumentacion").attr("checked", false);
   }
+
+
+  
+
+  if (mnu_sigrh == 1) {
+    $("#chkMnuSIGRH").attr("checked", true);
+  } else {
+    $("#chkMnuSIGRH").attr("checked", false);
+  }
+
+
 
   if (mnu_documentacion_ventas == 1) {
     $("#chkMnuDocVentas").attr("checked", true);
