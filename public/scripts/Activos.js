@@ -71,8 +71,15 @@ function init() {
 
     ArrayExport = visibleColumns
       .filter((e) => e.visible == true)
-      .map((e) => Number(e.value));
+      .map((e) =>{
+        
+        if(e.value!='20'){
 
+          return Number(e.value)}
+        }
+        );
+
+     
     tabla = $("#tblActivos")
       .dataTable({
         aProcessing: true,
@@ -148,7 +155,18 @@ function init() {
 
     ArrayExport = visibleColumns
       .filter((e) => e.visible == true)
-      .map((e) => Number(e.value));
+      .map((e) =>
+      {
+
+
+        if(e.value!="20"){    
+          return Number(e.value)
+        }else{
+
+
+        }
+      }
+      );
 
     // Actualizar el botón de Excel con las columnas seleccionadas
 
