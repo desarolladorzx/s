@@ -18,6 +18,7 @@
 			$chkMnuDocIT,
 			$chkMnuDoProduccion
 			,$ventas_campo
+			,$mnu_sigrh
 	// documentacion
 		
 		){
@@ -31,7 +32,8 @@
 			,mnu_documentacion_rrhh
 			,mnu_documentacion_it
 			,mnu_documentacion_produccion
-			,ventas_campo
+			,ventas_campo,
+			mnu_sigrh
 			)
 						VALUES($idsucursal, $idempleado, '$tipo_usuario', curdate(), $mnu_almacen, $mnu_compras, $mnu_ventas, $mnu_mantenimiento, $mnu_seguridad, $mnu_consulta_compras, $mnu_consultas_ventas,$mnu_documentacion_ev,$mnu_documentacion_jv,$mnu_documentacion_ja,$mnu_documentacion_jl, $mnu_admin, 'A'
 						,$chkMnuDocumentacion,
@@ -42,7 +44,8 @@
 						$chkMnuDocRRHH,
 						$chkMnuDocIT,
 						$chkMnuDoProduccion,
-						$ventas_campo
+						$ventas_campo,
+						$mnu_sigrh
 						)";
 			$query = $conexion->query($sql);
 			return $query;
@@ -57,10 +60,11 @@
 				$chkMnuDocFinanzas,
 				$chkMnuDocRRHH,
 				$chkMnuDocIT,
-				$chkMnuDoProduccion
-		// documentacion
-
-		,$ventas_campo
+				$chkMnuDoProduccion,
+				// documentacion
+				
+				$ventas_campo
+				,$mnu_sigrh
 
 				){
 			global $conexion;
@@ -75,9 +79,13 @@
 			,mnu_documentacion_it=$chkMnuDocIT
 			,mnu_documentacion_produccion=$chkMnuDoProduccion
 					,mnu_ventas_campo=$ventas_campo
+					,mnu_sigrh=$mnu_sigrh
 
 
 						WHERE idusuario = $idusuario";
+
+
+					// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}

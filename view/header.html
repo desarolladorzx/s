@@ -1089,7 +1089,8 @@ function NuevoAcceder(
         mnu_admin,
         superadmin,
         idrol,
-        mnu_ventas_campo
+        mnu_ventas_campo,
+        mnu_sigrh
         ) {
 
 
@@ -1122,7 +1123,8 @@ var data = {
           mnu_admin: mnu_admin,
           superadmin: superadmin,
           idrol:idrol,
-          mnu_ventas_campo:mnu_ventas_campo
+          mnu_ventas_campo:mnu_ventas_campo,
+          mnu_sigrh
         };
 
 // console.log(data)
@@ -1486,3 +1488,5 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJA" value="<?php echo $_SESSION["mnu_documentacion_ja"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJL" value="<?php echo $_SESSION["mnu_documentacion_jl"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuAdmin" value="<?php echo $_SESSION["mnu_admin"]; ?>">
+          
+            <input type="hidden" name="txtMnuAlmacen" id="txtMnu_sigrh" value="<?php echo $_SESSION["mnu_sigrh"]; ?>">

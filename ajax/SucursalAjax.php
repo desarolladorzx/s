@@ -153,7 +153,8 @@
 							\''.$reg->mnu_admin.'\',
 							\''.$reg->superadmin.'\',
 							\''.$reg->idrol.'\',
-							\''.$reg->mnu_ventas_campo.'\')" class="btn btn-info pull-left">Acceder</button></td>
+							\''.$reg->mnu_ventas_campo.'\',
+							\''.$reg->mnu_sigrh.'\')" class="btn btn-info pull-left">Acceder</button></td>
 		                <td>'.$reg->razon_social.'</td>
 		                <td><img class="img-thumbnail" width="100px" height="100px" src="./'.$reg->logo.'" /></td>
 	                   </tr>';
