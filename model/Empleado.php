@@ -8,6 +8,7 @@ class Empleado
 	public  function actualizarHijo($Post)
 	{
 
+// actualiza  al hijo del empleado segun el iddetalle_empleado_hijo a la tabla detalle_empleado_hijo
 		global $conexion;
 
 		$values = json_decode(json_encode($Post));
@@ -27,11 +28,13 @@ class Empleado
 		return $query;
 	}
 	public function anadirHijo($Post)
+
 	{
 		global $conexion;
 
 		$values = json_decode(json_encode($Post));
 
+		// inserta  un nuevo hijo al empleado seleccionado a la tabla  detalle_empleado_hijo
 		$sql = "INSERT 
 		INTO detalle_empleado_hijo(
 			nombre_hijo,
@@ -78,8 +81,9 @@ class Empleado
 		return $query;
 	}
 
-	public  function TraerDatosEmpleado($idempleado)
+	public  function TraerDatosEmpleado($idempleado) //funcion encargada de ctraer los datos  del empleado segun el  id empleado
 	{
+
 		global $conexion;
 		$sql = "SELECT *,
 			CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
@@ -106,6 +110,9 @@ class Empleado
 	}
 	public function traerRol()
 	{
+		// trae los roles de la tabla roles
+
+
 		global $conexion;
 
 
@@ -120,6 +127,7 @@ class Empleado
 	{
 	}
 	public function RenovarContrato(
+		// renueva el contrato del empleado y cambia de estado a los anteriores contratos
 		$idempleado,
 		$new_file_name_contrato,
 		$new_file_name_dni,
@@ -134,13 +142,14 @@ class Empleado
 
 		global $conexion;
 
+		// cambia de estado estado a los anteriroes contratos
 		$sql = "UPDATE contrato
 			set estado='C'
 			where idempleado='$idempleado' ";
 
 
 		$conexion->query($sql);
-
+// anade un nuevo contrato
 		$sql = "INSERT INTO 
 				contrato(
 					idempleado,
@@ -178,7 +187,7 @@ class Empleado
 		$query = $conexion->query($sql);
 	}
 	public  function RegistrarContrato(
-
+		// inserta el primer contrato  al empleado
 		$idempleado,
 		$new_file_name_contrato,
 		$new_file_name_dni,
@@ -193,7 +202,7 @@ class Empleado
 
 		global $conexion;
 
-
+		// inserta un nuevo contrato a la tabla contrato
 		$sql = "INSERT INTO 
 			contrato(
 				idempleado,
@@ -226,8 +235,6 @@ class Empleado
 				'$razon_social'
 				)
 				";
-
-		// echo $sql;
 		$query = $conexion->query($sql);
 	}
 	public function AgregarHijos()
@@ -245,6 +252,8 @@ class Empleado
 		$id_ubicacion_envio_array = isset($Post["id_ubicacion_empleado_array"]) ? explode(' - ', $Post["id_ubicacion_empleado_array"]) : "";
 
 
+
+			// insercion  de nuevo  empleado  a la  tabla  empleado 
 		$sql = "INSERT INTO empleado (
 				apellidos,
 				nombre,
@@ -305,12 +314,14 @@ class Empleado
 				'$values->txtcelular_contacto',
 				'$values->txtNombreUsuario'
 			  );";
-		// echo $sql;	
+
 		$conexion->query($sql);
 
 		$id = $conexion->insert_id;
 
 
+
+		// si el empleado  incerto hijos  se anadiran los hijos  a la  carpeta  detalle_empleado_hijos
 		if (isset($values->hijos)) {
 			$array = $values->hijos;
 			foreach ($array as $element) {
@@ -339,7 +350,7 @@ class Empleado
 			}
 		}
 
-
+		// return  del idempleado para la  creacion de  contratos 
 		return $id;
 	}
 
@@ -354,6 +365,8 @@ class Empleado
 		
 		$id_ubicacion_envio_array = isset($Post["id_ubicacion_empleado_array"]) ? explode(' - ', $Post["id_ubicacion_empleado_array"]) : "";
 
+
+		// actualizacion del empleado  en la base de datos
 
 		global $conexion;
 		$sql = "UPDATE empleado
@@ -401,6 +414,7 @@ class Empleado
 	}
 	public function EliminarHijo($id)
 	{
+		// cambia de estado al hijo "C"
 		global $conexion;
 		$sql = "UPDATE detalle_empleado_hijo set estado='C' WHERE iddetalle_empleado_hijo = $id";
 		$query = $conexion->query($sql);
@@ -408,6 +422,7 @@ class Empleado
 	}
 	public function Listar()
 	{
+		// lista los empleados en la tabla  empleado
 		global $conexion;
 		$sql = "SELECT 
 		CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion

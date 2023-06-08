@@ -2,7 +2,7 @@
 
 	session_start();
 
-	if(isset($_SESSION["idusuario"]) && $_SESSION["liSIGRH"] == 1){
+	if(isset($_SESSION["idusuario"]) && $_SESSION["mnu_sigrh"] == 1){
 		
 		// if ($_SESSION["superadmin"] != "S") {
 			include "view/header.html";

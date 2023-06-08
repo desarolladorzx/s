@@ -13,10 +13,11 @@ switch ($_GET["op"]) {
 	case 'AnadirHijooActualizar':
 
 
-
 		if (strlen($_POST['iddetalle_empleado_hijo']) > 0) {
+			//si existe  un id_detalle_empleado_hijo entonces se actualizara el hijo segun su id  
 			$objEmpleado->actualizarHijo($_POST);
 		} else {
+			//si no existe el id_detalle_empleado_hijo ese agregar un nuevo hijo al emplkeado 
 			$objEmpleado->anadirHijo($_POST);
 		}
 
@@ -25,12 +26,15 @@ switch ($_GET["op"]) {
 
 	case 'TraerEmpleado':
 
+
+		// trae los datos  del empleado segun el id
 		$query = $objEmpleado->TraerDatosEmpleado($_GET['id'])->fetch_object();
 
 		echo  json_encode($query);
 
 		break;
 	case 'TraerRol':
+		// trae los roles de la tabla roles
 		$query_Tipo = $objEmpleado->traerRol();
 
 		$nuevo = array();
@@ -109,7 +113,7 @@ switch ($_GET["op"]) {
 
 
 
-		// ANTECEDENTES
+		// INSERCION DE ANTECEDENTES
 
 		if ($_FILES["antecedentes"]["size"] !== 0) {
 
@@ -129,7 +133,7 @@ switch ($_GET["op"]) {
 
 
 
-		// declaracion jurada
+		//  INSERCION DE declaracion jurada
 		if ($_FILES["declaracion_jurada"]["size"] !== 0) {
 			$declaracion_jurada = $_FILES["declaracion_jurada"]["tmp_name"];
 			$declaracion_jurada_name = $_FILES["declaracion_jurada"]["name"];
@@ -165,7 +169,7 @@ switch ($_GET["op"]) {
 		break;
 	case 'SaveOrUpdate':
 
-
+// si el el elemento txtIdEmpleado no existe entonces registrara  la funcion 
 		if (strlen($_POST['txtIdEmpleado']) == 0) {
 
 			$imagenEmp = $_FILES["imagenEmp"]["tmp_name"];
@@ -177,6 +181,8 @@ switch ($_GET["op"]) {
 
 			move_uploaded_file($imagenEmp, "../Files/Empleado/" . $new_file_name);
 
+
+			// registrarmos  el nuevo empleado creado, mas  su imagen  que le  pertece
 			$idempleado = $objEmpleado->Registrar($_POST, "../Files/Empleado/" . $new_file_name);
 
 			// insercion de contrato
@@ -246,7 +252,7 @@ switch ($_GET["op"]) {
 
 
 
-			// ANTECEDENTES
+			// INSERCION DE ANTECEDENTES
 
 			if ($_FILES["antecedentes"]["size"] !== 0) {
 
@@ -266,7 +272,7 @@ switch ($_GET["op"]) {
 
 
 
-			// declaracion jurada
+			//  INSERCION DE declaracion jurada
 			if ($_FILES["declaracion_jurada"]["size"] !== 0) {
 				$declaracion_jurada = $_FILES["declaracion_jurada"]["tmp_name"];
 				$declaracion_jurada_name = $_FILES["declaracion_jurada"]["name"];
@@ -284,7 +290,7 @@ switch ($_GET["op"]) {
 
 
 
-
+			// registramos el contrato si el empleado se a generado  correctamente 
 			$objEmpleado->RegistrarContrato(
 				$idempleado,
 				$new_file_name_contrato,
@@ -293,12 +299,14 @@ switch ($_GET["op"]) {
 				$new_file_name_RIT,
 				$new_file_name_antecedentes,
 				$new_file_name_declaracion_jurada,
-				// $_POST['txtfecha_inicio_labores'],
 				date('Y-m-d'),
 				$_POST['txtfecha_fin_labores'],
 				$_POST['txtrazon_social'],
 			);
 		} else {
+
+			//si el elemento txtIdEmpleado existe  se procedera  a la actualizacion del empleado 
+
 			if ($_FILES["imagenEmp"]["size"] !== 0) {
 				$imagenEmp = $_FILES["imagenEmp"]["tmp_name"];
 				$imagenEmp_name = $_FILES["imagenEmp"]["name"];
@@ -311,226 +319,10 @@ switch ($_GET["op"]) {
 			}else{
 				$new_file_name='';
 			}
-		
+			//funcion  que  modifica  el empleado
 			$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name);
 		}
 
-
-
-
-
-		// $parte = explode(".", $imagenEmp);     
-
-
-
-		// $codigoInterno = strtotime(date('Y-m-d H:i:s'));
-		// $new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
-
-
-		// // move_uploaded_file($imagen, "../Files/Empleado/" . $imagenEmp);
-
-
-
-		// move_uploaded_file($imagen, "../Files/Empleado/" . $ruta);
-
-
-		// echo $new_file_name;
-
-
-
-
-
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . $contrato_trabajo);
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . $dniFile);
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . $cv_file);
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . 
-		// $registro_RIT);
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . $antecedentes);
-
-		// move_uploaded_file($imagen, "../Files/Contrato/" . $declaracion_jurada);
-
-
-
-
-
-
-		// $apellidos = $_POST["txtApellidos"];
-		// $nombre = $_POST["txtNombre"];
-		// $tipo_documento = $_POST["cboTipo_Documento"];
-		// $num_documento = $_POST["txtNum_Documento"];
-		// $direccion = $_POST["txtDireccion"];
-		// $telefono = $_POST["txtTelefono"];
-		// $email = $_POST["txtEmail"];
-		// $fecha_nacimiento = $_POST["txtFecha_Nacimiento"];
-		// $imagen = $_FILES["imagenEmp"]["tmp_name"];
-		// $ruta = $_FILES["imagenEmp"]["name"];
-		// $login = $_POST["txtLogin"];
-		// $clave = md5($_POST["txtClave"]);
-		// $estado = $_POST["txtEstado"];
-
-		// $cargo = $_POST["txtCargo"];
-		// $fecha_ingreso = $_POST["txtfecha_ingreso"];
-		// $sexo = $_POST["txtsexo"];
-
-		// if (move_uploaded_file($imagen, "../Files/Empleado/" . $ruta)) {
-		// 	if (empty($_POST["txtIdEmpleado"])) {
-		// 		if ($objEmpleado->Registrar(
-		// 			$apellidos,
-		// 			$nombre,
-		// 			$tipo_documento,
-		// 			$num_documento,
-		// 			$direccion,
-		// 			$telefono,
-		// 			$email,
-		// 			$fecha_nacimiento,
-		// 			"Files/Empleado/" . $ruta,
-		// 			$login,
-		// 			$clave,
-		// 			$estado,
-		// 			$cargo,
-		// 			$fecha_ingreso,
-		// 			$sexo
-		// 		)) {
-		// 			echo "Empleado Registrado correctamente.";
-		// 		} else {
-		// 			echo "Empleado no ha podido ser registado.";
-		// 		}
-		// 	} else {
-
-		// 		if ($_POST["txtClave"] == "") {
-		// 			$idempleado = $_POST["txtIdEmpleado"];
-		// 			if ($objEmpleado->Modificar(
-		// 				$idempleado,
-		// 				$apellidos,
-		// 				$nombre,
-		// 				$tipo_documento,
-		// 				$num_documento,
-		// 				$direccion,
-		// 				$telefono,
-		// 				$email,
-		// 				$fecha_nacimiento,
-		// 				"Files/Empleado/" . $ruta,
-		// 				$login,
-		// 				$_POST["txtClaveOtro"],
-		// 				$estado,
-		// 				$cargo,
-		// 				$fecha_ingreso,
-		// 				$sexo
-		// 			)) {
-		// 				echo "La información del empleado ha sido actualizada.";
-		// 			} else {
-		// 				echo "La información del empleado no ha podido ser actualizada.";
-		// 			}
-		// 		} else {
-		// 			$idempleado = $_POST["txtIdEmpleado"];
-		// 			if ($objEmpleado->Modificar(
-		// 				$idempleado,
-		// 				$apellidos,
-		// 				$nombre,
-		// 				$tipo_documento,
-		// 				$num_documento,
-		// 				$direccion,
-		// 				$telefono,
-		// 				$email,
-		// 				$fecha_nacimiento,
-		// 				"Files/Empleado/" . $ruta,
-		// 				$login,
-		// 				$clave,
-		// 				$estado,
-		// 				$cargo,
-		// 				$fecha_ingreso,
-		// 				$sexo
-		// 			)) {
-		// 				echo "La información del empleado ha sido actualizada.";
-		// 			} else {
-		// 				echo "La información del empleado no ha podido ser actualizada.";
-		// 			}
-		// 		}
-		// 	}
-		// } else {
-		// 	$ruta_img = $_POST["txtRutaImgEmp"];
-		// 	if (empty($_POST["txtIdEmpleado"])) {
-
-		// 		if ($objEmpleado->Registrar(
-		// 			$apellidos,
-		// 			$nombre,
-		// 			$tipo_documento,
-		// 			$num_documento,
-		// 			$direccion,
-		// 			$telefono,
-		// 			$email,
-		// 			$fecha_nacimiento,
-		// 			$ruta_img,
-		// 			$login,
-		// 			$clave,
-		// 			$estado,
-		// 			$cargo,
-		// 			$fecha_ingreso,
-		// 			$sexo
-		// 		)) {
-		// 			echo "Empleado Registrado correctamente.";
-		// 		} else {
-		// 			echo "Empleado no ha podido ser registado.";
-		// 		}
-		// 	} else {
-
-		// 		$idempleado = $_POST["txtIdEmpleado"];
-		// 		if ($_POST["txtClave"] == "") {
-		// 			$idempleado = $_POST["txtIdEmpleado"];
-		// 			if ($objEmpleado->Modificar(
-		// 				$idempleado,
-		// 				$apellidos,
-		// 				$nombre,
-		// 				$tipo_documento,
-		// 				$num_documento,
-		// 				$direccion,
-		// 				$telefono,
-		// 				$email,
-		// 				$fecha_nacimiento,
-		// 				$ruta_img,
-		// 				$login,
-		// 				$_POST["txtClaveOtro"],
-		// 				$estado,
-		// 				$cargo,
-		// 				$fecha_ingreso,
-		// 				$sexo
-		// 			)) {
-		// 				echo "La información del empleado ha sido actualizada.";
-		// 			} else {
-		// 				echo "La información del empleado no ha podido ser actualizada.";
-		// 			}
-		// 		} else {
-		// 			$idempleado = $_POST["txtIdEmpleado"];
-		// 			if ($objEmpleado->Modificar(
-		// 				$idempleado,
-		// 				$apellidos,
-		// 				$nombre,
-		// 				$tipo_documento,
-		// 				$num_documento,
-		// 				$direccion,
-		// 				$telefono,
-		// 				$email,
-		// 				$fecha_nacimiento,
-		// 				$ruta_img,
-		// 				$login,
-		// 				$clave,
-		// 				$estado,
-		// 				$cargo,
-		// 				$fecha_ingreso,
-		// 				$sexo
-		// 			)) {
-		// 				echo "La información del empleado ha sido actualizada.";
-		// 			} else {
-		// 				echo "La información del empleado no ha podido ser actualizada.";
-		// 			}
-		// 		}
-		// 	}
-		// }
 		break;
 
 	case "delete":
@@ -786,6 +578,7 @@ switch ($_GET["op"]) {
 
 
 	case "listHijos":
+		// lista los hijos segund el empleado
 		$query_Tipo = $objEmpleado->ListarHijos($_GET['id']);
 		$data = array();
 		$i = 1;
@@ -834,12 +627,8 @@ switch ($_GET["op"]) {
 		while ($reg = $query_Tipo->fetch_object()) {
 
 
-			// print_r(explode(',',$reg->mensaje))  ;
 
-
-
-			// strpos($reg->mensaje, 'archivo_dn')=='❌'?'✅';
-			
+			// muesta los estados de los documentos 
 			$estadoDocumentacion = '<div style="display: flex;">
 			<ul>
 				<li>DNI/CE ' . (strpos($reg->mensaje, 'archivo_dni') ? '❌' : '✅') . '</li>
@@ -852,7 +641,7 @@ switch ($_GET["op"]) {
 				<li>RIT ' . (strpos($reg->mensaje, 'archivo_rit') ? '❌' : '✅') . '</li>
 			</ul>
 		</div>';
-
+			// si no falta nungun documento todos pasaran como true
 			if ($reg->mensaje == 'No falta ningún archivo') {
 				$estadoDocumentacion = '        <div style="display: flex;">
 			<ul >
@@ -866,7 +655,7 @@ switch ($_GET["op"]) {
 			  <li>RIT  ✅</li>
 			</ul>
 		  </div>';
-		  
+		//   si no se insertaron ningun documento al empleado estaran como false
 			}else if($reg->mensaje ==null){
 				$estadoDocumentacion = '        <div style="display: flex;">
 				<ul >
@@ -909,6 +698,7 @@ switch ($_GET["op"]) {
 		break;
 
 	case "listTipo_DocumentoPersona":
+		// lista los documentos de las personas
 		require_once "../model/Tipo_Documento.php";
 		$objTipo_Documento = new Tipo_Documento();
 		$query_tipo_Documento = $objTipo_Documento->VerTipo_Documento_Persona();
