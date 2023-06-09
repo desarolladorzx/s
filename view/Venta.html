@@ -237,37 +237,46 @@
         </div>
         <!-- <button class="btn btn-primary" id="btnNuevoVent"><i class="fa fa-file"></i> Nuevo</button> -->
         <!-- <br id="OcultaBR1"><br id="OcultaBR2"> -->
-        <div class="row">
-          <div class="col-lg-12 left">
-            <div class="form-group has-success">
-              <span>
-                <input
+        
+        <?php 
+
+     
+        if($_SESSION["idrol"]==2){
+
+          echo ' <div class="row">
+            <div class="col-lg-12 left">
+              <div class="form-group has-success">
+                <span>
+                  <input
                   type="radio"
                   id="14diasRadio"
                   name="cantidad_de_datos"
                   value="14dias"
                   checked
 
-                />
-                <label for="14diasRadio">Ultimos 14 dias</label>
-              </span>
-
-              <span class="" style="padding: 0 20px">
-                <input
+                  />
+                  <label for="14diasRadio">Ultimos 14 dias</label>
+                </span>
+                
+                <span class="" style="padding: 0 20px">
+                  <input
                   type="radio"
                   id="totalRadio"
                   name="cantidad_de_datos"
                   value="total"
                   
-                />
-
-                <label for="totalRadio"
-                  >Mostrar todas las notas de Ventas</label
-                >
-              </span>
+                  />
+                  
+                  <label for="totalRadio"
+                  >Ultimos 6 meses</label
+                  >
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
+          </div>';
+        }
+          ?> 
+       
         <div id="VerListado" class="table-responsive">
           <table
             id="tblVentas"

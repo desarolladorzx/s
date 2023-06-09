@@ -189,7 +189,10 @@ class Pedido
 			';
 
 		}else{
-			$limit='';
+			$limit='
+			
+			AND v.fecha >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+			';
 		}
 		global $conexion;
 		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
@@ -233,7 +236,7 @@ class Pedido
 			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta'
 			
 			$limit
-			
+
 			 order by idpedido desc
 			
 			
