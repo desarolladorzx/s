@@ -33,7 +33,11 @@
           >
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Historial Laboral</label>
+                <h4 class="box-title">
+                  <b> Historial Laboral </b>
+                </h4>
+
+                <!-- <label>Historial Laboral</label> -->
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="form-group has-success">
@@ -84,7 +88,11 @@
             </div>
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Documentos adjuntos</label>
+                <h4 class="box-title">
+                  <b> Documentos adjuntos </b>
+                </h4>
+
+                <!-- <label>Documentos adjuntos</label> -->
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="form-group has-success">
@@ -213,11 +221,14 @@
 
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Informacion del Empleado</label>
+                <h4 class="box-title">
+                  <b> Informacion del Empleado </b>
+                </h4>
+
+                <!-- <label>Informacion del Empleado</label> -->
               </div>
               <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-warning">
-                
                   <label>Nombre de Usuario(*):</label>
                   <input
                     id="txtNombreUsuario"
@@ -271,7 +282,7 @@
                   />
                 </div>
               </div>
-              
+
               <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div class="form-group has-success">
                   <label>Tipo Documento (*):</label>
@@ -517,6 +528,39 @@
                   ></div>
                 </div>
               </div>
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                    <h4 class="box-title">
+                      <b> Contacto en caso de Emergencia </b>
+                    </h4>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Nombre de Contacto (*):</label>
+                      <input
+                        id="txtnombre_contacto"
+                        type="text"
+                        name="txtnombre_contacto"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>N° de celular de contacto (*):</label>
+                      <input
+                        id="txtcelular_contacto"
+                        type="number"
+                        required
+                        name="txtcelular_contacto"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col-lg-12" id="container_tbl_hijos">
                 <div class="box box-danger">
                   <div class="box-header with-border">
@@ -550,7 +594,6 @@
                               <input
                                 id="iddetalle_empleado_hijo"
                                 type="hidden"
-                              
                                 maxlength="70"
                                 name="iddetalle_empleado_hijo"
                                 class="form-control"
@@ -560,7 +603,6 @@
                               <input
                                 id="txtNombre_hijoNuevo"
                                 type="text"
-                               
                                 maxlength="70"
                                 name="txtNombre_hijoNuevo"
                                 class="form-control"
@@ -576,7 +618,6 @@
                               <input
                                 id="txtApellido_hijoNuevo"
                                 type="text"
-                               
                                 maxlength="70"
                                 name="txtApellido_hijoNuevo"
                                 class="form-control"
@@ -592,7 +633,6 @@
                               <input
                                 id="txtDni_hijoNuevo"
                                 type="number"
-                              
                                 maxlength="70"
                                 name="txtDni_hijoNuevo"
                                 class="form-control"
@@ -607,7 +647,6 @@
                               <input
                                 id="txtFechaNacimiento_hijoNuevo"
                                 type="date"
-                              
                                 maxlength="70"
                                 name="txtFechaNacimiento_hijoNuevo"
                                 class="form-control"
@@ -619,9 +658,10 @@
 
                           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="form-group has-success">
-                              <button type="button" class="btn btn-primary"
-                              
-                              id="anadir_hijo"
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="anadir_hijo"
                               >
                                 Añadir Hijo
                               </button>
@@ -664,111 +704,89 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: flex; justify-content: space-evenly;align-items: center;">
 
-                <div id="imageContainer">
+              
 
-                </div>
-
-
-                <div class="form-group has-success">
-                  <label>Foto (*):</label>
-                  <input
-                    id="imagenEmp"
-                    type="file"
-                    class="form-control"
-                    name="imagenEmp"
-                    autofocus=""
-                    required
-                    accept="image/*"
-                    
-                  />
-                  <!-- <input id="txtRutaImgEmp" type="text" class="form-control" name="txtRutaImgEmp" autofocus="" /> -->
-                </div>
-
-               
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Estado (*):</label>
-                  <select
-                    class="form-control"
-                    required=""
-                    name="txtEstado"
-                    id="txtEstado"
+              <div class="col-lg-12" id="container_login_password_image">
+                <div class="row">
+                  <div
+                    class="col-lg-6 col-md-6 col-sm-6 col-xs-12"
+                    style="
+                      display: flex;
+                      justify-content: space-evenly;
+                      align-items: center;
+                    "
                   >
-                    <option value="A">Activo</option>
-                    <option value="C">Inactivo</option>
-                    <option value="S">SuperAdmin</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group has-success">
-                  <label>Login (*):</label>
-                  <input
-                    id="txtLogin"
-                    type="email"
-                    class="form-control"
-                    required=""
-                    maxlength="50"
-                    name="txtLogin"
-                    autofocus=""
-                  />
-                </div>
-              </div>
+                    <div id="imageContainer"></div>
 
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
-                <div class="form-group">
-                  <div class="form-group has-success">
-                    <label>Clave (*):</label>
-                    <input
-                      id="txtClave"
-                      type="password"
-                      required=""
-                      class="form-control"
-                      maxlength="32"
-                      name="txtClave"
-                      autofocus=""
-                    />
-                    <input
-                      id="txtClaveOtro"
-                      type="text"
-                      class="form-control"
-                      maxlength="32"
-                      name="txtClaveOtro"
-                      autofocus=""
-                    />
+                    <div class="form-group has-success">
+                      <label>Foto (*):</label>
+                      <input
+                        id="imagenEmp"
+                        type="file"
+                        class="form-control"
+                        name="imagenEmp"
+                        autofocus=""
+                        required
+                        accept="image/*"
+                      />
+                      <!-- <input id="txtRutaImgEmp" type="text" class="form-control" name="txtRutaImgEmp" autofocus="" /> -->
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                <label>Contacto en caso de Emergencia</label>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>Nombre de Contacto (*):</label>
-                  <input
-                    id="txtnombre_contacto"
-                    type="text"
-                    name="txtnombre_contacto"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="form-group has-success">
-                  <label>N° de celular de contacto (*):</label>
-                  <input
-                    id="txtcelular_contacto"
-                    type="number"
-                    required
-                    name="txtcelular_contacto"
-                    class="form-control"
-                  />
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group has-success">
+                      <label>Estado (*):</label>
+                      <select
+                        class="form-control"
+                        required=""
+                        name="txtEstado"
+                        id="txtEstado"
+                      >
+                        <option value="A">Activo</option>
+                        <option value="C">Inactivo</option>
+                        <option value="S">SuperAdmin</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                    <div class="form-group has-success">
+                      <label>Login (*):</label>
+                      <input
+                        id="txtLogin"
+                        type="email"
+                        class="form-control"
+                        required=""
+                        maxlength="50"
+                        name="txtLogin"
+                        autofocus=""
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
+                    <div class="form-group">
+                      <div class="form-group has-success">
+                        <label>Clave (*):</label>
+                        <input
+                          id="txtClave"
+                          type="password"
+                          required=""
+                          class="form-control"
+                          maxlength="32"
+                          name="txtClave"
+                          autofocus=""
+                        />
+                        <input
+                          id="txtClaveOtro"
+                          type="text"
+                          class="form-control"
+                          maxlength="32"
+                          name="txtClaveOtro"
+                          autofocus=""
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -804,7 +822,7 @@
             <li>RIT  ✅</li>
           </ul>
         </div> -->
-    
+
         <br /><br />
         <div id="VerListado" class="table-responsive">
           <table

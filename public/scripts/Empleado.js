@@ -513,9 +513,11 @@ function ListarContratos(id) {
     .dataTable({
       aProcessing: true,
       aServerSide: true,
-      dom: "Bfrtip",
+      searching: false,  // Desactivar la búsqueda
+      paging: false ,
+      info: false ,
       pageLength: 2,
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+   
       aoColumns: [
         { mDataProp: "0" },
         { width: "150px", mDataProp: "1" },
@@ -552,9 +554,11 @@ function TraerHijosEmpleado(id) {
     .dataTable({
       aProcessing: true,
       aServerSide: true,
-      dom: "Bfrtip",
+    
       pageLength: 5,
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      searching: false,  // Desactivar la búsqueda
+      paging: false ,
+      info: false ,
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -583,14 +587,18 @@ function cargarDataEmpleado(id) {
   $.get("ajax/EmpleadoAjax.php?op=TraerImagen", { id }, function (data) {
 
 
-    // Crear un elemento de imagen
-    var img = new Image();
 
-    // Establecer la fuente de la imagen como la cadena base64
-    img.src = "data:image/jpeg;base64," + data;
+    if(data){
 
-    // Agregar el elemento de imagen al documento
-    $("#imageContainer").append(img);
+      // Crear un elemento de imagen
+      var img = new Image();
+      
+      // Establecer la fuente de la imagen como la cadena base64
+      img.src = "data:image/jpeg;base64," + data;
+      
+      // Agregar el elemento de imagen al documento
+      $("#imageContainer").append(img);
+    }
 
 
   });
@@ -646,25 +654,33 @@ function cargarDataEmpleado(id) {
       $("#txtEstado").val(values.estado);
 
       $("#txtLogin").val(values.login);
-      $("#txtClave").val(values.clave);
       $("#txtnombre_contacto").val(values.nombre_contacto);
       $("#txtcelular_contacto").val(values.celular_contacto);
       //
-
-      $("#txtLogin").prop("disabled", true);
-      $("#txtClave").prop("disabled", true);
+      
+      // $("#txtLogin").prop("disabled", true);
+      // $("#txtClave").prop("disabled", true);
       $("#VerListado").hide(); // ocultamos  el listado
-
+      
       $("#btnNuevoEmpleado").hide(); //ocultamos  el  boton empleado
-
+      
       //se quitaran los requeridos de los input que no son necesarios  para  la actualizacion del empleado
       $("#imagenEmp").prop("required", false);
       $("#txtfecha_fin_labores").prop("required", false);
       $("#txtrazon_social").prop("required", false);
-
+      
       $("#contrato_trabajo").prop("required", false);
+      
+      
+      $("#txtClave").prop('required', false);
 
       //
+        if($('#txtGlobalIdrol').val()!=2){
+
+          $('#container_login_password_image').hide()
+        
+        }
+    
     }
   );
 }

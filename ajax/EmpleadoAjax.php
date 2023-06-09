@@ -376,11 +376,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/contrato/' . $reg->archivo_contrato_trabajo . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png" 
 				
-				style="width:100px !important; height:100px !important;"
-
-				/>
 				</span>
 			   </a>
 			
@@ -408,12 +404,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/DNI/' . $reg->archivo_dni . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png" 
-
-
-				style="width:100px !important; height:100px !important;"
-
-				/>
+				
 				</span>
 			   </a>
 			
@@ -442,11 +433,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/CV/' . $reg->archivo_cv . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png" 
 				
-				style="width:100px !important; height:100px !important;"
-
-				/>
 				</span>
 			   </a>
 			
@@ -474,11 +461,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/RIT/' . $reg->archivo_rit . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png"
 				
-				style="width:100px !important; height:100px !important;"
-
-				/>
 				</span>
 			   </a>
 			
@@ -507,11 +490,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/Antecedentes/' . $reg->archivo_antecedentes . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png"
 				
-				style="width:100px !important; height:100px !important;"
-
-				/>
 				</span>
 			   </a>
 			
@@ -541,11 +520,7 @@ switch ($_GET["op"]) {
 				<a  href="./Files/declaracionJurada/' . $reg->archivo_declaracion_jurada . '" target="_blank" 
 				>
 				<span class="mailbox-attachment-icon has-img">
-				<img src="https://static.vecteezy.com/system/resources/previews/010/160/299/non_2x/document-file-icon-paper-doc-sign-free-png.png"
-
-				style="width:100px !important; height:100px !important;"
 				
-				/>
 				</span>
 			   </a>
 			

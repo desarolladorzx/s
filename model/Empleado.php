@@ -465,7 +465,8 @@ class Empleado
 
 		
 		 AS primera_fecha_contrato
-		
+		,
+		empleado.idempleado
 		FROM empleado
 		LEFT JOIN distrito  ON distrito.iddistrito=empleado.iddistrito
 				

@@ -13,6 +13,99 @@
       </div>
     </div>
   </div>
+
+
+  <style>
+    .image-item {
+      display: inline-block;
+      position: relative;
+      margin-right: 10px;
+    }
+    
+    .image-item img {
+      width: 100px;
+      height: auto;
+    }
+    
+    .image-item .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      /* background-color: red; */
+      /* color: white; */
+      /* font-size: 12px; */
+      /* padding: 2px 5px; */
+      border-radius: 50%;
+      /* cursor: pointer; */
+    }
+  </style>
+
+  
+<!-- <div id="image-container" style="border: 1px solid #ccc; padding: 10px;">
+  <span id="placeholder">Pega la imagen aquí</span>
+</div>
+
+<script>
+  $(document).ready(function() {
+      var imageContainer = $('#image-container');
+      var placeholder = $('#placeholder');
+
+      imageContainer.on('paste', function(event) {
+          var items = (event.originalEvent.clipboardData || event.clipboardData).items;
+
+          for (var i = 0; i < items.length; i++) {
+              var item = items[i];
+
+              if (item.type.indexOf('image') !== -1) {
+                  var blob = item.getAsFile();
+                  var reader = new FileReader();
+
+                  reader.onload = function(event) {
+                      var imageUrl = event.target.result;
+                      var imageItem = $('<div class="image-item"></div>');
+
+                      var imageElement = $('<img>');
+                      imageElement.attr('src', imageUrl);
+                      imageItem.append(imageElement);
+
+                      var removeBtn = $('<span class="remove-btn btn btn-danger"><i class="fa fa-trash"></i></span>');
+                      removeBtn.on('click', function() {
+                          imageItem.remove();
+                      });
+                      imageItem.append(removeBtn);
+
+                      imageContainer.append(imageItem);
+                  };
+
+                  reader.readAsDataURL(blob);
+              }
+          }
+
+          // Ocultar el texto de placeholder
+          placeholder.hide();
+      });
+
+      // Evitar la entrada de texto en el contenedor
+      imageContainer.on('keydown', function(event) {
+          var key = event.which || event.keyCode;
+
+          // Permitir el comando de pegar (Ctrl+V)
+          if ((event.ctrlKey || event.metaKey) && key === 86) {
+              return;
+          }
+
+          // Evitar la entrada de texto
+          event.preventDefault();
+          return false;
+      });
+  });
+
+
+
+
+</script> -->
+
+
   <!-- /.box-header Nueva Nota de Venta -->
   <div class="box-body">
     <div class="row">
