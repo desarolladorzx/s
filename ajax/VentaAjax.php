@@ -72,9 +72,9 @@ switch ($_GET["op"]) {
 		$rptaBuscarExistePedido = $objCliente->BuscarExistePedido($idCliente);
 		$resultExiste = $rptaBuscarExistePedido->fetch_object();
 
-		 $arrayMetodosPago = $_POST["arrayMetodosPago"];
+		$arrayMetodosPago = $_POST["arrayMetodosPago"];
 
-		 
+
 		if ($resultExiste->countidpedido >= 2) {
 			$estadoCuenta = "ANTIGUO";
 		} else {
@@ -86,7 +86,7 @@ switch ($_GET["op"]) {
 
 
 		if (empty($_POST["txtIdVenta"])) {
-			if ($objVenta->Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_doc_suc, $_POST["detalle"], $tipo_promocion, $metodo_pago, $agencia_envio,$arrayMetodosPago)) {
+			if ($objVenta->Registrar($idpedido, $idusuario, $tipo_venta, $tipo_comprobante, $serie_comprobante, $num_comprobante, $impuesto, $total, $estado, $numero, $iddetalle_doc_suc, $_POST["detalle"], $tipo_promocion, $metodo_pago, $agencia_envio, $arrayMetodosPago)) {
 				echo "Venta Registrada correctamente.";
 			} else {
 				echo "Venta no ha podido ser registado.";
@@ -171,8 +171,11 @@ switch ($_GET["op"]) {
 			$_SESSION['idsucursal'] = 1;
 		}
 
+		$listar=isset($_GET['cantidad']) ? $_GET['cantidad'] : '14diasRadio';
 
-		$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"]);
+
+		// echo $listar;
+		$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"],$listar);
 		$i = 1;
 		while ($reg = $query_Pedido->fetch_object()) {
 			$query_total = $objPedido->TotalPedido($reg->idpedido);
@@ -193,22 +196,21 @@ switch ($_GET["op"]) {
 			}
 			$data[] = array(
 				"0" => $i,
-				"1" => $reg->idsucursal==1?'Arequipa':'Lima' ,
-				"2" => 
-				
-			
-				
+				"1" => $reg->idsucursal == 1 ? 'Arequipa' : 'Lima',
+				"2" =>
+
+
+
 				"<p>$reg->fecha <b>| $reg->prefijo_pedido</b></p>
 				<p> $reg->fecha_apro_coti <b>| $reg->prefijo_estado</b></p>
-				<p>$reg->fecha_venta <b>| $reg->prefijo_venta</b></p>"
-				,
-									
-				"3" =>"<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
+				<p>$reg->fecha_venta <b>| $reg->prefijo_venta</b></p>",
+
+				"3" => "<p title='aprobado por : $reg->aproba_venta , pedido aprobado :   $reg->aproba_pedido' style='cursor:pointer'>$reg->ticket</p>",
 				"4" => $reg->cliente,
 				// "5" => explode("|", $reg->empleado)[0],
 				"5" => $reg->nombre_usuario_rol,
 				"6" => $reg->agencia_envio,
-			
+
 				// "6" => ($reg->tipo_pedido == "Pedido") ? '<span class="badge bg-blue">Pedido</span>' : (($reg->tipo_pedido == "Venta") ? '<span class="badge bg-aqua">Venta</span>' : '<span class="badge bg-green">Proforma</span>'),
 				//"4"=>$reg_direc->direccion_calle, --- MUESTRA LA VENTANA DE VENTAS
 				"7" => $reg_total->Total, //SE OBTIENE LOS DATOS DE LA TABLA PEDIDO
@@ -360,10 +362,10 @@ switch ($_GET["op"]) {
 		$server = $_SERVER["HTTP_HOST"];
 		// $idPedido = $_POST["idPedido"];
 
-		$nombre=$_POST['nombre'];
-		$marca_nombre=$_POST['marca_nombre'];
-		$stock_min=$_POST['stock_min'];
-		$stock_actual_total=$_POST['stock_actual_total'];
+		$nombre = $_POST['nombre'];
+		$marca_nombre = $_POST['marca_nombre'];
+		$stock_min = $_POST['stock_min'];
+		$stock_actual_total = $_POST['stock_actual_total'];
 
 		$result1 = 'logistica@grupopuma.pe';
 		// $result2 = 'almacesn@grupopuma.pe2';
@@ -376,7 +378,7 @@ switch ($_GET["op"]) {
 		$email = $_SESSION["email"];
 		$mail = new PHPMailer;
 
-		$mensaje=" ¡ALERTA! El $nombre de la marca $marca_nombre esta volando de nuestros estantes! Solo quedan $$stock_actual_total unidades en stock. Esto significa que nuestros clientes podrian experimentar retrasos en la entrega o incluso quedarse sin el producto. ¡Necesitamos reabastecer nuestro inventario lo antes posible! Ademas, este producto tienen un Stocke minomo de $stock_min Unidades y es conocido por su alta calidad y caracteristicas unicas que lo hacen destacar de otros productos similares en el mercado. ¡Ordene ahora para asegurarse de obtener su $nombre antes de que se agote! https://medicfit.grupopuma.pe/Articulo.php ";
+		$mensaje = " ¡ALERTA! El $nombre de la marca $marca_nombre esta volando de nuestros estantes! Solo quedan $$stock_actual_total unidades en stock. Esto significa que nuestros clientes podrian experimentar retrasos en la entrega o incluso quedarse sin el producto. ¡Necesitamos reabastecer nuestro inventario lo antes posible! Ademas, este producto tienen un Stocke minomo de $stock_min Unidades y es conocido por su alta calidad y caracteristicas unicas que lo hacen destacar de otros productos similares en el mercado. ¡Ordene ahora para asegurarse de obtener su $nombre antes de que se agote! https://medicfit.grupopuma.pe/Articulo.php ";
 		$mail->Host = "$server";
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - AREA LOGISTICA";
@@ -389,7 +391,7 @@ switch ($_GET["op"]) {
 		} else {
 			echo "Venta Registrada correctamente. No se pudo realizar el envio de Alerta de Stock Minimo";
 		}
-		
+
 		/* $mail->Host = "$server";
 		$mail->From = "$email";
 		$mail->FromName = "$sucursal - Almacen";

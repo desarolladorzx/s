@@ -15,20 +15,47 @@ function init() {
     buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
   });
 
-  /*     
-      $("#btn-only1click").click(function() {
-          // Si ha sido clicado
-          if (clicando){
-            // Mostramos que ya se ha clicado, y no puede clicarse de nuevo
-            alert( "Que ya he realizado un click." );
-          // Si no ha sido clicado
-          } else {
-            // Le decimos que ha sido clicado
-            clicando= true;
-            // Mostramos el mensaje de que ha sido clicado
-            alert( "Handler for only1click.click() called." );
+  $('input[name="cantidad_de_datos"]').change(function () {
+    // Obtiene el valor seleccionado
+    var valorSeleccionado = $('input[name="cantidad_de_datos"]:checked').val();
+
+    // Haz lo que necesites con el valor seleccionado
+    console.log(valorSeleccionado);
+
+    var tabla = $("#tblVentas")
+      .dataTable({
+        aProcessing: true,
+        aServerSide: true,
+        dom: "Bfrtip",
+        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        aoColumns: [
+          { mDataProp: "0" },
+          { mDataProp: "1" },
+          { mDataProp: "2" },
+          { mDataProp: "3" },
+          { mDataProp: "5" },
+          { mDataProp: "4" },
+          { mDataProp: "6" },
+          { mDataProp: "7" },
+          { mDataProp: "8" },
+          { mDataProp: "9" },
+        ],
+        ajax: {
+          url: "./ajax/VentaAjax.php?op=list",
+          type: "get",
+          dataType: "json",
+          data:{
+            cantidad:valorSeleccionado,
           }
-        }); */
+            ,
+          error: function (e) {
+            console.log(e.responseText);
+          },
+        },
+        bDestroy: true,
+      })
+      .DataTable();
+  });
 
   ListadoVenta(); // Ni bien carga la pagina que cargue el metodo
 
@@ -193,9 +220,11 @@ function init() {
                             var obj = jQuery.parseJSON(r);
                             console.log(obj);
                             obj.map((articulo) => {
-                              console.log(articulo.stock_min,articulo.stock_actual_total)
+                              console.log(
+                                articulo.stock_min,
+                                articulo.stock_actual_total
+                              );
                               if ([7, 21, 22].includes(idempleado)) {
-
                                 if (
                                   Number(articulo.stock_min) >=
                                   Number(articulo.stock_actual_total)
@@ -203,11 +232,9 @@ function init() {
                                   $.post(
                                     "./ajax/VentaAjax.php?op=EnviarCorreoStockMin",
                                     articulo,
-                                    function (r) {
-                                    
-                                    }
+                                    function (r) {}
                                   );
-                                      
+
                                   if ((Notification.permission = "grantFd")) {
                                     const notification = new Notification(
                                       "Producto Stock ",
@@ -705,9 +732,7 @@ function pasarIdPedido(
 ) {
   // funcion que llamamos del archivo ajax/PedidoAjax.php linea 149
 
-
   $("#txtTipoClienteVas").val(tipo_cliente);
-
 
   $("#VerForm").show(); // mostramos el formulario
   $("#VerListado").hide(); // ocultamos el listado
@@ -770,7 +795,7 @@ function pasarIdPedido(
   // CARGA DETALLE DE IMAGENES
   mostrarDetalleImagenes(idPedido);
   mostrarDetalleImagenesChat(idPedido);
-  
+
   mostrarDetalleImagenesFEFO(idPedido);
 
   $("#cboModPagoDetalles").val(PAGO_DETALLE);

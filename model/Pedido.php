@@ -181,8 +181,16 @@ class Pedido
 	}
 
 	// Se cambio la cantidad del orden a 10K corregir AP
-	public function Listar($idsucursal)
+	public function Listar($idsucursal,$listar)
 	{
+		if($listar=='14diasRadio'){
+			$limit='
+						AND v.fecha >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)
+			';
+
+		}else{
+			$limit='';
+		}
 		global $conexion;
 		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
 		
@@ -201,14 +209,14 @@ class Pedido
 
 
 			from pedido p
-						inner join persona c on p.idcliente = c.idpersona
-            inner join venta v on p.idpedido = v.idpedido
-						inner join usuario u on p.idusuario=u.idusuario
-						inner join empleado e on u.idempleado=e.idempleado
-						inner join usuario uv on v.idusuario=uv.idusuario
-						inner join empleado ev on uv.idempleado=ev.idempleado
-						inner join usuario uva on p.idusuario_est=uva.idusuario
-						inner join empleado eva on uva.idempleado=eva.idempleado
+			LEFT join persona c on p.idcliente = c.idpersona
+						LEFT join venta v on p.idpedido = v.idpedido
+			LEFT join usuario u on p.idusuario=u.idusuario
+						LEFT join empleado e on u.idempleado=e.idempleado
+						LEFT join usuario uv on v.idusuario=uv.idusuario
+						LEFT join empleado ev on uv.idempleado=ev.idempleado
+						LEFT join usuario uva on p.idusuario_est=uva.idusuario
+						LEFT join empleado eva on uva.idempleado=eva.idempleado
 
 						LEFT JOIN rol r_e ON r_e.r_id=e.idrol
 						LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
@@ -222,7 +230,15 @@ class Pedido
 		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
 
             where p.idsucursal = $idsucursal
-			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta' order by idpedido desc limit 0,300";
+			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta'
+			
+			$limit
+			
+			 order by idpedido desc
+			
+			
+			-- limit 0,300
+			";
 		$query = $conexion->query($sql);
 		return $query;
 	}
