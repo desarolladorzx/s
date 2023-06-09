@@ -356,7 +356,8 @@ class Empleado
 
 	public function Modificar(
 		$Post,
-		$ruta
+		$ruta,
+		$actualizar_foto
 	) {
 
 		$values = json_decode(json_encode($Post));
@@ -368,7 +369,18 @@ class Empleado
 
 		// actualizacion del empleado  en la base de datos
 
+	
 		global $conexion;
+		if($actualizar_foto==true){
+
+		
+
+			$trueruta="foto = '$ruta',";
+		}else{
+			$trueruta='';
+			
+
+		}
 		$sql = "UPDATE empleado
 		SET apellidos = '$values->txtApellidos',
 			nombre ='$values->txtNombre',
@@ -378,7 +390,8 @@ class Empleado
 			telefono ='$values->txtTelefono',
 			
 			fecha_nacimiento ='$values->txtfecha_nacimiento',
-			foto = '$ruta',
+			
+			$trueruta
 		
 			idrol = '$values->txtRol',
 			email_personal = '$values->txtEmail',
@@ -401,7 +414,7 @@ class Empleado
 		WHERE idempleado = '$values->txtIdEmpleado'";
 		$query = $conexion->query($sql);
 
-		// echo $sql;
+	
 		return $query;
 	}
 

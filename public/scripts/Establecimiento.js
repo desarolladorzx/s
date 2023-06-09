@@ -184,13 +184,19 @@ function init() {
       processData: false,
 
       success: function (datos) {
+        
         swal("Mensaje del Sistema", datos, "success");
-        ListadoEstablecimientos();
-        OcultarForm();
-        $("input").val("");
-        $("select").val("");
-        $("#image-preview-container").html("");
 
+        ListadoEstablecimientos();
+
+        OcultarForm();
+        
+        $("input").val("");
+        
+        $("select").val("");
+        
+        $("#image-preview-container").html("");
+        
         $("#container_select_button").show();
       },
     });

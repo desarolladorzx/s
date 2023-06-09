@@ -24,6 +24,19 @@ switch ($_GET["op"]) {
 
 		break;
 
+	case 'TraerImagen':
+
+		$query = $objEmpleado->TraerDatosEmpleado($_GET['id'])->fetch_object();
+
+
+		// $imagen = file_get_contents(ltrim(ltrim($query->foto, '.'),'/'));
+		$imagen = file_get_contents($query->foto);
+		$imagenCodificada = base64_encode($imagen);
+		echo $imagenCodificada;
+
+
+
+		break;
 	case 'TraerEmpleado':
 
 
@@ -104,7 +117,7 @@ switch ($_GET["op"]) {
 
 			$parte = explode(".", $registro_RIT_name);
 			$codigoInterno = strtotime(date('Y-m-d H:i:s'));
-			$new_file_name_RIT = str_replace(' ', '-', 'rit'. '-' . $codigoInterno . '.' . $parte[1]);
+			$new_file_name_RIT = str_replace(' ', '-', 'rit' . '-' . $codigoInterno . '.' . $parte[1]);
 
 			move_uploaded_file($registro_RIT, "../Files/RIT/" . $new_file_name_RIT);
 		} else {
@@ -141,7 +154,7 @@ switch ($_GET["op"]) {
 
 			$parte = explode(".", $declaracion_jurada_name);
 			$codigoInterno = strtotime(date('Y-m-d H:i:s'));
-			$new_file_name_declaracion_jurada = str_replace(' ', '-', 'declaracion_jurada'. '-' . $codigoInterno . '.' . $parte[1]);
+			$new_file_name_declaracion_jurada = str_replace(' ', '-', 'declaracion_jurada' . '-' . $codigoInterno . '.' . $parte[1]);
 
 			move_uploaded_file($declaracion_jurada, "../Files/DeclaracionJurada/" . $new_file_name_declaracion_jurada);
 		} else {
@@ -169,7 +182,7 @@ switch ($_GET["op"]) {
 		break;
 	case 'SaveOrUpdate':
 
-// si el el elemento txtIdEmpleado no existe entonces registrara  la funcion 
+		// si el el elemento txtIdEmpleado no existe entonces registrara  la funcion 
 		if (strlen($_POST['txtIdEmpleado']) == 0) {
 
 			$imagenEmp = $_FILES["imagenEmp"]["tmp_name"];
@@ -187,8 +200,8 @@ switch ($_GET["op"]) {
 
 			// insercion de contrato
 
-
 			$contrato_trabajo = $_FILES["contrato_trabajo"]["tmp_name"];
+
 			$contrato_trabajo_name = $_FILES["contrato_trabajo"]["name"];
 
 			$parte = explode(".", $contrato_trabajo_name);
@@ -226,7 +239,7 @@ switch ($_GET["op"]) {
 
 				$parte = explode(".", $cv_file_name);
 				$codigoInterno = strtotime(date('Y-m-d H:i:s'));
-				$new_file_name_cv = str_replace(' ', '-', 'cv'. '-' . $codigoInterno . '.' . $parte[1]);
+				$new_file_name_cv = str_replace(' ', '-', 'cv' . '-' . $codigoInterno . '.' . $parte[1]);
 
 				move_uploaded_file($cv_file, "../Files/CV/" . $new_file_name_cv);
 			} else {
@@ -310,17 +323,22 @@ switch ($_GET["op"]) {
 			if ($_FILES["imagenEmp"]["size"] !== 0) {
 				$imagenEmp = $_FILES["imagenEmp"]["tmp_name"];
 				$imagenEmp_name = $_FILES["imagenEmp"]["name"];
-	
+
 				$parte = explode(".", $imagenEmp_name);
 				$codigoInterno = strtotime(date('Y-m-d H:i:s'));
 				$new_file_name = str_replace(' ', '-', $parte[0] . '-' . $codigoInterno . '.' . $parte[1]);
-	
+
 				move_uploaded_file($imagenEmp, "../Files/Empleado/" . $new_file_name);
-			}else{
-				$new_file_name='';
+
+				$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name ,true);
+			} else {
+				$new_file_name = '';
+
+
+				$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name,false);
+
 			}
 			//funcion  que  modifica  el empleado
-			$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name);
 		}
 
 		break;
@@ -334,15 +352,15 @@ switch ($_GET["op"]) {
 			echo "No fue Eliminado";
 		}
 		break;
-		case "deleteHijo":
-			$id = $_POST["id"]; // Llamamos a la variable id del js que mandamos por $.post (Categoria.js (Linea 62))
-			$result = $objEmpleado->EliminarHijo($id);
-			if ($result) {
-				echo "Eliminado Exitosamente";
-			} else {
-				echo "No fue Eliminado";
-			}
-			break;
+	case "deleteHijo":
+		$id = $_POST["id"]; // Llamamos a la variable id del js que mandamos por $.post (Categoria.js (Linea 62))
+		$result = $objEmpleado->EliminarHijo($id);
+		if ($result) {
+			echo "Eliminado Exitosamente";
+		} else {
+			echo "No fue Eliminado";
+		}
+		break;
 	case "listContratos":
 
 
@@ -657,8 +675,8 @@ switch ($_GET["op"]) {
 			  <li>RIT  ✅</li>
 			</ul>
 		  </div>';
-		//   si no se insertaron ningun documento al empleado estaran como false
-			}else if($reg->mensaje ==null){
+				//   si no se insertaron ningun documento al empleado estaran como false
+			} else if ($reg->mensaje == null) {
 				$estadoDocumentacion = '        <div style="display: flex;">
 				<ul >
 				  <li>DNI/CE  ❌</li>
@@ -671,7 +689,6 @@ switch ($_GET["op"]) {
 				  <li>RIT  ❌</li>
 				</ul>
 			  </div>';
-			  
 			}
 			$data[] = array(
 				"0" => $i,
@@ -680,13 +697,12 @@ switch ($_GET["op"]) {
 				"3" => $reg->puesto_ocupado,
 				"4" => $reg->area_funcional,
 				"5" => $estadoDocumentacion,
-				"6" => $reg->dias_restantes.' dias faltantes',
+				"6" => $reg->dias_restantes . ' dias faltantes',
 				"7" =>
-				
-				'<span class="badge bg-green">' .$reg->primera_fecha_contrato.'</span>'
-				,
-				"8" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataEmpleado(' . $reg->idempleado . ')"><i class="fa fa-pencil"></i> </button>&nbsp;' 
-					
+
+				'<span class="badge bg-green">' . $reg->primera_fecha_contrato . '</span>',
+				"8" => '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataEmpleado(' . $reg->idempleado . ')"><i class="fa fa-pencil"></i> </button>&nbsp;'
+
 			);
 			$i++;
 		}

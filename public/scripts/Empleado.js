@@ -15,7 +15,8 @@ var hijos = [];
 
 function renderizarHijos() {
   let renderHtml = "";
-  hijos.map((hijo, index) => { //se encarga de rendirar el html con los input necesarios para poder almacenar los hijos
+  hijos.map((hijo, index) => {
+    //se encarga de rendirar el html con los input necesarios para poder almacenar los hijos
     renderHtml += `
   <div class="row">
   
@@ -124,10 +125,12 @@ function renderizarHijos() {
 
   $("#container_input_hijos").html(renderHtml); // inserta los elemnetos al html
 }
-function eliminarFilaHijo(index) { //funcion encargada de eliminar un hijo segun la posicion en la que se encuentre con el index 
-  if (index !== 0) { // es necesario tener almenos un hijo para poder realizar la operacion
+function eliminarFilaHijo(index) {
+  //funcion encargada de eliminar un hijo segun la posicion en la que se encuentre con el index
+  if (index !== 0) {
+    // es necesario tener almenos un hijo para poder realizar la operacion
     hijos.splice(index, 1);
-    renderizarHijos();  //rendeiza el array de hijos a html
+    renderizarHijos(); //rendeiza el array de hijos a html
   } else {
     alert("es Necesario un hijo para realizar la operacion");
   }
@@ -155,17 +158,16 @@ function init() {
   $("#txtEstado_civil").change(function () {
     console.log(this.value);
 
-
     // si el estado civil pasa a casado el input que almacena  el nombre de conyugue pasara a ser requerido para la insercion de datos
     if (this.value == "CASADO") {
       $("#txtnombre_conyugue").prop("required", true);
     } else {
-      // en caso no este el estado civil el nombre del conyugue pasara a ser no requerido 
+      // en caso no este el estado civil el nombre del conyugue pasara a ser no requerido
       $("#txtnombre_conyugue").prop("required", false);
     }
   });
 
-  // funcion encargada  de que al momneto de almacenar una ubicacion que no cuadra con las opciones dadas , este se limpiara 
+  // funcion encargada  de que al momneto de almacenar una ubicacion que no cuadra con las opciones dadas , este se limpiara
   $("#txt_ubicacion_empleado").on("blur", function () {
     var optionValues = $(".ubicacion_containe_options option")
       .map(function () {
@@ -176,9 +178,9 @@ function init() {
       $(this).val("");
     }
   });
-// 
+  //
 
-// funcion encargada  de almacenar los id de la ubicacion para posterirormente guardarlos en la base  de datos 
+  // funcion encargada  de almacenar los id de la ubicacion para posterirormente guardarlos en la base  de datos
   $("#txt_ubicacion_empleado").change(function (e) {
     const selectedOption = $(
       `#ubicacion option[value="${$("#txt_ubicacion_empleado").val()}"`
@@ -187,12 +189,10 @@ function init() {
 
     $("#id_ubicacion_empleado_array").val(selectedOption.data("id"));
   });
-// 
-
-
+  //
 
   $("#container_tbl_contratos").hide(); // el contenedor de contratos  estara oculto hasta que se pase  al modo de edicion
-  $("#container_tbl_hijos").hide();// el contendedor de  hijos estara oculta hasta que se pase al modo de edicion
+  $("#container_tbl_hijos").hide(); // el contendedor de  hijos estara oculta hasta que se pase al modo de edicion
 
   $("#anadir_hijo").click(function () {
     // se encarga  de agragar un nuevo hijo dentro del funcionamiento de edicion del empleado
@@ -200,17 +200,15 @@ function init() {
       //si el input existe se puede anadir
 
       if ($("#txtApellido_hijoNuevo").val()) {
-         //si el input existe se puede anadir
+        //si el input existe se puede anadir
 
         if ($("#txtDni_hijoNuevo").val()) {
-                //si el input existe se puede anadir
-
+          //si el input existe se puede anadir
 
           if ($("#txtFechaNacimiento_hijoNuevo").val()) {
             //si el input existe se puede anadir
 
             var formData = new FormData();
-
 
             // se anaden al formdata  los input necesarios para  poder  anadir a un hijo
             formData.append(
@@ -246,8 +244,6 @@ function init() {
               processData: false,
 
               success: function (datos) {
-
-
                 // si el Post funciona correctamente , se liminaran los datos de los input insertados anteriormente
 
                 $("#anadir_hijo").text("Anadir Hijo");
@@ -257,7 +253,7 @@ function init() {
                 $("#txtDni_hijoNuevo").val("");
                 $("#txtFechaNacimiento_hijoNuevo").val("");
 
-                // 
+                //
                 TraerHijosEmpleado($("#txtIdEmpleado").val()); //trae la tabla de hijos  del empleado
               },
             });
@@ -277,8 +273,7 @@ function init() {
     console.log();
   });
   $("#button_renovar_contrato").click(function () {
- 
-//  funcion encargada  de renovar un nuevo contrato y cambiar los contratos  anteriores  a invalidos 
+    //  funcion encargada  de renovar un nuevo contrato y cambiar los contratos  anteriores  a invalidos
     var inputFile = $("#contrato_trabajo")[0].files;
 
     if ($("#txtfecha_fin_labores").val()) {
@@ -289,7 +284,7 @@ function init() {
 
         $.ajax({
           url: "./ajax/EmpleadoAjax.php?op=RenovarContrato",
-// consulta encargada de renovar el contrato
+          // consulta encargada de renovar el contrato
           type: "POST",
 
           data: formData,
@@ -307,7 +302,7 @@ function init() {
             $("#dniFile").val("");
             $("#contrato_trabajo").val("");
             $("#cv_file").val("");
-            // 
+            //
             ListarContratos($("#txtIdEmpleado").val()); //trae la lista  de contratos
           },
         });
@@ -326,25 +321,22 @@ function init() {
     //   console.log('El campo no está vacío');
     // }
   });
-  $("#button_anadir_hijos").hide(); // el boton de anadir hijos estara oculto hasta que el campo de hijos este con el valor si 
+  $("#button_anadir_hijos").hide(); // el boton de anadir hijos estara oculto hasta que el campo de hijos este con el valor si
 
-
-  
-  $("#button_anadir_hijos").click(function () {//button encargado  de anadir hijos 
-    anadir_hijos();  // inserta hijos a un array de hijos 
+  $("#button_anadir_hijos").click(function () {
+    //button encargado  de anadir hijos
+    anadir_hijos(); // inserta hijos a un array de hijos
   });
 
-  function anadir_hijos() { //anade un elemneto al array de hijos 
+  function anadir_hijos() {
+    //anade un elemneto al array de hijos
     hijos.push(["", "", "", ""]);
 
-    renderizarHijos(); //renderiza los inputs segun la cantidad  de hijos   que  se  requiera  
+    renderizarHijos(); //renderiza los inputs segun la cantidad  de hijos   que  se  requiera
   }
   $("#txtcant_hijos").change(function () {
-
-
     if (this.value == "SI") {
-
-      // si el select  txtcant_hijos  da a entender que se cuenta con un hijo 
+      // si el select  txtcant_hijos  da a entender que se cuenta con un hijo
 
       $("#button_anadir_hijos").show(); //nuestra el boton de anadir mas hijos si es requerido
       hijos = [["", "", "", ""]]; // anade el primer elemento al array de hijos
@@ -353,13 +345,14 @@ function init() {
     } else {
       // en caso no tener hijos, se limpiara el array , asi como el html del contenedor de los input de hijos
       hijos = [];
-      $("#container_input_hijos").html(""); 
+      $("#container_input_hijos").html("");
       //
       $("#button_anadir_hijos").hide(); // se ocultara el boton
     }
   });
 
-  function getFormattedDate(date) { //funcion encargada  de establecer el dia de hoy y retornar un valor que pueda ser insertado en un input date 
+  function getFormattedDate(date) {
+    //funcion encargada  de establecer el dia de hoy y retornar un valor que pueda ser insertado en un input date
     var year = date.getFullYear();
     var month = ("0" + (date.getMonth() + 1)).slice(-2);
     var day = ("0" + date.getDate()).slice(-2);
@@ -368,7 +361,7 @@ function init() {
 
   $("#txtfecha_inicio_labores").val(getFormattedDate(new Date())); // el input txtfecha_inicio_labores esta siempre con la fecha de hoy
 
-  $("#txtfecha_fin_labores").attr("min", getFormattedDate(new Date())); // encargado de poner como fecha de fin de labores un dia despues del dia enconttrado 
+  $("#txtfecha_fin_labores").attr("min", getFormattedDate(new Date())); // encargado de poner como fecha de fin de labores un dia despues del dia enconttrado
 
   $("#tblEmpleado").dataTable({
     dom: "Bfrtip",
@@ -376,27 +369,28 @@ function init() {
   });
 
   ListadoEmpleado(); // Ni bien carga la pagina que cargue el metodo
-  ComboTipo_Documento(); //trae los tipos de documentos 
+  ComboTipo_Documento(); //trae los tipos de documentos
 
   $("#VerForm").hide(); // Ocultamos el formulario
-  $("#txtClaveOtro").hide(); 
+  $("#txtClaveOtro").hide();
   $("form#frmEmpleado").submit(SaveOrUpdate); // Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos
 
   $("#btnNuevoEmpleado").click(VerFormEmpleado); // evento click de jquery que llamamos al metodo VerForm
 
-  function SaveOrUpdate(e) { //funcion encargada de actualizar o anadir empleados
+  function SaveOrUpdate(e) {
+    //funcion encargada de actualizar o anadir empleados
     e.preventDefault();
 
     var formData = new FormData($("#frmEmpleado")[0]);
 
-
-    hijos.map((hijos) => { //agrega el array de hijos a la consulta 
+    hijos.map((hijos) => {
+      //agrega el array de hijos a la consulta
       formData.append("hijos[]", hijos);
     });
 
     $.ajax({
       url: "./ajax/EmpleadoAjax.php?op=SaveOrUpdate",
-//guarda o actualiza al empleado
+      //guarda o actualiza al empleado
       type: "POST",
 
       data: formData,
@@ -498,7 +492,8 @@ function eliminarEmpleado(id) {
   });
 }
 
-function eliminarEmpleadoHijo(id) { //elimina el hijo del empleado seleccionado
+function eliminarEmpleadoHijo(id) {
+  //elimina el hijo del empleado seleccionado
   bootbox.confirm("¿Esta Seguro de eliminar el Hijo?", function (result) {
     // confirmamos con una pregunta si queremos eliminar
     if (result) {
@@ -585,6 +580,21 @@ function TraerHijosEmpleado(id) {
 }
 
 function cargarDataEmpleado(id) {
+  $.get("ajax/EmpleadoAjax.php?op=TraerImagen", { id }, function (data) {
+
+
+    // Crear un elemento de imagen
+    var img = new Image();
+
+    // Establecer la fuente de la imagen como la cadena base64
+    img.src = "data:image/jpeg;base64," + data;
+
+    // Agregar el elemento de imagen al documento
+    $("#imageContainer").append(img);
+
+
+  });
+
   $.getJSON(
     "ajax/EmpleadoAjax.php?op=TraerEmpleado", //funcion encargaeda  de traer  los datos del empleado por el id
     { id },
