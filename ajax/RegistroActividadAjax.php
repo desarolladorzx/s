@@ -22,8 +22,10 @@ switch ($_GET["op"]) {
                 "2" => $reg->nombre_usuario_rol,
                 "3" => $reg->tipo_cliente,
                 "4" => $reg->cliente,
-                "5" => $reg->nombre_usuario_rol,
-                '6' => $reg->cartera_estado
+                "5" => $reg->tipo_documento . ' ' . $reg->num_documento,
+                "6" => $reg->telefono . ' ' . $reg->telefono_2,
+                "7" => $reg->nombre_usuario_rol,
+                '8' => $reg->cartera_estado
             );
             $i++;
         }

@@ -18,7 +18,9 @@ function init() {
           { mDataProp: "3" },
           { mDataProp: "4" },
           { mDataProp: "5" },
-          { mDataProp: "6", visible: false },
+          { mDataProp: "6" },
+          { mDataProp: "7" },
+          { mDataProp: "8", visible: false },
         ],
         ajax: {
           url: "./ajax/RegistroActividadAjax.php?op=list",
