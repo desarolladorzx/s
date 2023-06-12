@@ -236,6 +236,7 @@ class Empleado
 				)
 				";
 		$query = $conexion->query($sql);
+		return $query;
 	}
 	public function AgregarHijos()
 	{
@@ -372,14 +373,26 @@ class Empleado
 	
 		global $conexion;
 		if($actualizar_foto==true){
-
-		
-
 			$trueruta="foto = '$ruta',";
 		}else{
 			$trueruta='';
-			
+		}
 
+
+
+		$update_User='';
+
+		$clave='';
+		if($_SESSION['idrol']==2){
+			if(strlen($values->txtClave)>0){
+				$clave="clave='".md5($values->txtClave)."',";
+			}
+		$update_User="
+		login='$values->txtLogin',
+		
+		estado='$values->txtEstado',
+		";
+					
 		}
 		$sql = "UPDATE empleado
 		SET apellidos = '$values->txtApellidos',
@@ -392,14 +405,14 @@ class Empleado
 			fecha_nacimiento ='$values->txtfecha_nacimiento',
 			
 			$trueruta
-		
+			$update_User
 			idrol = '$values->txtRol',
 			email_personal = '$values->txtEmail',
 			
 			telefono_personal = '$values->txtTelefono',
 			
 			sexo = '$values->optionsRadios',
-		
+			$clave
 			estado ='$values->txtEstado',
 			iddistrito = '$id_ubicacion_envio_array[2]',
 				
@@ -414,6 +427,7 @@ class Empleado
 		WHERE idempleado = '$values->txtIdEmpleado'";
 		$query = $conexion->query($sql);
 
+		// echo $sql;
 	
 		return $query;
 	}

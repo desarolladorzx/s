@@ -245,11 +245,7 @@ switch ($_GET["op"]) {
 			} else {
 				$new_file_name_cv = '';
 			}
-
-
-
 			// INSERCION DE RIT
-
 			if ($_FILES["registro_RIT"]["size"] !== 0) {
 				$registro_RIT = $_FILES["registro_RIT"]["tmp_name"];
 				$registro_RIT_name = $_FILES["registro_RIT"]["name"];
@@ -263,10 +259,7 @@ switch ($_GET["op"]) {
 				$new_file_name_RIT = '';
 			}
 
-
-
 			// INSERCION DE ANTECEDENTES
-
 			if ($_FILES["antecedentes"]["size"] !== 0) {
 
 				$antecedentes = $_FILES["antecedentes"]["tmp_name"];
@@ -280,11 +273,6 @@ switch ($_GET["op"]) {
 			} else {
 				$new_file_name_antecedentes = '';
 			}
-
-
-
-
-
 			//  INSERCION DE declaracion jurada
 			if ($_FILES["declaracion_jurada"]["size"] !== 0) {
 				$declaracion_jurada = $_FILES["declaracion_jurada"]["tmp_name"];
@@ -299,12 +287,22 @@ switch ($_GET["op"]) {
 			} else {
 				$new_file_name_declaracion_jurada = '';
 			}
-
-
-
-
 			// registramos el contrato si el empleado se a generado  correctamente 
-			$objEmpleado->RegistrarContrato(
+			// $objEmpleado->RegistrarContrato(
+			// 	$idempleado,
+			// 	$new_file_name_contrato,
+			// 	$new_file_name_dni,
+			// 	$new_file_name_cv,
+			// 	$new_file_name_RIT,
+			// 	$new_file_name_antecedentes,
+			// 	$new_file_name_declaracion_jurada,
+			// 	date('Y-m-d'),
+			// 	$_POST['txtfecha_fin_labores'],
+			// 	$_POST['txtrazon_social'],
+			// );
+
+
+			if ($objEmpleado->RegistrarContrato(
 				$idempleado,
 				$new_file_name_contrato,
 				$new_file_name_dni,
@@ -315,12 +313,20 @@ switch ($_GET["op"]) {
 				date('Y-m-d'),
 				$_POST['txtfecha_fin_labores'],
 				$_POST['txtrazon_social'],
-			);
+			)) {
+                echo "Usuario Registrado Correctamente";
+            } else {
+                echo "No se ha podido registrar el Usuario";
+            }
+
+
 		} else {
 
 			//si el elemento txtIdEmpleado existe  se procedera  a la actualizacion del empleado 
 
 			if ($_FILES["imagenEmp"]["size"] !== 0) {
+
+
 				$imagenEmp = $_FILES["imagenEmp"]["tmp_name"];
 				$imagenEmp_name = $_FILES["imagenEmp"]["name"];
 
@@ -330,12 +336,25 @@ switch ($_GET["op"]) {
 
 				move_uploaded_file($imagenEmp, "../Files/Empleado/" . $new_file_name);
 
-				$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name ,true);
+				// $objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name ,true);
+
+				if($objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name ,true)){
+					echo "Usuario Actualizado Correctamente";
+				} else {
+					echo "No se ha podido Actualizar el Usuario";
+				}
 			} else {
 				$new_file_name = '';
 
 
-				$objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name,false);
+
+				if($objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name ,false)){
+					echo "Usuario Actualizado Correctamente";
+				} else {
+					echo "No se ha podido Actualizar el Usuario";
+				}
+
+				// $objEmpleado->Modificar($_POST, "../Files/Empleado/" . $new_file_name,false);
 
 			}
 			//funcion  que  modifica  el empleado
