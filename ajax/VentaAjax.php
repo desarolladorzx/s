@@ -175,6 +175,9 @@ switch ($_GET["op"]) {
 
 
 		// echo $listar;
+
+
+		// echo $listar;
 		$query_Pedido = $objPedido->Listar($_SESSION["idsucursal"],$listar);
 		$i = 1;
 		while ($reg = $query_Pedido->fetch_object()) {
