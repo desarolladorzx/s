@@ -86,7 +86,7 @@ function init() {
         aServerSide: true,
         dom: "Bfrtip",
         buttons: [
-          "copyHtml5",
+        
           {
             extend: "excelHtml5",
             text: "Excel",
@@ -94,8 +94,7 @@ function init() {
               columns: ArrayExport,
             },
           },
-          "csvHtml5",
-          "pdfHtml5",
+         
         ],
         aoColumns: Array,
         ajax: {
@@ -284,7 +283,7 @@ function init() {
               aProcessing: true,
               aServerSide: true,
               dom: "Bfrtip",
-              buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+              buttons: ["excelHtml5"],
               aoColumns: [
                 { mDataProp: "0" },
                 { mDataProp: "1" },
@@ -552,7 +551,7 @@ function init() {
             aProcessing: true,
             aServerSide: true,
             dom: "Bfrtip",
-            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            buttons: ["excelHtml5"],
             aoColumns: [
               { mDataProp: "0" },
               { mDataProp: "1" },
@@ -590,7 +589,7 @@ function init() {
             aProcessing: true,
             aServerSide: true,
             dom: "Bfrtip",
-            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            buttons: ["excelHtml5"],
             aoColumns: [
               { mDataProp: "0" },
               { mDataProp: "1" },
@@ -656,7 +655,7 @@ function cargarDataEmpleadoActivos(
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -741,7 +740,7 @@ function verDetallesActivoUnidad(id) {
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -864,7 +863,7 @@ function ModificarDetallesActivosView(id) {
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },

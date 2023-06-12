@@ -451,7 +451,7 @@ function ListadoEmpleado() {
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },

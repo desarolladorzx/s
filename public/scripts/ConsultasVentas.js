@@ -18,40 +18,40 @@ function init() {
 
   $("#tblVentaFechas").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   $("#tblVentasDetalladas").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentaAnuladas").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentasPendientes").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentasContado").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentasCredito").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentasCliente").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentaEmp").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblVentaEmpDet").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   $("#cboFechaDesdeVent").change(ListadoVentasFechas);
@@ -199,7 +199,7 @@ function ListadoVentasDetalladas() {
         aServerSide: true,
         "order": [[1, "desc"]],
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -265,7 +265,7 @@ function ListadoVentasAnuladas() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -315,7 +315,7 @@ function ListadoVentasPendientes() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -363,7 +363,7 @@ function ListadoVentasContados() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -409,7 +409,7 @@ function ListadoVentasCredito() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -460,7 +460,7 @@ function ListadoVentasCliente() {
         aServerSide: true,
         dom: "Bfrtip",
         "order": [[ 0, "desc" ]],
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -511,7 +511,7 @@ function ListadoComprasDetProveedor() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -564,7 +564,7 @@ function ListadoVentasEmpleado() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "1" },
           { mDataProp: "2" },
@@ -610,7 +610,7 @@ function ListadoVentasEmpleadoDet() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "1" },
           { mDataProp: "2" },

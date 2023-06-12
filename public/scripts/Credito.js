@@ -9,20 +9,18 @@ function init(){
 	$("#tblCredito").dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copyHtml5',
+           
             'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+            
         ]
     });
 
     $("#tblDeuda").dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copyHtml5',
+           
             'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+            
         ]
     });
 
@@ -70,10 +68,9 @@ function init(){
        		"aServerSide": true,
    			dom: 'Bfrtip',
 	        buttons: [
-	            'copyHtml5',
+	         
 	            'excelHtml5',
-	            'csvHtml5',
-	            'pdfHtml5'
+	           
 	        ],
         	"aoColumns":[
         	     	{   "mDataProp": "0"},
@@ -111,10 +108,9 @@ function init(){
        		"aServerSide": true,
    			dom: 'Bfrtip',
 	        buttons: [
-	            'copyHtml5',
+	          
 	            'excelHtml5',
-	            'csvHtml5',
-	            'pdfHtml5'
+	           
 	        ],
         	"aoColumns":[
         	     	{   "mDataProp": "0"},

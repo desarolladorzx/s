@@ -5,10 +5,9 @@ function init(){
     $('#tblProveedor').dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copyHtml5',
+            
             'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+           
         ]
     });
 
@@ -67,10 +66,9 @@ function ListadoProveedor(){
             "aServerSide": true,
             dom: 'Bfrtip',
             buttons: [
-                'copyHtml5',
+                
                 'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
+                
             ],
             "aoColumns":[
                     {   "mDataProp": "0"},

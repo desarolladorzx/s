@@ -57,34 +57,34 @@ function init() {
 
   $("#tblCompraFechas").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblComprasDetalladas").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblComprasProveedor").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
   $("#tblComprasDetProveedor").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   var tabla = $("#tblStockArticulos").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   var tablaKV = $("#tblKardexValorizado").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   var tabla = $("#tblSalidaArticulos").dataTable({
     dom: "Bfrtip",
-    buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    buttons: ["excelHtml5"],
   });
 
   ListadoKardexValorizado();
@@ -126,7 +126,7 @@ function ListadoKardexValorizado() {
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -165,7 +165,7 @@ function ListadoStockArticulos() {
       aProcessing: true,
       aServerSide: true,
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -207,7 +207,7 @@ function ListadoSalidaArticulos() {
       pageLength: 30,
       iDisplayLength: 30, //Cantidad de filas a mostrar en las salidas
       dom: "Bfrtip",
-      buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+      buttons: ["excelHtml5"],
       aoColumns: [
         { mDataProp: "0" },
         { mDataProp: "1" },
@@ -248,7 +248,7 @@ function ListadoComprasFechas() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -299,7 +299,7 @@ function ListadoComprasDetalladas() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -357,7 +357,7 @@ function ListadoComprasProveedor() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },
@@ -407,7 +407,7 @@ function ListadoComprasDetProveedor() {
         aProcessing: true,
         aServerSide: true,
         dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        buttons: ["excelHtml5"],
         aoColumns: [
           { mDataProp: "0" },
           { mDataProp: "1" },

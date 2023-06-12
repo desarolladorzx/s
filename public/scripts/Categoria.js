@@ -8,10 +8,9 @@ function init(){
 	var tabla = $('#tblCategorias').dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copyHtml5',
+          
             'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+           
         ]
     });
 
@@ -72,10 +71,9 @@ function ListadoCategorias(){
        		"aServerSide": true,
        		dom: 'Bfrtip',
 	        buttons: [
-	            'copyHtml5',
+	          
 	            'excelHtml5',
-	            'csvHtml5',
-	            'pdfHtml5'
+	           
 	        ],
         	"aoColumns":[
         	     	{   "mDataProp": "id"},
