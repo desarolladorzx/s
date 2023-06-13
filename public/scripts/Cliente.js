@@ -80,10 +80,64 @@ function ubicacionAntiguo() {
   console.log();
 }
 
-
-
-
 function init() {
+
+$('#txt_empleado_asignado').change(function() {
+
+  console.log('45645435245')
+
+  $('#motivo_reasignacionModalporCliente').modal('show');
+
+
+})
+
+$('#idselect_motivo_reasignacion_por_cliente').change(
+  function(){
+  $('#motivo_reasignacionModalporCliente').modal('hide');
+
+  }
+)
+
+  $("#btn_guardar_nuevo_motivo_reasignacion").click(function () {
+    if ($("#txt_nuevo_motivo_reasignacion").val()) {
+      $.ajax({
+        url: "./ajax/ClienteAjax.php?op=GuardarMotivoReasignacion",
+        dataType: "json",
+        data: {
+          motivo_reasignacion: $("#txt_nuevo_motivo_reasignacion").val(),
+        },
+        type: "post",
+        dataType: "json",
+        success: function (e) {
+          console.log(e);
+
+          $("#txt_nuevo_motivo_reasignacion").val("");
+
+          swal(
+            "Mensaje del Sistema",
+            "Se creo un nuevo motivo de reasginacion",
+            "success"
+          );
+
+          $("#motivo_reasignacionModal").modal("hide");
+        },
+        error: function (e) {
+          $("#txt_nuevo_motivo_reasignacion").val("");
+
+          swal(
+            "Mensaje del Sistema",
+            "No se pudo crear un nuevo motivo de reasginacion",
+            "success"
+          );
+
+
+          $("#motivo_reasignacionModal").modal("hide");
+        },
+      });
+    } else {
+      alert("Es necesario agregar el motivo");
+    }
+  });
 
   $("#insertarClientesACartera").click(function () {
     // $('.close').click()
@@ -96,6 +150,7 @@ function init() {
         data: {
           lista: listadeClientesAsignados,
           idempleado: $("#select_personal_vendedor").val(),
+          idmotivo_reasignacion: $("#idselect_motivo_reasignacion").val(),
         },
         type: "post",
         success: function (rpta) {
@@ -531,9 +586,8 @@ function llenarCantidades() {
 }
 var listadeClientesAsignados = [];
 
-function motivo_reasignacionModal(){
+function motivo_reasignacionModal() {
   $("#motivo_reasignacionModal").modal("show");
-
 }
 function guardarSelects() {
   var selectedRows = $("#tblCliente")

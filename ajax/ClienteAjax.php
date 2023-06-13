@@ -18,21 +18,21 @@ switch ($_GET["op"]) {
 		break;
 
 	case 'asignarCarteraVendedor':
-		
 
-		$query_Tipo = $objCliente->asignarCarteraVendedor($_POST['lista'],$_POST['idempleado']);
+
+		$query_Tipo = $objCliente->asignarCarteraVendedor($_POST['lista'], $_POST['idempleado'],$_POST['idmotivo_reasignacion']);
 
 
 		// echo "Cliente registrado correctamente";
 
-		
+
 		echo  json_encode($query_Tipo);
 		break;
 
 	case 'SaveOrUpdate':
 
 
-
+		
 		if ($_POST["optionsRadios_edit"] != "") {
 			$genero = $_POST["optionsRadios_id_edit"];
 		} else {
@@ -52,6 +52,14 @@ switch ($_GET["op"]) {
 
 		$tipo_persona =
 			isset($_POST["cboTipo_Persona"]) ? $_POST["cboTipo_Persona"] : "";
+
+
+		
+			$motivo_reasignacion =
+			isset($_POST["idselect_motivo_reasignacion_por_cliente"]) ? $_POST["idselect_motivo_reasignacion_por_cliente"] : "";
+
+
+
 		$nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"] : "";
 		$apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"] : "";
 		//$tipo_documento = $_POST["cboTipo_Documento"];
@@ -98,10 +106,9 @@ switch ($_GET["op"]) {
 
 
 
-		$empleado_asignado= isset($_POST["txt_empleado_asignado"]) ? $_POST["txt_empleado_asignado"] : 
-		$_SESSION['idempleado']
-		;
-		
+		$empleado_asignado = isset($_POST["txt_empleado_asignado"]) ? $_POST["txt_empleado_asignado"] :
+			$_SESSION['idempleado'];
+
 
 		$direccion_calle = isset($_POST["txtDireccion_Calle"]) ? $_POST["txtDireccion_Calle"] : "";
 
@@ -117,7 +124,7 @@ switch ($_GET["op"]) {
 
 		$dni_existente = $objCliente->ConsultarDni($num_documento)->num_rows > 0;
 
-		
+
 		if (empty($_POST["txtIdPersona"]) && !$dni_existente) {
 			if ($objCliente->Registrar(
 				$tipo_persona,
@@ -142,8 +149,9 @@ switch ($_GET["op"]) {
 				$direccion_calle_factura,
 				$direccion_referencia_factura,
 				$idprovincia_factura,
-				$iddistrito_factura
-				,$empleado_asignado
+				$iddistrito_factura,
+				$empleado_asignado,
+				$motivo_reasignacion
 
 			)) {
 				echo "Cliente registrado correctamente";
@@ -177,8 +185,9 @@ switch ($_GET["op"]) {
 				$direccion_calle_factura,
 				$direccion_referencia_factura,
 				$idprovincia_factura,
-				$iddistrito_factura
-				,$empleado_asignado
+				$iddistrito_factura,
+				$empleado_asignado,
+				$motivo_reasignacion
 
 
 			)) {
@@ -189,21 +198,29 @@ switch ($_GET["op"]) {
 		}
 		break;
 
-		case 'traerMotivoReasignacion':
+	case 'traerMotivoReasignacion':
 
-			require_once "../model/Persona.php";
-			$objPersona = new Persona();
-	
-			$query_Tipo = $objPersona->traerMotivoReasignacion();
-	
-			$nuevo = array();
-			while ($reg = $query_Tipo->fetch_object()) {
-				$nuevo[] = $reg;
-			}
-			echo  json_encode($nuevo);
-	
-			break;
+		require_once "../model/Persona.php";
+		$objPersona = new Persona();
 
+		$query_Tipo = $objPersona->traerMotivoReasignacion();
+
+		$nuevo = array();
+		while ($reg = $query_Tipo->fetch_object()) {
+			$nuevo[] = $reg;
+		}
+		echo  json_encode($nuevo);
+
+		break;
+	case 'GuardarMotivoReasignacion':
+		require_once "../model/Persona.php";
+		$objPersona = new Persona();
+
+		$query_Tipo = $objPersona->GuardarMotivoReasignacion($_POST);
+
+		echo  json_encode($query_Tipo);
+
+		break;
 	case 'traerPersonalVendedor':
 
 		require_once "../model/Persona.php";
@@ -235,7 +252,7 @@ switch ($_GET["op"]) {
 		while ($reg = $query_Tipo->fetch_object()) {
 
 			$clasificacion = $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->clasificacion;
-			$ultima_venta= $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->fecha;
+			$ultima_venta = $objCliente->clasificacion_cliente($reg->idpersona)->fetch_object()->fecha;
 
 			if ($_SESSION['rol_usuario'] == "S") {
 				$boton_editar = '<button class="btn btn-warning" data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
@@ -274,14 +291,14 @@ switch ($_GET["op"]) {
 
 			$boton_eliminar = '<button class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="eliminarCliente(' . $reg->idpersona . ')"><i class="fa fa-trash"></i> </button>';
 
-			if($clasificacion=='ACTIVO'){
-				$clasificacion='-ACTIVO';
+			if ($clasificacion == 'ACTIVO') {
+				$clasificacion = '-ACTIVO';
 			}
 			$data[] = array(
 				"id" => $i,
 				"0" => '',
-				'vendedor_asignado'=>$reg->rol_nombre_usuario,
-				'12'=>$reg->idpersona,
+				'vendedor_asignado' => $reg->rol_nombre_usuario,
+				'12' => $reg->idpersona,
 				"1" => $reg->tipo_persona . ' - ' . $reg->numero_cuenta,
 				"2" => $reg->nombre . '&nbsp;' . $reg->apellido,
 				"3" => $reg->tipo_documento . ': ' . $reg->num_documento,
@@ -292,11 +309,11 @@ switch ($_GET["op"]) {
 				"8" => $reg->fecha_registro,
 				"9" => $reg->empleado_modificado,
 				"10" => $reg->fecha_modificado,
-				'13'=>$clasificacion,
-				"30"=>$reg->tipo_persona,
-				'14'=>$ultima_venta,
-				
-				"11" => $boton_editar . ' ' . $boton_eliminar.''.'
+				'13' => $clasificacion,
+				"30" => $reg->tipo_persona,
+				'14' => $ultima_venta,
+
+				"11" => $boton_editar . ' ' . $boton_eliminar . '' . '
 				 <button class="btn btn-success"  data-toggle="tooltip" title="Editar" onclick="cargarDataCliente(' . $reg->idpersona . ',\'' . $reg->tipo_persona . '\',\'' . $reg->nombre . '\',\'' . $reg->apellido . '\',\'' . $reg->tipo_documento . '\',\'' . $reg->num_documento . '\',\'' . $reg->direccion_departamento . '\',\'' . $reg->direccion_provincia . '\',\'' . $reg->direccion_distrito . '\',\'' . $reg->direccion_calle . '\',\'' . $reg->telefono . '\',\'' . $reg->telefono_2 . '\',\'' . $reg->email . '\',\'' . $reg->numero_cuenta . '\',\'' . $reg->estado . '\',\'' . $reg->idempleado . '\',\'' . $reg->empleado . '\',\'' . $reg->fecha_registro . '\',\'' . $reg->empleado_modificado . '\',\'' . $reg->fecha_modificado . '\',\'' . $reg->genero . '\',\'' . $reg->genero_txt . '\' 
 				,\'' . $clasificacion . '\',\'' . $reg->direccion_referencia . '\'
 
@@ -311,10 +328,9 @@ switch ($_GET["op"]) {
 				,\'' . $reg->idempleado_asignado . '\'
 				,\'' . $reg->empleado_asignado . '\'
 				,\'disabled\'
-				)"><i class="fa fa-eye"></i> </button>'
-				,
-				
-				
+				)"><i class="fa fa-eye"></i> </button>',
+
+
 			);
 			$i++;
 		}
@@ -523,8 +539,8 @@ switch ($_GET["op"]) {
 			$datos = array(
 				'response_text' => 'El cliente con el Numero de Documento ' . $reg->num_documento . ' se encuentra registrado en el sistema, solo está permitido editar los campos habilitados...',
 				'estado' => 'encontrado',
-				'idempleado_asignado'=>$reg->idempleado_asignado,
-				'empleado_asignado'=>$reg->empleado_asignado,
+				'idempleado_asignado' => $reg->idempleado_asignado,
+				'empleado_asignado' => $reg->empleado_asignado,
 				'direccion_antigua' => $reg->direccion_antigua,
 				'ubicacion_completa' => "$reg->direccion_departamento - $reg->direccion_provincia - $reg->direccion_distrito",
 

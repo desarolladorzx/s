@@ -7,7 +7,7 @@ class Persona
 {
 
 
-	public function  asignarCarteraVendedor($lista, $idempleado)
+	public function  asignarCarteraVendedor($lista, $idempleado,$idmotivo_reasignacion)
 	{
 		global $conexion;
 
@@ -32,14 +32,15 @@ class Persona
 			fecha_modificado,
 			estado,
 			idempleado_asignado
-
+			,motivo_reasignacion
 			) VALUES (
 			$idempleado,
 			$idpersona,
 			CURRENT_TIMESTAMP(),
 			CURRENT_TIMESTAMP(),
 			'A',
-			".$_SESSION['idempleado']." 
+			".$_SESSION['idempleado']."
+			,$idmotivo_reasignacion
 
 			);";
 			$query = $conexion->query($sql);
@@ -62,7 +63,21 @@ class Persona
 		return $query;
 	}
 
+	public function GuardarMotivoReasignacion($_post)
+	{
+		global $conexion;
 
+		$sql = "INSERT INTO motivo_reasignacion(descripcion,tipo,estado) values(
+			'".$_post['motivo_reasignacion']."',
+			'persona',
+			'A'
+		)
+		";
+
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
 	public function traerPersonalVendedor()
 	{
 		global $conexion;
@@ -113,7 +128,8 @@ class Persona
 		$direccion_referencia_factura,
 		$idprovincia_factura,
 		$iddistrito_factura,
-		$empleado_asignado
+		$empleado_asignado,
+		$motivo_reasignacion
 	) {
 		global $conexion;
 		$sql = "INSERT INTO persona(tipo_persona,nombre,apellido,tipo_documento,num_documento,genero,direccion_departamento,direccion_provincia,direccion_distrito,direccion_calle,telefono,telefono_2,email,numero_cuenta,estado,idempleado,idempleado_modificado,fecha_registro,fecha_modificado,direccion_referencia
@@ -144,14 +160,16 @@ class Persona
 		fecha_registro,
 		fecha_modificado,
 		estado,
-		idempleado_asignado
+		idempleado_asignado,
+		motivo_reasignacion
 		) VALUES (
 		$empleado_asignado,
 		$idpersona,
 		CURRENT_TIMESTAMP(),
 		CURRENT_TIMESTAMP(),
 		'A',
-		".$_SESSION['idempleado']." 
+		".$_SESSION['idempleado']." ,
+		'$motivo_reasignacion'
 		);";
 		$query = $conexion->query($sql);
 
@@ -187,7 +205,8 @@ class Persona
 		$direccion_referencia_factura,
 		$idprovincia_factura,
 		$iddistrito_factura,
-		$empleado_asignado
+		$empleado_asignado,
+		$motivo_reasignacion
 	) {
 		global $conexion;
 
@@ -210,14 +229,16 @@ class Persona
 		fecha_registro,
 		fecha_modificado,
 		estado,
-		idempleado_asignado
+		idempleado_asignado,
+		motivo_reasignacion
 		) VALUES (
 		$empleado_asignado,
 		$idpersona,
 		CURRENT_TIMESTAMP(),
 		CURRENT_TIMESTAMP(),
 		'A',
-		".$_SESSION['idempleado']." 
+		".$_SESSION['idempleado']." ,
+		'$motivo_reasignacion'
 		);";
 
 
@@ -396,7 +417,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			 limit 10 
+			--  limit 10 
 ;
 		";
 		// $sql = "SELECT  
