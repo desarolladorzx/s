@@ -189,6 +189,21 @@ switch ($_GET["op"]) {
 		}
 		break;
 
+		case 'traerMotivoReasignacion':
+
+			require_once "../model/Persona.php";
+			$objPersona = new Persona();
+	
+			$query_Tipo = $objPersona->traerMotivoReasignacion();
+	
+			$nuevo = array();
+			while ($reg = $query_Tipo->fetch_object()) {
+				$nuevo[] = $reg;
+			}
+			echo  json_encode($nuevo);
+	
+			break;
+
 	case 'traerPersonalVendedor':
 
 		require_once "../model/Persona.php";

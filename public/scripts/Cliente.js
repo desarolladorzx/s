@@ -530,6 +530,11 @@ function llenarCantidades() {
   $("#cant_clientes_Representantes").val(clientes_representantes);
 }
 var listadeClientesAsignados = [];
+
+function motivo_reasignacionModal(){
+  $("#motivo_reasignacionModal").modal("show");
+
+}
 function guardarSelects() {
   var selectedRows = $("#tblCliente")
     .DataTable()

@@ -50,6 +50,19 @@ class Persona
 		// return $lista;
 
 	}
+
+	public function traerMotivoReasignacion()
+	{
+		global $conexion;
+
+		$sql = "SELECT  *  FROM motivo_reasignacion where estado='A' and tipo='persona'
+		";
+
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function traerPersonalVendedor()
 	{
 		global $conexion;
@@ -383,7 +396,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			--  limit 10 
+			 limit 10 
 ;
 		";
 		// $sql = "SELECT  
