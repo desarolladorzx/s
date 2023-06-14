@@ -1381,7 +1381,9 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
           processData: false,
           contentType: false,
           type: "GET",
-
+          error:function(val){
+            console.log('ho;a')
+          },
           success: function (data) {
 
             setTimeout(() => {
@@ -1395,22 +1397,32 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
               pedidosPendientes.map((e) => {
                 let fecha_pedido = new Date(e.fecha);
 
-                let fecha_aprovacion = new Date(e.fecha_apro_coti);
+                let fecha_aprobacion = new Date(e.fecha_apro_coti);
+
+
                 let msDifference = hora_actual - fecha_pedido;
                 let minutes = Math.floor(msDifference / 1000 / 60);
-                let msDifference_aprovacion = hora_actual - fecha_aprovacion;
-                let minutes_aprovacion = Math.floor(msDifference_aprovacion / 1000 / 60);
 
-                if(minutes_aprovacion > 5){
+                let msDifference_aprobacion = hora_actual - fecha_aprobacion;
+
+
+     
+                let minutes_aprobacion = Math.floor(msDifference_aprobacion / 1000 / 60);
+
+                console.log(minutes_aprobacion,msDifference)
+                if(minutes_aprobacion > 5){
                   if (e.estado == "D" && [11, 6].includes(idEmpleado)) {
                     if ((Notification.permission = "grantFd")) {
+                    
+                   
                       const notification = new Notification(
+                        
                         `Nota de Venta ${e.numero} Aprobada`,
                         {
                           icon: "/medicfitcen/Files/Global/logo_medicfitcen2.jpg",
                           body: `${
                             e?.idsucursal == "1" ? "Arequipa" : "Lima"
-                          } - Pendiente a Generar Venta por ${minutes} Minutos - JA`,
+                          } - Pendiente a Generar Venta por ${minutes_aprobacion} Minutos - JA`,
                         }
                       );
                       notification.onclick = function () {
