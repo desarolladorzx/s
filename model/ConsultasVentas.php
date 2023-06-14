@@ -16,8 +16,13 @@
 
 			 FROM empleado
 			JOIN rol ON rol.r_id=empleado.idrol
-			
-			 WHERE idrol=1 or idrol=2 or idrol=3
+			JOIN area  ON area.idarea=rol.idarea 
+			 WHERE 
+
+			 area.idarea=4 or  area.idarea=1
+AND empleado.estado='A'
+
+
 			 ORDER 
 			 BY 
 			CASE idrol 
