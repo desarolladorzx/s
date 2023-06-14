@@ -33,7 +33,23 @@ var tabla;
 
 var ArrayExport;
 
+
+
 function init() {
+
+	$("#btnNuevoActivo").click(VerForm);
+
+  function VerForm() {
+      console.log('hola')
+
+      $("#VerForm").show(); // Mostramos el formulario
+      //$("#btnNuevo").hide();// ocultamos el boton nuevo
+      $("#VerListado").hide();
+      $('#container_select_visible').hide()
+
+      $('#btnNuevoActivo').hide()
+  }
+
   getTipoActivo()
 
   function getTipoActivo() {
@@ -684,6 +700,11 @@ function cargarDataEmpleadoActivos(
     .DataTable();
 
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52
+
+
+  $('#VerForm').click(function(){
+    console.log()
+  })
   $("#VerForm").show(); // mostramos el formulario
   $("#btnNuevo").hide();
   $("#VerListado").hide(); // ocultamos el listado
@@ -727,6 +748,11 @@ function modicarUltimoUsuarioAsignado(id) {
 
 function verDetallesActivoUnidad(id) {
   $("#btnNuevo").hide();
+
+
+  $('#container_select_visible').hide()
+
+  $('#btnNuevoActivo').hide()
 
   idActivo = id;
 
@@ -846,6 +872,13 @@ function ModificarDetallesActivosView(id) {
   idActivo = id;
 
   $("#btnNuevo").hide();
+
+
+  $('#container_select_visible').hide()
+
+  $('#btnNuevoActivo').hide()
+
+  
   $("#table_activos_anteriores").show();
 
   $('input[id^="act_"]').each(function () {

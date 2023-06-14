@@ -61,13 +61,15 @@ function init() {
     $("#txt_verificacion").val("SIN VERIFICAR");
   }
 
-  $("#tipo_de_establecimiento_select").on("change", function () {
+  $(".tipo_establecimiento_select").on("change", function () {
     var valorSeleccionado = this.value;
+
+    console.log(valorSeleccionado);
     tablaEstablecimiento.column(8).search(valorSeleccionado).draw();
 
     let valoresFiltrados = tablaEstablecimiento
       .rows({ search: "applied" })
-      .data()
+      .data()                 
       .toArray().length;
 
     $("#txt_resultados_busquedas").val(valoresFiltrados);
@@ -75,6 +77,9 @@ function init() {
 
   $("#txt_ubicacionSelect").on("change", function () {
     var valorSeleccionado = this.value;
+
+        console.log(valorSeleccionado);
+
 
     tablaEstablecimiento
       .column(1)
@@ -245,6 +250,7 @@ function ListadoEstablecimientos() {
         { mDataProp: "7" },
         { mDataProp: "8" },
         { mDataProp: "9", visible: false },
+
       ],
       ajax: {
         url: "./ajax/EstablecimientoAjax.php?op=list",
