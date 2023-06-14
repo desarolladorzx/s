@@ -450,6 +450,9 @@ $mnu_sigrh
 		$_SESSION["mnu_admin"] = $_POST["mnu_admin"];
 
 		$_SESSION["idrol"] = $_POST["idrol"];
+
+
+
 		
 
 

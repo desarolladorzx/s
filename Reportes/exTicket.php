@@ -58,6 +58,13 @@ error_reporting(0); ?>
   $objConfiguracion = new Configuracion();
   $query_global = $objConfiguracion->Listar();
   $reg_igv = $query_global->fetch_object();
+  
+
+
+
+  $objEmpleado = $objPedido->TraerEmpleadoUsuarioRol($_SESSION["idempleado"]);
+  $reg_emp = $objEmpleado->fetch_object();
+
 
   ?>
 
@@ -141,12 +148,12 @@ error_reporting(0); ?>
           </strong></td>
       </tr>
       <?php echo ($reg_cli->estado == 'A') ? '' : '<tr>
-      <td align="center">ANULADO POR :<b> ' . $reg_cli->empleado_anulado . '</b></td>
+      <td align="center">ANULADO POR :<b> ' . $reg_cli->usuario_empleado_anulado . '</b></td>
     </tr>'; ?>
 
 
       <tr>
-        <td align="center"> IMPRESO POR : <?php echo $_SESSION["empleado"]; ?></td>
+        <td align="center"> IMPRESO POR : <?php echo $reg_emp->r_prefijo.' '.$reg_emp->nombre_usuario; ?></td>
       </tr>
 
       <tr>
@@ -167,7 +174,7 @@ error_reporting(0); ?>
         </td>
       </tr>
       <tr>
-        <td><strong>ATENDIO : </strong><?php echo mb_strtoupper($reg_cli->empleado); ?></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
+        <td><strong>ATENDIO : </strong><?php echo mb_strtoupper($reg_cli->nombre_usuario); ?></td> <!-- Empleado se modifico pedido.php. el script gevVenta -->
       </tr>
       <td>&nbsp;</td>
       <tr>

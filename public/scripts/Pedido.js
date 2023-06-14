@@ -1248,6 +1248,32 @@ function cargarDataPedido(
   estado,
   ubicacion
 ) {
+
+  console.log(idPedido,
+    tipo_pedido,
+    numero,
+    cliente,
+    total,
+    correo,
+    num_documento,
+    celular,
+    tipo_cliente,
+    destino,
+    ticket,
+    aproba_venta,
+    aproba_pedido,
+    empleado,
+    metodo_pago,
+    agencia_envio,
+    tipo_promocion,
+    observaciones,
+    modo_pago,
+    ultimo,
+    modificar_detalle,
+    idcliente,
+    estado,
+    ubicacion)
+
   $("#txtTipoClienteVas").val(agencia_envio);
 
   $(".ventasFechasOcultar").hide();
@@ -1270,7 +1296,7 @@ function cargarDataPedido(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
-  $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
+  $("#txtEmpleadoVent").val(tipo_promocion); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
   $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
   $("#txtClienteCel").val(celular);
@@ -1823,6 +1849,7 @@ function cambiarEstadoPedidoVer(
   idcliente,
   estado,
   ubicacion
+  ,nombre_usuario
 ) {
   console.log(
     idPedido,
@@ -1886,7 +1913,7 @@ function cambiarEstadoPedidoVer(
   $("#txtCliente").hide();
   $("#cboTipoPedido").hide();
 
-  $("#txtEmpleadoVent").val(total); //.Empleado que registro el pedido;
+  $("#txtEmpleadoVent").val(tipo_promocion); //.Empleado que registro el pedido;
   $("#txtClienteVent").val(correo); //.falta concatenar nombre y apellido desde js;
   $("#txtClienteDni").val(num_documento); // MUESTRA DETALLE DE VENTA
   $("#txtClienteCel").val(celular);

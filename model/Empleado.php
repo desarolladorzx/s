@@ -453,24 +453,15 @@ class Empleado
 		global $conexion;
 		$sql = "SELECT 
 		CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
-		
 		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
-		
 		,CONCAT(empleado.nombre,' ',empleado.apellidos) nombre_completo
-		
 		,DATEDIFF(fecha_fin_labores, CURDATE())   dias_restantes
-		
 		,contrato.razon_social
-		
 		,fecha_inicio_labores
 		,rol.r_descripcion puesto_ocupado
-		,AREA.descripcion area_funcional
-		
+		,area.descripcion area_funcional
 		,contrato.*
-
 		,
-		
-
 		CASE
            WHEN DATEDIFF(CURDATE(), (SELECT MIN(fecha_inicio_labores) FROM contrato WHERE idempleado = empleado.idempleado)) > 1095 THEN 'Antiguo'
            ELSE 'Nuevo'
@@ -486,7 +477,7 @@ class Empleado
 				
 		LEFT  JOIN  rol  ON rol.r_id=empleado.idrol
 		
-		LEFT  JOIN AREA ON AREA.idarea=rol.idarea
+		LEFT  JOIN area ON area.idarea=rol.idarea
 		left JOIN provincia  ON provincia.idprovincia=empleado.idprovincia
 		
 		LEFT JOIN (
@@ -519,9 +510,7 @@ FROM contrato
 		) contrato ON contrato.idempleado =empleado.idempleado AND contrato.estado='A'
 		
 		left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
-		
 		order by empleado.idempleado DESC;
-		
 		";
 		$query = $conexion->query($sql);
 		return $query;

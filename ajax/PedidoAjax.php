@@ -409,6 +409,9 @@ switch ($_GET["op"]) {
                     $botonCambiarEstado = '<button class="btn btn-warning" data-toggle="tooltip" title="Ver Detalle" onclick="cambiarEstadoPedidoVer(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\',
                     \'' . $reg->tipo_entrega . '\'
                     ,\'' . $reg->tipo_persona . '\'
+
+                    ,\'' . $reg->nombre_usuario . '\'
+
                     )" ><i class="fa fa-refresh"></i> </button>';
                 } else {
                     $botonCambiarEstado = '';
@@ -439,7 +442,7 @@ switch ($_GET["op"]) {
                 "9" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $fetch->total . '\',\'' . $reg->email . '\',\'' . $reg->idcliente . '\',\'' . $reg->empleado . '\',\'' . $reg->cliente . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->destino . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->observaciones . '\',\'' . $reg->modo_pago . '\'
                 ,\'' . $reg->tipo_entrega . '\'
                 ,\'' . $reg->tipo_persona . '\'
-                
+                ,\'' . $reg->nombre_usario_rol . '\'
                 )" ><i class="fa fa-eye"></i> </button>&nbsp' .
                     $botonPasarAVenta .
                     '<a href="./Reportes/exPedido.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;' .

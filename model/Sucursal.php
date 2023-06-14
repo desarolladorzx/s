@@ -46,9 +46,10 @@
 
 		public function ListarSucursalesEmp($id){
 			global $conexion;
-			$sql = "select u.*, s.razon_social, s.logo as logo, concat(e.nombre, ' ', e.apellidos) as empleado, e.*, e.estado as superadmin
+			$sql = "select u.*, s.razon_social, s.logo as logo, concat(rol.r_prefijo, ' ', e.nombre_usuario) as empleado, e.*, e.estado as superadmin
 	from usuario u inner join empleado e on u.idempleado = e.idempleado
 	inner join sucursal s on u.idsucursal = s.idsucursal
+	join rol on rol.r_id=e.idrol
 	where u.idempleado = $id and u.estado='A'";
 			$query = $conexion->query($sql);
 			return $query;

@@ -195,9 +195,9 @@ class Pedido
 			';
 		}
 		global $conexion;
-		$sql = "SELECT  concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		$sql = "SELECT  concat(r_anu.r_prefijo ,' ',em_anu.nombre_usuario) empleado_anulado_txt,p.*, concat(r_e.r_prefijo,' ',e.nombre_usuario,' | ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
 		
-		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(ev.nombre,' ',ev.apellidos,' |  ',v.fecha) as aproba_venta,concat(eva.nombre,' ',eva.apellidos,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
+		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(r_ev.r_prefijo,' ',ev.nombre_usuario,' |  ',v.fecha) as aproba_venta,concat(r_eva.r_prefijo,' ',eva.nombre_usuario,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
 	
 
 	
@@ -227,6 +227,9 @@ class Pedido
 						
 						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
 						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+
+
+						LEFT JOIN rol r_anu ON r_anu.r_id=em_anu.idrol
 
 		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
 		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
@@ -465,8 +468,9 @@ class Pedido
 	public function ListarTipoPedidoPedido($idsucursal)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado
-		,
+		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado 
+		,e.nombre_usuario
+,
 		CONCAT (IFNULL(r_e.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) nombre_usario_rol
 
 		,concat(c.nombre,' ',c.apellido) as cliente,c.email,concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) as destino, c.num_documento,concat(c.telefono,' - ',c.telefono_2) as celular,
@@ -691,11 +695,21 @@ order by idpersona DESC ;";
 		$query = $conexion->query($sql);
 		return $query;
 	}
+	public function TraerEmpleadoUsuarioRol($id){
+		global $conexion;
+		$sql="SELECT * FROM empleado
+		join rol  on  rol.r_id=empleado.idrol
+		 where idempleado=$id";
+		$query = $conexion->query($sql);
+		return $query;
 
+	}
 	public function GetVenta($idpedido)
 	{
 		global $conexion;
-		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(emp_anu.nombre,' ',emp_anu.apellidos) as empleado_anulado, p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
+		$sql = "SELECT p.*,concat(e.nombre,' ',e.apellidos) as empleado,concat(rol.r_prefijo,' ',e.nombre_usuario) nombre_usuario, concat(emp_anu.nombre,' ',emp_anu.apellidos) as empleado_anulado,
+		concat(rol_anu.r_prefijo,' ',emp_anu.nombre_usuario) as usuario_empleado_anulado,
+		 p.tipo_documento as documento_per,p.tipo_persona as tipo_cliente, ped.fecha, s.razon_social, v.num_comprobante,v.idventa, v.serie_comprobante, ped.metodo_pago, ped.agencia_envio, s.tipo_documento, s.num_documento as num_sucursal, s.direccion, s.telefono as telefono_suc, s.email as email_suc, s.representante, s.logo, ped.tipo_pedido,v.impuesto,p.tipo_documento as doc,ped.estado,ped.modo_pago,ped.tipo_entrega
 		
 		,distrito.descripcion distrito,provincia.descripcion provincia ,departamento.descripcion departamento
 		
@@ -705,8 +719,11 @@ order by idpersona DESC ;";
 		inner join venta v on v.idpedido = ped.idpedido
 		inner join usuario u on ped.idusuario=u.idusuario
 		inner join empleado e on u.idempleado=e.idempleado
+		inner join rol on rol.r_id=e.idrol
 		left JOIN  usuario usu_anu on usu_anu.idusuario= v.idusuario_anu
 		LEFT  JOIN  empleado emp_anu on emp_anu.idempleado=usu_anu.idempleado
+
+		left  join rol rol_anu on rol_anu.r_id=emp_anu.idrol
 
 		left JOIN distrito ON distrito.iddistrito=p.direccion_distrito
 	LEFT  JOIN provincia ON provincia.idprovincia=p.direccion_provincia

@@ -358,7 +358,10 @@ iddistrito_factura='$iddistrito_factura'
 			$join = " JOIN cartera_cliente ON cartera_cliente.idcliente=p.idpersona
 			AND cartera_cliente.estado='A'
 
-			JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado";
+			JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
+			left JOIN rol ON rol.r_id=e3.idrol
+
+			";
 		}
 		$sql = "SELECT
 		p.idpersona,
@@ -403,6 +406,7 @@ iddistrito_factura='$iddistrito_factura'
 		left JOIN departamento dep_n ON dep_n.iddepartamento=pro_n.iddepartamento
 		
 
+	
 		$join
 		
 

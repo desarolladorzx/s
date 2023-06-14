@@ -411,7 +411,6 @@ $('#idselect_motivo_reasignacion_por_cliente').change(
     //   $("#txt_ubicacion_envio").val($("#txtDireccion_Referencia").val());
     // }
 
-    console.log($("#cboTipo_Persona").val());
 
     document.getElementById("cboTipo_Persona").disabled = false;
 
