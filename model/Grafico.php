@@ -13,7 +13,10 @@ class Grafico
 	{
 		global $conexion;
 
-		$sql = "SELECT idempleado ,concat(nombre,' ',apellidos) nombre ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario FROM empleado left JOIN rol ON rol.r_id=empleado.idrol WHERE idrol=1;";
+		$sql = "SELECT idempleado ,concat(nombre,' ',apellidos) nombre ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario FROM empleado left JOIN rol ON rol.r_id=empleado.idrol WHERE idrol=1
+		
+		and empleado.estado='A'
+		;";
 		$query = $conexion->query($sql);
 
 		$reg = $query->fetch_all();
