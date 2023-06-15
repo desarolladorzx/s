@@ -4,6 +4,27 @@ require "Conexion.php";
 
 class Establecimiento
 {
+
+
+
+
+	public function GuardarMotivoReasignacionEmpresa($_post)
+	{
+		global $conexion;
+
+		$sql = "INSERT INTO motivo_reasignacion(descripcion,tipo,estado) values(
+			'" . $_post['motivo_reasignacion'] . "',
+			'empresa',
+			'A'
+		)
+		";
+
+		// echo $sql;
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function traerDatosRolVendedor()
 	{
 		global $conexion;
@@ -11,7 +32,7 @@ class Establecimiento
 
 
 
-		$sql="SELECT *  ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
+		$sql = "SELECT *  ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
 		
 		FROM  empleado 
 		left JOIN rol ON rol.r_id=empleado.idrol
@@ -75,30 +96,31 @@ class Establecimiento
 	{
 		global $conexion;
 
-
-
-
-
 		$sql = "SELECT * 
-			,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
-			,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
-			,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
-			,empresa.nombre,empresa.direccion	,empresa.telefono
-			
-			 from empresa 
-			
-			left JOIN empleado ON empleado.idempleado =empresa.idempleado
-			
-			
-			LEFT JOIN distrito  ON distrito.iddistrito=empresa.iddistrito
-			left JOIN provincia  ON provincia.idprovincia=empresa.idprovincia
-			left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
-					
-			where empresa.estado='1' and 
-			idempresa=$id
-			";
+		,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
+		,CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion
+		,CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
+		,empresa.nombre,empresa.direccion	,empresa.telefono
+		
+		,cartera_empresa.idempleado empleado_asignado
 
+			
+		 from empresa 
+		
+		left JOIN empleado ON empleado.idempleado =empresa.idempleado
+		
+		
+		LEFT JOIN distrito  ON distrito.iddistrito=empresa.iddistrito
+		left JOIN provincia  ON provincia.idprovincia=empresa.idprovincia
+		left JOIN departamento  ON departamento.iddepartamento=provincia.iddepartamento
+				
+		 JOIN cartera_empresa ON cartera_empresa.idempresa=empresa.idempresa AND cartera_empresa.estado='A'
+		
+		where empresa.estado='1' and 
+			empresa.idempresa=$id
+		";
 
+		// echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -107,9 +129,9 @@ class Establecimiento
 	{
 		global $conexion;
 
-		$exepcion='';
-		if($_SESSION['idrol']==7){
-			$exepcion="and cartera_empresa.idempleado=".$_SESSION['idempleado'].  "";
+		$exepcion = '';
+		if ($_SESSION['idrol'] == 7) {
+			$exepcion = "and cartera_empresa.idempleado=" . $_SESSION['idempleado'] .  "";
 		}
 		$sql = "SELECT * 
 		,CONCAT(empleado.nombre,' ',empleado.apellidos) empleado
@@ -139,13 +161,13 @@ class Establecimiento
 
 		WHERE cartera_empresa.estado='A'
 		
-		".$exepcion."
+		" . $exepcion . "
 		and empresa.estado='1'
 
 		order by empresa.idempresa desc
 			";
-// echo $sql;
-			
+		// echo $sql;
+
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -160,17 +182,19 @@ class Establecimiento
 	public function Registrar($POST)
 	{
 
-		if(isset($_POST["id_ubicacion_envio_array"]) and $_POST["id_ubicacion_envio_array"]!=""){
-			$id_ubicacion_envio_array =explode(' - ', $_POST["id_ubicacion_envio_array"]);
-
-		}else{
-			$id_ubicacion_envio_array =[" " ," "," "];
+		if (isset($_POST["id_ubicacion_envio_array"]) and $_POST["id_ubicacion_envio_array"] != "") {
+			$id_ubicacion_envio_array = explode(' - ', $_POST["id_ubicacion_envio_array"]);
+		} else {
+			$id_ubicacion_envio_array = ["", "null", "null"];
 		}
 		$json = json_decode(json_encode($POST));
 
-		$verificado= strlen($json->txt_verificacion)==0?'SIN VERIFICAR':$json->txt_verificacion;
+		$verificado = strlen($json->txt_verificacion) == 0 ? 'SIN VERIFICAR' : $json->txt_verificacion;
 
 		global $conexion;
+
+		$idcategoria_empresa = !empty($json->txtTipoEstablecimiento) ? $json->txtTipoEstablecimiento : "null";
+
 		$sql = "INSERT INTO 
 			empresa(
 				horario,
@@ -207,11 +231,11 @@ class Establecimiento
 				'$json->txtHorario',
 				'1',
 				'$json->txtTelefono',
-				'$json->txtTipoEstablecimiento',
+				$idcategoria_empresa,
 				'$json->txtNombreEstablecimiento',
 				'$json->txtDireccionEstablecimiento',
-				'$id_ubicacion_envio_array[1]',
-				'$id_ubicacion_envio_array[2]',
+				$id_ubicacion_envio_array[1],
+				$id_ubicacion_envio_array[2],
 				'" . $_SESSION['idempleado'] . "',
 				'$json->txtNombre',
 
@@ -237,21 +261,38 @@ class Establecimiento
 
 
 				) ";
-				// echo $sql;
+		
+		$query = $conexion->query($sql);
+
+	
+		$idempresa = $conexion->insert_id;
+		
+
+		$sql = "UPDATE cartera_empresa set estado ='C' WHERE idempresa='$idempresa';";
 		$query = $conexion->query($sql);
 
 
-		$idempresa = $conexion->insert_id;
-
-		$sql ="INSERT INTO  
-		cartera_empresa(idempleado,idempresa,fecha_modificado,fecha_registro,estado) 
+		
+		$sql = "INSERT INTO  
+		cartera_empresa(
+			idempleado,
+			idempresa,
+			fecha_modificado,
+			fecha_registro,
+			estado,
+			idempleado_asignador,
+			idmotivo_asignacion
+			) 
 		values(
 			'$json->txtEmpleadoAsignado',
 			'$idempresa',
 			CURRENT_TIMESTAMP(),
 			CURRENT_TIMESTAMP(),
-			'A'
+			'A',
+			" . $_SESSION['idempleado'] . " ,
+			1
 		)";
+		// echo $sql;
 
 		$query = $conexion->query($sql);
 
@@ -262,20 +303,64 @@ class Establecimiento
 	{
 		global $conexion;
 
-		$id_ubicacion_envio_array = isset($_POST["id_ubicacion_envio_array"]) ? explode(' - ', $_POST["id_ubicacion_envio_array"]) : "";
+		if (isset($_POST["id_ubicacion_envio_array"]) and $_POST["id_ubicacion_envio_array"] != "") {
+			$id_ubicacion_envio_array = explode(' - ', $_POST["id_ubicacion_envio_array"]);
+		} else {
+			$id_ubicacion_envio_array = ["", "null", "null"];
+		}
 
 		$json = json_decode(json_encode($POST));
+
+
+		$sql = "SELECT *  FROM cartera_empresa where estado='A'
+		and  idempresa='$idempresa'
+		";
+		$idempleadoAntiguo = $conexion->query($sql)->fetch_object()->idempleado;
+
+		if ($idempleadoAntiguo != $json->txtEmpleadoAsignado) {
+			$sql = "UPDATE cartera_empresa set estado ='C' WHERE idempresa='$idempresa';";
+			$query = $conexion->query($sql);
+
+
+
+			$sql = "INSERT  INTO cartera_empresa
+		(
+		idempleado,
+		idempresa,
+		fecha_registro,
+		fecha_modificado,
+		estado,
+		idempleado_asignador,
+		idmotivo_asignacion
+		) VALUES (
+		$json->txtEmpleadoAsignado,
+		$idempresa,
+		CURRENT_TIMESTAMP(),
+		CURRENT_TIMESTAMP(),
+		'A',
+		" . $_SESSION['idempleado'] . " ,
+		'$json->idselect_motivo_reasignacion_por_cliente'
+		);";
+
+		echo $sql;
+			$query = $conexion->query($sql);
+		}
+
+
+
+		$idcategoria_empresa = !empty($json->txtTipoEstablecimiento) ? $json->txtTipoEstablecimiento : "null";
 
 
 		$sql = "UPDATE empresa set 
 			horario='$json->txtHorario',
 			estado='1',
 			telefono='$json->txtTelefono',
-			idcategoria_empresa='$json->txtTipoEstablecimiento',
+			idcategoria_empresa=$idcategoria_empresa,
+			verificacion='$json->txt_verificacion',
 			razon_comercial='$json->txtNombreEstablecimiento',
 			direccion='$json->txtDireccionEstablecimiento',
-			idprovincia='$id_ubicacion_envio_array[1]',
-			iddistrito='$id_ubicacion_envio_array[2]',
+			idprovincia=$id_ubicacion_envio_array[1],
+			iddistrito=$id_ubicacion_envio_array[2],
 			idempleado='" . $_SESSION['idempleado'] . "',
 			nombre='$json->txtNombre'
 			,
@@ -297,7 +382,7 @@ class Establecimiento
 
 			WHERE idempresa = $idempresa";
 
-		// echo $sql;
+
 		$query = $conexion->query($sql);
 		return $query;
 	}

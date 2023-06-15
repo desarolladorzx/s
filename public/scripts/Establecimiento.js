@@ -21,6 +21,8 @@ function traerDatosTipoEstablecimiento() {
   });
 }
 
+
+var nuevo_establecimiento=false
 function traerDatosRolVendedor() {
   $.ajax({
     url: "./ajax/EstablecimientoAjax.php?op=traerDatosRolVendedor",
@@ -50,6 +52,60 @@ function traerDatosRolVendedor() {
 }
 
 function init() {
+
+  $("#btn_guardar_nuevo_motivo_reasignacion_empresa").click(function () {
+    if ($("#txt_nuevo_motivo_reasignacion").val()) {
+      $.ajax({
+        url: "./ajax/EstablecimientoAjax.php?op=GuardarMotivoReasignacionEmpresa",
+        dataType: "json",
+        data: {
+          motivo_reasignacion: $("#txt_nuevo_motivo_reasignacion").val(),
+        },
+        type: "post",
+        dataType: "json",
+        success: function (e) {
+          console.log(e);
+
+          $("#txt_nuevo_motivo_reasignacion").val("");
+
+          swal(
+            "Mensaje del Sistema",
+            "Se creo un nuevo motivo de reasginacion",
+            "success"
+          );
+
+          $("#motivo_reasignacionModal").modal("hide");
+        },
+        error: function (e) {
+          $("#txt_nuevo_motivo_reasignacion").val("");
+
+          swal(
+            "Mensaje del Sistema",
+            "No se pudo crear un nuevo motivo de reasginacion",
+            "success"
+          );
+
+
+          $("#motivo_reasignacionModal").modal("hide");
+        },
+      });
+    } else {
+      alert("Es necesario agregar el motivo");
+    }
+  });
+
+
+
+  $('#txtEmpleadoAsignado').on('change', function (e) {
+    
+
+    if(nuevo_establecimiento==false){ 
+      $('#motivo_reasignacionModalporCliente').modal('show');
+      
+    }
+
+  })
+
   $(".horaInicio ").val("09:00");
   $(".horaFin").val("20:30");
 
@@ -190,19 +246,32 @@ function init() {
 
       success: function (datos) {
         
-        swal("Mensaje del Sistema", datos, "success");
+       
+        swal(
+          {
+            title: "Mensaje del Sistema",
+            text: datos,
+            icon: "success",
+          },
+          function (confirm) {
+            if (confirm) {
+              location.reload();
+            }
+          }
+        );
 
-        ListadoEstablecimientos();
 
-        OcultarForm();
+        // ListadoEstablecimientos();
+
+        // OcultarForm();
         
-        $("input").val("");
+        // $("input").val("");
         
-        $("select").val("");
+        // $("select").val("");
         
-        $("#image-preview-container").html("");
+        // $("#image-preview-container").html("");
         
-        $("#container_select_button").show();
+        // $("#container_select_button").show();
       },
     });
   }
@@ -214,12 +283,13 @@ function init() {
   }
 
   function VerFormEstablecimiento() {
+
+    nuevo_establecimiento=true
     $("#VerForm").show(); // Mostramos el formulario
     $("#btnNuevoEstablecimiento").hide(); // ocultamos el boton nuevo
     $("#VerListado").hide();
 
-    $("input").prop("required", false);
-    $("select").prop("required", false);
+
 
     // $('#txtFileFotografia').prop('required',true)
     $("#container_select_button").hide();
@@ -314,9 +384,17 @@ function cargarDataEstablecimiento(id, editable) {
 
     type: "GET",
     success: function (empresa) {
-      $("input").prop("required", true);
-      $("select").prop("required", true);
+      // $("input").prop("required", true);
+      // $("select").prop("required", true);
 
+      $('#idselect_motivo_reasignacion_por_cliente').prop('required',false)
+
+
+      $("#txt_verificacion").val(empresa.verificacion);
+
+      $("#txtEmpleadoAsignado").val(empresa.empleado_asignado)
+ 
+      
       $("#hor_ini_lunes").val(empresa.hor_ini_lunes);
       $("#hor_ini_martes").val(empresa.hor_ini_martes);
       $("#hor_ini_miercoles").val(empresa.hor_ini_miercoles);
@@ -359,7 +437,14 @@ function cargarDataEstablecimiento(id, editable) {
         $("select").prop("disabled", true);
         $("#btnRegistrar_Establecimiento").hide();
       }
+
+  
+
     },
+
+    error:function(error){
+      console.error(error)
+    }
   });
 
   // funcion que llamamos del archivo ajax/CategoriaAjax.php linea 52

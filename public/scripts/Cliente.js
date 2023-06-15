@@ -84,10 +84,7 @@ function init() {
 
 $('#txt_empleado_asignado').change(function() {
 
-  console.log('45645435245')
-
   $('#motivo_reasignacionModalporCliente').modal('show');
-
 
 })
 

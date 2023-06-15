@@ -6,6 +6,16 @@ $obj = new Establecimiento();
 switch ($_GET["op"]) {
 
 
+    case 'GuardarMotivoReasignacionEmpresa':
+
+
+        $query_Tipo = $obj->GuardarMotivoReasignacionEmpresa($_POST);
+
+        echo  json_encode($query_Tipo);
+
+        break;
+
+
     case 'traerDatosRolVendedor':
 
         $query_Tipo = $obj->traerDatosRolVendedor();

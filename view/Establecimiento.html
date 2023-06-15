@@ -12,6 +12,54 @@
     </div>
   </div>
   <!-- /.box-header -->
+
+  <div 
+  id="motivo_reasignacionModal"
+  tabindex="-1"
+  style="z-index: 10000;"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+  class="modal fade bs-example-modal-lg"
+>
+  <div class="modal-dialog modal-center modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" >
+          Agregar Nuevo Motivo de Reasignacion
+        </h4>
+
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12"> 
+            <label for="">Nuevo Motivo de Reasignacion</label>
+            <input 
+            type="text"
+            id="txt_nuevo_motivo_reasignacion"
+            class="form-control"> 
+          </div>
+          <div class="col-lg-12 left"  style="display: flex; justify-content: end;">
+            <button type="button" class="btn btn-primary"
+            id="btn_guardar_nuevo_motivo_reasignacion_empresa"
+            
+            style="margin:10px 0">
+              Guardar
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="box-body">
     <div class="row">
       <div class="col-md-12">
@@ -26,37 +74,26 @@
             <div class="row">
               <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <label>Informacion de Establecimiento</label><br />
-
-
-               
                 <input
                   type="hidden"
                   class="form-control"
-                  required
                   placeholder="Ubicacion de Envio"
-                  
                   id="idEstablecimiento"
                   name="idEstablecimiento"
                   style="text-transform: uppercase"
                 />
 
               </div>
-             
-             
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                 <div class="row">
-                  
-
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                     <div class="form-group has-success">
                       <label>Tipo de Establecimiento (*):</label>
-                    
                       <select 
                       name="txtTipoEstablecimiento" id="txtTipoEstablecimiento"
                       class="form-control tipo_establecimiento_select"
                       placeholder="Tipo de Establecimiento (*)"
                       >
-    
                       </select>
                     </div>
                   </div>
@@ -82,7 +119,7 @@
                       <input
                         type="hidden"
                         class="form-control"
-                        required
+                        
                         placeholder="Ubicacion de Establecimiento (*)"
                         list="ubicacions"
                         id="id_ubicacion_envio_array"
@@ -93,7 +130,7 @@
                       <input
                         type="text"
                         class="form-control"
-                        required
+                  
                         placeholder="Ubicacion de Establecimiento"
                         list="ubicacion"
                         id="txt_ubicacion_establecimiento"
@@ -112,25 +149,73 @@
                     
                       <select 
                       name="txt_verificacion" id="txt_verificacion"
-                      required=""
+                   required
                       class="form-control "
                       placeholder="verifacion (*)"
                       >
-
-                      <option value=""></option>
                       <option value="SIN VERIFICAR">Sin Verificar</option>
                       <option value="VERIFICADO">Verificado</option>
                     </select>
                   </div>
                   </div>
+
+                  <div
+                  id="motivo_reasignacionModalporCliente"
+                  class="modal fade bs-example-modal-lg"
+                  tabindex="-1"
+
+                  data-backdrop="static"
+                  data-keyboard="false"
+
+                  role="dialog"
+                  aria-labelledby="myLargeModalLabel"
+                >
+                  <div class="modal-dialog modal-center modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                       
+                        <h4 class="modal-title">Agregar Motivo de Reasignacion</h4>
+                      </div>
+                      <div class="modal-body">
+                       
+                      
+                          <label for="">Motivo De Reasignacion</label>
+                          <div class="form-group has-success">
+                            <label>Motivo de Resignacion:</label>
+                            <div style="display: flex;">
+          
+                              <select
+                              id="idselect_motivo_reasignacion_por_cliente"
+          
+                              name="idselect_motivo_reasignacion_por_cliente"
+                              class="form-control select_motivo_reasignacion"
+                              
+                              
+                              ></select>
+                              <button style="margin:  0 10px;" class="btn btn-primary"   onclick="motivo_reasignacionModal()"
+                              type="button"
+                              > 
+                                <i class="glyphicon glyphicon-plus"></i>
+                              </button>
+                            </div>
+                          </div>
+          
+                      </div>
+                     
+                     
+                    </div>
+                  </div>
+                </div>
+
                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left">
                     <div class="form-group has-success">
                       <label>Empleado Asignado (*):</label>
 
                       <select 
-                      name="txtEmpleadoAsignado" id="txtEmpleadoAsignado"
-                      required=""
-                      value="6"
+                      name="txtEmpleadoAsignado"
+                      
+                      id="txtEmpleadoAsignado"
+                
                       class="form-control tipo_empleadoAsignadoEstablecimiento"
                       placeholder="Empleado  Asignado (*)"
                       >
@@ -152,7 +237,7 @@
                         maxlength="150"
                         class="form-control"
                         name="txtDireccionEstablecimiento"
-                        required=""
+                       
                         placeholder="Dirección Establecimiento (*)"
                         autofocus=""
                       />
@@ -335,7 +420,7 @@
                     maxlength="150"
                     class="form-control"
                     name="txtNombre"
-                    required=""
+                   
                     placeholder="Dueño o Administrador"
                     autofocus=""
                   />
@@ -350,7 +435,7 @@
                     maxlength="150"
                     class="form-control"
                     name="txtTelefono"
-                    required=""
+                    required
                     placeholder="Nº Celular del Dueño"
                     autofocus=""
                   />
@@ -371,7 +456,7 @@
                     class="form-control"
                     name="txtFileFotografia"
                     multiple
-                    required  
+                      
                     placeholder="Fotografías Fachada"
                     autofocus=""
                   />
@@ -606,6 +691,34 @@
 <script type="text/javascript">
   $("#liVentasCampo").addClass("treeview active");
   $("#liEstablecimiento").addClass("active");
+
+
+  $('.select_motivo_reasignacion').focus(function() {
+    traerMotivoReasignacion()
+  })
+
+  function traerMotivoReasignacion(){
+    $.ajax({
+      url: "./ajax/ClienteAjax.php?op=traerMotivoReasignacionEmpresa",
+      dataType: "json",
+      type: "get",
+      success: function (rpta) {
+
+        console.log(rpta);
+        var ubicacion_containe_options_html = '<option value=""></option>';
+
+        rpta.map((e) => {
+          ubicacion_containe_options_html += `<option data-id='${e.idmotivo_reasignacion}' value='${e.idmotivo_reasignacion}'> ${e.descripcion} </option>`;
+        });
+
+        $(".select_motivo_reasignacion").html(ubicacion_containe_options_html);
+      },
+      error: function (e) {
+        console.log(e)
+      },
+    });
+  }
+
 
 
 

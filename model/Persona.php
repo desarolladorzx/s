@@ -63,6 +63,18 @@ class Persona
 		return $query;
 	}
 
+	public function traerMotivoReasignacionEmpresa()
+	{
+		global $conexion;
+
+		$sql = "SELECT  *  FROM motivo_reasignacion where estado='A' and tipo='empresa'
+		";
+
+		$query = $conexion->query($sql);
+		return $query;
+	}
+
+
 	public function GuardarMotivoReasignacion($_post)
 	{
 		global $conexion;
