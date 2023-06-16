@@ -362,7 +362,7 @@
 	
 					
 					where c.idpersona= $idcliente and v.estado='A'
-					order by v.fecha ASC
+					order by v.fecha DESC
 	
 
 			";
