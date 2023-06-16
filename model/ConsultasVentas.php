@@ -10,18 +10,14 @@
 		public function listaDePersonasVendedor(){
 			global $conexion;
 			$sql="SELECT *,idempleado ,rol.r_prefijo, CONCAT(nombre,' ',apellidos) nombre
-			
 			,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
-
-
-			 FROM empleado
+			FROM empleado
 			JOIN rol ON rol.r_id=empleado.idrol
 			JOIN area  ON area.idarea=rol.idarea 
-			 WHERE 
-
+			WHERE 
 			(area.idarea=4 or  area.idarea=1)
 		AND (empleado.estado='A' OR empleado.estado='S')
-		
+
 			 ORDER 
 			 BY 
 			CASE idrol 
@@ -29,10 +25,8 @@
 			    WHEN 3 THEN 2 
 			    WHEN 1 THEN 3 
 			    ELSE 4 
-			  END
-			  asc
-			  
-			  ";
+			END
+			asc";
 			$query=$conexion->query($sql);
 			return $query;
 		}

@@ -94,7 +94,13 @@ class Persona
 	{
 		global $conexion;
 
-		$sql = "SELECT  *  FROM empleado where idrol=1
+		$sql = "SELECT *,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
+		FROM empleado
+		JOIN rol ON rol.r_id=empleado.idrol
+		JOIN area  ON area.idarea=rol.idarea 
+		 WHERE 
+		 (area.idarea=4 or  area.idarea=1)
+		AND empleado.estado='A'
 		";
 
 		$query = $conexion->query($sql);

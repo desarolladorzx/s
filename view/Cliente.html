@@ -1325,7 +1325,7 @@
         var ubicacion_containe_options_html = '<option value=""></option>';
 
         rpta.map((e) => {
-          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.apellidos} ${e.nombre} </option>`;
+          ubicacion_containe_options_html += `<option data-id='${e.idempleado}' value='${e.idempleado} '>${e.rol_nombre_usuario} </option>`;
         });
 
         $("#select_personal_vendedor").html(ubicacion_containe_options_html);
