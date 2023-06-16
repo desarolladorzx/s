@@ -46,7 +46,7 @@ class articulo
 					
 						)";
 
-		echo $sql;
+		// echo $sql;
 		$query = $conexion->query($sql);
 		return $query;
 	}

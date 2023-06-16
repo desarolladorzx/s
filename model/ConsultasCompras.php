@@ -129,7 +129,7 @@
 			}
 			global $conexion;
 			$sql = "select i.idingreso, i.fecha,s.razon_social as sucursal,
-				concat(e.apellidos,' ',e.nombre) as empleado,
+				concat(rol.r_prefijo,' ',e.nombre_usuario) as empleado,
 				p.nombre as proveedor,i.tipo_comprobante as comprobante,
 				i.serie_comprobante as serie,i.num_comprobante as numero,
 				i.impuesto,
@@ -139,6 +139,7 @@
 				from ingreso i inner join sucursal s on i.idsucursal=s.idsucursal
 				inner join usuario u on i.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+				join rol on r_id=e.idrol
 				inner join persona p on i.idproveedor=p.idpersona
 				where i.fecha>='$fecha_desde' and i.fecha<='$fecha_hasta'
 				 $sqlProveedor
@@ -164,7 +165,7 @@
 
 			global $conexion;
 			$sql = "select i.fecha,s.razon_social as sucursal,
-				concat(e.apellidos,' ',e.nombre) as empleado,
+			concat(rol.r_prefijo,' ',e.nombre_usuario) as empleado,
 				p.nombre as proveedor,i.tipo_comprobante as comprobante,
 				i.serie_comprobante as serie,i.num_comprobante as numero,
 				i.impuesto,
@@ -181,6 +182,9 @@
 				inner join sucursal s on i.idsucursal=s.idsucursal
 				inner join usuario u on i.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
+
+				join rol on r_id=e.idrol
+				
 				inner join persona p on i.idproveedor=p.idpersona
 				where i.fecha>='$fecha_desde' and i.fecha<='$fecha_hasta'
 				and s.idsucursal= $idsucursal and i.estado='A' $sqlProveedor 

@@ -35,10 +35,23 @@ function init(){
 
 	                {
 							
-	                    swal("Mensaje del Sistema", datos, "success");
-						  ListadoArticulos();
-						  OcultarForm();
-						  $('#frmArticulos').trigger("reset");
+	                    // swal("Mensaje del Sistema", datos, "success");
+						//   ListadoArticulos();
+						//   OcultarForm();
+						//   $('#frmArticulos').trigger("reset");
+						  swal(
+							{
+							  title: "Mensaje del Sistema",
+							  text: datos,
+							  icon: "success",
+							},
+							function (confirm) {
+							  if (confirm) {
+								location.reload();
+							  }
+							}
+						  );
+
 	                }
 
 	            });

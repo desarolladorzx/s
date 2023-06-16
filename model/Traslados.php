@@ -12,8 +12,8 @@ class Traslados
         $sql = "SELECT
            
         idtraslado,
-        CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_ingreso,
-        CONCAT(emp2.nombre ,' ',emp2.apellidos) empleado_recepcion,
+        CONCAT(rol.r_prefijo ,' ',empleado.nombre_usuario) empleado_ingreso,
+        CONCAT(rol2.r_prefijo ,' ',emp2.nombre_usuario) empleado_recepcion,
         
         traslados.fecha_registro fecha,
         sucursal.razon_social almacen_inicial ,
@@ -27,9 +27,11 @@ class Traslados
         left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id
             LEFT JOIN usuario ON usuario.idusuario =traslados.id_empleado
             LEFT JOIN empleado ON empleado.idempleado=usuario.idempleado
+            LEFT JOIN rol ON rol.r_id=empleado.idrol
             
             left JOIN usuario usu2 ON usu2.idusuario =traslados.id_empleado_recepcion
-             left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado
+            left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado
+            left JOIN rol rol2 ON rol2.r_id=empleado.idrol
         where idtraslado=$idtraslado
         ";
         $query = $conexion->query($sql);
@@ -495,8 +497,8 @@ class Traslados
         $sql = "SELECT
            
         idtraslado,
-        CONCAT(empleado.nombre ,' ',empleado.apellidos) empleado_ingreso,
-        CONCAT(emp2.nombre ,' ',emp2.apellidos) empleado_recepcion,
+        CONCAT(rol.r_prefijo ,' ',empleado.nombre_usuario) empleado_ingreso,
+        CONCAT(rol2.r_prefijo ,' ',emp2.nombre_usuario) empleado_recepcion,
         
         traslados.fecha_registro fecha,
         sucursal.razon_social almacen_inicial ,
@@ -510,9 +512,11 @@ class Traslados
         left join sucursal  sucu on sucu.idsucursal=traslados.sucursal_destino_id
             LEFT JOIN usuario ON usuario.idusuario =traslados.id_empleado
             LEFT JOIN empleado ON empleado.idempleado=usuario.idempleado
+            LEFT JOIN rol ON rol.r_id=empleado.idrol
             
             left JOIN usuario usu2 ON usu2.idusuario =traslados.id_empleado_recepcion
              left JOIN empleado emp2 ON emp2.idempleado=usu2.idempleado
+             LEFT JOIN rol rol2 ON rol2.r_id=emp2.idrol
              
 
              order by idtraslado desc

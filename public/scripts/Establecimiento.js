@@ -121,8 +121,11 @@ function init() {
     var valorSeleccionado = this.value;
 
     console.log(valorSeleccionado);
-    tablaEstablecimiento.column(8).search(valorSeleccionado).draw();
+    tablaEstablecimiento.column(9).search(valorSeleccionado).draw();
 
+
+    // console.log(tablaEstablecimiento.rows().data())
+    
     let valoresFiltrados = tablaEstablecimiento
       .rows({ search: "applied" })
       .data()                 

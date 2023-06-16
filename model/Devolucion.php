@@ -24,8 +24,9 @@ class Devolucion
 
 	public function TraerListaDevolucion(){
 		global $conexion;
-		$sql = "SELECT dev.*, dev.iddevolucion, dev.iddevolucion_motivo, dev.fecha fecha, CONCAT(emp.nombre,' ',emp.apellidos) usuario ,filename devolucion ,dev_mot.descripcion motivo,dev.observacion FROM devolucion dev
+		$sql = "SELECT dev.*, dev.iddevolucion, dev.iddevolucion_motivo, dev.fecha fecha, CONCAT(rol.r_prefijo,' ',emp.nombre_usuario) usuario ,filename devolucion ,dev_mot.descripcion motivo,dev.observacion FROM devolucion dev
 		JOIN empleado emp ON  emp.idempleado=dev.idempleado
+		JOIN rol  ON  emp.idrol=rol.r_id
 		JOIN devolucion_motivo dev_mot ON  dev_mot.iddevolucion_motivo=dev.iddevolucion_motivo
 		where dev.idsucursal=".$_SESSION["idsucursal"]. "
 		ORDER BY iddevolucion desc 
