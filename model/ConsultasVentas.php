@@ -19,10 +19,9 @@
 			JOIN area  ON area.idarea=rol.idarea 
 			 WHERE 
 
-			 area.idarea=4 or  area.idarea=1
-AND empleado.estado='A'
-
-
+			(area.idarea=4 or  area.idarea=1)
+		AND (empleado.estado='A' OR empleado.estado='S')
+		
 			 ORDER 
 			 BY 
 			CASE idrol 

@@ -1190,7 +1190,7 @@ function buscarPorNumeroDocumento() {
             swal("Mensaje del Sistema", "error del sistema", "error");
             break;
           case "no_encontrado":
-            console.log(434534534534);
+ 
             $("#txt_empleado_asignado").val($("#txtEmpleadoNuevo").val());
 
             // $('#cboTipo_Persona').val('FINAL')
