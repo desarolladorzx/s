@@ -28,7 +28,7 @@ class Establecimiento
 	public function traerDatosRolVendedor()
 	{
 		global $conexion;
-		$sql = "SELECT *  FROM  empleado WHERE  idrol=1 or idrol=2 or idrol=7;";
+		$sql = "SELECT *  FROM  empleado WHERE  (idrol=3 or idrol=2 or idrol=7 ) and empleado.estado='A';";
 
 
 
@@ -38,7 +38,9 @@ class Establecimiento
 		left JOIN rol ON rol.r_id=empleado.idrol
 		
 		LEFT JOIN area ON area.idarea=rol.idarea
-		WHERE  idrol=1 or idrol=2 or idrol=7;";
+		WHERE  (idrol=2 or idrol=3 or idrol=7)
+		and empleado.estado='A'
+		;";
 
 
 		$query = $conexion->query($sql);
@@ -342,7 +344,7 @@ class Establecimiento
 		'$json->idselect_motivo_reasignacion_por_cliente'
 		);";
 
-		echo $sql;
+		// echo $sql;
 			$query = $conexion->query($sql);
 		}
 
