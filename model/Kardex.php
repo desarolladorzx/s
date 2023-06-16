@@ -17,7 +17,8 @@ class Kardex
 		FROM articulo 
 		left join categoria on categoria.idcategoria=articulo.idcategoria
 		
-		WHERE CONCAT(articulo.nombre,' ',categoria.nombre) like '%$q%'";
+		WHERE CONCAT(articulo.nombre,' ',categoria.nombre) like '%$q%' and articulo.estado='A'";
+
 		$query = $conexion->query($sql);
 
 
