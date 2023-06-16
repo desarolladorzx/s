@@ -141,6 +141,7 @@ function init() {
     var opt = $("input[type=radio]:checked");
     $("#txtIdCliente").val(opt.val());
 
+
     tipo_persona = opt.attr("tipo_persona");
 
     // $("#btnBuscarCliente").prop("disabled", true);
@@ -154,6 +155,8 @@ function init() {
     // }
 
     // tablaArticulo.columns.adjust().draw();
+    
+    ListadoVentasCliente();
 
     $("#txtCliente").val(opt.attr("data-nombre"));
     email = opt.attr("data-email");

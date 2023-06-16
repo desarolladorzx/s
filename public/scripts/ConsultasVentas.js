@@ -75,7 +75,11 @@ function init() {
   $("#cboFechaDesdeVentCred").change(ListadoVentasCredito);
   $("#cboFechaHastaVentCred").change(ListadoVentasCredito);
 
-  $("#txtIdCliente").change(ListadoVentasCliente);
+  $("#txtIdCliente").on('change', function(){
+
+    ListadoVentasCliente()
+  }
+  );
   $("#cboFechaDesdeCli").change(ListadoVentasCliente);
   $("#cboFechaHastaCli").change(ListadoVentasCliente);
 
@@ -445,9 +449,11 @@ function ListadoVentasCredito() {
 }
 
 function ListadoVentasCliente() {
+
+  // console.log('asdas')
   if (
-    $("#cboFechaDesdeCli").val() != "" &&
-    $("#cboFechaHastaCli").val() != "" &&
+    // $("#cboFechaDesdeCli").val() != "" &&
+    // $("#cboFechaHastaCli").val() != "" &&
     $("#txtIdCliente").val() != ""
   ) {
     var idCliente = $("#txtIdCliente").val(),
@@ -483,8 +489,8 @@ function ListadoVentasCliente() {
           dataType: "json",
           data: {
             idCliente: idCliente,
-            fecha_desde: fecha_desde,
-            fecha_hasta: fecha_hasta,
+            fecha_desde: 1,
+            fecha_hasta: 2,
             idsucursal: idsucursal,
           },
           error: function (e) {

@@ -95,7 +95,7 @@
 				else v.idventa
 				end
 				order by v.idventa asc";
-				// echo $sql;
+				echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -315,8 +315,9 @@
 				inner join usuario u on p.idusuario=u.idusuario
 				inner join empleado e on u.idempleado=e.idempleado
 				inner join persona pe on p.idcliente=pe.idpersona
-				where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
-				and pe.idpersona= $idcliente and v.estado='A'
+				where 
+				-- v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'and 
+				pe.idpersona= $idcliente and v.estado='A'
 				order by v.fecha desc
 				";
 			$sql="SELECT *, concat(em_anu.nombre ,' ',em_anu.apellidos) empleado_anulado_txt,p.*, concat(e.nombre,' ',e.apellidos,' |  ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
@@ -359,13 +360,13 @@
 			LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
 			left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
 	
-					where v.fecha>='$fecha_desde' and v.fecha<='$fecha_hasta'
-					and c.idpersona= $idcliente and v.estado='A'
+					
+					where c.idpersona= $idcliente and v.estado='A'
 					order by v.fecha ASC
 	
 
 			";
-
+				// echo $sql;
 	
 			$query = $conexion->query($sql);
 			return $query;
