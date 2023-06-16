@@ -32,14 +32,13 @@ class Establecimiento
 
 
 
-		$sql = "SELECT *  ,CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) rol_nombre_usuario
-		
-		FROM  empleado 
-		left JOIN rol ON rol.r_id=empleado.idrol
-		
-		LEFT JOIN area ON area.idarea=rol.idarea
-		WHERE  (idrol=2 or idrol=3 or idrol=7)
-		and empleado.estado='A'
+		$sql = "SELECT *, CONCAT(IFNULL(r_prefijo, ' '), ' - ', IFNULL(nombre_usuario, ' ')) AS rol_nombre_usuario
+		FROM empleado
+		LEFT JOIN rol ON rol.r_id = empleado.idrol
+		LEFT JOIN area ON area.idarea = rol.idarea
+		WHERE (idrol = 2 OR idrol = 3 OR idrol = 7)
+		  AND empleado.estado = 'A'
+		ORDER BY FIELD(idrol, 2, 3, 7);
 		;";
 
 
