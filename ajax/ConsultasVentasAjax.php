@@ -47,10 +47,12 @@ switch ($_GET["op"]) {
                     /*                          "10"=>$reg->num_ope,
                          "11"=>$reg->fecha_operacion, */
                     "12" => $reg->total,
-                    "13" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" 
+                    "13" => 
+                    // '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->email . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\',\'' . $reg->tipo_entrega . '\',\'' . $reg->observacion . '\',\'' . $reg->modo_pago . '\')" 
                     
                     
-                    ><i class="fa fa-eye"></i> </button>&nbsp' .
+                    // ><i class="fa fa-eye"></i> </button>&nbsp'
+                    '<button class="btn btn-success" data-toggle="tooltip" title="VER DETALLES" onclick="openModalDetalleVentas('.$reg->idpedido.')" ><i class="fa fa-eye"></i>  </button>&nbsp'. 
                          '<a href="./Reportes/exVenta.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                );
           }
@@ -154,7 +156,11 @@ switch ($_GET["op"]) {
                     /* "11"=>$reg->fecha_operacion, */
                     "10" => $reg->total,
                     "11" => ($reg->estado == "A") ? '<span class="badge bg-green">ACEPTADO</span>' : '<span class="badge bg-red">CANCELADO</span>',
-                    "12" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg->total . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+                    "12" => 
+                    // '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg->total . '\')" ><i class="fa fa-eye"></i> </button>&nbsp' .
+
+                    '<button class="btn btn-success" data-toggle="tooltip" title="VER DETALLES" onclick="openModalDetalleVentas('.$reg->idpedido.')" ><i class="fa fa-eye"></i>  </button>&nbsp'. 
+
                          '<a href="./Reportes/exVenta.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                );
           }
@@ -188,7 +194,8 @@ switch ($_GET["op"]) {
                     "9" => $reg->totalimpuesto,
                     "10" => $reg->totalpagar,
                     "11" => $reg->totalpagado,
-                    "12" => $reg->totaldeuda
+                    "12" => $reg->totaldeuda,
+                    '13'=>'<button class="btn btn-success" data-toggle="tooltip" title="VER DETALLES" onclick="openModalDetalleVentas('.$reg->idpedido.')" ><i class="fa fa-eye"></i>  </button>&nbsp'
                );
           }
           $results = array(
@@ -295,9 +302,14 @@ switch ($_GET["op"]) {
                     /*                          "10"=>$reg->num_ope,
                          "11"=>$reg->fecha_operacion, */
                     "10" => $reg->total,
-                    "11" => '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\'
+                    "11" => 
+                    
+                    // '<button class="btn btn-success" data-toggle="tooltip" title="Ver Detalle" onclick="cargarDataPedido(' . $reg->idpedido . ',\'' . $reg->tipo_pedido . '\',\'' . $reg->numero . '\',\'' . $reg->cliente . '\',\'' . $reg_total->Total . '\',\'' . $reg->num_documento . '\',\'' . $reg->celular . '\',\'' . $reg->tipo_cliente . '\',\'' . $reg->destino . '\',\'' . $reg->ticket . '\',\'' . $reg->aproba_venta . '\',\'' . $reg->aproba_pedido . '\',\'' . $reg->empleado . '\',\'' . $reg->metodo_pago . '\',\'' . $reg->agencia_envio . '\',\'' . $reg->tipo_promocion . '\'
 					
-                    )" ><i class="fa fa-eye"></i> </button>&nbsp' .
+                    // )" ><i class="fa fa-eye"></i> </button>&nbsp'
+                    '<button class="btn btn-success" data-toggle="tooltip" title="VER DETALLES" onclick="openModalDetalleVentas('.$reg->idpedido.')" ><i class="fa fa-eye"></i>  </button>&nbsp'
+
+                    .
                          '<a href="./Reportes/exVenta.php?id=' . $reg->idpedido . '" class="btn btn-primary" data-toggle="tooltip" title="Imprimir" target="blanck" ><i class="fa fa-file-text"></i> </a>&nbsp;'
                );
           }
@@ -367,7 +379,8 @@ switch ($_GET["op"]) {
                     "8" => $reg->impuesto,
                     "9" => $reg->subtotal,
                     "10" => $reg->totalimpuesto,
-                    "11" => $reg->total
+                    "11" => $reg->total,
+                    '12'=>'<button class="btn btn-success" data-toggle="tooltip" title="VER DETALLES" onclick="openModalDetalleVentas('.$reg->idpedido.')" ><i class="fa fa-eye"></i>  </button>&nbsp'
                );
           }
           $results = array(

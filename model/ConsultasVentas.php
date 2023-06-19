@@ -95,7 +95,7 @@
 				else v.idventa
 				end
 				order by v.idventa asc";
-				echo $sql;
+				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -189,7 +189,7 @@
 
 		public function ListarVentasPendientes($fecha_desde, $fecha_hasta){
 			global $conexion;
-			$sql = "select v.fecha,s.razon_social as sucursal,
+			$sql = "select p.idpedido,	 v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
 				concat(pe.nombre,' ',pe.apellido) as cliente,
 				v.tipo_comprobante as comprobante,
@@ -198,6 +198,13 @@
 				a.nombre as articulo,di.codigo as codigo,di.serie as serie_art,
 				dp.cantidad,dp.precio_venta,dp.descuento,
 				(dp.cantidad*(dp.precio_venta-dp.descuento))as total
+
+				,format((v.total-(v.impuesto*v.total/(100+v.impuesto))),2) as subtotal,
+				format((v.impuesto*v.total/(100+v.impuesto)),2) as totalimpuesto,
+				v.total as totalpagar,(select sum(total_pago) from credito where idventa=v.idventa)as totalpagado,
+		 		(v.total-(select sum(total_pago) from credito where idventa=v.idventa))as totaldeuda
+		
+
 				from detalle_pedido dp inner join detalle_ingreso di on dp.iddetalle_ingreso=di.iddetalle_ingreso
 				inner join articulo a on di.idarticulo=a.idarticulo
 				inner join pedido p on dp.idpedido=p.idpedido 
@@ -210,6 +217,7 @@
 				and v.estado='A'
 				order by v.fecha desc
 				";
+				// echo $sql;
 			$query = $conexion->query($sql);
 			return $query;
 		}
@@ -374,7 +382,7 @@
 
 		public function ListarVentasEmpleado($idempleado, $fecha_desde, $fecha_hasta){
 			global $conexion;
-			$sql = "select v.fecha,s.razon_social as sucursal,
+			$sql = "select p.idpedido, v.fecha,s.razon_social as sucursal,
 				concat(e.apellidos,' ',e.nombre) as empleado,
 
 				CONCAT (IFNULL(r_prefijo,' '), ' - ',IFNULL(nombre_usuario,' ')) nombre_usuario_rol,

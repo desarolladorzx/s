@@ -1555,7 +1555,7 @@ function cargarDataPedido(
 }
 
 function mostrarDetalleImagenes(idPedido) {
-  $("#detalleImagenes").html("");
+  $(".detalleImagenes").html("");
 
   $.post(
     "./ajax/PedidoAjax.php?op=GetImagenes",
@@ -1564,16 +1564,16 @@ function mostrarDetalleImagenes(idPedido) {
     },
     function (r) {
       if (r != "") {
-        $("#detalleImagenes").html(r);
+        $(".detalleImagenes").html(r);
       } else {
-        $("#detalleImagenes").html("Sin datos que mostrar...");
+        $(".detalleImagenes").html("Sin datos que mostrar...");
       }
     }
   );
 }
 
 function mostrarDetalleImagenesEmpaquetado(idPedido) {
-  $("#detalleImagenesEmpaquetado").html("");
+  $(".detalleImagenesEmpaquetado").html("");
 
   $.post(
     "./ajax/PedidoAjax.php?op=GetImagenesEmpaquetado",
@@ -1582,16 +1582,16 @@ function mostrarDetalleImagenesEmpaquetado(idPedido) {
     },
     function (r) {
       if (r != "") {
-        $("#detalleImagenesEmpaquetado").html(r);
+        $(".detalleImagenesEmpaquetado").html(r);
       } else {
-        $("#detalleImagenesEmpaquetado").html("Sin datos que mostrar...");
+        $(".detalleImagenesEmpaquetado").html("Sin datos que mostrar...");
       }
     }
   );
 }
 
 function mostrarDetalleImagenesFEFO(idPedido) {
-  $("#detalleImagenesChat").html("");
+  $(".detalleImagenesFEFO").html("");
 
   $.post(
     "./ajax/PedidoAjax.php?op=GetImagenesFEFO",
@@ -1601,9 +1601,9 @@ function mostrarDetalleImagenesFEFO(idPedido) {
     function (r) {
       // console.log(r);
       if (r != "") {
-        $("#detalleImagenesFEFO").html(r);
+        $(".detalleImagenesFEFO").html(r);
       } else {
-        $("#detalleImagenesFEFO").html("Sin datos que mostrar...");
+        $(".detalleImagenesFEFO").html("Sin datos que mostrar...");
       }
     }
   );
@@ -1638,7 +1638,7 @@ $("#btn_cancelar_imagen").click(function (e) {
 });
 
 function mostrarDetalleImagenesChat(idPedido) {
-  $("#detalleImagenesChat").html("");
+  $(".detalleImagenesChat").html("");
 
   $.post(
     "./ajax/PedidoAjax.php?op=GetImagenesChat",
@@ -1648,9 +1648,9 @@ function mostrarDetalleImagenesChat(idPedido) {
     function (r) {
       // console.log(r);
       if (r != "") {
-        $("#detalleImagenesChat").html(r);
+        $(".detalleImagenesChat").html(r);
       } else {
-        $("#detalleImagenesChat").html("Sin datos que mostrar...");
+        $(".detalleImagenesChat").html("Sin datos que mostrar...");
       }
     }
   );
@@ -1695,8 +1695,7 @@ $("#btn_eliminar_imagen").click(function (e) {
 });
 
 function CargarDetallePedido(idPedido) {
-  //$('th:nth-child(2)').hide();
-  //$('th:nth-child(3)').hide();
+
   $("table#tblDetallePedidoVer th:nth-child(4)").hide();
   $("table#tblDetallePedidoVer th:nth-child(8)").hide();
 
@@ -1880,7 +1879,7 @@ function cambiarEstadoPedidoVer(
     estado,
     ubicacion
   );
-  $("#detalleImagenesFEFO").css("background-color", "#dd4b39");
+  $(".detalleImagenesFEFO").css("background-color", "#dd4b39");
 
   $("#container_button_estado_pedido").html(`
       <button

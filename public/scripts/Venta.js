@@ -441,6 +441,207 @@ function init() {
   }
 }
 
+function openModalDetalleVentas(idpedido){
+
+
+  mostrarDetalleImagenesEmpaquetado(idpedido);
+
+  mostrarDetalleImagenesChat(idpedido);
+
+  mostrarDetalleImagenesFEFO(idpedido);
+
+  mostrarDetalleImagenes(idpedido);
+
+
+  $('#modalDetalleVentas').modal('show');
+  $.getJSON(
+    "ajax/VentaAjax.php?op=TraerDataPedido", //funcion encargaeda  de traer  los datos del empleado por el id
+    { idpedido },
+    function (pedido) {
+      console.log(pedido)
+      $('#txtClienteVentDetalles').val(pedido.cliente);
+      $('#txtClienteDniDetalles').val(pedido.num_documento);
+      $('#txtClienteCelDetalles').val(pedido.celular);
+      $('#txtTipoClienteDetalles').val(pedido.tipo_cliente);
+      $('#txtClienteDirDetalles').val(pedido.destino);
+      $('#txtNotaVentaDetalles').val(pedido.ticket);
+      $('#txtAprobaCuenAboDetalles').val(pedido.aproba_venta);
+      $('#txtAprobaVentaDetalles').val(pedido.aproba_pedido);
+      $('#txtEmpleadoVentDetalles').val(pedido.empleado);
+      $('#hdn_metodo_pagoDetalles').val(pedido.metodo_pago);
+      $('#hdn_agencia_envioDetalles').val(pedido.agencia_envio);
+      $('#hdn_tipo_promocionDetalles').val(pedido.tipo_promocion
+        );
+      $('#hdn_tipo_entregaDetalles').val(pedido.tipo_entrega);
+
+
+      $('#hdn_modo_pagoDetalles').val(pedido.modo_pago);
+
+      $('#empleado_anuladorDetalles').val(pedido.cliente);
+
+
+      $("#cancelado_por_containerDetalles").hide();
+
+      if (pedido.estado == "C") {
+        // console.log(idcliente);
+        $("#cancelado_por_containerDetalles").show();
+        $("#empleado_anuladorDetalles").val(pedido.empleado_anulado_txt);
+      }
+
+
+
+      $('#hdn_observacionDetalles').val(pedido.observacion);
+
+
+      CargarDetallePedido(idpedido)
+      $('#txtClienteVent').val(pedido.cliente);
+      $('#txtClienteVent').val(pedido.cliente);
+
+    })
+
+
+    let tipo_pedido="Venta"
+    if (tipo_pedido == "Venta") {
+      $.getJSON(
+        "./ajax/PedidoAjax.php?op=GetVenta",
+        {
+          idPedido: idpedido,
+        },
+        function (r) {
+          if (r) {
+            console.log(r.idventa);
+            $.getJSON(
+              "./ajax/PedidoAjax.php?op=TraerMetodosPago",
+              {
+                idventa: r.idventa,
+              },
+              function (r) {
+                console.log(r);
+                r.map((element, index) => {
+                  $("#container_metodo_pago_visual").append(`
+                  <div class="row">
+  
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Fecha de Pago</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="datetime-local"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.fecha_pago}'
+                        disabled
+  
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Metodo de Pago</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.tipo_metodo_pago}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                    
+                    ${
+                      element.es_efectivo != "1"
+                        ? `
+                      <div class="col-lg-2 ">
+                      
+                      <label for="inputInscripcion">Cuenta Bancaria</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.banco_cuenta}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Referencia</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.referencia}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                
+                    `
+                        : ``
+                    }
+                    
+                    <div class="col-lg-2 ">
+                      <label for="inputInscripcion">Monto</label>
+                      <div class="form-group has-success">
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder=""
+                        value='${element.pago}'
+                        disabled
+                        />
+                      </div>
+                    </div>
+                </div>
+                
+                  
+                  
+                  `);
+                });
+              }
+            );
+  
+            $("#VerFormVentaPed").show();
+            $("#VerDetallePedido").hide();
+            $("#VerTotalesDetPedido").hide();
+            $("#inputTotal").hide();
+            $("#txtTotalVent").hide();
+            $("#VerRegPedido").hide();
+            // $("#txtClienteVent").val(cliente); 
+            $("#txtSerieVent").val(r.serie_comprobante);
+            $("#txtNumeroVent").val(r.num_comprobante);
+            $("#cboTipoVenta").val(r.tipo_venta); //$("#txtClienteFech").val(date);
+            $("#cboTipoComprobante").html(
+              "<option>" + r.tipo_comprobante + "</option>"
+            );
+
+            var igvPed =
+              (r.total * parseInt($("#txtImpuesto").val())) /
+              (100 + parseInt($("#txtImpuesto").val()));
+            $("#txtIgvPedVerDetalles").val(Math.round(igvPed * 100) / 100);
+  
+            var subTotalPed =
+              r.total -
+              (r.total * parseInt($("#txtImpuesto").val())) /
+                (100 + parseInt($("#txtImpuesto").val()));
+            $("#txtSubTotalPedVerDetalles").val(Math.round(subTotalPed * 100) / 100);
+  
+            $("#txtTotalPedVerDetalles").val(Math.round(r.total * 100) / 100);
+ 
+    
+            $('button[type="submit"]').hide();
+        
+          }
+        }
+      );
+    }
+
+}
+
+
+
+
+
 function ListadoPedidos() {
   var tabla = $("#tblVentas")
     .dataTable({

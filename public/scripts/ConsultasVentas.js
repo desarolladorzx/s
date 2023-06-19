@@ -334,6 +334,7 @@ function ListadoVentasPendientes() {
           { mDataProp: "10" },
           { mDataProp: "11" },
           { mDataProp: "12" },
+          { mDataProp: "13" }
         ],
         ajax: {
           url: "./ajax/ConsultasVentasAjax.php?op=listVentasPendientes",
@@ -583,6 +584,7 @@ function ListadoVentasEmpleado() {
           { mDataProp: "9" },
           { mDataProp: "10" },
           { mDataProp: "11" },
+          { mDataProp: "12" },
         ],
         ajax: {
           url: "./ajax/ConsultasVentasAjax.php?op=listVentasEmpleado",

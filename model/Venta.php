@@ -4,6 +4,65 @@ require "Conexion.php";
 class Venta
 {
 
+	public function TraerDataPedido($idpedido){
+
+		global $conexion;
+		$sql = "SELECT  concat(r_anu.r_prefijo ,' ',em_anu.nombre_usuario) empleado_anulado_txt,p.*, concat(r_e.r_prefijo,' ',e.nombre_usuario,' | ',p.fecha) as empleado,concat(c.nombre,' ',c.apellido) as cliente, c.email, concat(c.direccion_departamento,' - ',c.direccion_provincia,' - ',c.direccion_distrito,'  |  ',c.direccion_calle, '|',
+		
+		IFNULL(c.direccion_referencia,'')) as destino , c.num_documento, concat(c.telefono,' - ',c.telefono_2) as celular,concat(v.serie_comprobante,' - ',v.num_comprobante) as ticket,v.fecha as fecha_venta,v.idusuario as aprobacion2v,v.tipo_venta,concat(r_ev.r_prefijo,' ',ev.nombre_usuario,' |  ',v.fecha) as aproba_venta,concat(r_eva.r_prefijo,' ',eva.nombre_usuario,' |  ',p.fecha_apro_coti) as aproba_pedido,concat(c.tipo_persona,' - ',c.numero_cuenta) as tipo_cliente
+	
+
+	
+
+		,CONCAT( IFNULL(departamento.descripcion,'') ,' - ',IFNULL(provincia.descripcion,''), ' - ',IFNULL(distrito.descripcion,''),' - ',c.direccion_calle ,' - ',IFNULL(c.direccion_referencia,'')) destino
+
+
+		,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta
+		,
+
+		CONCAT (IFNULL(r_e.r_prefijo,' '), ' - ',IFNULL(e.nombre_usuario,' ')) nombre_usuario_rol
+
+
+			from pedido p
+			LEFT join persona c on p.idcliente = c.idpersona
+						LEFT join venta v on p.idpedido = v.idpedido
+			LEFT join usuario u on p.idusuario=u.idusuario
+						LEFT join empleado e on u.idempleado=e.idempleado
+						LEFT join usuario uv on v.idusuario=uv.idusuario
+						LEFT join empleado ev on uv.idempleado=ev.idempleado
+						LEFT join usuario uva on p.idusuario_est=uva.idusuario
+						LEFT join empleado eva on uva.idempleado=eva.idempleado
+
+						LEFT JOIN rol r_e ON r_e.r_id=e.idrol
+						LEFT JOIN rol r_eva ON r_eva.r_id=eva.idrol
+						LEFT JOIN rol r_ev ON r_ev.r_id=ev.idrol
+						
+						LEFT JOIN usuario anu ON anu.idusuario=v.idusuario_anu
+						LEFT JOIN empleado em_anu ON em_anu.idempleado=anu.idempleado
+
+
+						LEFT JOIN rol r_anu ON r_anu.r_id=em_anu.idrol
+
+		left JOIN distrito ON distrito.iddistrito=c.direccion_distrito
+		LEFT  JOIN provincia ON provincia.idprovincia=c.direccion_provincia
+		left 	JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
+
+            where p.idpedido=$idpedido
+			and c.tipo_persona = 'Final' & 'Distribuidor' & 'Superdistribuidor' & 'Representante' and p.tipo_pedido = 'Venta'
+			
+			
+
+			 order by idpedido desc
+			
+			
+			-- limit 0,300
+			";
+		$query = $conexion->query($sql);
+		return $query;
+
+		
+	}
+
 	public function VerificarStockMinimo($idpedido)
 	{
 		global $conexion;

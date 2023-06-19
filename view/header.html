@@ -107,6 +107,657 @@
   </style>
 </head>
 
+
+<div 
+id="modalDetalleVentas" 
+class="modal fade bs-example-modal-lg" 
+tabindex="-1" 
+role="dialog" 
+aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Detalles de Venta</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12 left">
+            <div class="row">
+              <div class="col-lg-3 left">
+                <div class="form-group has-success">
+                  <label>Cliente:</label>
+                  <input
+                    id="txtClienteVentDetalles"
+                    type="text"
+                    name="txtClienteVentDetalles"
+                    class="form-control"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-3 left">
+                <div class="form-group has-success">
+                  <label>Documento:</label>
+                  <input
+                    id="txtClienteDniDetalles"
+                    type="text"
+                    name="txtClienteDniDetalles"
+                    class="form-control"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-3 left">
+                <div class="form-group has-success">
+                  <label>Teléfonos:</label>
+                  <input
+                    id="txtClienteCelDetalles"
+                    type="text"
+                    name="txtClienteCelDetalles"
+                    class="form-control"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-3 left">
+                <div class="form-group has-success">
+                  <label>Tipo de Cliente:</label>
+                  <input
+                    id="txtTipoClienteDetalles"
+                    type="text"
+                    name="txtTipoClienteDetalles"
+                    class="form-control"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 left">
+            <div class="row">
+              <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group has-success">
+                  <label>Direccion:</label>
+                  <input
+                    id="txtClienteDirDetalles"
+                    type="text"
+                    name="txtClienteDirDetalles"
+                    class="form-control"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 left">
+            <label for="inputInscripcion">Numero de Nota de Venta</label>
+            <div class="form-group has-success">
+              <input
+                id="txtNotaVentaDetalles"
+                type="text"
+                name="txtNotaVentaDetalles"
+                class="form-control"
+                readonly="readonly"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 left">
+            <label for="inputInscripcion"
+              >Aprobacion de Cuenta Abonada</label
+            >
+            <div class="form-group has-success">
+              <input
+                id="txtAprobaCuenAboDetalles"
+                type="text"
+                name="txtAprobaCuenAboDetalles"
+                class="form-control"
+                readonly="readonly"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 left">
+            <label for="inputInscripcion">Aprobacion de Venta</label>
+            <div class="form-group has-success">
+              <input
+                id="txtAprobaVentaDetalles"
+                type="text"
+                name="txtAprobaVentaDetalles"
+                class="form-control"
+                readonly="readonly"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 left">
+            <div class="form-group has-warning">
+              <label>Ejecutivo de Ventas:</label>
+              <input
+                id="txtEmpleadoVentDetalles"
+                type="text"
+                name="txtEmpleadoVentDetalles"
+                class="form-control"
+                readonly="readonly"
+              />
+            </div>
+          </div>
+
+          <div class="col-lg-12 left">
+            <div class="row">
+              <div class="col-lg-2 left">
+                <label for="inputInscripcion">Cuenta Abonada</label>
+                <div class="form-group has-success">
+                  <input
+                    id="hdn_metodo_pagoDetalles"
+                    type="text"
+                    class="form-control"
+                    name="hdn_metodo_pagoDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 left">
+                <label for="inputInscripcion">Agencia de Transporte</label>
+                <div class="form-group has-success">
+                  <input
+                    id="hdn_agencia_envioDetalles"
+                    type="text"
+                    class="form-control"
+                    name="hdn_agencia_envioDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 left">
+                <label for="inputInscripcion">Promocion</label>
+                <div class="form-group has-success">
+                  <input
+                    id="hdn_tipo_promocionDetalles"
+                    type="text"
+                    class="form-control"
+                    name="hdn_tipo_promocionDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 left">
+                <label for="inputInscripcion">Tipo de Entrega</label>
+                <div class="form-group has-success">
+                  <input
+                    id="hdn_tipo_entregaDetalles"
+                    type="text"
+                    class="form-control"
+                    name="hdn_tipo_promocionDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 left">
+                <label for="inputInscripcion">Modo De Pago</label>
+                <div class="form-group has-success">
+                  <input
+                    id="hdn_modo_pagoDetalles"
+                    type="text"
+                    class="form-control"
+                    name="hdn_modo_pagoDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-2 left" id="cancelado_por_containerDetalles">
+                <div class="form-group has-error">
+                  <label for="inputInscripcion error">Cancelado Por:</label>
+                  <input
+                    id="empleado_anuladorDetalles"
+                    type="text"
+                    class="form-control"
+                    name="empleado_anuladorDetalles"
+                    readonly="readonly"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-12 left">
+                <label for="inputInscripcion">Observacion</label>
+                <div class="form-group has-success">
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    name="hdn_observacionDetalles"
+                    id="hdn_observacionDetalles"
+                    maxlength="500"
+                    disabled
+                    placeholder="Ingresar Observacion sobre la Nota de Venta ..."
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-lg-12 left">
+                <div
+                  class="box box-danger"
+                  style="
+                    border-right: 1px solid #d2d6de;
+
+                    border-left: 1px solid #d2d6de;
+                  "
+                >
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Metodos de Pago</h3>
+                    <div class="box-tools pull-right">
+                      <button
+                        type="button"
+                        class="btn btn-box-tool"
+                        data-widget="collapse"
+                      >
+                        <i class="fa fa-minus"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-box-tool"
+                        data-widget="remove"
+                      >
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="box-body">
+                    <div
+                      class="col-lg-12 left"
+                      id="container_metodo_pago_visual"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div id="ContainerbuttonAgregarImagenAlmacen">
+                <div class="col-lg-2 left">
+                  <input class="input" id="txtIdPedido" type="hidden" />
+                  <input class="input" id="txtIdCliente" type="hidden" />
+
+                  <div style="width: 100%" class="form-group">
+                    <label
+                      style="width: 100%"
+                      for="inputFileAlmacen"
+                      class="btn btn-warning w-100 custom-file-upload"
+                    >
+                      Agregar Imagenes de Almacen
+                    </label>
+
+                    <input
+                      type="file"
+                      id="inputFileAlmacen"
+                      multiple
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-10" style="display: flex">
+                  <div
+                    id="image-preview-container-almacen"
+                    style="display: flex"
+                  ></div>
+
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="btn_todos_eliminar_imagen"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+
+                <div class="col-lg-12 left">
+                  <div class="form-group has-success">
+                    <button
+                      type="button"
+                      id="save-guardar-almacen"
+                      class="btn btn-success"
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                </div>
+              </div> -->
+              <style>
+                .my-images_preview {
+                  /* transition: all 0.2s ease; */
+                  /* box-shadow: 1px 1px 1px 1px #31b0d3; */
+                  margin: 0 10px;
+                  border: solid 1px gray;
+                  border-radius: 4px;
+                  cursor: pointer;
+                }
+                .my-images_preview:active {
+                  /* background-color: red !important; */
+                  width: 700px !important;
+                  position: fixed;
+                  cursor: auto;
+                  top: 50%;
+                  left: 50%;
+
+                  transform: translate(-50%, -50%);
+                  z-index: 100000;
+
+                  /* height: 100% !important; */
+                }
+              </style>
+            </div>
+          </div>
+
+          <div class="col-lg-12 left">
+            <input type="hidden" name="hdn_idcliente" id="hdn_idcliente" />
+
+            <button
+              class="btn btn-success"
+              type="submit"
+              id="btn-only1click"
+            >
+              <i class="fa fa-floppy-o"></i> Registrar
+            </button>
+            <a href="Venta.php" class="btn btn-primary"
+              ><i class="fa fa-remove"></i> Cancelar</a
+            >
+            <a id="btnEnviarCorreo" class="btn btn-default"
+              ><i class="fa fa-envelope"></i> Enviar por correo</a
+            >
+            <hr />
+            <span class="lead text-primary"></span>
+          </div>
+
+          <div class="col-sm-9 col-lg-12 main" id="VerVentaDetallePedido">
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-bordered table-condensed table-hover"
+                cellpadding="0"
+                cellspacing="0"
+                border="1"
+                class="display"
+                id="tblDetallePedidoVer"
+              >
+                <thead>
+                  <tr>
+                    <th>Productos</th>
+                    <th>Marca</th>
+                    <th>Codigo-Lote</th>
+                    <th>Stock</th>
+                    <th>F.Vencimiento</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                    <!-- <th>Eliminar</th> -->
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div
+              class="col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-2 main"
+            >
+              <div class="row">
+                <div class="col-lg-4 left">
+                  <div class="input-group has-error">
+                    <div id="SubTotal_Ver" class="input-group-addon"></div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtSubTotalPedVerDetalles"
+                      name="txtSubTotalPedVerDetalles"
+                      placeholder="Sub Total"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4 left has-error">
+                  <div class="input-group">
+                    <div id="IGV_Ver" class="input-group-addon"></div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtIgvPedVerDetalles"
+                      name="txtIgvPedVerDetalles"
+                      placeholder="I.G.V"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4 left has-error">
+                  <div class="input-group">
+                    <div id="Total_Ver" class="input-group-addon"></div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="txtTotalPedVerDetalles"
+                      name="txtTotalPedVerDetalles"
+                      placeholder="Total"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <br /><br />
+
+            <div class="col-sm-4 col-lg-4">
+              <ul class="timeline timeline-inverse">
+                <li>
+                  <div class="timeline-item" style="margin: 10px">
+                    <h3 class="timeline-header">
+                      <a href="#">Img. Chat confirmacion de pedido:</a>
+                      Imagenes
+                    </h3>
+                    <ul
+                      class="timeline-body detalleImagenesChat mailbox-attachments clearfix row"
+                      id="detalleImagenesChat"
+                      style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-4 col-lg-4">
+              <ul class="timeline timeline-inverse">
+                <li>
+                  <div class="timeline-item" style="margin: 10px">
+                    <h3 class="timeline-header">
+                      <a href="#">Img. Voucher de Pago:</a> Imagenes
+                    </h3>
+                    <ul
+                      class="timeline-body  detalleImagenes mailbox-attachments clearfix row"
+                      id="detalleImagenes"
+                      style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-4 col-lg-4">
+              <ul class="timeline timeline-inverse">
+                <li>
+                  <div class="timeline-item" style="margin: 10px">
+                    <h3 class="timeline-header">
+                      <a href="#">Img. Registro de Omisión FEFO</a> Imagenes
+                    </h3>
+                    <ul
+                      class="timeline-body detalleImagenesFEFO mailbox-attachments clearfix row"
+                      id="detalleImagenesFEFO"
+                      style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-sm-12 col-lg-12">
+              <ul class="timeline timeline-inverse">
+                <li>
+                  <div class="timeline-item" style="margin: 10px">
+                    <h3 class="timeline-header">
+                      <a href="#">Img. Registro de Omisión FEFO</a> Imagenes
+                    </h3>
+                    <ul
+                      class="timeline-body 
+                      
+                      detalleImagenesEmpaquetado
+                      mailbox-attachments clearfix row"
+                      id="detalleImagenesEmpaquetado"
+                      style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                      <img
+                        src="http://placehold.it/150x100"
+                        alt="..."
+                        class="margin"
+                      />
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <style>
+              .timeline::before {
+                width: 0px !important;
+              }
+            </style>
+
+            <!-- <div class="col-lg-12">
+              <h4 for="modal-title">Imágenes De Empaquetado</h4>
+              <ul
+                class="mailbox-attachments clearfix"
+                id="detalleImagenesEmpaquetado"
+              ></ul>
+            </div> -->
+          </div>
+          
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">
+          <i class="fa fa-remove"></i> Cerrar
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+.modal-fullscreen {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+</style>
+
+
+
+
 <body class="hold-transition skin-red sidebar-mini">
   <div class="wrapper">
     <header class="main-header">
@@ -365,12 +1016,12 @@
               <li id="liVentasDetalladas"><a href="VentasDetalladas.php"><i class="fa fa-circle-o"></i> Ventas Detalladas</a></li>
               <li id="liVentasAnuladas"><a href="VentasAnuladas.php"><i class="fa fa-circle-o"></i> Ventas Anuladas</a></li>
               <li id="liVentaPend"><a href="VentaPend.php"><i class="fa fa-circle-o"></i> Ventas Pendientes</a></li>
-              <li id="liVentasContado"><a href="VentasContado.php"><i class="fa fa-circle-o"></i> Ventas Contado</a></li>
+              <!-- <li id="liVentasContado"><a href="VentasContado.php"><i class="fa fa-circle-o"></i> Ventas Contado</a></li>
               <li id="liVentasCredito"><a href="VentasCredito.php"><i class="fa fa-circle-o"></i> Ventas Crédito</a></li>
               <li id="liDeudasPendientes"><a href="Deuda.php"><i class="fa fa-circle-o"></i> Deudas Pendientes</a></li>
-              <li id="liEscritorio"><a href="Escritorio.php"><i class="fa fa-circle-o"></i> Estadísticas Por Asesora</a></li>
+              <li id="liEscritorio"><a href="Escritorio.php"><i class="fa fa-circle-o"></i> Estadísticas Por Asesora</a></li> -->
 
-              <li id="liRegistroActividad"><a href="RegistroActividad.php"><i class="fa fa-circle-o"></i>Registro de Actividad</a></li>
+              <li id="liRegistroActividad"><a href="RegistroActividad.php"><i class="fa fa-circle-o"></i> Registro de Actividad</a></li>
               
             </ul>
           </li>
