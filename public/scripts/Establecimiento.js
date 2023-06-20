@@ -441,6 +441,16 @@ function cargarDataEstablecimiento(id, editable) {
         $("#btnRegistrar_Establecimiento").hide();
       }
 
+      if (empresa.verificacion == 'VERIFICADO' &&
+      $('#txtGlobalIdrol').val() == 7
+      
+      ) {
+        $("input").prop("disabled", true);
+        $("select").prop("disabled", true);
+        $("#btnRegistrar_Establecimiento").hide();
+      }
+
+
   
 
     },
