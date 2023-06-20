@@ -601,7 +601,7 @@ function openModalDetalleVentas(idpedido){
               }
             );
   
-            $("#VerFormVentaPed").show();
+            // $("#VerFormVentaPed").show();
             $("#VerDetallePedido").hide();
             $("#VerTotalesDetPedido").hide();
             $("#inputTotal").hide();
