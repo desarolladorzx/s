@@ -464,6 +464,8 @@ iddistrito_factura='$iddistrito_factura'
 		//var_dump($sql);exit;
 
 		$query = $conexion->query($sql);
+
+			// echo $sql;
 		return $query;
 	}
 

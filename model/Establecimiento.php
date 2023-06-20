@@ -36,8 +36,8 @@ class Establecimiento
 		FROM empleado
 		LEFT JOIN rol ON rol.r_id = empleado.idrol
 		LEFT JOIN area ON area.idarea = rol.idarea
-		WHERE (idrol = 2 OR idrol = 3 OR idrol = 7)
-		  AND empleado.estado = 'A'
+		WHERE (idrol = 2 OR idrol = 3 OR idrol=  7)
+		  AND (empleado.estado = 'A' or empleado.estado='S')
 		ORDER BY FIELD(idrol, 2, 3, 7);
 		;";
 
