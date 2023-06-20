@@ -17,6 +17,8 @@
   <div class="box-body">
     <div class="row">
       <div class="col-md-12">
+        Cliente:
+
         <!--Contenido se añadio ver detalle del pedido-->
         <div class="col-sm-14" id="VerFormVentaPed">
           <form role="form" name="frmVentas" id="frmVentas">
@@ -475,7 +477,7 @@
           <form role="form">
             <div class="row">
               <div class="col-lg-12 left">
-                <label id="inputCliente">Cliente:</label>
+                <!-- <label id="inputCliente">Cliente:</label> -->
 
                 <select
                   class="form-control form-control-select2 form-control-lg"
@@ -489,7 +491,7 @@
                   </option>
                 </select>
 
-                <label id="inputCliente">Cliente:</label>
+                <!-- <label id="inputCliente">Cliente:</label> -->
                 <div class="form-group has-success">
                   <input
                     id="txtIdCliente"
@@ -503,7 +505,7 @@
                   <div class="input-group">
                     <input
                       id="txtCliente"
-                      type="text"
+                      type="hidden"
                       class="form-control"
                       name="txtCliente"
                       required
@@ -511,7 +513,7 @@
                       autofocus=""
                       disabled
                     />
-                    <span class="input-group-btn">
+                    <!-- <span class="input-group-btn">
                       <button
                         type="button"
                         class="btn btn-success"
@@ -520,7 +522,7 @@
                         <i class="fa fa-search"></i>
                         Buscar
                       </button>
-                    </span>
+                    </span> -->
                   </div>
                 </div>
               </div>
@@ -767,9 +769,6 @@
 </div>
 
 <script type="text/javascript">
-
-
-
   function formatRepo(repo) {
     if (repo.loading) return repo.texto;
 
@@ -786,8 +785,9 @@
   }
 
   function formatRepoSelection(repo) {
-
-    var  val=repo.ubicacion?`${repo.texto} / ${repo.ubicacion}`:"Ingresar 3 caracteres para buscar... "
+    var val = repo.ubicacion
+      ? `${repo.texto} / ${repo.ubicacion}`
+      : "Ingresar 3 caracteres para buscar... ";
     return val || repo.id;
   }
 

@@ -226,7 +226,7 @@ function ListadoVentasDetalladas() {
 
           { mDataProp: "6" },
 
-          { mDataProp: "7" },
+          { mDataProp: "22" },
           { mDataProp: "8" },
           { mDataProp: "9" },
           { mDataProp: "10" },
@@ -241,7 +241,7 @@ function ListadoVentasDetalladas() {
           { mDataProp: "19" },
           { mDataProp: "20" },
           { mDataProp: "21" },
-          { mDataProp: "22" },
+          { mDataProp: "7" },
           { mDataProp: "23" },
           { mDataProp: "24" },
           { mDataProp: "25" },
