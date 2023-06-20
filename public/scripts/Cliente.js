@@ -656,7 +656,7 @@ function ListadoCliente() {
       { mDataProp: "6" },
       // { mDataProp: "7" },
       { mDataProp: "32"  },
-      { mDataProp: "31" }
+      { mDataProp: "31" },
 
       { mDataProp: "8" },
 
