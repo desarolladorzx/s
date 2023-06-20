@@ -460,7 +460,9 @@ iddistrito_factura='$iddistrito_factura'
 		// from persona
 		// limit 1000
 		// ";
+
 		// echo $sql;
+		
 		//var_dump($sql);exit;
 
 		$query = $conexion->query($sql);
@@ -746,6 +748,9 @@ iddistrito_factura='$iddistrito_factura'
 		idpersona ,
 		tipo_persona,
 		max(venta.fecha) fecha,
+		COUNT(venta.idventa) cant_ticket_venta,
+		SUM(venta.total) suma_total,
+		
 	CASE 
 		  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<2 THEN 'ACTIVO' 
 			 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 

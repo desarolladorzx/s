@@ -655,7 +655,11 @@ function ListadoCliente() {
       { mDataProp: "5" },
       { mDataProp: "6" },
       // { mDataProp: "7" },
+      { mDataProp: "32"  },
+      { mDataProp: "31" }
+
       { mDataProp: "8" },
+
 
       // { mDataProp: "10" },
       { mDataProp: "vendedor_asignado" },
