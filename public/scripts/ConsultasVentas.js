@@ -80,6 +80,18 @@ function init() {
     ListadoVentasCliente()
   }
   );
+
+  
+$("#slc_select_cliente").on("select2:select", function (e) {
+
+
+  $("#txtIdCliente").val($('#slc_select_cliente').val());
+
+  ListadoVentasCliente()
+});
+
+
+
   $("#cboFechaDesdeCli").change(ListadoVentasCliente);
   $("#cboFechaHastaCli").change(ListadoVentasCliente);
 

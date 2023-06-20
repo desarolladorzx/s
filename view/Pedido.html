@@ -1517,24 +1517,13 @@ $('.container_datos_cliente_seleccionado').hide();
 
       ConsultarDetallesPed()
       tipo_persona = opcionSeleccionada.tipo_persona;
-
-   
       $('.container_datos_cliente_seleccionado').show();
       $('#txtNuevoNombre').val(opcionSeleccionada.nombre_completo)
       $('#txtNuevoDocumento').val(opcionSeleccionada.documento)
       $('#txtNuevoCelulares').val(opcionSeleccionada.telefonos)
       $('#txtNuevoUbicacion').val(opcionSeleccionada.ubicacion)
       $('#txtNuevoDireccion').val(opcionSeleccionada.direccion)
-
-
       $('#txtTipoCliente').val(opcionSeleccionada.tipo_persona)
-
-
-
-      
-
-      // $("#slc_select_cliente").prop("disabled", true);
-
       $("#txtIdCliente").val($('#slc_select_cliente').val());
     });
 

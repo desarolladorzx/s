@@ -338,8 +338,8 @@
 			,r_e.r_prefijo prefijo_pedido,r_eva.r_prefijo prefijo_estado,r_ev.r_prefijo prefijo_venta 
 			
 			,c.direccion_departamento as departamento
-			,v.agencia_envio as transporte
-			,v.metodo_pago as cuenta_abonada
+			,p.agencia_envio as transporte
+			,p.metodo_pago as cuenta_abonada
 			,s.razon_social as sucursal
 			,c.num_documento as dni
 			,v.total
