@@ -114,10 +114,11 @@ switch ($_GET["op"]) {
                     "19" => $reg->costo_total,
                     "20" => $reg->ganancia,
                     "21" => $reg->promocion,
-                    "22" => $reg->departamento,
-                    "23" => $reg->provincia,
-                    "24" => $reg->distrito,
-                    "25" => $reg->banco_abono,
+                    "22" => $reg->num_documento,
+                    "23" => $reg->departamento,
+                    "24" => $reg->provincia,
+                    "25" => $reg->distrito,
+                    "26" => $reg->banco_abono,
                );
           }
 

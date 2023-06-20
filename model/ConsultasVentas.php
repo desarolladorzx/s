@@ -122,6 +122,7 @@
 				p.tipo_promocion as promocion, 
 				if(pe.direccion_distrito>0,departamento.descripcion,pe.direccion_distrito)departamento 
 				,
+				pe.num_documento,
 				pe.direccion_distrito as distrito,p.metodo_pago as banco_abono
 				,idpersona
 				,provincia.descripcion provincia

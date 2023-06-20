@@ -245,6 +245,7 @@ function ListadoVentasDetalladas() {
           { mDataProp: "23" },
           { mDataProp: "24" },
           { mDataProp: "25" },
+          { mDataProp: "26" },
           
         ],
         ajax: {
