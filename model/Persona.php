@@ -100,8 +100,8 @@ class Persona
 		JOIN area  ON area.idarea=rol.idarea 
 		 WHERE 
 		 (area.idarea=4 or  area.idarea=1)
-		AND empleado.estado='A'
-		";
+		AND (empleado.estado='A' or  empleado.estado='S')";
+		
 
 		$query = $conexion->query($sql);
 		return $query;
