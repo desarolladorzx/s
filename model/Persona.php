@@ -100,7 +100,11 @@ class Persona
 		JOIN area  ON area.idarea=rol.idarea 
 		 WHERE 
 		 (area.idarea=4 or  area.idarea=1)
-		AND (empleado.estado='A' or  empleado.estado='S')";
+		AND (empleado.estado='A' or  empleado.estado='S')
+		
+		ORDER BY FIELD(idrol, 2, 3,1, 7)
+
+		";
 		
 
 		$query = $conexion->query($sql);
