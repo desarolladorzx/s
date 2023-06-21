@@ -783,8 +783,8 @@ iddistrito_factura='$iddistrito_factura'
 	 persona.nombre
 	
 	FROM persona 
-	left join pedido on pedido.idcliente=persona.idpersona
-	left JOIN venta ON venta.idpedido=pedido.idpedido
+	left join pedido on pedido.idcliente=persona.idpersona AND persona.estado='A'
+	left JOIN venta ON venta.idpedido=pedido.idpedido	AND venta.estado='A'
 	WHERE persona.idpersona=$id_cliente
 	GROUP by (idpersona)
 			";
