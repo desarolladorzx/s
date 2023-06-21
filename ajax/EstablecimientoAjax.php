@@ -198,7 +198,7 @@ switch ($_GET["op"]) {
 
 
 
-                echo "El Establecimiento ".$_POST['txtNombreEstablecimiento']." nombre se ha actualizado correctamente";
+                echo "El Establecimiento ".$_POST['txtNombreEstablecimiento']." se ha actualizado correctamente";
             } else {
                 echo "Usuario no ha podido ser registado.";
             }
