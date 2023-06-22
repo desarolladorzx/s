@@ -443,7 +443,7 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			--  limit 10 
+			--  limit 100 
 ;
 		";
 		// $sql = "SELECT  
@@ -760,6 +760,13 @@ iddistrito_factura='$iddistrito_factura'
 			 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 
 			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<4   THEN 'INACTIVO' 
 	   WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=4 THEN 'PERDIDO' 
+
+
+	   WHEN tipo_persona='VIP' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<2 THEN 'ACTIVO' 
+		WHEN tipo_persona='VIP' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=2 
+			 and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<4   THEN 'INACTIVO' 
+	   WHEN tipo_persona='VIP' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=4 THEN 'PERDIDO' 
+
 
 	   WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())<1 THEN 'ACTIVO' 
 			 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,max(venta.fecha) ,CURDATE())>=1 

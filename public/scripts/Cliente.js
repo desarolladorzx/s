@@ -338,24 +338,28 @@ $('#idselect_motivo_reasignacion_por_cliente').change(
     var valor = $(this).val();
     // tabla.column(13).search(valor).draw();
 
-    // console.log(tabla.column(13).data())
+    // console.log(valor)
+    // console.log(tabla.column(15).data())
+
     if (valor.length == 0) {
       // verifica si el valor es nulo
-      tabla.column(13).search("").draw();
+      tabla.column(15).search("").draw();
     } else {
-      tabla.column(13).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
+      tabla.column(15).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
     }
 
     llenarCantidades();
   });
   $("#ejecutivo_filtro").change(function () {
     var valor = $(this).val();
-    // console.log(valor)
+    console.log(valor)
+
+    //  console.log(tabla.column(13).data())
     if (valor.length == 0) {
       // verifica si el valor es nulo
-      tabla.column(11).search("").draw();
+      tabla.column(13).search("").draw();
     } else {
-      tabla.column(11).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
+      tabla.column(13).search(`^${valor}$`, true, false).draw(); // realiza la búsqueda normal
     }
 
     $("#cant_total_cliente").val(tabla.page.info().end);
@@ -537,11 +541,16 @@ function llenarCantidades() {
 
   let valoresFiltrados = tabla.rows({ search: "applied" }).data().toArray();
 
-  console.log(valoresFiltrados);
+
+  console.log(valoresFiltrados)
 
   let clientes_activos = valoresFiltrados.filter((e) =>
     e[13].includes("-ACTIVO")
   ).length;
+
+
+
+
 
   let clientes_inactivos = valoresFiltrados.filter((e) =>
     e[13].includes("INACTIVO")
@@ -560,15 +569,16 @@ function llenarCantidades() {
   ).length;
 
   let clientes_distribuidores = valoresFiltrados.filter((e) =>
-    e[1].includes("Distribuidor")
+    e[1].includes("DISTRIBUIDOR")&& !elemento.includes("SUPERDISTRIBUIDOR")
+
   ).length;
 
   let clientes_Superdistribuidores = valoresFiltrados.filter((e) =>
-    e[1].includes("Superdistribuidores")
+    e[1].includes("SUPERDISTRIBUIDOR")
   ).length;
 
   let clientes_representantes = valoresFiltrados.filter((e) =>
-    e[1].includes("Representante")
+    e[1].includes("REPRESENTANTE")
   ).length;
 
   $("#cant_clientes_activos").val(clientes_activos);
