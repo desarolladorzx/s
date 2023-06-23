@@ -443,35 +443,12 @@ iddistrito_factura='$iddistrito_factura'
 		tipo_persona = 'FINAL' or 	tipo_persona =  'DISTRIBUIDOR' or tipo_persona =  'SUPERDISTRIBUIDOR' or tipo_persona = 'REPRESENTANTE' or tipo_persona ='VIP' or tipo_persona ='NO RECUPERABLE'  )
 		GROUP BY p.num_documento
 		ORDER BY p.idpersona DESC
-			--  limit 100 
+			--  limit 5000
 ;
 		";
-		// $sql = "SELECT  
-		// tipo_documento empleado ,
-		// tipo_documento empleado_modificado ,
-		// tipo_documento genero_txt ,
-		// tipo_documento ubicacion_factura ,
-
-		// tipo_documento  idubicacion ,
-		// tipo_documento  direccion_antigua ,
-		// tipo_documento  idempleado_asignado  ,
-		// tipo_documento  empleado_asignado  ,
-		// tipo_documento  ubicacion ,
-		// tipo_documento idubicacion_factura, 
-		// persona.* 
-
-
-		// from persona
-		// limit 1000
-		// ";
 
 		// echo $sql;
-		
-		//var_dump($sql);exit;
-
 		$query = $conexion->query($sql);
-
-			// echo $sql;
 		return $query;
 	}
 
@@ -479,45 +456,6 @@ iddistrito_factura='$iddistrito_factura'
 	{
 		global $conexion;
 
-		// $sql = "SELECT *,
-		// (
-		// 	CASE 
-		// 	  WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
-		// 		 WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
-		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<4   THEN 'INACTIVO' 
-		//    WHEN tipo_persona='FINAL' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
-
-		//    WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-		// 		 WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-		//    WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-
-		// 	WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
-		// 		 WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
-		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2   THEN 'INACTIVO' 
-		//    WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 THEN 'PERDIDO' 
-
-
-		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<3 THEN 'ACTIVO' 
-		// 		 WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 
-		// 		 and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=5   THEN 'INACTIVO' 
-		//    WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=5 THEN 'PERDIDO' 
-
-		// 		WHEN venta.fecha IS NULL then 'PERDIDO'
-
-		// END  
-
-		// )as clasificacion ,
-		// (CASE
-		// 	WHEN genero = 1 THEN 'MUJER'
-		// 	WHEN genero = 2 THEN 'HOMBRE'
-		// 	WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
-		// END) AS genero_txt
-		// FROM persona 
-		// left join pedido on pedido.idcliente=persona.idpersona
-		// left JOIN venta ON venta.idpedido=pedido.idpedido
-		// WHERE num_documento = $numeroDocumento";
-		// nuevo sql que solo trae el dato el dato mas reciente
 		$sql = "SELECT persona.*,
 			(
 				CASE 
@@ -530,22 +468,16 @@ iddistrito_factura='$iddistrito_factura'
 					WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
 					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=2   THEN 'INACTIVO' 
 			WHEN tipo_persona='distribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 THEN 'PERDIDO' 
-			
 				WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<1 THEN 'ACTIVO' 
 					WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=1 
 					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=2   THEN 'INACTIVO' 
 			WHEN tipo_persona='superdistribuidor' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=3 THEN 'PERDIDO' 
-			
-					
 					WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<2 THEN 'ACTIVO' 
 					WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=2 
 					and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())<=3   THEN 'INACTIVO' 
 			WHEN tipo_persona='representante' and TIMESTAMPDIFF(month,venta.fecha ,CURDATE())>=4 THEN 'PERDIDO' 
-				
 					WHEN venta.fecha IS NULL then 'PERDIDO'
-				
-			END  
-
+			END 
 			)as clasificacion ,
 			(CASE
 				WHEN genero = 1 THEN 'MUJER'
@@ -553,49 +485,27 @@ iddistrito_factura='$iddistrito_factura'
 				WHEN genero = 3 THEN 'PREFIERO NO DECIRLO'
 			END) AS genero_txt
 			, CONCAT(departamento.iddepartamento,' - ',provincia.idprovincia, ' - ',distrito.iddistrito) idubicacion,  CONCAT(departamento.descripcion,' - ',provincia.descripcion, ' - ',distrito.descripcion) ubicacion
-			
-
 			, CONCAT(dep_n.iddepartamento,' - ',pro_n.idprovincia, ' - ',dis_n.iddistrito) idubicacion_factura,  CONCAT(dep_n.descripcion,' - ',pro_n.descripcion, ' - ',dis_n.descripcion) ubicacion_factura
-			
 			,if(persona.direccion_distrito>0 AND persona.direccion_provincia>0,'',CONCAT(persona.direccion_departamento ,' ', persona.direccion_distrito,' ',persona.direccion_provincia)) direccion_antigua
-			
-
 			,	CONCAT( e3.nombre, ' ', e3.apellidos ) AS  empleado_asignado
 			,e3.idempleado idempleado_asignado
-
-			FROM persona 
-
+			FROM persona
 			left join pedido on pedido.idcliente=persona.idpersona
 			left JOIN venta ON venta.idpedido=pedido.idpedido
-			
 			INNER JOIN (SELECT num_documento, MAX(persona.idpersona) AS max_fecha FROM persona  GROUP BY num_documento)
 			t2 ON t2.num_documento = persona.num_documento AND persona.idpersona = t2.max_fecha
-			
 			LEFT JOIN distrito ON distrito.iddistrito=persona.direccion_distrito
 			left JOIN provincia ON provincia.idprovincia=persona.direccion_provincia
 			left JOIN departamento ON departamento.iddepartamento=provincia.iddepartamento
-		
 			left JOIN cartera_cliente ON cartera_cliente.idcliente=persona.idpersona AND cartera_cliente.estado='A'
-
 			left JOIN empleado e3 ON e3.idempleado=cartera_cliente.idempleado
-			
-
-				
 			LEFT JOIN distrito dis_n ON dis_n.iddistrito=persona.iddistrito_factura
 			left JOIN provincia pro_n ON pro_n.idprovincia=persona.idprovincia_factura
 			left JOIN departamento dep_n ON dep_n.iddepartamento=pro_n.iddepartamento
 
-			
 			WHERE persona.num_documento ='$numeroDocumento'
-
-		
-
 				GROUP BY persona.num_documento
 			ORDER BY persona.idpersona DESC;";
-
-
-
-
 		$query = $conexion->query($sql);
 		return $query;
 	}
@@ -604,7 +514,6 @@ iddistrito_factura='$iddistrito_factura'
 	{
 		global $conexion;
 		$query = $conexion->query("SELECT  COUNT(idpedido) AS countidpedido FROM pedido WHERE idcliente = " . $idpersona);
-		//var_dump($query);exit;
 		return $query;
 	}
 

@@ -1,15 +1,7 @@
 $(document).on("ready", init);// Inciamos el jquery
 var objC = new init();
 function init(){
-	var tabla = $('#tblMarcas').dataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            
-            'excelHtml5',
-           
-		
-		]
-    });
+	
 	/*
 		{
 			"iDisplayLength": 2,

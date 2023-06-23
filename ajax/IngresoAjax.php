@@ -147,7 +147,6 @@ switch ($_GET["op"]) {
             require_once "../model/Ingreso.php";
             $objIngreso = new Ingreso();
             $query_Categoria = $objIngreso->ListarTipoDocumento();
-            //echo '<option value="">--Seleccione Comprobante--</option>';
             while ($reg = $query_Categoria->fetch_object()) {
                 echo '<option value=' . $reg->nombre . '>' . $reg->nombre . '</option>';
             }

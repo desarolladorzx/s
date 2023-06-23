@@ -5,14 +5,14 @@ var objC = new init();
 function init(){
 
 
-	var tabla = $('#tblCategorias').dataTable({
-        dom: 'Bfrtip',
-        buttons: [
+	// var tabla = $('#tblCategorias').dataTable({
+    //     dom: 'Bfrtip',
+    //     buttons: [
           
-            'excelHtml5',
+    //         'excelHtml5',
            
-        ]
-    });
+    //     ]
+    // });
 
 	/*
 		{

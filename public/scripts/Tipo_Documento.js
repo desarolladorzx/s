@@ -10,7 +10,7 @@ function init(){
            
         ]
     });
-    
+        
 	ListadoTipo_Documento();// Ni bien carga la pagina que cargue el metodo
 	$("#VerForm").hide();// Ocultamos el formulario
 	$("form#frmTipo_Documento").submit(SaveOrUpdate);// Evento submit de jquery que llamamos al metodo SaveOrUpdate para poder registrar o modificar datos

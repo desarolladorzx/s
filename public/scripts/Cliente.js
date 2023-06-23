@@ -179,15 +179,7 @@ $('#idselect_motivo_reasignacion_por_cliente').change(
   $("#container_respuesta_inputs_coincidencia_de_telefonos").hide();
   $("#container_alerta_telefono").hide();
 
-  /* 	$('#tblCliente').dataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5
-            'pdfHtml5'
-        ]
-    }); */
+
   $("#txtTelefono_2").change(function () {
     demostrarTelefono($("#txtTelefono_2").val(), "txtTelefono_2_span");
   });

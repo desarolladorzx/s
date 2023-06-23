@@ -7,7 +7,6 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.5 -->
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="public/css/font-awesome.min.css">
   <!-- Theme style -->
@@ -32,14 +31,13 @@
   <script type="text/javascript" src="public/js/dataTables.js"></script>
   <script type="text/javascript" src="public/js/swat/sweet/lib/sweet-alert.min.js"></script>
 
-  <!-- 
-  insertando neuvo codigo
- -->
  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css">
+
+
+
+
   <script type="text/javascript" src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
-
   <script type="text/javascript" src="public/js/select2.js"></script>
-
   <script type="text/javascript" src="public/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript" src="public/js/dataTables.buttons.min.js"></script>
   <script type="text/javascript" src="public/js/jszip.min.js"></script>
@@ -47,59 +45,28 @@
   <script type="text/javascript" src="public/js/vfs_fonts.js"></script>
   <script type="text/javascript" src="public/js/buttons.html5.min.js"></script>
   <script type="text/javascript" src="public/js/Chart.js"></script>
-  
   <script type="text/javascript" src="public/scripts/ProductosPorVencimiento.js"></script>
-
-
-
-  <!-- <script type="text/javascript" src="public/scripts/Catalogo.js"></script> -->
-
-  <!-- <script type="text/javascript" src="public/scripts/Establecimiento.js"></script> -->
-
-  <!-- <script type="text/javascript" src="public/scripts/Activos.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Devolucion.js"></script> -->
-  <script type="text/javascript" src="public/scripts/Devolucion.js"></script>
-  <!-- <script type="text/javascript" src="public/scripts/Traslados.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Categoria.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Marca.js"></script> -->
+  <script type="text/javascript" src="public/scripts/Utilities.js"></script>
   <script type="text/javascript" src="public/scripts/Articulo.js"></script>
   <script type="text/javascript" src="public/scripts/Usuario.js"></script>
   <script type="text/javascript" src="public/scripts/Empleado.js"></script>
   <script type="text/javascript" src="public/scripts/Ingreso.js"></script>
   <script type="text/javascript" src="public/scripts/Global.js"></script>
-  <script type="text/javascript" src="public/scripts/Tipo_Documento.js"></script>
   <script type="text/javascript" src="public/scripts/Sucursal.js"></script>
   <script type="text/javascript" src="public/scripts/Venta.js"></script>
   <script type="text/javascript" src="public/scripts/Pedido.js"></script>
   <script type="text/javascript" src="public/scripts/DocSucursal.js"></script>
   <script type="text/javascript" src="public/scripts/Credito.js"></script>
-  <script type="text/javascript" src="public/scripts/Cliente.js"></script>
+  <!-- <script type="text/javascript" src="public/scripts/Cliente.js"></script> -->
   <script type="text/javascript" src="public/scripts/Proveedor.js"></script>
   <script type="text/javascript" src="public/scripts/Unidad_medida.js"></script>
   <script type="text/javascript" src="public/scripts/Permisos.js"></script>
+
   <script type="text/javascript" src="public/scripts/ConsultasCompras.js"></script>
-
   <script type="text/javascript" src="public/scripts/ConsultasVentas.js"></script>
-
 
   <script type="text/javascript" src="public/scripts/jquery.toaster.js"></script>
 
-  <!-- Nuevos Modulos -->
-  <!-- <script type="text/javascript" src="public/scripts/Banco.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/CategoriaEmpresa.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/CuentaBancaria.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Transporte.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Tarjeta.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Metodo_Pago.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/Plataforma.js"></script> -->
-  <!-- <script type="text/javascript" src="public/scripts/MotivoTraslado.js"></script> -->
-
-
-  <!-- <script type="text/javascript" src="public/scripts/Correccion_stock.js"></script> -->
-
-  <!-- <script type="text/javascript" src="public/scripts/RegistroActividad.js"></script> -->
-
-<!--  -->
   <style type="text/css">
     input[type="text"] {
       text-align: center;
@@ -371,77 +338,21 @@ aria-labelledby="myLargeModalLabel">
                   </div>
                 </div>
               </div>
-
-              <!-- <div id="ContainerbuttonAgregarImagenAlmacen">
-                <div class="col-lg-2 left">
-                  <input class="input" id="txtIdPedido" type="hidden" />
-                  <input class="input" id="txtIdCliente" type="hidden" />
-
-                  <div style="width: 100%" class="form-group">
-                    <label
-                      style="width: 100%"
-                      for="inputFileAlmacen"
-                      class="btn btn-warning w-100 custom-file-upload"
-                    >
-                      Agregar Imagenes de Almacen
-                    </label>
-
-                    <input
-                      type="file"
-                      id="inputFileAlmacen"
-                      multiple
-                      style="display: none"
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-10" style="display: flex">
-                  <div
-                    id="image-preview-container-almacen"
-                    style="display: flex"
-                  ></div>
-
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    id="btn_todos_eliminar_imagen"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </div>
-
-                <div class="col-lg-12 left">
-                  <div class="form-group has-success">
-                    <button
-                      type="button"
-                      id="save-guardar-almacen"
-                      class="btn btn-success"
-                    >
-                      Guardar
-                    </button>
-                  </div>
-                </div>
-              </div> -->
               <style>
                 .my-images_preview {
-                  /* transition: all 0.2s ease; */
-                  /* box-shadow: 1px 1px 1px 1px #31b0d3; */
                   margin: 0 10px;
                   border: solid 1px gray;
                   border-radius: 4px;
                   cursor: pointer;
                 }
                 .my-images_preview:active {
-                  /* background-color: red !important; */
                   width: 700px !important;
                   position: fixed;
                   cursor: auto;
                   top: 50%;
                   left: 50%;
-
                   transform: translate(-50%, -50%);
                   z-index: 100000;
-
-                  /* height: 100% !important; */
                 }
               </style>
             </div>
@@ -457,16 +368,9 @@ aria-labelledby="myLargeModalLabel">
             >
               <i class="fa fa-floppy-o"></i> Registrar
             </button>
-            <!-- <a href="Venta.php" class="btn btn-primary"
-              ><i class="fa fa-remove"></i> Cancelar</a
-            > -->
-            <!-- <a id="btnEnviarCorreo" class="btn btn-default"
-              ><i class="fa fa-envelope"></i> Enviar por correo</a
-            > -->
             <hr />
             <span class="lead text-primary"></span>
           </div>
-
           <div class="col-sm-9 col-lg-12 main" id="VerVentaDetallePedido">
             <div class="table-responsive">
               <table
@@ -489,13 +393,11 @@ aria-labelledby="myLargeModalLabel">
                     <th>Cantidad</th>
                     <th>Descuento</th>
                     <th>Total</th>
-                    <!-- <th>Eliminar</th> -->
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
-
             <div
               class="col-sm-9 col-sm-offset-3 col-lg-8 col-lg-offset-2 main"
             >
@@ -541,9 +443,7 @@ aria-labelledby="myLargeModalLabel">
                 </div>
               </div>
             </div>
-
             <br /><br />
-
             <div class="col-sm-4 col-lg-4">
               <ul class="timeline timeline-inverse">
                 <li>
@@ -723,14 +623,6 @@ aria-labelledby="myLargeModalLabel">
                 width: 0px !important;
               }
             </style>
-
-            <!-- <div class="col-lg-12">
-              <h4 for="modal-title">Imágenes De Empaquetado</h4>
-              <ul
-                class="mailbox-attachments clearfix"
-                id="detalleImagenesEmpaquetado"
-              ></ul>
-            </div> -->
           </div>
           
         </div>
@@ -748,9 +640,7 @@ aria-labelledby="myLargeModalLabel">
 
 .modal-fullscreen {
   width: 80%;
-  /* height: 100%;
-  margin: 0;
-  padding: 0; */
+
 }
 
 </style>
@@ -1016,33 +906,10 @@ aria-labelledby="myLargeModalLabel">
               <li id="liVentasDetalladas"><a href="VentasDetalladas.php"><i class="fa fa-circle-o"></i> Ventas Detalladas</a></li>
               <li id="liVentasAnuladas"><a href="VentasAnuladas.php"><i class="fa fa-circle-o"></i> Ventas Anuladas</a></li>
               <li id="liVentaPend"><a href="VentaPend.php"><i class="fa fa-circle-o"></i> Ventas Pendientes</a></li>
-              <!-- <li id="liVentasContado"><a href="VentasContado.php"><i class="fa fa-circle-o"></i> Ventas Contado</a></li>
-              <li id="liVentasCredito"><a href="VentasCredito.php"><i class="fa fa-circle-o"></i> Ventas Crédito</a></li>
-              <li id="liDeudasPendientes"><a href="Deuda.php"><i class="fa fa-circle-o"></i> Deudas Pendientes</a></li>
-              <li id="liEscritorio"><a href="Escritorio.php"><i class="fa fa-circle-o"></i> Estadísticas Por Asesora</a></li> -->
-
               <li id="liRegistroActividad"><a href="RegistroActividad.php"><i class="fa fa-circle-o"></i> Registro de Actividad</a></li>
               
             </ul>
           </li>
-          <!-- <li class="treeview" id="liSeguridad">
-            <a href="#">
-              <i class="fa fa-folder"></i> <span>Configuracion</span>
-              <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li id="liCopia"><a href="CopiaSeguridad.php"><i class="fa fa-circle-o"></i> Copia de Seguridad</a></li>
-         
-              <li id="liConfigurarSerie"><a href="DocSucursal.php"><i class="fa fa-circle-o"></i> Conf. Comprobantes</a></li>
-              <li id="liConfiguraBanco"><a href="Banco.php"><i class="fa fa-circle-o"></i>Banco</a></li>
-              <li id="liConfiguraCuentaBancaria"><a href="CuentaBancaria.php"><i class="fa fa-circle-o"></i>Cuenta Bancaria</a></li>
-              <li id="liConfiguraTransporte"><a href="Transporte.php"><i class="fa fa-circle-o"></i>Transporte</a></li>
-              <li id="liConfiguraTarjeta"><a href="Tarjeta.php"><i class="fa fa-circle-o"></i>Tarjeta</a></li>
-              <li id="liConfiguraPlataforma"><a href="Plataforma.php"><i class="fa fa-circle-o"></i>Plataforma</a></li>
-              <li id="liConfiguraMetodo_Pago"><a href="Metodo_Pago.php"><i class="fa fa-circle-o"></i>Metodo de Pago</a></li>
-              <li id="liConfiguraMotivoTraslado"><a href="MotivoTraslado.php"><i class="fa fa-circle-o"></i>Motivo de traslado</a></li>
-            </ul>
-          </li> -->
 
           <li class="treeview" id="liDocumentacion">
             <a href="#">
@@ -1364,14 +1231,10 @@ aria-labelledby="myLargeModalLabel">
                         <li id="liFOOFZGFZ014"><a href="FOOFZGFZ014.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-014</a></li>
                         <li id="liFOOFZGFZ015"><a href="FOOFZGFZ015.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-015</a></li>
                         <li id="liFOOFZGFZ016"><a href="FOOFZGFZ016.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-016</a></li>
-                        <!-- <li id="liFOOFZGFZ017"><a href="FOOFZGFZ017.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-017</a></li> -->
                         <li id="liFOOFZGFZ018"><a href="FOOFZGFZ018.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-018</a></li>
-                        <!-- <li id="liFOOFZGFZ019"><a href="FOOFZGFZ019.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-019</a></li> -->
                         <li id="liFOOFZGFZ020"><a href="FOOFZGFZ020.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-020</a></li>
                         <li id="liFOOFZGFZ021"><a href="FOOFZGFZ021.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-021</a></li>
                         <li id="liFOOFZGFZ022"><a href="FOOFZGFZ022.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-022</a></li>
-                        <!-- <li id="liFOOFZGFZ023"><a href="FOOFZGFZ023.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-023</a></li>
-                        <li id="liFOOFZGFZ024"><a href="FOOFZGFZ024.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-024</a></li> -->
                         <li id="liFOOFZGFZ025"><a href="FOOFZGFZ025.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-025</a></li>
                         <li id="liFOOFZGFZ026"><a href="FOOFZGFZ026.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-026</a></li>
                         <li id="liFOOFZGFZ027"><a href="FOOFZGFZ027.php"><i class="fa fa-circle-o"></i> FO-OFZ-GFZ-027</a></li>
@@ -1618,10 +1481,8 @@ aria-labelledby="myLargeModalLabel">
                      
                     </ul>
                   </li>
-
                 </ul>
               </li>
-
             </ul>
           </li>
 
@@ -1677,9 +1538,6 @@ $.get('ajax/UsuarioAjax.php?op=Container_cambiarSucursal_global',function(r){
 })
 
 function Acceder(idusuario, idsucursal, idempleado, empleado, tipo_documento, tipo_usuario, num_documento, direccion, telefono, foto, logo, email, login, razon_social, mnu_almacen, mnu_compras, mnu_ventas, mnu_mantenimiento, mnu_seguridad, mnu_consulta_compras, mnu_consulta_ventas, mnu_admin, superadmin, mnu_documentacion_ev, mnu_documentacion_jv, mnu_documentacion_ja, mnu_documentacion_jl) {
-
-//alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
-
 var data = {
   idusuario: idusuario,
   idsucursal: idsucursal,
@@ -1710,9 +1568,6 @@ var data = {
   mnu_admin: mnu_admin,
   superadmin: superadmin
 };
-
-//console.log(data)
-
 $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
   $(location).attr("href", "EscritorioEmp.php");
 });
@@ -1746,12 +1601,6 @@ function NuevoAcceder(
         mnu_ventas_campo,
         mnu_sigrh
         ) {
-
-
-
-
-//alert(idusuario+' '+ idsucursal+' '+ idempleado+' '+ empleado+' '+ tipo_documento+' '+ tipo_usuario+' '+ num_documento+' '+ direccion+' '+ telefono+' '+ foto+' '+ logo+' '+ email+' '+ login+' '+ razon_social+' '+ mnu_almacen+' '+ mnu_compras+' '+ mnu_ventas+' '+ mnu_mantenimiento+' '+ mnu_seguridad+' '+ mnu_consulta_compras+' '+ mnu_consulta_ventas+' '+ mnu_admin+' '+superadmin+' '+mnu_documentacion_ev+' '+mnu_documentacion_jv+' '+mnu_documentacion_ja+' '+mnu_documentacion_jl);
-
 var data = {
           idusuario: idusuario,
           idsucursal: idsucursal,
@@ -1885,13 +1734,6 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
                 localStorage.setItem("ultimoPedido", ultimoPedido);
               }
             }
-
-//             console.log( nuevoPedido.estado=='D' &&
-
-// baseD == local &&
-// JSON.parse(data).estado !==
-//   JSON.parse(localStorage.getItem("ultimoPedido")).estado &&
-// [11, 6].includes(idEmpleado))
             if (
               nuevoPedido.estado=='D' &&
               baseD == local &&
@@ -2115,7 +1957,6 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-      <!-- Main content -->
       <section class="content">
 
         <div class="row">
@@ -2132,9 +1973,6 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
               value="<?php echo $_SESSION["mnu_consulta_compras"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuConsultaVentas"
               value="<?php echo $_SESSION["mnu_consulta_ventas"]; ?>">
-            
-
-            
               <input type="hidden" name="doc-txtMnuDocumentacion" id="doc-txtMnuDocumentacion" value="<?php echo $_SESSION["mnu_documentacion"]; ?>">
               <input type="hidden" name="doc-txtMnuDocVentas" id="doc-txtMnuDocVentas" value="<?php echo $_SESSION["mnu_documentacion_ventas"]; ?>">
               <input type="hidden" name="doc-txtMnuDocMarketing" id="doc-txtMnuDocMarketing" value="<?php echo $_SESSION["mnu_documentacion_marketing"]; ?>">
@@ -2144,11 +1982,7 @@ $.post("ajax/UsuarioAjax.php?op=IngresarPanel", data, function(r) {
               <input type="hidden" name="doc-txtMnuDocRRHH" id="doc-txtMnuDocRRHH" value="<?php echo $_SESSION["mnu_documentacion_rrhh"]; ?>">
               <input type="hidden" name="doc-txtMnuDocIT" id="doc-txtMnuDocIT" value="<?php echo $_SESSION["mnu_documentacion_it"]; ?>">
               <input type="hidden" name="doc-txtMnuDoProduccion" id="doc-txtMnuDoProduccion" value="<?php echo $_SESSION["mnu_documentacion_produccion"]; ?>">
-            
               <input type="hidden" name="txtMnuVentasCampo" id="txtMnuVentasCampo" value="<?php echo $_SESSION["mnu_ventas_campo"]; ?>">
-
-
-
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocEV" value="<?php echo $_SESSION["mnu_documentacion_ev"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJV" value="<?php echo $_SESSION["mnu_documentacion_jv"]; ?>">
             <input type="hidden" name="txtMnuAlmacen" id="txtMnuDocJA" value="<?php echo $_SESSION["mnu_documentacion_ja"]; ?>">
